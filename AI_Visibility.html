@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI可见度 · 完整知识手册（Pro版）</title>
+    <style>
+        /* ===== 全局重置 & 基础 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f6f9fc;
+            color: #0b1a2e;
+            padding: 20px 16px 50px 16px;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        /* ===== 锚点偏移（修复跳转遮挡） ===== */
+        [id^="section-"] {
+            scroll-margin-top: 100px;
+        }
+
+        /* ===== 顶部导航（粘性） ===== */
+        .nav-tabs {
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 10px 18px;
+            border-radius: 60px;
+            box-shadow: 0 8px 32px rgba(0, 20, 40, 0.10);
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 6px 18px;
+            border-radius: 40px;
+            transition: all 0.2s ease;
+            background: transparent;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-tabs a:hover {
+            background: #0b1a2e;
+            color: #ffffff;
+            transform: scale(1.02);
+        }
+
+        .nav-tabs a.active {
+            background: #0b1a2e;
+            color: #fbbf24;
+            box-shadow: 0 4px 12px rgba(11, 26, 46, 0.2);
+        }
+
+        @media (max-width: 700px) {
+            .nav-tabs {
+                border-radius: 20px;
+                justify-content: center;
+                gap: 4px;
+                padding: 10px 12px;
+                top: 8px;
+            }
+            .nav-tabs a {
+                font-size: 0.75rem;
+                padding: 4px 12px;
+            }
+        }
+
+        /* ===== 通用卡片 ===== */
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 32px 34px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.25s ease, transform 0.2s ease;
+            border: 1px solid rgba(203, 213, 225, 0.3);
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+        }
+
+        .card-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+            border-bottom: 3px solid #f1f5f9;
+            padding-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .card-title .badge {
+            background: #0b1a2e;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .card-title .badge.gold {
+            background: #fbbf24;
+            color: #0b1a2e;
+        }
+        .card-title .badge.blue {
+            background: #3b82f6;
+            color: white;
+        }
+        .card-title .badge.green {
+            background: #10b981;
+            color: white;
+        }
+        .card-title .badge.purple {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .emoji-big {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        /* ===== 模块一：黄金定义（Hero） ===== */
+        .hero-definition {
+            background: linear-gradient(145deg, #0b1a2e 0%, #1e3347 100%);
+            color: #f0f6fc;
+            border-radius: 28px;
+            padding: 38px 40px;
+            margin-bottom: 30px;
+            border-left: 8px solid #fbbf24;
+            box-shadow: 0 16px 40px -8px rgba(11, 26, 46, 0.3);
+        }
+
+        .hero-definition h1 {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fcd34d, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .hero-definition .def-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #d1dce8;
+            max-width: 90%;
+        }
+
+        .hero-definition .def-text strong {
+            color: #fbbf24;
+            -webkit-text-fill-color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .hero-definition .def-highlight {
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            padding: 14px 22px;
+            border-radius: 16px;
+            margin-top: 16px;
+            display: inline-block;
+            font-size: 1.05rem;
+            color: #fcd34d;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-meta .stat {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #b0c4db;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .hero-meta .stat span {
+            color: #fbbf24;
+            font-weight: 800;
+            -webkit-text-fill-color: #fbbf24;
+        }
+
+        /* ===== 模块二：为什么（逻辑网格） ===== */
+        .logic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 6px;
+        }
+
+        .logic-item {
+            background: #f9fcff;
+            padding: 22px 22px 20px 22px;
+            border-radius: 20px;
+            border-left: 6px solid #fbbf24;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .logic-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(11, 26, 46, 0.08);
+        }
+
+        .logic-item .num {
+            font-weight: 800;
+            color: #fbbf24;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .logic-item h4 {
+            font-size: 1.1rem;
+            margin: 8px 0 6px 0;
+            color: #0b1a2e;
+        }
+
+        .logic-item p {
+            font-size: 0.93rem;
+            color: #475569;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .logic-item .highlight-num {
+            background: #0b1a2e;
+            color: #fbbf24;
+            padding: 1px 10px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        /* ===== 模块三：概念对比表 ===== */
+        .concept-table-wrap {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid #eef2f6;
+        }
+
+        .concept-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 620px;
+        }
+
+        .concept-table th {
+            background: #0b1a2e;
+            color: white;
+            padding: 16px 18px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .concept-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+            background-color: white;
+        }
+
+        .concept-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .concept-table tr:hover td {
+            background-color: #fafcff;
+        }
+
+        .concept-table .highlight-cell {
+            background: #fffbeb;
+        }
+
+        .concept-table .tag-concept {
+            display: inline-block;
+            background: #0b1a2e;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+
+        .concept-table .tag-geo {
+            background: #3b82f6;
+        }
+        .concept-table .tag-aivo {
+            background: #8b5cf6;
+        }
+
+        .concept-table .keyword-highlight {
+            background: #fef3c7;
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        /* ===== 模块四：怎么办（SOP） ===== */
+        .sop-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sop-step {
+            display: flex;
+            gap: 24px;
+            background: #fafdff;
+            padding: 24px 28px;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+            transition: all 0.2s ease;
+        }
+
+        .sop-step:hover {
+            border-color: #fbbf24;
+            background: #ffffff;
+            box-shadow: 0 4px 16px rgba(251, 191, 36, 0.08);
+        }
+
+        .sop-step .step-num {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            background: #0b1a2e;
+            color: #fbbf24;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4rem;
+        }
+
+        .sop-step .step-content {
+            flex: 1;
+        }
+
+        .sop-step .step-content h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .sop-step .step-content .step-desc {
+            color: #475569;
+            margin-bottom: 12px;
+            font-size: 0.98rem;
+        }
+
+        .layer-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0 6px 0;
+        }
+
+        .layer-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            border-radius: 16px;
+            background: white;
+            border: 1px solid #eef2f6;
+            transition: all 0.15s ease;
+        }
+
+        .layer-row:hover {
+            border-color: #cbd5e1;
+            background: #fafdff;
+        }
+
+        .layer-row .prio {
+            font-weight: 800;
+            font-size: 0.7rem;
+            background: #0b1a2e;
+            color: white;
+            padding: 3px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .layer-row .prio.p0 {
+            background: #fbbf24;
+            color: #0b1a2e;
+        }
+
+        .layer-row .prio.p1 {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .layer-row .prio.p2 {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .layer-row .layer-desc {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .layer-row .layer-desc strong {
+            color: #0b1a2e;
+        }
+
+        .layer-row .layer-desc small {
+            color: #64748b;
+            font-size: 0.85rem;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .step-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+            margin-top: 10px;
+        }
+
+        .step-actions .action-tag {
+            background: #f1f5f9;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .step-actions .action-tag.p0 {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .step-actions .action-tag.blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .step-outcome {
+            margin-top: 12px;
+            background: #f1f5f9;
+            padding: 10px 18px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            color: #334155;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .step-outcome strong {
+            color: #0b1a2e;
+        }
+
+        /* ===== 模块五：R.A.T.E 速记 ===== */
+        .rate-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .rate-item {
+            background: #fafdff;
+            padding: 24px 16px 20px 16px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #eef2f6;
+            transition: all 0.2s ease;
+        }
+
+        .rate-item:hover {
+            border-color: #fbbf24;
+            background: #fffbeb;
+            transform: scale(1.02);
+        }
+
+        .rate-item .letter {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: block;
+            line-height: 1.1;
+            text-shadow: 0 4px 12px rgba(251, 191, 36, 0.15);
+        }
+
+        .rate-item .word {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin: 6px 0 2px 0;
+            color: #0b1a2e;
+        }
+
+        .rate-item .meaning {
+            font-size: 0.88rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        .rate-item .meaning small {
+            display: block;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        .rate-mantra {
+            background: #0b1a2e;
+            color: #f0f6fc;
+            padding: 16px 24px;
+            border-radius: 60px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            border: 1px solid #fbbf24;
+        }
+
+        .rate-mantra span {
+            color: #fbbf24;
+        }
+
+        @media (max-width: 700px) {
+            .rate-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .rate-mantra {
+                font-size: 0.9rem;
+                border-radius: 30px;
+                padding: 14px 16px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .rate-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== 模块六：自查清单 ===== */
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .checklist-col {
+            background: #fafdff;
+            padding: 22px 24px;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+        }
+
+        .checklist-col h5 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #0b1a2e;
+        }
+
+        .checklist-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .checklist-col ul li {
+            padding: 8px 0 8px 32px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%23fbbf24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>') left center no-repeat;
+            background-size: 18px;
+            font-size: 0.92rem;
+            color: #334155;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .checklist-col ul li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-col.spotlight {
+            grid-column: 1 / -1;
+            background: #fffbeb;
+            border-color: #fcd34d;
+        }
+
+        .checklist-col.spotlight h5 {
+            color: #92400e;
+        }
+
+        @media (max-width: 750px) {
+            .checklist-grid {
+                grid-template-columns: 1fr;
+            }
+            .checklist-col.spotlight {
+                grid-column: 1;
+            }
+        }
+
+        /* ===== 底部 ===== */
+        .footer-note {
+            text-align: center;
+            padding: 28px 0 10px 0;
+            border-top: 2px solid #eef2f6;
+            margin-top: 10px;
+        }
+
+        .footer-note p {
+            color: #475569;
+            font-size: 0.98rem;
+        }
+
+        .footer-note .highlight {
+            color: #0b1a2e;
+            font-weight: 700;
+        }
+
+        .footer-note small {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 6px;
+        }
+
+        /* ===== 响应式微调 ===== */
+        @media (max-width: 640px) {
+            .card {
+                padding: 20px 16px;
+            }
+            .hero-definition {
+                padding: 24px 20px;
+            }
+            .hero-definition h1 {
+                font-size: 1.8rem;
+            }
+            .hero-definition .def-text {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+            .sop-step {
+                flex-direction: column;
+                gap: 12px;
+                padding: 18px 16px;
+            }
+            .sop-step .step-num {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+            .card-title {
+                font-size: 1.3rem;
+            }
+            .layer-row {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .concept-table {
+                font-size: 0.82rem;
+                min-width: 480px;
+            }
+            .concept-table th,
+            .concept-table td {
+                padding: 10px 12px;
+            }
+            .hero-meta .stat {
+                font-size: 0.8rem;
+                padding: 4px 14px;
+            }
+        }
+
+        /* ===== 打印优化 ===== */
+        @media print {
+            body {
+                background: white;
+                padding: 10px;
+            }
+            .card {
+                box-shadow: none !important;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+            .hero-definition {
+                background: #0b1a2e !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .nav-tabs {
+                display: none;
+            }
+            .rate-item {
+                border: 1px solid #ccc;
+            }
+            .layer-row .prio {
+                background: #333 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .layer-row .prio.p0 {
+                background: #fbbf24 !important;
+                color: #000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ========================================= -->
+        <!-- 顶部导航（修复：粘性 + 平滑跳转） -->
+        <!-- ========================================= -->
+        <nav class="nav-tabs" id="topNav">
+            <a href="#section-def" class="active">📖 是什么</a>
+            <a href="#section-why">🔍 为什么</a>
+            <a href="#section-concepts">🧩 核心概念</a>
+            <a href="#section-how">⚙️ 怎么办（SOP）</a>
+            <a href="#section-rate">🧠 速记口诀</a>
+            <a href="#section-checklist">✅ 自查清单</a>
+        </nav>
+
+        <!-- ========================================= -->
+        <!-- 模块一：是什么（定义） -->
+        <!-- ========================================= -->
+        <section class="hero-definition" id="section-def">
+            <h1>🧠 AI可见度 · 是什么</h1>
+            <div class="def-text">
+                <strong>AI可见度（AI Visibility）</strong> 是指品牌、产品或内容在生成式AI平台
+                （ChatGPT、Google Gemini、Perplexity、DeepSeek 等）的生成答案中，
+                被 <strong>引用、提及或推荐</strong> 的频率与质量。
+            </div>
+            <div class="def-highlight">
+                ⚡ 核心本质：用户不点击链接，AI直接替你回答 —— <strong>“零点击搜索时代的品牌生存战”</strong>
+            </div>
+            <div class="hero-meta">
+                <span class="stat">📊 超过 <span>60%</span> 的搜索零点击</span>
+                <span class="stat">📈 超过 <span>25%</span> 触发 AI Overviews</span>
+                <span class="stat">🏷️ 品牌提及权重 <span>94%</span></span>
+                <span class="stat">🚀 GEO 优化可提升可见度 <span>40%</span></span>
+                <span class="stat">👥 AI Overviews 月活 <span>25亿+</span></span>
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- 模块二：为什么（底层逻辑） -->
+        <!-- ========================================= -->
+        <div class="card" id="section-why">
+            <div class="card-title">
+                <span class="emoji-big">🔍</span> 为什么AI可见度至关重要？
+                <span class="badge gold">底层逻辑</span>
+            </div>
+            <div class="logic-grid">
+                <div class="logic-item">
+                    <div class="num">范式转移</div>
+                    <h4>关键词 → 实体</h4>
+                    <p>AI不再匹配关键词，而是识别 <strong>实体</strong>（产品、品牌、属性），理解事物之间的深层关系。</p>
+                    <span class="highlight-num">旧SEO失效</span>
+                </div>
+                <div class="logic-item" style="border-left-color: #3b82f6;">
+                    <div class="num" style="color: #3b82f6;">技术黑盒</div>
+                    <h4>RAG 检索增强生成</h4>
+                    <p>AI先 <strong>检索</strong> 你的内容 → 再 <strong>增强</strong> 为上下文 → 最后 <strong>生成</strong> 答案。你不在检索池里，就不会被引用。</p>
+                    <span class="highlight-num" style="background: #3b82f6; color: white;">核心机制</span>
+                </div>
+                <div class="logic-item" style="border-left-color: #10b981;">
+                    <div class="num" style="color: #10b981;">数据冲击</div>
+                    <h4>零点击成为常态</h4>
+                    <p>Google AI Overviews 月活 25亿+，超过 <strong>60%</strong> 的搜索不再产生点击。被 AI <strong>提及</strong> 比被 <strong>点击</strong> 更重要。</p>
+                    <span class="highlight-num" style="background: #10b981; color: white;">流量重构</span>
+                </div>
+                <div class="logic-item" style="border-left-color: #8b5cf6;">
+                    <div class="num" style="color: #8b5cf6;">官方定调</div>
+                    <h4>Google 2026.6 更新</h4>
+                    <p>“为生成式AI搜索优化，就是为搜索体验优化 —— 它仍然是 SEO。” <strong>优质内容 + 清晰结构</strong> 是永远的核心。</p>
+                    <span class="highlight-num" style="background: #8b5cf6; color: white;">不焦虑</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- 模块三：核心概念（SGE / GEO / AIVO） -->
+        <!-- ========================================= -->
+        <div class="card" id="section-concepts">
+            <div class="card-title">
+                <span class="emoji-big">🧩</span> 三大核心概念辨析
+                <span class="badge purple">别被术语忽悠</span>
+            </div>
+            <div class="concept-table-wrap">
+                <table class="concept-table">
+                    <thead>
+                        <tr>
+                            <th style="width:13%;">概念</th>
+                            <th style="width:27%;">核心定义</th>
+                            <th style="width:32%;">优化对象 / 手段</th>
+                            <th style="width:28%;">一句话大白话</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag-concept">SGE</span><br><small style="color:#64748b;">搜索生成体验</small></td>
+                            <td>Google AI Overviews 在结果页顶部生成的 <span class="keyword-highlight">AI 摘要答案</span></td>
+                            <td>触发 AI 摘要的界面层，是零点击的 <strong>“第一战场”</strong></td>
+                            <td>📱 这是 AI 出现的<strong>“界面层”</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag-concept tag-geo">GEO</span><br><small style="color:#64748b;">生成式引擎优化</small></td>
+                            <td>优化内容使其被 AI 搜索引擎 <span class="keyword-highlight">检索、总结、引用</span></td>
+                            <td><strong>原子答案</strong>、语义密度、问题式标题、提示词工程</td>
+                            <td>📥 让 AI <strong>“读得懂”</strong> 你的内容</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag-concept tag-aivo">AIVO</span><br><small style="color:#64748b;">AI可见性优化</small></td>
+                            <td>优化品牌在 AI 认知体系中的 <span class="keyword-highlight">可信存在</span></td>
+                            <td><strong>知识图谱</strong>、全网实体统一、品牌提及（权重94%）、Schema</td>
+                            <td>📤 让 AI <strong>“信得过”</strong> 并主动推荐你</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top:18px; padding:16px 22px; background: #fffbeb; border-radius:16px; font-size:0.98rem; color:#78350f; border:1px solid #fde68a;">
+                💡 <strong>运营心法：</strong> GEO 解决 <strong>“被 AI 找到”</strong> 的问题，AIVO 解决 <strong>“被 AI 信任”</strong> 的问题。两者互补，缺一不可。
+            </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- 模块四：怎么办（完整 SOP） -->
+        <!-- ========================================= -->
+        <div class="card" id="section-how">
+            <div class="card-title">
+                <span class="emoji-big">⚙️</span> 怎么办 · 运营落地三步闭环
+                <span class="badge gold">诊断 → 手术 → 复查</span>
+            </div>
+
+            <div class="sop-container">
+
+                <!-- Step 1 -->
+                <div class="sop-step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>🔍 诊断 —— 你的内容被 AI 看见了吗？</h4>
+                        <div class="step-desc">盘点家底，找到优化 ROI 最高的切入点。</div>
+                        <div class="step-actions">
+                            <span class="action-tag p0">① 核心30词扫描</span>
+                            <span class="action-tag p0">② 识别“高排名低引用”页面</span>
+                            <span class="action-tag blue">③ 记录竞品 AI 引用情况</span>
+                        </div>
+                        <div class="step-outcome">
+                            🎯 <strong>产出：</strong>一份“AI看不见你”的内容清单 + 优先级排序
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="sop-step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>🔧 手术 —— 让内容变成 AI 的“首选信源”</h4>
+                        <div class="step-desc">四层优化，从最紧迫的开始。</div>
+
+                        <div class="layer-stack">
+                            <div class="layer-row">
+                                <span class="prio p0">P0</span>
+                                <div class="layer-desc">
+                                    <strong>🧱 结构层 · 原子答案</strong>
+                                    <small>每个 H2 标题下放 40-60 字独立完整回答；标题改成问句</small>
+                                </div>
+                            </div>
+                            <div class="layer-row">
+                                <span class="prio p0">P0</span>
+                                <div class="layer-desc">
+                                    <strong>🏷️ 技术层 · Schema 标记</strong>
+                                    <small>部署 Organization / Product / FAQPage / Article Schema</small>
+                                </div>
+                            </div>
+                            <div class="layer-row">
+                                <span class="prio p1">P1</span>
+                                <div class="layer-desc">
+                                    <strong>📚 内容层 · 实体密度 + 权威信源</strong>
+                                    <small>从“关键词堆砌”升级到“实体集群”，引入独家数据、作者背书</small>
+                                </div>
+                            </div>
+                            <div class="layer-row">
+                                <span class="prio p2">P2</span>
+                                <div class="layer-desc">
+                                    <strong>🌐 声誉层 · 品牌提及 + 实体统一</strong>
+                                    <small>被行业媒体主动提及（权重94%），全网品牌描述完全一致</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-outcome" style="border-left-color: #3b82f6;">
+                            ⚡ <strong>优先级排序：</strong> 结构 = 技术（P0，立刻做） → 内容（P1，本月做） → 声誉（P2，长期建设）
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="sop-step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>📊 复查 —— 量化 AI 可见度并持续迭代</h4>
+                        <div class="step-desc">无法衡量就无法改进。</div>
+                        <div class="step-actions">
+                            <span class="action-tag p0">📈 Google Search Console 生成式AI报告</span>
+                            <span class="action-tag blue">📉 监测 Perplexity / ChatGPT 提及率</span>
+                            <span class="action-tag blue">📋 月度竞品 AI 引用审计</span>
+                        </div>
+                        <div class="step-outcome" style="border-left-color: #8b5cf6;">
+                            📌 <strong>关键指标：</strong> 出现频次 × 显著度（位置权重） × 引用方式（正面/中性） = <strong>PSOS（提示词占有率）</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- 模块五：R.A.T.E 速记口诀 -->
+        <!-- ========================================= -->
+        <div class="card" id="section-rate">
+            <div class="card-title">
+                <span class="emoji-big">🧠</span> 肌肉记忆 · R.A.T.E. 速记口诀
+                <span class="badge gold">每天念一遍</span>
+            </div>
+            <p style="color:#475569; margin-bottom:18px; font-size:1rem;">记不住长篇大论？只记这四个字母。贴在显示器上，每天问自己一遍。</p>
+
+            <div class="rate-grid">
+                <div class="rate-item">
+                    <span class="letter">R</span>
+                    <div class="word">Retrieve</div>
+                    <div class="meaning">可检索 <small>内容在 AI 的池子里吗？</small></div>
+                </div>
+                <div class="rate-item">
+                    <span class="letter">A</span>
+                    <div class="word">Answer</div>
+                    <div class="meaning">直接答 <small>前50字给结论了吗？</small></div>
+                </div>
+                <div class="rate-item">
+                    <span class="letter">T</span>
+                    <div class="word">Trust</div>
+                    <div class="meaning">可信任 <small>有作者/数据/媒体背书吗？</small></div>
+                </div>
+                <div class="rate-item">
+                    <span class="letter">E</span>
+                    <div class="word">Entity</div>
+                    <div class="meaning">实体统一 <small>全网品牌描述一致吗？</small></div>
+                </div>
+            </div>
+
+            <div class="rate-mantra">
+                💡 每日一句：<span>“R</span>etrieve 进场先得有，<span>A</span>nswer 直接说出口，<span>T</span>rust 靠权威来凑，<span>E</span>ntity 全网统一走。”
+            </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- 模块六：运营自查清单 -->
+        <!-- ========================================= -->
+        <div class="card" id="section-checklist">
+            <div class="card-title">
+                <span class="emoji-big">✅</span> 每日 / 每周自查清单
+                <span class="badge blue">打勾用</span>
+            </div>
+
+            <div class="checklist-grid">
+                <div class="checklist-col">
+                    <h5>📝 内容生产者必查</h5>
+                    <ul>
+                        <li>首屏前100字是否直接回答了核心问题？</li>
+                        <li>H2/H3 标题是否使用了“什么是X”“如何做Y”等问句？</li>
+                        <li>文章中是否自然穿插了 5 个以上强相关“实体词”？</li>
+                        <li>每个问题型标题下是否有 40-60 字的独立原子答案？</li>
+                    </ul>
+                </div>
+                <div class="checklist-col">
+                    <h5>⚙️ 技术 / 产品必查</h5>
+                    <ul>
+                        <li>核心产品页是否部署了 Product Schema（价格/评分/库存）？</li>
+                        <li>博客页是否部署了 BlogPosting Schema（作者/发布时间）？</li>
+                        <li>是否部署了 FAQPage Schema 作为 AI 候选提取点？</li>
+                        <li>核心文本是否在 HTML 中直接渲染（非 JS 懒加载）？</li>
+                    </ul>
+                </div>
+                <div class="checklist-col spotlight">
+                    <h5>📢 品牌 / 公关必查（最高优先级）</h5>
+                    <ul>
+                        <li>官网、知乎、LinkedIn 上的品牌简介是否 <strong>一字不差</strong>？</li>
+                        <li>本月是否有来自垂直行业权威媒体的 <strong>主动提及</strong>（Brand Mention）？</li>
+                        <li>品牌核心信息（名称/Logo/产品线）是否在各大平台 <strong>完全一致</strong>？</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- 底部 -->
+        <!-- ========================================= -->
+        <div class="footer-note">
+            <p>
+                🚀 <strong>Google 官方定调：</strong> “别纠结名字，好 SEO = 好 GEO。”
+                AI 只是换了种呈现方式，<span class="highlight">优质内容 + 清晰结构 + 权威背书</span> 永远是核心。
+            </p>
+            <small>📂 保存此页为书签 · 每天看一遍 · 肌肉记忆生成中</small>
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- JavaScript：滚动高亮激活 Tab（增强体验） -->
+    <!-- ========================================= -->
+    <script>
+        (function() {
+            const navLinks = document.querySelectorAll('.nav-tabs a');
+            const sections = [];
+            navLinks.forEach(link => {
+                const targetId = link.getAttribute('href').substring(1);
+                const el = document.getElementById(targetId);
+                if (el) sections.push({ link, el });
+            });
+
+            function updateActiveTab() {
+                let currentActive = null;
+                const scrollY = window.scrollY + 120; // 偏移量
+
+                sections.forEach(({ link, el }) => {
+                    const top = el.offsetTop;
+                    const height = el.offsetHeight;
+                    if (scrollY >= top && scrollY < top + height) {
+                        currentActive = link;
+                    }
+                });
+
+                navLinks.forEach(link => link.classList.remove('active'));
+                if (currentActive) {
+                    currentActive.classList.add('active');
+                } else if (sections.length > 0) {
+                    // 如果滚动到最顶部，高亮第一个
+                    if (window.scrollY < 100) {
+                        sections[0].link.classList.add('active');
+                    }
+                }
+            }
+
+            // 初始检查
+            updateActiveTab();
+
+            // 滚动监听
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateActiveTab();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // 点击导航时，手动高亮（让active即时切换）
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    // 不阻止默认跳转，让 scroll-behavior 接管
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>
