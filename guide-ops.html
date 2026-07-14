@@ -1,0 +1,2398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>出海运营知识体系 2.0 · 最终版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-body: #F0F8FF;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F5FAFF;
+            --border: #B8D4E8;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #8A9BA8;
+            --coral: #FF6B6B;
+            --teal: #4ECDC4;
+            --gold: #FACF23;
+            --purple: #A78BFA;
+            --green-plain: #068A1C;
+            --shadow: 0 8px 24px rgba(78, 205, 196, 0.12);
+            --radius: 14px;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: 0.25s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #0AA5F2;
+            color: var(--text-primary);
+            font-family: var(--font);
+            line-height: 2.0;
+            padding: 0 20px 50px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+            background: #0AA5F2;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--coral);
+        }
+
+        /* ===== 头部 ===== */
+        .header {
+            padding: 32px 0 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .header-left h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+        }
+        .header-left h1 i {
+            color: var(--gold);
+            margin-right: 8px;
+        }
+
+        .header-left .sub {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-top: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header-left .sub i {
+            margin-right: 4px;
+        }
+        .header-left .sub i.fa-book-open {
+            color: var(--gold);
+        }
+        .header-left .sub i.fa-calendar-alt {
+            color: var(--teal);
+        }
+        .header-left .sub i.fa-puzzle-piece {
+            color: var(--purple);
+        }
+
+        .header-right {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: right;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 10px 18px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+        }
+        .header-right .badge {
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.7rem;
+            padding: 2px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.4px;
+            margin-left: 6px;
+        }
+        .badge.p0 {
+            background: #FFE4E4;
+            color: #B91C1C;
+        }
+        .badge.core {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        /* ===== Tab 导航 ===== */
+        .tab-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 165, 242, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 0;
+            margin-bottom: 28px;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font);
+        }
+        .tab-btn i {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .tab-btn.active {
+            background: var(--coral);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+        .tab-btn.active i {
+            color: #fff;
+        }
+
+        /* ===== Tab 内容 ===== */
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== 卡片通用 ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            transition: border-color var(--transition);
+        }
+        .card:hover {
+            border-color: var(--teal);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+        .card-title i {
+            color: var(--coral);
+            width: 24px;
+            text-align: center;
+        }
+
+        .card-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+        .card-sub i {
+            color: var(--purple);
+            margin-right: 4px;
+        }
+
+        /* ===== 路径 Tab ===== */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 6px 0;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .flow-node {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+        .flow-node:hover {
+            border-color: var(--coral);
+            background: #FFF0ED;
+        }
+        .flow-node .tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 1px 10px;
+            border-radius: 12px;
+            letter-spacing: 0.3px;
+            color: #fff;
+        }
+        .flow-node .tag.coral {
+            background: var(--coral);
+        }
+        .flow-node .tag.teal {
+            background: var(--teal);
+        }
+        .flow-node .tag.gold {
+            background: var(--gold);
+            color: #2D2A24;
+        }
+        .flow-node .tag.purple {
+            background: var(--purple);
+        }
+        .flow-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        .flow-branch {
+            padding-left: 32px;
+            border-left: 2px dashed var(--border);
+            margin: 4px 0 4px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .flow-branch .flow-node {
+            font-size: 0.9rem;
+            padding: 4px 14px;
+            background: #fff;
+            cursor: pointer;
+        }
+        .flow-branch .flow-node i {
+            width: 18px;
+        }
+
+        /* ===== 速查表 ===== */
+        .cheat-wrap {
+            overflow-x: auto;
+        }
+        .cheat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .cheat-table th {
+            text-align: left;
+            padding: 10px 12px;
+            background: var(--bg-card-alt);
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cheat-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .cheat-table tr:hover td {
+            background: var(--bg-card-alt);
+        }
+        .cheat-table .keyword {
+            color: var(--coral);
+            font-weight: 600;
+        }
+        .cheat-table .memo {
+            color: var(--purple);
+            font-weight: 500;
+        }
+        .cheat-table .click-hint {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-left: 6px;
+        }
+        .cheat-table td i {
+            margin-right: 6px;
+            color: var(--coral);
+            width: 18px;
+        }
+
+        /* ===== 缺口网格（4×5） ===== */
+        .gap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .gap-item {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            transition: all var(--transition);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-height: 90px;
+            justify-content: center;
+        }
+        .gap-item:hover {
+            border-color: var(--coral);
+            background: #FFF0ED;
+            transform: translateY(-2px);
+        }
+        .gap-item .num {
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .gap-item .label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+        .gap-item .sub-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+        .gap-item .gap-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+        .gap-item .status {
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 1px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .gap-item .status.p0 {
+            background: #FFE4E4;
+            color: #B91C1C;
+        }
+        .gap-item .status.p1 {
+            background: #FDEBD0;
+            color: #B45309;
+        }
+        .gap-item .status.p2 {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .gap-item .status.p3 {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+        .gap-item .mod-tag {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 1px 8px;
+            border-radius: 10px;
+            background: var(--teal);
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .gap-item .mod-tag:hover {
+            background: var(--coral);
+        }
+        .gap-item .new-tag {
+            font-size: 0.55rem;
+            background: var(--gold);
+            color: #2D2A24;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .gap-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .gap-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 400px) {
+            .gap-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== 折叠面板 ===== */
+        .accordion {
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--bg-card);
+            box-shadow: var(--shadow);
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: background var(--transition);
+            gap: 12px;
+        }
+        .accordion-header:hover {
+            background: var(--bg-card-alt);
+        }
+        .accordion-header .title {
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+        .accordion-header .title .badge-mod {
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 1px 10px;
+            border-radius: 12px;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+        .badge-mod.coral {
+            background: var(--coral);
+        }
+        .badge-mod.teal {
+            background: var(--teal);
+        }
+        .badge-mod.gold {
+            background: var(--gold);
+            color: #2D2A24;
+        }
+        .badge-mod.purple {
+            background: var(--purple);
+        }
+
+        .accordion-header .arrow {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: transform var(--transition);
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 20px;
+        }
+        .accordion-body.open {
+            max-height: 5000px;
+            padding: 6px 20px 24px;
+        }
+
+        .accordion input[type="checkbox"] {
+            display: none;
+        }
+        .accordion input[type="checkbox"]:checked~.accordion-body {
+            max-height: 5000px;
+            padding: 6px 20px 24px;
+        }
+        .accordion input[type="checkbox"]:checked~.accordion-header .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* ===== 模块内容 ===== */
+        .mod-content {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 2.0;
+        }
+        .mod-content strong,
+        .mod-content b {
+            color: var(--text-primary);
+        }
+        .mod-content .highlight-coral {
+            color: var(--coral);
+            font-weight: 600;
+        }
+        .mod-content .highlight-teal {
+            color: var(--teal);
+            font-weight: 600;
+        }
+        .mod-content .highlight-purple {
+            color: var(--purple);
+            font-weight: 600;
+        }
+        .mod-content .highlight-gold {
+            color: #B8860B;
+            font-weight: 600;
+        }
+
+        .mod-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin: 12px 0;
+        }
+        .mod-content table th {
+            text-align: left;
+            padding: 8px 10px;
+            background: var(--bg-card-alt);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .mod-content table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .mod-content .tag-sm {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 1px 10px;
+            border-radius: 12px;
+            background: #FDEBD0;
+            color: #B45309;
+            margin-right: 4px;
+        }
+        .mod-content .tag-sm.coral {
+            background: #FFE4E4;
+            color: #B91C1C;
+        }
+        .mod-content .tag-sm.teal {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .mod-content .tag-sm.gold {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .mod-content .tag-sm.purple {
+            background: #EDE9FE;
+            color: #6D28D9;
+        }
+
+        .mod-content .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 18px 0;
+        }
+        .mod-content ul,
+        .mod-content ol {
+            padding-left: 22px;
+            margin: 8px 0;
+        }
+        .mod-content li {
+            margin-bottom: 4px;
+        }
+        .mod-content .memo-box {
+            background: var(--bg-card-alt);
+            border-left: 4px solid var(--gold);
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .mod-content .memo-box i {
+            color: var(--gold);
+            margin-right: 8px;
+        }
+
+        .mod-content .glossary-link {
+            color: var(--teal);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--teal);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .mod-content .glossary-link:hover {
+            color: var(--coral);
+            border-bottom-color: var(--coral);
+        }
+        .mod-content .cheat-link {
+            color: var(--purple);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--purple);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .mod-content .cheat-link:hover {
+            color: var(--coral);
+            border-bottom-color: var(--coral);
+        }
+        .mod-content .gap-link {
+            color: var(--coral);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--coral);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .mod-content .gap-link:hover {
+            color: var(--teal);
+            border-bottom-color: var(--teal);
+        }
+
+        /* ===== 资源链接 ===== */
+        .resource-link {
+            display: inline-block;
+            background: #F0F7FF;
+            padding: 2px 10px;
+            border-radius: 12px;
+            border: 1px solid #DBEAFE;
+            margin: 2px 4px 2px 0;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+        .resource-link:hover {
+            background: var(--coral);
+            color: #fff;
+            border-color: var(--coral);
+        }
+        .resource-link .pay-tag {
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-left: 4px;
+            padding: 1px 6px;
+            border-radius: 8px;
+            background: #E5E7EB;
+            color: #4B5563;
+        }
+        .resource-link .pay-tag.free {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .resource-link .pay-tag.paid {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+        .resource-link .pay-tag.freemium {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        /* ===== 招聘标准表格 ===== */
+        .hire-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            border: 2px solid var(--teal);
+        }
+        .hire-table th,
+        .hire-table td {
+            border: 2px solid var(--teal);
+            padding: 10px 14px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .hire-table th {
+            background: #E6F7F5;
+            font-weight: 700;
+            color: var(--text-primary);
+            width: 18%;
+            font-size: 0.85rem;
+        }
+        .hire-table td {
+            background: #FFFFFF;
+        }
+        .hire-table .highlight-coral {
+            color: var(--coral);
+            font-weight: 600;
+        }
+        .hire-table .highlight-gold {
+            color: #B8860B;
+            font-weight: 600;
+        }
+        /* 新增侧重点：无背景框，黄色圆点分隔，字号同表格正文，颜色珊瑚红 */
+        .hire-table .new-dot {
+            color: var(--gold);
+            font-weight: 700;
+            margin: 0 2px;
+        }
+        .hire-table .new-item {
+            color: var(--coral);
+            font-weight: 500;
+        }
+
+        /* ===== 技能图谱（横向对比看板） ===== */
+        .skills-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin: 10px 0;
+            border: 2px solid var(--gold);
+        }
+        .skills-table th,
+        .skills-table td {
+            border: 2px solid var(--gold);
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .skills-table th {
+            background: #FEF9E7;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        .skills-table td {
+            background: #FFFFFF;
+            font-size: 0.8rem;
+        }
+        .skills-table i {
+            margin-right: 4px;
+            color: var(--coral);
+        }
+        .skills-table .stars {
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        /* ===== 名词解释 Tab ===== */
+        .glossary-category {
+            margin-bottom: 20px;
+        }
+        .glossary-category h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card-alt);
+            border-radius: 8px 8px 0 0;
+        }
+        .glossary-category h4 i {
+            color: var(--coral);
+        }
+        .glossary-item {
+            display: grid;
+            grid-template-columns: 140px 1fr 1fr;
+            gap: 12px;
+            padding: 14px 12px;
+            border-bottom: 1px solid #F0F0F0;
+            font-size: 0.85rem;
+            align-items: baseline;
+        }
+        .glossary-item .term {
+            font-weight: 700;
+            color: #1E293B;
+            font-size: 0.9rem;
+        }
+        .glossary-item .def {
+            color: #475569;
+            font-size: 0.85rem;
+        }
+        .glossary-item .plain {
+            color: #068A1C;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .glossary-item .plain::before {
+            content: "💬 ";
+            font-weight: 400;
+        }
+        .glossary-item .glossary-mod-link {
+            font-size: 0.7rem;
+            color: var(--coral);
+            cursor: pointer;
+            margin-left: 8px;
+            text-decoration: underline dotted;
+        }
+        .glossary-item .glossary-mod-link:hover {
+            color: var(--teal);
+        }
+        @media (max-width: 768px) {
+            .glossary-item {
+                grid-template-columns: 1fr;
+                gap: 4px;
+                padding: 10px 8px;
+            }
+            .glossary-item .term {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ===== 方案C：横向步骤条 + 完整内容区 ===== */
+        .timeline-wrap-c {
+            margin: 12px 0 16px 0;
+            overflow-x: auto;
+        }
+        .timeline-bar-c {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            min-width: 480px;
+            padding: 4px 0;
+        }
+        .timeline-step-c {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border);
+        }
+        .timeline-step-c:hover {
+            background: #FFF0ED;
+            border-color: var(--coral);
+        }
+        .timeline-step-c .step-num {
+            background: var(--teal);
+            color: #fff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        .timeline-step-c.active {
+            background: var(--coral);
+            color: #fff;
+            border-color: var(--coral);
+        }
+        .timeline-step-c.active .step-num {
+            background: #fff;
+            color: var(--coral);
+        }
+        .timeline-arrow-c {
+            color: var(--text-muted);
+            font-size: 1rem;
+            padding: 0 4px;
+        }
+
+        .content-panel-c {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-top: 12px;
+        }
+        .content-panel-c .panel-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .content-panel-c .panel-title i {
+            color: var(--coral);
+        }
+        .content-panel-c .panel-body {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 2.0;
+        }
+        .content-panel-c .panel-body .tool-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            margin: 4px 0;
+        }
+        .content-panel-c .panel-body .tool-row .label {
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 70px;
+        }
+        .content-panel-c .panel-body .dahuai {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+            color: var(--purple);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .content-panel-c .panel-body .dahuai i {
+            color: var(--gold);
+            margin-right: 6px;
+        }
+        .content-panel-c .panel-footer {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+
+        @media (max-width: 600px) {
+            .timeline-bar-c {
+                min-width: 100%;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            .timeline-step-c {
+                font-size: 0.7rem;
+                padding: 4px 10px;
+            }
+            .content-panel-c {
+                padding: 14px 16px;
+            }
+        }
+
+        /* ===== 页脚 ===== */
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .footer i {
+            color: var(--gold);
+        }
+
+        /* ===== 打印 ===== */
+        @media print {
+            .tab-nav {
+                display: none;
+            }
+            .tab-content {
+                display: block !important;
+            }
+            .accordion-body {
+                max-height: none !important;
+                padding: 6px 20px 24px !important;
+            }
+            .accordion input[type="checkbox"] {
+                display: none;
+            }
+            .accordion-header .arrow {
+                display: none;
+            }
+            body {
+                background: #fff !important;
+                color: #111;
+            }
+            .container {
+                background: #fff !important;
+            }
+            .card {
+                background: #f9f9f9;
+                border-color: #ccc;
+                box-shadow: none;
+            }
+            .gap-item {
+                background: #f5f5f5;
+                border-color: #ddd;
+            }
+            .hire-table {
+                border-color: #888;
+            }
+            .hire-table th,
+            .hire-table td {
+                border-color: #888;
+            }
+            .skills-table {
+                border-color: #888;
+            }
+            .skills-table th,
+            .skills-table td {
+                border-color: #888;
+            }
+            .header-left h1 {
+                color: #111 !important;
+            }
+            .header-left .sub {
+                color: #555 !important;
+            }
+            .header-right {
+                background: #f0f0f0 !important;
+                color: #333 !important;
+                border-color: #ccc !important;
+            }
+            .tab-btn {
+                display: none;
+            }
+            .timeline-step-c {
+                background: #f0f0f0 !important;
+                border-color: #ccc !important;
+            }
+            .content-panel-c {
+                background: #f5f5f5 !important;
+                border-color: #ddd !important;
+            }
+            .glossary-item .plain {
+                color: #068A1C !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ===== 头部 ===== -->
+        <header class="header">
+            <div class="header-left">
+                <h1><i class="fas fa-ship"></i> 出海运营知识体系 2.0</h1>
+                <div class="sub">
+                    <span><i class="fas fa-book-open"></i> 最终版 · 天空蓝</span>
+                    <span><i class="fas fa-calendar-alt"></i> 更新 2026-07-14</span>
+                    <span><i class="fas fa-puzzle-piece"></i> 20 项缺口 · 全体系覆盖</span>
+                    <span><i class="fas fa-briefcase"></i> 北上广深招聘标准</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div><i class="fas fa-lightbulb" style="color:var(--gold);"></i> 点击术语/缺口/速查 <i class="fas fa-arrow-right"></i> 双向跳转</div>
+                <div style="font-size:0.75rem; margin-top:2px;">
+                    <span class="badge p0"><i class="fas fa-fire"></i> P0 最急</span>
+                    <span class="badge core"><i class="fas fa-star"></i> 核心</span>
+                    <span style="margin-left:6px;"><i class="fas fa-chevron-down"></i> 折叠展开</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== Tab 导航 ===== -->
+        <nav class="tab-nav" id="tabNav">
+            <button class="tab-btn active" data-tab="tab-hiring"><i class="fas fa-briefcase"></i> 招聘标准</button>
+            <button class="tab-btn" data-tab="tab-path"><i class="fas fa-route"></i> 路径</button>
+            <button class="tab-btn" data-tab="tab-modules"><i class="fas fa-layer-group"></i> 模块</button>
+            <button class="tab-btn" data-tab="tab-glossary"><i class="fas fa-book"></i> 名词解释</button>
+            <button class="tab-btn" data-tab="tab-cheat"><i class="fas fa-brain"></i> 速查</button>
+            <button class="tab-btn" data-tab="tab-gaps"><i class="fas fa-puzzle-piece"></i> 缺口</button>
+        </nav>
+
+        <!-- ============================== -->
+        <!-- TAB 0: 招聘标准 -->
+        <!-- ============================== -->
+        <div id="tab-hiring" class="tab-content active">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-briefcase"></i> 北上广深 · 出海运营岗位招聘标准</div>
+                <div class="card-sub"><i class="fas fa-map-pin"></i> BOSS直聘 / 猎聘 / 前程无忧 2026 · 五险一金+周末双休</div>
+
+                <h3 style="color:var(--coral); margin-top:8px;"><i class="fab fa-google"></i> 岗位一：谷歌运营 / Google Ads 投放</h3>
+                <table class="hire-table">
+                    <tr><th>维度</th><td>学历/经验/语言</td><td>本科+（部分大专） / 1-3年 / CET-4以上，读写流利</td></tr>
+                    <tr><th><span class="highlight-coral"><i class="fas fa-star"></i> 核心技能</span></th><td colspan="2">Google Ads账户搭建/优化 · GA数据分析 · ROI优化 · 关键词调价与质量度提升</td></tr>
+                    <tr><th><span class="highlight-gold"><i class="fas fa-rocket"></i> 新增侧重点</span></th><td colspan="2">
+                        <span class="new-dot">●</span> <span class="new-item">PMax效果最大化</span>
+                        <span class="new-dot">●</span> <span class="new-item">AI Max for Search</span>
+                        <span class="new-dot">●</span> <span class="new-item">信号设计</span>
+                        <span class="new-dot">●</span> <span class="new-item">GTM转化追踪</span>
+                    </td></tr>
+                    <tr><th>薪酬范围</th><td colspan="2">初级 8-15k · 主管 15-30k · 资深 20-40k</td></tr>
+                </table>
+
+                <h3 style="color:var(--teal); margin-top:24px;"><i class="fas fa-globe"></i> 岗位二：国际站运营（阿里巴巴国际站）</h3>
+                <table class="hire-table">
+                    <tr><th>维度</th><td>学历/经验/语言</td><td>大专+ / 1-2年 / 英语四级以上</td></tr>
+                    <tr><th><span class="highlight-coral"><i class="fas fa-star"></i> 核心技能</span></th><td colspan="2">P4P直通车推广 · 产品上下架与优化 · 数据监控（曝光/点击/转化）· 竞品分析</td></tr>
+                    <tr><th><span class="highlight-gold"><i class="fas fa-rocket"></i> 新增侧重点</span></th><td colspan="2">
+                        <span class="new-dot">●</span> <span class="new-item">信保流程</span>
+                        <span class="new-dot">●</span> <span class="new-item">RTS赛道</span>
+                        <span class="new-dot">●</span> <span class="new-item">金品诚企认证</span>
+                    </td></tr>
+                    <tr><th>薪酬范围</th><td colspan="2">6-10k底薪+提成 · 资深 10-15k</td></tr>
+                </table>
+
+                <h3 style="color:var(--purple); margin-top:24px;"><i class="fas fa-share-alt"></i> 岗位三：社媒运营（FB/LI/TT/INS）</h3>
+                <table class="hire-table">
+                    <tr><th>维度</th><td>学历/经验</td><td>本科+ / 1-3年</td></tr>
+                    <tr><th><span class="highlight-coral"><i class="fas fa-star"></i> 核心技能</span></th><td colspan="2">各平台运营规则 · 内容策略 · 文案撰写 · 热点捕捉 · 数据分析</td></tr>
+                    <tr><th><span class="highlight-gold"><i class="fas fa-rocket"></i> 新增侧重点</span></th><td colspan="2">
+                        <span class="new-dot">●</span> <span class="new-item">跨平台矩阵运营</span>
+                        <span class="new-dot">●</span> <span class="new-item">AI生图/视频</span>
+                        <span class="new-dot">●</span> <span class="new-item">热点趋势捕捉</span>
+                    </td></tr>
+                    <tr><th>薪酬范围</th><td colspan="2">8-15k · 主管 15-30k</td></tr>
+                </table>
+
+                <div style="margin-top:28px; background: rgba(250, 207, 35, 0.12); border: 2px solid var(--gold); border-radius: var(--radius); padding: 20px 24px;">
+                    <h4 style="display:flex;align-items:center;gap:8px;color:var(--text-primary);margin-bottom:12px;">
+                        <i class="fas fa-chess-queen" style="color:var(--gold);"></i> 综合技能图谱 · 横向对比
+                        <span style="font-size:0.7rem;background:var(--gold);color:#2D2A24;padding:1px 12px;border-radius:20px;font-weight:700;">核心</span>
+                    </h4>
+                    <div style="overflow-x:auto;">
+                        <table class="skills-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:12%;">技能</th>
+                                    <th style="width:28%;">核心能力</th>
+                                    <th style="width:22%;">必备工具</th>
+                                    <th style="width:12%;">招聘热度</th>
+                                    <th style="width:26%;">学习路径速览</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><i class="fas fa-bullhorn"></i> 广告投放</td><td>PMax资产管理 / 信号设计 / 出价四阶段 / 素材迭代</td><td>Google Ads / Editor / Merchant Center</td><td class="stars">⭐⭐⭐⭐⭐</td><td>① Skillshop认证 → ② 实操测试 → ③ tCPA切换</td></tr>
+                                <tr><td><i class="fas fa-chart-line"></i> 数据分析</td><td>GTM埋设 / GA4归因 / BigQuery SQL / Looker Studio</td><td>GA4 / Looker / GTM / BigQuery</td><td class="stars">⭐⭐⭐⭐⭐</td><td>① GA4课程 → ② 埋点练习 → ③ SQL基础</td></tr>
+                                <tr><td><i class="fas fa-search"></i> SEO</td><td>内容集群 / EEAT实战 / 技术SEO / 外链建设</td><td>Ahrefs / Semrush / GSC / Rank Math</td><td class="stars">⭐⭐⭐⭐</td><td>① Ahrefs博客 → ② 建1+5集群 → ③ 监控3个月</td></tr>
+                                <tr><td><i class="fas fa-code"></i> 建站</td><td>WP安装/主题/插件 / 性能优化 / 安全加固 / SEO底座</td><td>WordPress / Cloudflare / WP Rocket / Wordfence</td><td class="stars">⭐⭐⭐⭐</td><td>① 米课课程 → ② 搭测试站 → ③ 上线运营</td></tr>
+                                <tr><td><i class="fas fa-share-alt"></i> 社媒</td><td>平台策略(6:2:2) / AI生图/视频 / 内容日历 / 社群运营</td><td>Canva / CapCut / Midjourney / Buffer</td><td class="stars">⭐⭐⭐</td><td>① Buffer博客 → ② 日更1条 → ③ 分析数据</td></tr>
+                                <tr><td><i class="fas fa-globe-americas"></i> 本地化</td><td>hreflang部署 / 多币种支付 / 格式适配 / 文化细节</td><td>Weglot / WC Multi-Currency / Klaviyo</td><td class="stars">⭐⭐⭐</td><td>① hreflang文档 → ② 多语言站实操 → ③ 支付集成</td></tr>
+                                <tr><td><i class="fas fa-robot"></i> AI前沿</td><td>GEO五大做法 / AIVO写作原则 / PSOS追踪</td><td>Schema.org / ChatGPT / Claude</td><td class="stars">⭐⭐</td><td>① 读AI Overview文档 → ② 部署Schema → ③ 测试AI引用</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="memo-box" style="margin-top:12px; border-left-color: var(--gold);">
+                        <i class="fas fa-magic" style="color:var(--gold);"></i> <strong>速记口诀：</strong> PMax打底 → 信号设计 → GTM埋准 → GA4归因 → Looker Studio报 → BigQuery挖 → AI工具提效
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB 1: 路径 -->
+        <!-- ============================== -->
+        <div id="tab-path" class="tab-content">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-map-signs"></i> 从 0 到 1 执行路径</div>
+                <div class="card-sub"><i class="fas fa-info-circle"></i> 点击知识节点可跳转至对应模块或名词解释</div>
+
+                <div class="flowchart">
+                    <!-- Phase 0 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag coral" style="font-size:0.9rem;">Phase 0</span> 出海运营岗位技能认知</div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node"><i class="fas fa-briefcase"></i> 北上广深招聘标准 · 五险一金+双休</div>
+                        <div class="flow-node"><i class="fas fa-stethoscope"></i> 技能诊断：广告投放（PMax/AI Max/信号设计）+ 数据分析（GTM/GA4归因/BigQuery）</div>
+                        <div class="flow-node"><i class="fas fa-chess-queen"></i> 核心技能矩阵：广告投放 ⭐ 数据分析 ⭐ SEO ⭐ 建站 ⭐ 社媒 ⭐ 英语</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 0.5 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag teal" style="font-size:0.9rem;">Phase 0.5</span> UX与转化优化 <span style="font-size:0.75rem;color:var(--text-muted);">（提前至建站前）</span></div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-1"><i class="fas fa-layer-group"></i> UX四层：战略→资源→框架→感知</div>
+                        <div class="flow-node" data-target="mod-4-1"><i class="fas fa-home"></i> 首页ABCDE / About求婚6问 / 产品8要素</div>
+                        <div class="flow-node" data-target="mod-4-1"><i class="fas fa-flask"></i> CRO：A/B测试 + 漏斗 + 热力图</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 1 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag teal" style="font-size:0.9rem;">Phase 1</span> 前提确认</div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node"><i class="fas fa-check-circle" style="color:var(--teal);"></i> 已有独立站 → 进入Phase 2</div>
+                        <div class="flow-node"><i class="fas fa-hammer"></i> WP自建站 → 米课学习</div>
+                        <div class="flow-node"><i class="fas fa-building"></i> 第三方代建 → 瑞诺国际等</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 2 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag teal" style="font-size:0.9rem;">Phase 2</span> 技术基建 <span style="font-size:0.75rem;color:var(--text-muted);">第1-2周</span></div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-3"><i class="fas fa-boxes"></i> 建站决策：SaaS vs WP（强化Shopify/WP实操）</div>
+                        <div class="flow-node" data-target="mod-4-3"><i class="fas fa-key"></i> DNS/SSL/VPS</div>
+                        <div class="flow-node" data-target="mod-4-3"><i class="fas fa-code"></i> 建站四步</div>
+                        <div class="flow-node" data-target="mod-4-3"><i class="fas fa-shield-alt"></i> 安全备份：Wordfence + UpdraftPlus</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 3 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag teal" style="font-size:0.9rem;">Phase 3</span> 搜索引擎基础 <span style="font-size:0.75rem;color:var(--text-muted);">第2-3周</span></div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-4"><i class="fas fa-book"></i> 索引流程：URL→抓取→处理→索引</div>
+                        <div class="flow-node" data-target="mod-4-4"><i class="fas fa-trophy"></i> 排名因素：E-E-A-T + 内容外链 + 速度</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 4 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag gold" style="background:var(--gold);color:#2D2A24;font-size:0.9rem;">⭐ Phase 4</span> SEO体系 <span style="font-size:0.75rem;color:var(--text-muted);">第3-8周</span></div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-5"><i class="fas fa-calendar-alt"></i> 算法全景图（2025-2026核心更新）</div>
+                        <div class="flow-node" data-target="mod-4-5"><i class="fas fa-shield-alt"></i> EEAT 2026 + 实用性内容系统</div>
+                        <div class="flow-node" data-target="mod-4-5"><i class="fas fa-list"></i> 10步SOP / 内容集群 / Schema / 长尾词</div>
+                        <div class="flow-node" data-target="mod-4-5"><i class="fas fa-arrow-up"></i> 摩天楼技术 / CWV / 页面SEO / 链接建设</div>
+                        <div class="flow-node" data-target="mod-4-5"><i class="fas fa-sync-alt"></i> 2026新范式：价值优化 → 排名优化</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 5 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag teal" style="font-size:0.9rem;">Phase 5</span> Google Ads + GA4 <span style="font-size:0.75rem;color:var(--text-muted);">第6-10周</span></div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-8"><i class="fas fa-bullhorn"></i> 广告投放轨道：PMax / AI Max / 信号设计 / 出价策略 / 素材迭代</div>
+                        <div class="flow-node" data-target="mod-4-9"><i class="fas fa-chart-line"></i> 数据追踪轨道：GTM高级追踪 / GA4归因 / Looker Studio / BigQuery</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 6 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag teal" style="font-size:0.9rem;">Phase 6</span> 社媒 + 视频 + 社区 <span style="font-size:0.75rem;color:var(--text-muted);">第8-12周</span></div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-10"><i class="fab fa-facebook"></i> FB/LI/TT/EDM</div>
+                        <div class="flow-node" data-target="mod-4-11"><i class="fab fa-youtube"></i> YouTube：频道基建 + SEO三件套</div>
+                        <div class="flow-node" data-target="mod-4-12"><i class="fas fa-comments"></i> Reddit/Quora：10:1养号 + 软植入</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 7 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag teal" style="font-size:0.9rem;">Phase 7</span> 运营工具矩阵</div><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-13"><i class="fas fa-tools"></i> SEO工具 / Ads工具 / 效率工具</div>
+                    </div>
+
+                    <div class="flow-row"><span class="flow-arrow"><i class="fas fa-arrow-down"></i></span></div>
+
+                    <!-- Phase 8 -->
+                    <div class="flow-row"><div class="flow-node"><span class="tag purple" style="font-size:0.9rem;">Phase 8</span> 合规 + 前沿 <span style="font-size:0.75rem;color:var(--text-muted);">持续</span></div></div>
+                    <div class="flow-branch">
+                        <div class="flow-node" data-target="mod-4-14"><i class="fas fa-gavel"></i> GDPR / CAN-SPAM / CCPA</div>
+                        <div class="flow-node" data-target="mod-4-6"><i class="fas fa-robot"></i> <span class="tag gold">🆕</span> GEO：生成式引擎优化</div>
+                        <div class="flow-node" data-target="mod-4-7"><i class="fas fa-brain"></i> <span class="tag gold">🆕</span> AIVO：AI可见性优化</div>
+                        <div class="flow-node" data-target="mod-4-15"><i class="fas fa-globe"></i> <span class="tag gold">🆕</span> 本地化：多语言/多币种/文化适配</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB 2: 模块 -->
+        <!-- ============================== -->
+        <div id="tab-modules" class="tab-content">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                <i class="fas fa-layer-group" style="font-size:1.6rem;color:var(--coral);"></i>
+                <h2 style="font-weight:700;font-size:1.5rem;color:var(--text-primary);">分模块详细知识库</h2>
+                <span style="font-size:0.75rem;color:var(--text-muted);margin-left:auto;"><i class="fas fa-chevron-circle-down"></i> 点击标题展开</span>
+            </div>
+
+            <!-- ===== 4.1 UX ===== -->
+            <div class="accordion" id="mod-4-1">
+                <input type="checkbox" id="modCheck1" />
+                <label class="accordion-header" for="modCheck1">
+                    <span class="title"><span class="badge-mod coral">4.1</span> UX与转化优化 <span style="font-size:0.7rem;color:var(--text-muted);">（建站前）</span></span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <p><strong>UX四层模型：</strong>战略层 → 资源层 → 框架层 → 感知层</p>
+                        <p><strong>首页 ABCDE：</strong>A吸引力 · B品牌 · C召唤行动 · D设计 · E教育</p>
+                        <p><strong>About页 求婚6问：</strong>你是谁？为什么从你这买？有什么好处？不是骗子？能来找你吗？接下来干啥？</p>
+                        <p><strong>产品页 8要素：</strong>图 · 描述 · 视频 · 价格 · CTA · 评价 · 消除不确定 · 推荐</p>
+                        <p><strong>CRO转化优化：</strong>A/B测试（Google Optimize/VWO）· 漏斗分析（GA4）· 热力图（Hotjar/Crazy Egg）</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="12">缺口 #12 对应本模块</a> · <a class="glossary-link" data-term="CRO">📖 CRO</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.2 前提条件 ===== -->
+            <div class="accordion" id="mod-4-2">
+                <input type="checkbox" id="modCheck2" />
+                <label class="accordion-header" for="modCheck2">
+                    <span class="title"><span class="badge-mod teal">4.2</span> 前提条件</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <table><tr><th>项目</th><th>内容</th></tr>
+                            <tr><td>有独立站</td><td>已有网站，直接进入技术基建</td></tr>
+                            <tr><td>WP自建站</td><td>推荐米课学习，掌握所有权</td></tr>
+                            <tr><td>第三方代建</td><td>如瑞诺国际，快速上线</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.3 技术基建 ===== -->
+            <div class="accordion" id="mod-4-3">
+                <input type="checkbox" id="modCheck3" />
+                <label class="accordion-header" for="modCheck3">
+                    <span class="title"><span class="badge-mod teal">4.3</span> 技术基建 · WordPress自建站</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div class="timeline-wrap-c">
+                            <div class="timeline-bar-c" id="timelineBar4-3">
+                                <span class="timeline-step-c active" data-step="1"><span class="step-num">1</span> 环境准备</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="2"><span class="step-num">2</span> 核心安装</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="3"><span class="step-num">3</span> 性能优化</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="4"><span class="step-num">4</span> 安全加固</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="5"><span class="step-num">5</span> SEO底座</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="6"><span class="step-num">6</span> 日常运维</span>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-3-1">
+                            <div class="panel-title"><i class="fas fa-box"></i> ① 环境准备</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">域名</span> NameSilo / Cloudflare</div>
+                                <div class="tool-row"><span class="label">服务器</span> Hostinger / SiteGround / Cloudways</div>
+                                <div class="tool-row"><span class="label">SSL</span> Let's Encrypt 免费证书</div>
+                                <div class="tool-row"><span class="label">DNS</span> A 记录指向服务器</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 域名是门牌号，服务器是房子，备好钥匙（SSL）才能安心入住。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="gap-link" data-gap="13">缺口 #13</a>
+                                <a class="glossary-link" data-term="CDN">📖 CDN</a>
+                                <a class="glossary-link" data-term="WebP">📖 WebP</a>
+                                <a class="glossary-link" data-term="WordPress">📖 WordPress</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-3-2" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-download"></i> ② 核心安装</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">WP安装</span> 一键安装 / 手动上传</div>
+                                <div class="tool-row"><span class="label">主题</span> Astra / GeneratePress（轻量）</div>
+                                <div class="tool-row"><span class="label">必备插件</span> Rank Math / WP Rocket / Wordfence / UpdraftPlus</div>
+                                <div class="tool-row"><span class="label">安全</span> 修改数据库表前缀</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 装好 WordPress 骨架，选对主题，配上核心插件，把框架立起来。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="gap-link" data-gap="13">缺口 #13</a>
+                                <a class="glossary-link" data-term="WordPress">📖 WordPress</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-3-3" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-rocket"></i> ③ 性能优化</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">缓存</span> WP Rocket / W3 Total Cache</div>
+                                <div class="tool-row"><span class="label">CDN</span> Cloudflare（免费节点加速）</div>
+                                <div class="tool-row"><span class="label">图片</span> WebP 格式 + 懒加载 + srcset 响应式</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 缓存是提前备菜，CDN 是多个厨房炒菜，图片优化是把菜切小，让网站飞起来。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="CDN">📖 CDN</a>
+                                <a class="glossary-link" data-term="WebP">📖 WebP</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-3-4" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-shield-alt"></i> ④ 安全加固</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">登录</span> 二次验证 + 限制尝试次数</div>
+                                <div class="tool-row"><span class="label">防火墙</span> Wordfence WAF + 恶意扫描</div>
+                                <div class="tool-row"><span class="label">备份</span> UpdraftPlus 自动备份至云端</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 给网站装上防盗门（防火墙）、保险柜（备份）和指纹锁（二次验证）。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="gap-link" data-gap="13">缺口 #13</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-3-5" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-search"></i> ⑤ SEO底座</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">永久链接</span> <code>/%postname%/</code>（简洁含关键词）</div>
+                                <div class="tool-row"><span class="label">Sitemap</span> Rank Math 自动生成 + GSC 提交</div>
+                                <div class="tool-row"><span class="label">GSC</span> 验证网站 + 监控覆盖率</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 永久链接是门牌号，Sitemap 是地图，GSC 是直通谷歌的窗口。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="GSC">📖 GSC</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-3-6" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-sync"></i> ⑥ 日常运维</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">核心更新</span> 保持最新，测试环境先行</div>
+                                <div class="tool-row"><span class="label">插件维护</span> 每月审查，删除无用插件</div>
+                                <div class="tool-row"><span class="label">数据库</span> WP-Optimize 清理 + 优化表</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 定期更新核心、检查插件、清理数据库垃圾，做好日常保养。</div>
+                            </div>
+                            <div class="panel-footer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.4 搜索引擎基础 ===== -->
+            <div class="accordion" id="mod-4-4">
+                <input type="checkbox" id="modCheck4" />
+                <label class="accordion-header" for="modCheck4">
+                    <span class="title"><span class="badge-mod teal">4.4</span> 搜索引擎基础</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <p><strong>索引流程：</strong>URL获取 → 抓取 → 处理&渲染 → 索引</p>
+                        <p><strong>排名因素 E-E-A-T：</strong>经验(Experience) · 专业知识(Expertise) · 权威性(Authoritativeness) · 可信度(Trustworthiness)</p>
+                        <p>其他：内容+外链 · 相关性 · 新鲜度 · 页面速度 · 移动友好</p>
+                        <p><strong>搜索意图类型：</strong>导航型 · 信息型 · 交易型</p>
+                        <p><strong>个性化搜索：</strong>位置 · 语言 · 搜索历史</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="glossary-link" data-term="EEAT">📖 EEAT</a> · <a class="glossary-link" data-term="SERP">📖 SERP</a> · <a class="glossary-link" data-term="抓取">📖 抓取</a> · <a class="glossary-link" data-term="索引">📖 索引</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.5 SEO体系 ===== -->
+            <div class="accordion" id="mod-4-5">
+                <input type="checkbox" id="modCheck5" />
+                <label class="accordion-header" for="modCheck5">
+                    <span class="title"><span class="badge-mod gold" style="background:var(--gold);color:#2D2A24;">⭐ 4.5</span> SEO体系 核心</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div style="background:var(--bg-card-alt);border-radius:10px;padding:12px 16px;margin-bottom:12px;border:1px solid var(--gold);">
+                            <p><strong><i class="fas fa-link" style="color:var(--coral);"></i> 学习资源：</strong>
+                                <a href="https://ahrefs.com/" target="_blank" class="resource-link">Ahrefs <span class="pay-tag freemium">部分付费</span></a>
+                                <a href="https://semrush.com/" target="_blank" class="resource-link">Semrush <span class="pay-tag freemium">部分付费</span></a>
+                                <a href="https://searchengineland.com/" target="_blank" class="resource-link">Search Engine Land <span class="pay-tag free">免费</span></a>
+                                <a href="https://www.searchenginejournal.com/" target="_blank" class="resource-link">Search Engine Journal <span class="pay-tag free">免费</span></a>
+                                <a href="https://developers.google.com/search" target="_blank" class="resource-link">Google Search Central <span class="pay-tag free">免费</span></a>
+                                <a href="https://schema.org/" target="_blank" class="resource-link">Schema.org <span class="pay-tag free">免费</span></a>
+                            </p>
+                        </div>
+
+                        <div class="timeline-wrap-c">
+                            <div class="timeline-bar-c" id="timelineBar4-5">
+                                <span class="timeline-step-c active" data-step="1"><span class="step-num">1</span> 算法与理念</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="2"><span class="step-num">2</span> 关键词与集群</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="3"><span class="step-num">3</span> 技术与内容</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="4"><span class="step-num">4</span> 外链与权威</span>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-5-1">
+                            <div class="panel-title"><i class="fas fa-calendar-alt"></i> ① 算法与理念</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">2025-2026算法</span> 3/6/12 核心更新 + 垃圾内容更新</div>
+                                <div class="tool-row"><span class="label">EEAT 2026</span> 经验/专业/权威/可信 → 硬性门槛</div>
+                                <div class="tool-row"><span class="label">实用性内容</span> 用户看得懂、用得上</div>
+                                <div class="tool-row"><span class="label">新范式</span> 价值优化 > 排名优化</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 先看懂谷歌的评分表（EEAT），再按它的喜好（实用性）写作业。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="EEAT">📖 EEAT</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-5-2" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-search"></i> ② 关键词与集群</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">关键词研究</span> Ahrefs KD<30 + 搜索量50-2000</div>
+                                <div class="tool-row"><span class="label">内容集群</span> 支柱(3000字) + 集群(800字) + 双向内链</div>
+                                <div class="tool-row"><span class="label">3C标准</span> Type / Format / Angle</div>
+                                <div class="tool-row"><span class="label">长尾词5策略</span> 信息/商业/交易/本地/问题</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 先锁定好词，再搭好内容阵型（1个支柱+多个集群），让谷歌觉得你懂行。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="gap-link" data-gap="3">缺口 #3</a>
+                                <a class="gap-link" data-gap="7">#7</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-5-3" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-code"></i> ③ 技术与内容</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">Schema</span> Article/Product/FAQ JSON-LD</div>
+                                <div class="tool-row"><span class="label">Core Web Vitals</span> LCP<2.5s / FID<100ms / CLS<0.1</div>
+                                <div class="tool-row"><span class="label">页面SEO</span> 标题/Meta/URL/H1/Alt</div>
+                                <div class="tool-row"><span class="label">技术SEO</span> robots.txt / sitemap / canonical / noindex</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 内容要写得像专家，技术要做得像流水线（Schema/CWV/页面SEO）。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="Schema">📖 Schema</a>
+                                <a class="glossary-link" data-term="CWV">📖 CWV</a>
+                                <a class="gap-link" data-gap="5">缺口 #5</a>
+                                <a class="gap-link" data-gap="6">#6</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-5-4" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-link"></i> ④ 外链与权威</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">摩天楼技术</span> 找爆款 → 做更好 → Outreach → 跟进</div>
+                                <div class="tool-row"><span class="label">链接建设</span> 客座博客 / 品牌目录 / 社媒主页</div>
+                                <div class="tool-row"><span class="label">好链接标准</span> DA>50 + 行业相关 + 正文位置 + dofollow</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 靠大咖网站给你投“信任票”（外链），比你自己喊一百遍都管用。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="gap-link" data-gap="4">缺口 #4</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.6 GEO ===== -->
+            <div class="accordion" id="mod-4-6">
+                <input type="checkbox" id="modCheck6" />
+                <label class="accordion-header" for="modCheck6">
+                    <span class="title"><span class="badge-mod purple">4.6</span> GEO 生成式引擎优化</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div class="memo-box"><i class="fas fa-magic"></i> 口诀：知识图谱 → 权威信源 → Schema → 语义内容 → 多平台</div>
+                        <p><strong>定义：</strong>优化内容在ChatGPT/Perplexity/Claude/DeepSeek/Kimi/豆包等AI中被引用和展示的策略</p>
+                        <p><strong>五大核心做法：</strong>①构建知识图谱 ②与权威内容合作 ③部署结构化数据 ④生成语义丰富内容 ⑤覆盖多平台生态</p>
+                        <p><strong>避坑：</strong>勿用SEO思维堆砌关键词；重视多模态内容；正确使用Schema</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="18">缺口 #18 对应本模块</a> · <a class="glossary-link" data-term="GEO">📖 GEO</a> · <a class="glossary-link" data-term="知识图谱">📖 知识图谱</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.7 AIVO ===== -->
+            <div class="accordion" id="mod-4-7">
+                <input type="checkbox" id="modCheck7" />
+                <label class="accordion-header" for="modCheck7">
+                    <span class="title"><span class="badge-mod purple">4.7</span> AIVO AI可见性优化</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div class="memo-box"><i class="fas fa-magic"></i> 口诀：语义清晰 → 信息前置 → 问答结构 → 实体优先 → 人机兼顾</div>
+                        <p><strong>定义：</strong>量化品牌在ChatGPT/Claude/Gemini/Perplexity等大模型中可见度的方法论</p>
+                        <p><strong>核心KPI：PSOS</strong>——品牌在AI推荐空间中的占有率</p>
+                        <p><strong>五大写作原则：</strong>①语义清晰 ②关键信息前置 ③问答式结构 ④用实体替代关键词 ⑤以人为本</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="19">缺口 #19 对应本模块</a> · <a class="glossary-link" data-term="AIVO">📖 AIVO</a> · <a class="glossary-link" data-term="PSOS">📖 PSOS</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.8 Google Ads ===== -->
+            <div class="accordion" id="mod-4-8">
+                <input type="checkbox" id="modCheck8" />
+                <label class="accordion-header" for="modCheck8">
+                    <span class="title"><span class="badge-mod coral">4.8</span> Google Ads 广告投放实战</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div style="background:var(--bg-card-alt);border-radius:10px;padding:12px 16px;margin-bottom:12px;border:1px solid var(--coral);">
+                            <p><strong><i class="fas fa-link" style="color:var(--coral);"></i> 学习资源：</strong>
+                                <a href="https://skillshop.google.com/" target="_blank" class="resource-link">Google Skillshop <span class="pay-tag free">免费</span></a>
+                                <a href="https://www.wordstream.com/" target="_blank" class="resource-link">WordStream <span class="pay-tag free">免费</span></a>
+                                <a href="https://searchengineland.com/ppc" target="_blank" class="resource-link">Search Engine Land PPC <span class="pay-tag free">免费</span></a>
+                            </p>
+                        </div>
+
+                        <div class="timeline-wrap-c">
+                            <div class="timeline-bar-c" id="timelineBar4-8">
+                                <span class="timeline-step-c active" data-step="1"><span class="step-num">1</span> 智能基建</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="2"><span class="step-num">2</span> 信号与出价</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="3"><span class="step-num">3</span> 素材与协同</span>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-8-1">
+                            <div class="panel-title"><i class="fas fa-microchip"></i> ① 智能基建</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">PMax</span> 15张图片+5视频+5标题+5描述，覆盖全渠道</div>
+                                <div class="tool-row"><span class="label">AI Max for Search</span> 输入业务描述+着陆页，AI自动匹配意图</div>
+                                <div class="tool-row"><span class="label">预算配比</span> Search 40% + PMax 35% + YouTube 15% + Display 10%</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 把素材和业务描述喂给 PMax/AI Max，让谷歌 AI 自己去帮你找客户。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="PMax">📖 PMax</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-8-2" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-bullseye"></i> ② 信号与出价</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">信号设计</span> 高价值客户 > 关键词</div>
+                                <div class="tool-row"><span class="label">出价四阶段</span> 手动 CPC → tCPA → 最大转化 → tROAS</div>
+                                <div class="tool-row"><span class="label">转化价值回传</span> GA4 高价值事件导入</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 告诉 AI “谁是你的好客户”（信号设计），让 AI 盯着高价值人群出价。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="信号设计">📖 信号设计</a>
+                                <a class="gap-link" data-gap="2">缺口 #2</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-8-3" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-paint-brush"></i> ③ 素材与协同</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">RSA测试</span> 每月10-20组变体迭代</div>
+                                <div class="tool-row"><span class="label">跨渠道协同</span> Meta种草 + Google收割</div>
+                                <div class="tool-row"><span class="label">归因分析</span> 数据驱动归因</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 广告素材每月换花样，Meta 负责种草，Google 负责收割，打好配合战。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="RSA">📖 RSA</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.9 数据追踪 ===== -->
+            <div class="accordion" id="mod-4-9">
+                <input type="checkbox" id="modCheck9" />
+                <label class="accordion-header" for="modCheck9">
+                    <span class="title"><span class="badge-mod teal">4.9</span> 数据追踪与成效分析</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div style="background:var(--bg-card-alt);border-radius:10px;padding:12px 16px;margin-bottom:12px;border:1px solid var(--teal);">
+                            <p><strong><i class="fas fa-link" style="color:var(--teal);"></i> 学习资源：</strong>
+                                <a href="https://analytics.google.com/analytics/academy/" target="_blank" class="resource-link">GA4 Academy <span class="pay-tag free">免费</span></a>
+                                <a href="https://lookerstudio.google.com/" target="_blank" class="resource-link">Looker Studio <span class="pay-tag free">免费</span></a>
+                                <a href="https://support.google.com/tagmanager/" target="_blank" class="resource-link">GTM Help <span class="pay-tag free">免费</span></a>
+                                <a href="https://cloud.google.com/bigquery" target="_blank" class="resource-link">BigQuery <span class="pay-tag freemium">部分付费</span></a>
+                            </p>
+                        </div>
+
+                        <div class="timeline-wrap-c">
+                            <div class="timeline-bar-c" id="timelineBar4-9">
+                                <span class="timeline-step-c active" data-step="1"><span class="step-num">1</span> 采集与埋点</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="2"><span class="step-num">2</span> 分析与归因</span>
+                                <span class="timeline-arrow-c"><i class="fas fa-arrow-right"></i></span>
+                                <span class="timeline-step-c" data-step="3"><span class="step-num">3</span> 报表与激活</span>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-9-1">
+                            <div class="panel-title"><i class="fas fa-database"></i> ① 采集与埋点</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">GTM标准化事件</span> view_item / add_to_cart / purchase + items数组</div>
+                                <div class="tool-row"><span class="label">Conversion API</span> 服务器端回传，准确率95%+</div>
+                                <div class="tool-row"><span class="label">调试</span> GTM预览 + GA4 DebugView</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 接好 GTM 数据水管，再用 Conversion API 做备份，确保数据一滴不漏。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="GTM">📖 GTM</a>
+                                <a class="glossary-link" data-term="GA4">📖 GA4</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-9-2" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-chart-pie"></i> ② 分析与归因</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">路径探索</span> 用户转化轨迹可视化</div>
+                                <div class="tool-row"><span class="label">归因模型</span> 数据驱动归因（需400+转化/月）</div>
+                                <div class="tool-row"><span class="label">预测受众</span> 7/14天购买预测人群</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 看清用户从哪来、在哪流失（路径探索），算清每个渠道的真实功劳（归因）。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="gap-link" data-gap="1">缺口 #1</a>
+                            </div>
+                        </div>
+
+                        <div class="content-panel-c" id="panel4-9-3" style="display:none;">
+                            <div class="panel-title"><i class="fas fa-file-alt"></i> ③ 报表与激活</div>
+                            <div class="panel-body">
+                                <div class="tool-row"><span class="label">Looker Studio</span> 连接GA4+Ads自动周报</div>
+                                <div class="tool-row"><span class="label">BigQuery</span> 未抽样SQL分析</div>
+                                <div class="tool-row"><span class="label">AI辅助</span> ChatGPT解析异常波动</div>
+                                <div class="dahuai"><i class="fas fa-comment-dots"></i> 用 Looker Studio 做自动日报，用 BigQuery 挖原始数据，用 AI 帮你写报告。</div>
+                            </div>
+                            <div class="panel-footer">
+                                <a class="glossary-link" data-term="BigQuery">📖 BigQuery</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.10 社媒+AI ===== -->
+            <div class="accordion" id="mod-4-10">
+                <input type="checkbox" id="modCheck10" />
+                <label class="accordion-header" for="modCheck10">
+                    <span class="title"><span class="badge-mod coral">4.10</span> 社媒运营 + AI生图/视频</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <p><strong>Facebook：</strong>6:2:2内容比例 · 线索广告/再营销 · 养号7-14天</p>
+                        <p><strong>LinkedIn：</strong>B2B平台 · 个人主页优化 · 长文/动态/视频 · 赞助内容/InMail</p>
+                        <p><strong>TikTok：</strong>海外IP+SIM卡 · 工厂实拍 · 每天1-3条 · In-Feed/TopView</p>
+                        <p><strong>EDM：</strong>欢迎→培育→促销→再激活 · Mailchimp/Klaviyo · 打开率>20%</p>
+                        <p><strong>AI生图工具：</strong>Midjourney(创意) · DALL-E 3(精准) · Canva AI(效率) · Stable Diffusion(开源)</p>
+                        <p><strong>AI视频工具：</strong>Runway(大制作) · Pika(快速) · CapCut(剪辑+特效) · HeyGen(数字人)</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="8">缺口 #8</a> · <a class="gap-link" data-gap="9">#9</a> · <a class="gap-link" data-gap="10">#10</a> · <a class="gap-link" data-gap="11">#11</a> 对应本模块</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.11 YouTube ===== -->
+            <div class="accordion" id="mod-4-11">
+                <input type="checkbox" id="modCheck11" />
+                <label class="accordion-header" for="modCheck11">
+                    <span class="title"><span class="badge-mod teal">4.11</span> YouTube营销与SEO</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div class="memo-box"><i class="fas fa-magic"></i> 口诀：基建 → 三件套 → 三步走 → 拉留存</div>
+                        <p><strong>频道基建：</strong>Banner+频道介绍+播放列表+60秒预告片</p>
+                        <p><strong>SEO三件套：</strong>标题(前60字符含关键词+年份) · 描述(前150字符含摘要+CTA) · 缩略图(高对比+人物+大字)</p>
+                        <p><strong>内容三步走：</strong>认知期(趋势/痛点) → 比较期(评测/横评) → 决策期(开箱/教程/证言)</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="16">缺口 #16 对应本模块</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.12 社区 ===== -->
+            <div class="accordion" id="mod-4-12">
+                <input type="checkbox" id="modCheck12" />
+                <label class="accordion-header" for="modCheck12">
+                    <span class="title"><span class="badge-mod purple">4.12</span> 海外社区运营 · Reddit/Quora</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div class="memo-box"><i class="fas fa-magic"></i> 口诀：选版 → 养号(10:1) → 软植入 → 转私密</div>
+                        <p><strong>Reddit选版：</strong>3-5个精准Subreddit</p>
+                        <p><strong>黄金法则：</strong>10:1贡献比（每10条评论，发1条推广）</p>
+                        <p><strong>软植入法：</strong>引用博客作“拓展阅读”，不直接甩产品链接</p>
+                        <p><strong>Quora结构：</strong>结论先行 → 分点论述(带数据) → 文末软性CTA</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="17">缺口 #17 对应本模块</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.13 工具矩阵 ===== -->
+            <div class="accordion" id="mod-4-13">
+                <input type="checkbox" id="modCheck13" />
+                <label class="accordion-header" for="modCheck13">
+                    <span class="title"><span class="badge-mod teal">4.13</span> 运营工具矩阵</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <p><strong>SEO工具：</strong>Ahrefs · Semrush · Google Keyword Planner · Yoast SEO · Merkle Schema</p>
+                        <p><strong>Ads工具：</strong>Google Ads · GA4 · GTM</p>
+                        <p><strong>效率工具：</strong>Notion/Trello · Canva/Figma · Zapier/Make · ChatGPT/Claude</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="14">缺口 #14 对应本模块</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.14 合规 ===== -->
+            <div class="accordion" id="mod-4-14">
+                <input type="checkbox" id="modCheck14" />
+                <label class="accordion-header" for="modCheck14">
+                    <span class="title"><span class="badge-mod purple">4.14</span> 合规与法律</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <p><strong>GDPR（欧盟）：</strong>隐私政策页 · Cookie同意横幅 · 数据删除权 · 最高罚全球年营收4%</p>
+                        <p><strong>CAN-SPAM（美国）：</strong>邮件含物理地址 · 清晰退订链接 · 48小时处理 · 每封最高$43,792</p>
+                        <p><strong>CCPA（加州）：</strong>知情权 · 删除权 · 选择退出权</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="15">缺口 #15 对应本模块</a> · <a class="glossary-link" data-term="GDPR">📖 GDPR</a> · <a class="glossary-link" data-term="CCPA">📖 CCPA</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 4.15 本地化 ===== -->
+            <div class="accordion" id="mod-4-15">
+                <input type="checkbox" id="modCheck15" />
+                <label class="accordion-header" for="modCheck15">
+                    <span class="title"><span class="badge-mod coral">4.15</span> 网站本地化深度</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <div class="accordion-body">
+                    <div class="mod-content">
+                        <div class="memo-box"><i class="fas fa-magic"></i> 口诀：hreflang → 本地支付 → 格式 → 文化</div>
+                        <p><strong>多语言标签：</strong>部署hreflang（en-us/en-gb/de-de），用二级目录(/de/)集中权重</p>
+                        <p><strong>多币种支付：</strong>自动汇率转换 + 本地支付（欧洲Klarna/Sofort · 东南亚GrabPay/GCash · 拉美Mercado Pago/Pix）</p>
+                        <p><strong>格式适配：</strong>日期(美MM/DD vs 欧DD/MM) · 度量衡(lbs vs kg) · 电话格式</p>
+                        <p><strong>文化细节：</strong>避开敏感色 · 用当地真人素材 · 欧洲标价含税(VAT)，美国不含税</p>
+                        <div class="memo-box"><i class="fas fa-lightbulb"></i> <a class="gap-link" data-gap="20">缺口 #20 对应本模块</a> · <a class="glossary-link" data-term="hreflang">📖 hreflang</a></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB 3: 名词解释 -->
+        <!-- ============================== -->
+        <div id="tab-glossary" class="tab-content">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-book"></i> 名词解释 · 全体系术语速查</div>
+                <div class="card-sub"><i class="fas fa-mouse-pointer"></i> 点击术语旁的模块链接可跳转至对应章节</div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-globe" style="color:var(--teal);"></i> 搜索引擎与 SEO 基础</h4>
+                    <div class="glossary-item"><span class="term">SEO</span><span class="def">Search Engine Optimization，通过优化网站提高自然排名</span><span class="plain">让 Google 觉得你的网站值得推荐，把你的页面排在前面</span></div>
+                    <div class="glossary-item"><span class="term">SEM</span><span class="def">Search Engine Marketing，搜索引擎营销，通常指 Google Ads 付费广告</span><span class="plain">花钱在搜索引擎上买广告位，让用户搜到你的产品</span></div>
+                    <div class="glossary-item"><span class="term">SERP</span><span class="def">Search Engine Results Page，用户搜索后看到的完整结果页面</span><span class="plain">你搜完关键词后看到的那个页面</span><a class="glossary-mod-link" data-mod="mod-4-4">→ 4.4</a></div>
+                    <div class="glossary-item"><span class="term">搜索引擎</span><span class="def">通过爬虫抓取网页、建立索引、提供搜索服务的系统</span><span class="plain">互联网的“图书馆管理员”，帮你找到想要的信息</span></div>
+                    <div class="glossary-item"><span class="term">爬虫/蜘蛛</span><span class="def">搜索引擎派出的程序，沿着链接在互联网上“爬行”抓取网页</span><span class="plain">Google 派来的“信息采集员”，一家一家网站去敲门看内容</span></div>
+                    <div class="glossary-item"><span class="term">抓取</span><span class="def">爬虫访问网页、下载内容的过程</span><span class="plain">采集员到你家门口，把门牌号和屋内情况记录下来</span></div>
+                    <div class="glossary-item"><span class="term">索引</span><span class="def">将抓取到的网页信息存入搜索引擎数据库的过程</span><span class="plain">采集员把记录下来的信息登记进 Google 的“大本营”数据库</span></div>
+                    <div class="glossary-item"><span class="term">排名</span><span class="def">搜索引擎根据算法对索引中的网页进行排序的过程</span><span class="plain">Google 决定谁排第一、谁排第二的过程</span></div>
+                    <div class="glossary-item"><span class="term">抓取预算</span><span class="def">搜索引擎每天分配给一个网站的抓取资源量</span><span class="plain">Google 每天愿意花在你网站上的“采集员工时”</span></div>
+                    <div class="glossary-item"><span class="term">Sitemap</span><span class="def">列出网站所有重要页面的 XML 文件</span><span class="plain">给 Google 的“网站地图”——我家所有房间都在这里了</span><a class="glossary-mod-link" data-mod="mod-4-3">→ 4.3</a></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-chart-bar" style="color:var(--coral);"></i> SEO 工具指标</h4>
+                    <div class="glossary-item"><span class="term">DA</span><span class="def">Domain Authority，Moz 开发的域名权威评分（0-100）</span><span class="plain">给整个网站打的“权威分”——外链越多越好，分越高</span></div>
+                    <div class="glossary-item"><span class="term">DR</span><span class="def">Domain Rating，Ahrefs 开发的域名权威评分（0-100）</span><span class="plain">给整个网站打的“权威分”——外链越多越好，分越高</span></div>
+                    <div class="glossary-item"><span class="term">UR</span><span class="def">URL Rating，Ahrefs 开发的页面权威评分（0-100）</span><span class="plain">给单个页面打的“权威分”——这个页面被多少好网站推荐过</span></div>
+                    <div class="glossary-item"><span class="term">KD</span><span class="def">Keyword Difficulty，关键词难度（0-100）</span><span class="plain">这个词好不好上首页——分数越高越难</span></div>
+                    <div class="glossary-item"><span class="term">AS</span><span class="def">Authority Score，Semrush 的网站权威性评分（0-100）</span><span class="plain">Semrush 给网站打的“靠谱分”</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-robot" style="color:var(--purple);"></i> Google 算法与标准</h4>
+                    <div class="glossary-item"><span class="term">EEAT</span><span class="def">Experience, Expertise, Authoritativeness, Trustworthiness</span><span class="plain">Google 判断“这内容靠不靠谱”的四个标准</span><a class="glossary-mod-link" data-mod="mod-4-5">→ 4.5</a></div>
+                    <div class="glossary-item"><span class="term">BERT</span><span class="def">Google 的 NLP 算法，理解搜索词中词语的上下文关系</span><span class="plain">让 Google 能读懂“苹果”是指水果还是手机</span></div>
+                    <div class="glossary-item"><span class="term">RankBrain</span><span class="def">Google 的机器学习排序系统，理解搜索语义</span><span class="plain">Google 的“猜你想找什么”引擎</span></div>
+                    <div class="glossary-item"><span class="term">实用性内容系统</span><span class="def">Google 自动化系统，优先排序“有用、可靠”的内容</span><span class="plain">Google 判断“这篇文章对用户有没有用”的过滤器</span></div>
+                    <div class="glossary-item"><span class="term">核心更新</span><span class="def">Google 对排名算法进行的重大调整</span><span class="plain">Google 给排名规则“大修”一次，排名会剧烈波动</span></div>
+                    <div class="glossary-item"><span class="term">垃圾内容更新</span><span class="def">Google 针对低质量、欺骗性内容的专项打击</span><span class="plain">Google 清理“垃圾内容”的专项行动</span></div>
+                    <div class="glossary-item"><span class="term">Discover</span><span class="def">Google 移动端的内容推荐流，基于用户兴趣推送</span><span class="plain">Google 版的“猜你喜欢”信息流</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-code" style="color:var(--gold);"></i> 技术 SEO</h4>
+                    <div class="glossary-item"><span class="term">Canonical</span><span class="def">规范标签，告诉搜索引擎哪个 URL 是页面的“主版本”</span><span class="plain">告诉 Google“这个页面有多个网址，但主版本是这一个”</span></div>
+                    <div class="glossary-item"><span class="term">301重定向</span><span class="def">永久重定向，将旧 URL 的权重传递到新 URL</span><span class="plain">“永久搬家了，把原来的信用分都带过去”</span></div>
+                    <div class="glossary-item"><span class="term">302重定向</span><span class="def">临时重定向，通知搜索引擎页面临时移动</span><span class="plain">“暂时挪个地方，信用分先不转”</span></div>
+                    <div class="glossary-item"><span class="term">404错误</span><span class="def">页面不存在时返回的 HTTP 状态码</span><span class="plain">“你要找的页面已经没了”</span></div>
+                    <div class="glossary-item"><span class="term">robots.txt</span><span class="def">告诉搜索引擎哪些页面可以抓取的指令文件</span><span class="plain">给 Google 采集员的“准入名单”——哪些房间可以进</span></div>
+                    <div class="glossary-item"><span class="term">noindex</span><span class="def">告诉搜索引擎“不要把这个页面编入索引”的指令</span><span class="plain">告诉 Google“这个房间不用登记”</span></div>
+                    <div class="glossary-item"><span class="term">hreflang</span><span class="def">告诉搜索引擎同一内容的不同语言/地区版本</span><span class="plain">告诉 Google“这个页面有英文版、中文版、德文版”</span><a class="glossary-mod-link" data-mod="mod-4-15">→ 4.15</a></div>
+                    <div class="glossary-item"><span class="term">RWD</span><span class="def">响应式网页设计，在不同屏幕尺寸上自动适配</span><span class="plain">一个网站自动适配电脑、平板、手机三种屏幕</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-link" style="color:var(--coral);"></i> 链接建设</h4>
+                    <div class="glossary-item"><span class="term">Dofollow</span><span class="def">传递页面权重的链接类型</span><span class="plain">“我推荐这个链接，把我的信用分传过去”</span></div>
+                    <div class="glossary-item"><span class="term">Nofollow</span><span class="def">不传递页面权重的链接类型</span><span class="plain">“我不背书，不传信用分”</span></div>
+                    <div class="glossary-item"><span class="term">外链</span><span class="def">从其他网站指向你网站的所有链接</span><span class="plain">所有别人推荐你的链接</span></div>
+                    <div class="glossary-item"><span class="term">反向链接</span><span class="def">从其他网站指向你网站的链接</span><span class="plain">别的网站推荐你的链接——“我推荐这个网站”</span></div>
+                    <div class="glossary-item"><span class="term">客座博客</span><span class="def">在其他网站投稿并获得外链的方式</span><span class="plain">去别人家写文章，顺便留个自家地址</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-bullhorn" style="color:var(--coral);"></i> Google Ads</h4>
+                    <div class="glossary-item"><span class="term">PPC</span><span class="def">Pay Per Click，按点击付费的广告模式</span><span class="plain">有人点你的广告，你才付钱</span></div>
+                    <div class="glossary-item"><span class="term">CPC</span><span class="def">Cost Per Click，每次点击的成本</span><span class="plain">每被点一次，你付多少钱</span></div>
+                    <div class="glossary-item"><span class="term">PMax</span><span class="def">Performance Max，效果最大化广告，覆盖全渠道</span><span class="plain">一个广告系列同时投放在 YouTube、搜索、展示等所有 Google 渠道</span><a class="glossary-mod-link" data-mod="mod-4-8">→ 4.8</a></div>
+                    <div class="glossary-item"><span class="term">AI Max for Search</span><span class="def">2026年新功能，用 AI 自动匹配搜索意图</span><span class="plain">告诉 Google“我的产品是卖什么的”，它自动帮你找客户</span></div>
+                    <div class="glossary-item"><span class="term">信号设计</span><span class="def">设计“让 AI 理解优质流量”的输入信号</span><span class="plain">不是告诉 AI“投什么词”，而是告诉 AI“什么样的人是我的好客户”</span><a class="glossary-mod-link" data-mod="mod-4-8">→ 4.8</a></div>
+                    <div class="glossary-item"><span class="term">质量得分</span><span class="def">Google 给关键词打的 1-10 分</span><span class="plain">Google 给你的广告打的“质量分”——分越高越便宜</span></div>
+                    <div class="glossary-item"><span class="term">广告评级</span><span class="def">决定广告排名的综合得分 = 出价 × 质量得分</span><span class="plain">你的广告能排第几的“总得分”</span></div>
+                    <div class="glossary-item"><span class="term">Smart Bidding</span><span class="def">Google 的自动出价策略，用 AI 优化转化</span><span class="plain">让 Google AI 帮你自动调价，追求最好的转化效果</span></div>
+                    <div class="glossary-item"><span class="term">tCPA</span><span class="def">Target CPA，以“目标转化成本”为导向的智能出价</span><span class="plain">告诉 Google“我希望每次转化花 100 块”，它帮你自动调价</span></div>
+                    <div class="glossary-item"><span class="term">tROAS</span><span class="def">Target ROAS，以“目标广告支出回报率”为导向的智能出价</span><span class="plain">告诉 Google“我希望每花 1 块赚 4 块”，它帮你自动调价</span></div>
+                    <div class="glossary-item"><span class="term">RSA</span><span class="def">Responsive Search Ads，响应式搜索广告</span><span class="plain">你提供多条标题和描述，Google 自动组合测试最佳搭配</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-chart-line" style="color:var(--teal);"></i> 数据分析</h4>
+                    <div class="glossary-item"><span class="term">GA4</span><span class="def">Google Analytics 4，基于事件模型的分析工具</span><span class="plain">Google 的“用户行为追踪器”——谁来了、做了什么、从哪里来的</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+                    <div class="glossary-item"><span class="term">GTM</span><span class="def">Google Tag Manager，统一管理所有追踪代码的工具</span><span class="plain">所有追踪代码的“中央控制台”，不用改网站代码就能添加追踪</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+                    <div class="glossary-item"><span class="term">Conversion API</span><span class="def">服务器端数据回传接口，绕过浏览器拦截器</span><span class="plain">直接从你的服务器把转化数据发给 Google，更准确、不会被拦截</span></div>
+                    <div class="glossary-item"><span class="term">BigQuery</span><span class="def">Google 的云端数据仓库，可存储和分析海量数据</span><span class="plain">Google 的“超级 Excel”，能处理几亿行数据</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+                    <div class="glossary-item"><span class="term">Looker Studio</span><span class="def">Google 免费数据可视化工具</span><span class="plain">把 GA4、Google Ads 数据变成漂亮的图表和日报</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+                    <div class="glossary-item"><span class="term">归因模型</span><span class="def">决定“转化功劳分配给哪些渠道”的规则</span><span class="plain">用户看了 3 个广告才购买，每个广告各占多少功劳？</span></div>
+                    <div class="glossary-item"><span class="term">数据驱动归因</span><span class="def">Google 用机器学习自动分配转化功劳</span><span class="plain">Google AI 根据数据自动判断“哪个渠道功劳最大”</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-microchip" style="color:var(--purple);"></i> AI 与前沿</h4>
+                    <div class="glossary-item"><span class="term">GEO</span><span class="def">Generative Engine Optimization，优化内容在 AI 搜索中被引用</span><span class="plain">让 ChatGPT、Perplexity 等 AI 工具在回答问题时提到你</span><a class="glossary-mod-link" data-mod="mod-4-6">→ 4.6</a></div>
+                    <div class="glossary-item"><span class="term">AIVO</span><span class="def">AI Visibility Optimization，量化品牌在大模型中可见度</span><span class="plain">衡量“AI 推不推荐你”的分数</span><a class="glossary-mod-link" data-mod="mod-4-7">→ 4.7</a></div>
+                    <div class="glossary-item"><span class="term">PSOS</span><span class="def">Prompt-Space Occupancy Score，AIVO 核心 KPI</span><span class="plain">“AI 推荐空间占有率”——在 AI 的回答里，你出现了多少次</span></div>
+                    <div class="glossary-item"><span class="term">AI Overview</span><span class="def">Google 搜索结果顶部的 AI 生成摘要</span><span class="plain">Google AI 直接在搜索结果顶部给你总结答案</span></div>
+                    <div class="glossary-item"><span class="term">知识图谱</span><span class="def">实体关系网络，将“人-事-物”的关系结构化</span><span class="plain">把“人-事-物”的关系画成一张网</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-gavel" style="color:var(--gold);"></i> 合规与本地化</h4>
+                    <div class="glossary-item"><span class="term">GDPR</span><span class="def">欧盟通用数据保护条例</span><span class="plain">欧盟的“用户隐私保护法”——收集用户数据必须告知、用户有权删除</span><a class="glossary-mod-link" data-mod="mod-4-14">→ 4.14</a></div>
+                    <div class="glossary-item"><span class="term">CCPA</span><span class="def">美国加州消费者隐私法案</span><span class="plain">加州的“用户隐私保护法”——用户有权知道你要了什么数据</span><a class="glossary-mod-link" data-mod="mod-4-14">→ 4.14</a></div>
+                    <div class="glossary-item"><span class="term">CAN-SPAM</span><span class="def">美国反垃圾邮件法</span><span class="plain">美国的“邮件营销规范”——邮件必须含退订链接、地址等信息</span></div>
+                </div>
+
+                <div class="glossary-category">
+                    <h4><i class="fas fa-server" style="color:var(--teal);"></i> 自建站与技术基建</h4>
+                    <div class="glossary-item"><span class="term">DNS</span><span class="def">Domain Name System，将域名转换为服务器 IP</span><span class="plain">域名是门牌号，DNS 是门牌号查询系统</span></div>
+                    <div class="glossary-item"><span class="term">SSL</span><span class="def">Secure Sockets Layer，数字安全证书</span><span class="plain">给网站装上“加密锁”，让用户和服务器之间安全通信</span></div>
+                    <div class="glossary-item"><span class="term">VPS</span><span class="def">Virtual Private Server，虚拟专用服务器</span><span class="plain">把一台大房子隔成多个独立小房间，每个房间有独立水电</span></div>
+                    <div class="glossary-item"><span class="term">CDN</span><span class="def">Content Delivery Network，内容分发网络</span><span class="plain">多个厨房同时炒菜，就近上菜，不用等一个厨房做完</span></div>
+                    <div class="glossary-item"><span class="term">WebP</span><span class="def">Google 开发的图片格式，比 JPG 小 30-40%</span><span class="plain">把图片“瘦身”但不损失画质，让网页加载更快</span></div>
+                    <div class="glossary-item"><span class="term">srcset</span><span class="def">响应式图片属性，不同屏幕用不同大小图片</span><span class="plain">告诉浏览器“手机用小图，电脑用大图”，不浪费流量</span></div>
+                    <div class="glossary-item"><span class="term">WordPress</span><span class="def">全球最流行的开源建站系统</span><span class="plain">全球最流行的网站搭建工具，不用写代码也能建站</span></div>
+                    <div class="glossary-item"><span class="term">Elementor</span><span class="def">WordPress 页面构建器，拖拽式设计</span><span class="plain">拖拖拽拽就能设计网页，不用写一行代码</span></div>
+                    <div class="glossary-item"><span class="term">Rank Math / Yoast</span><span class="def">WordPress SEO 插件</span><span class="plain">SEO 小助手，提醒你标题写了没、关键词用对了没</span></div>
+                    <div class="glossary-item"><span class="term">WP Rocket</span><span class="def">WordPress 付费缓存插件</span><span class="plain">把做好的网页“拍张照片”存起来，下次访问直接给照片，秒开</span></div>
+                    <div class="glossary-item"><span class="term">Wordfence</span><span class="def">WordPress 安全插件</span><span class="plain">给网站装“防盗门 + 监控摄像头 + 报警器”</span></div>
+                    <div class="glossary-item"><span class="term">UpdraftPlus</span><span class="def">WordPress 备份插件</span><span class="plain">自动把网站“打包”存到云盘，出事了随时恢复</span></div>
+                    <div class="glossary-item"><span class="term">Cloudflare</span><span class="def">全球 CDN + 安全服务</span><span class="plain">全球加速 + 防攻击 + 域名管理，一站式服务</span></div>
+                    <div class="glossary-item"><span class="term">GSC</span><span class="def">Google Search Console，官方站长工具</span><span class="plain">Google 给站长开的“后台管理系统”，看你的网站在 Google 眼里什么样</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB 4: 速查 -->
+        <!-- ============================== -->
+        <div id="tab-cheat" class="tab-content">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-brain"></i> 关键概念速查 · 记忆口诀</div>
+                <div class="card-sub"><i class="fas fa-mouse-pointer"></i> 点击行可跳转至对应模块 · <span style="color:var(--purple);font-weight:600;">💜 紫色口诀</span> 方便记忆</div>
+                <div class="cheat-wrap">
+                    <table class="cheat-table">
+                        <thead><tr><th style="width:14%;">模块</th><th style="width:34%;">核心概念</th><th style="width:52%;">记忆口诀</th></tr></thead>
+                        <tbody>
+                            <tr data-mod="mod-4-3"><td><i class="fas fa-server"></i> 建站</td><td><strong>DNS / SSL / VPS</strong></td><td class="memo">买好域名、配上 SSL、选好服务器，三步搭好网站地基</td></tr>
+                            <tr data-mod="mod-4-4"><td><i class="fas fa-globe"></i> 索引流程</td><td><strong>URL → 抓 → 处 → 索</strong></td><td class="memo">搜索引擎四步走：发现 URL → 抓取页面 → 处理渲染 → 编入索引</td></tr>
+                            <tr data-mod="mod-4-4"><td><i class="fas fa-trophy"></i> EEAT</td><td><strong>经验·专业·权威·可信</strong></td><td class="memo">内容靠谱四要素：有实战经验、有专业知识、被行业认可、信息真实可信</td></tr>
+                            <tr data-mod="mod-4-5"><td><i class="fas fa-list"></i> SEO 10 步</td><td><strong>选→找→架→竞→内→链→优→AI→权→技</strong></td><td class="memo">从选领域到技术落地，十个步骤打造完整 SEO 体系</td></tr>
+                            <tr data-mod="mod-4-5"><td><i class="fas fa-project-diagram"></i> 内容集群</td><td><strong>支柱统领 · 集群细化 · 双向内链</strong></td><td class="memo">一个大主题（支柱）配多篇细节文章（集群），互相链接形成内容网络</td></tr>
+                            <tr data-mod="mod-4-5"><td><i class="fas fa-search"></i> 3C 标准</td><td><strong>Type · Format · Angle</strong></td><td class="memo">研究搜索意图三要素：内容类型、呈现格式、切入角度</td></tr>
+                            <tr data-mod="mod-4-5"><td><i class="fas fa-tags"></i> 长尾词 5 类</td><td><strong>I · C · T · L · Q</strong></td><td class="memo">五种长尾词覆盖用户全旅程：信息型、商业调查型、交易型、本地型、问题型</td></tr>
+                            <tr data-mod="mod-4-5"><td><i class="fas fa-arrow-up"></i> 摩天楼技术</td><td><strong>找 · 做 · 联 · 跟</strong></td><td class="memo">找爆款文章 → 做得更好 → 外联推广 → 跟进转化，四步获取高质量外链</td></tr>
+                            <tr data-mod="mod-4-5"><td><i class="fas fa-tachometer-alt"></i> CWV</td><td><strong>2.5s · 100ms · 0.1</strong></td><td class="memo">页面体验三指标：加载快（LCP<2.5s）、响应快（FID<100ms）、不跳动（CLS<0.1）</td></tr>
+                            <tr data-mod="mod-4-8"><td><i class="fas fa-bullhorn"></i> PMax + AI Max</td><td><strong>PMax打底 → AI Max扩量 → 信号设计 → 素材迭代</strong></td><td class="memo">用 PMax 覆盖全渠道，用 AI Max 自动拓词，用信号设计告诉 AI 谁是高价值客户，每月迭代素材提升效果</td></tr>
+                            <tr data-mod="mod-4-9"><td><i class="fas fa-chart-line"></i> GA4 + GTM</td><td><strong>GTM埋准 → GA4归因 → Looker报 → BigQuery挖</strong></td><td class="memo">用 GTM 精准埋点，用 GA4 分析归因，用 Looker 制作自动化报表，用 BigQuery 深度挖掘原始数据</td></tr>
+                            <tr data-mod="mod-4-10"><td><i class="fas fa-share-alt"></i> 社媒内容</td><td><strong>6:2:2</strong></td><td class="memo">教育型 60% · 促销型 20% · 互动型 20%</td></tr>
+                            <tr data-mod="mod-4-10"><td><i class="fas fa-image"></i> AI生图</td><td><strong>Midjourney出创意 · Canva出效率 · DALL-E出精准</strong></td><td class="memo">Midjourney 做创意素材，Canva 快速产出电商图，DALL-E 生成精准产品图</td></tr>
+                            <tr data-mod="mod-4-10"><td><i class="fas fa-video"></i> AI视频</td><td><strong>Runway出大片 · Pika出快速 · CapCut出爆款 · HeyGen出数字人</strong></td><td class="memo">Runway 做高质量视频，Pika 快速生成短片，CapCut 剪辑爆款内容，HeyGen 创建数字人主播</td></tr>
+                            <tr data-mod="mod-4-6"><td><i class="fas fa-robot"></i> GEO</td><td><strong>知识图谱→权威信源→Schema→语义内容→多平台</strong></td><td class="memo">构建知识图谱关联实体，对接权威信源，部署 Schema 结构化数据，生成语义丰富内容，覆盖多 AI 平台</td></tr>
+                            <tr data-mod="mod-4-7"><td><i class="fas fa-brain"></i> AIVO</td><td><strong>语义清晰→信息前置→问答结构→实体优先→人机兼顾</strong></td><td class="memo">写内容五原则：语义要清晰、关键信息放前面、用问答结构、突出实体而非堆词、同时服务人和 AI</td></tr>
+                            <tr data-mod="mod-4-15"><td><i class="fas fa-globe-americas"></i> 本地化</td><td><strong>hreflang→本地支付→格式→文化</strong></td><td class="memo">部署多语言标签，接入本地支付方式，适配日期/度量衡/电话格式，尊重目标市场文化习惯</td></tr>
+                            <tr data-mod="mod-4-3"><td><i class="fas fa-cubes"></i> 自建站-环境</td><td><strong>域名/服务器/SSL/DNS</strong></td><td class="memo">域名选 NameSilo，服务器选 SiteGround/Cloudways，SSL 用 Let's Encrypt，DNS 指向服务器 IP</td></tr>
+                            <tr data-mod="mod-4-3"><td><i class="fas fa-rocket"></i> 自建站-性能</td><td><strong>缓存/CDN/图片优化</strong></td><td class="memo">WP Rocket 做页面缓存，Cloudflare 全球加速，WebP + 懒加载让图片秒开</td></tr>
+                            <tr data-mod="mod-4-3"><td><i class="fas fa-shield-alt"></i> 自建站-安全</td><td><strong>登录安全/防火墙/备份</strong></td><td class="memo">Wordfence 防火墙防攻击，二次验证保登录，UpdraftPlus 每天自动备份到云端</td></tr>
+                            <tr data-mod="mod-4-9"><td><i class="fas fa-arrows-left-right"></i> 归因模型</td><td><strong>归因/数据驱动归因</strong></td><td class="memo">算清每个渠道的真实功劳：数据驱动归因用机器学习分配权重</td></tr>
+                            <tr data-mod="mod-4-9"><td><i class="fas fa-database"></i> BigQuery</td><td><strong>BigQuery SQL</strong></td><td class="memo">原始数据导出 BigQuery，写 SQL 做未抽样深度分析</td></tr>
+                            <tr data-mod="mod-4-8"><td><i class="fas fa-crosshairs"></i> 信号设计</td><td><strong>信号设计</strong></td><td class="memo">不投关键词投客户画像，用转化价值数据喂养 AI 出价</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB 5: 缺口（4×5 网格） -->
+        <!-- ============================== -->
+        <div id="tab-gaps" class="tab-content">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-puzzle-piece"></i> 知识缺口补全 · 20项</div>
+                <div class="card-sub"><i class="fas fa-mouse-pointer"></i> 点击卡片跳转至模块 · 点击 <span style="color:var(--teal);font-weight:600;">[模块号]</span> 直接定位</div>
+                <div class="gap-grid">
+                    <div class="gap-item" data-target="mod-4-9">
+                        <div class="num">#1</div>
+                        <div class="label">GA4深度使用</div>
+                        <div class="sub-label">（归因/BigQuery）</div>
+                        <div class="gap-meta"><span class="status p0">P0</span><span class="mod-tag" data-mod="mod-4-9">4.9</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-8">
+                        <div class="num">#2</div>
+                        <div class="label">Ads出价策略</div>
+                        <div class="sub-label">（PMax/AI Max）</div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-8">4.8</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-5">
+                        <div class="num">#3</div>
+                        <div class="label">内容集群</div>
+                        <div class="sub-label">（扩展）</div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-5">4.5</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-5">
+                        <div class="num">#6</div>
+                        <div class="label">Schema结构化</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-5">4.5</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-5">
+                        <div class="num">#7</div>
+                        <div class="label">长尾词5策略</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p2">P2</span><span class="mod-tag" data-mod="mod-4-5">4.5</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-13">
+                        <div class="num">#14</div>
+                        <div class="label">效率工具矩阵</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p3">P3</span><span class="mod-tag" data-mod="mod-4-13">4.13</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-14">
+                        <div class="num">#15</div>
+                        <div class="label">GDPR/CAN-SPAM/CCPA</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p3">P3</span><span class="mod-tag" data-mod="mod-4-14">4.14</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-11">
+                        <div class="num">#16</div>
+                        <div class="label">YouTube营销与SEO</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-11">4.11</span><span class="new-tag">NEW</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-12">
+                        <div class="num">#17</div>
+                        <div class="label">海外社区运营</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-12">4.12</span><span class="new-tag">NEW</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-6">
+                        <div class="num">#18</div>
+                        <div class="label">GEO生成式引擎优化</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-6">4.6</span><span class="new-tag">NEW</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-7">
+                        <div class="num">#19</div>
+                        <div class="label">AIVO AI可见性优化</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p2">P2</span><span class="mod-tag" data-mod="mod-4-7">4.7</span><span class="new-tag">NEW</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-15">
+                        <div class="num">#20</div>
+                        <div class="label">网站本地化深度</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p3">P3</span><span class="mod-tag" data-mod="mod-4-15">4.15</span><span class="new-tag">NEW</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-5">
+                        <div class="num">#4</div>
+                        <div class="label">摩天楼技术</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-5">4.5</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-5">
+                        <div class="num">#5</div>
+                        <div class="label">Core Web Vitals</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p1">P1</span><span class="mod-tag" data-mod="mod-4-5">4.5</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-10">
+                        <div class="num">#8</div>
+                        <div class="label">Facebook运营</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p2">P2</span><span class="mod-tag" data-mod="mod-4-10">4.10</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-10">
+                        <div class="num">#9</div>
+                        <div class="label">LinkedIn运营</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p2">P2</span><span class="mod-tag" data-mod="mod-4-10">4.10</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-10">
+                        <div class="num">#10</div>
+                        <div class="label">TikTok运营</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p2">P2</span><span class="mod-tag" data-mod="mod-4-10">4.10</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-10">
+                        <div class="num">#11</div>
+                        <div class="label">邮件营销EDM</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p2">P2</span><span class="mod-tag" data-mod="mod-4-10">4.10</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-1">
+                        <div class="num">#12</div>
+                        <div class="label">CRO转化优化</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p2">P2</span><span class="mod-tag" data-mod="mod-4-1">4.1</span></div>
+                    </div>
+                    <div class="gap-item" data-target="mod-4-3">
+                        <div class="num">#13</div>
+                        <div class="label">网站安全与备份</div>
+                        <div class="sub-label"></div>
+                        <div class="gap-meta"><span class="status p3">P3</span><span class="mod-tag" data-mod="mod-4-3">4.3</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 页脚 ===== -->
+        <footer class="footer">
+            <p><i class="fas fa-ship"></i> 出海运营知识体系 2.0 · 最终版</p>
+            <p style="font-size:0.7rem;margin-top:4px;">20项缺口全部覆盖 · 全体系术语双向联动 · 点击术语/缺口/速查即跳转</p>
+            <p style="font-size:0.7rem;margin-top:4px;"><i class="fas fa-chevron-circle-down"></i> 天空蓝背景 · 珊瑚红 · 蒂芙尼蓝 · 亮金黄 · 梦幻紫</p>
+        </footer>
+
+    </div>
+
+    <script>
+        (function() {
+            // ===== Tab 切换 =====
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = {
+                'tab-hiring': document.getElementById('tab-hiring'),
+                'tab-path': document.getElementById('tab-path'),
+                'tab-modules': document.getElementById('tab-modules'),
+                'tab-glossary': document.getElementById('tab-glossary'),
+                'tab-cheat': document.getElementById('tab-cheat'),
+                'tab-gaps': document.getElementById('tab-gaps')
+            };
+
+            function switchTab(tabId) {
+                Object.values(tabContents).forEach(el => el.classList.remove('active'));
+                if (tabContents[tabId]) tabContents[tabId].classList.add('active');
+                tabBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.tab === tabId) btn.classList.add('active');
+                });
+            }
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // ===== 通用跳转：模块展开 =====
+            function jumpToModule(targetId) {
+                if (!targetId) return;
+                switchTab('tab-modules');
+                const targetAccordion = document.getElementById(targetId);
+                if (!targetAccordion) return;
+                const checkbox = targetAccordion.querySelector('input[type="checkbox"]');
+                if (checkbox && !checkbox.checked) {
+                    checkbox.checked = true;
+                    const evt = new Event('change', { bubbles: true });
+                    checkbox.dispatchEvent(evt);
+                }
+                setTimeout(() => {
+                    targetAccordion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+            }
+
+            // ===== 缺口卡片点击 =====
+            document.querySelectorAll('.gap-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('mod-tag')) return;
+                    const target = this.dataset.target;
+                    if (target) jumpToModule(target);
+                });
+            });
+
+            // ===== 缺口内模块标签点击 =====
+            document.querySelectorAll('.mod-tag').forEach(tag => {
+                tag.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const target = this.dataset.mod;
+                    if (target) jumpToModule(target);
+                });
+            });
+
+            // ===== 模块内 gap-link 点击 =====
+            document.querySelectorAll('.gap-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const gapNum = this.dataset.gap;
+                    switchTab('tab-gaps');
+                    const items = document.querySelectorAll('.gap-item');
+                    items.forEach(el => {
+                        el.style.border = '1px solid var(--border)';
+                        el.style.boxShadow = 'var(--shadow)';
+                    });
+                    let targetItem = null;
+                    items.forEach(el => {
+                        const numEl = el.querySelector('.num');
+                        if (numEl && numEl.textContent.trim() === '#' + gapNum) {
+                            targetItem = el;
+                        }
+                    });
+                    if (targetItem) {
+                        targetItem.style.border = '2px solid var(--gold)';
+                        targetItem.style.boxShadow = '0 0 0 3px rgba(250,207,35,0.3)';
+                        setTimeout(() => {
+                            targetItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 150);
+                    }
+                });
+            });
+
+            // ===== 模块内 glossary-link 点击 =====
+            document.querySelectorAll('.glossary-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const term = this.dataset.term;
+                    switchTab('tab-glossary');
+                    const items = document.querySelectorAll('.glossary-item');
+                    items.forEach(el => {
+                        el.style.background = 'transparent';
+                        el.style.borderLeft = 'none';
+                    });
+                    let targetItem = null;
+                    items.forEach(el => {
+                        const termEl = el.querySelector('.term');
+                        if (termEl && termEl.textContent.trim() === term) {
+                            targetItem = el;
+                        }
+                    });
+                    if (targetItem) {
+                        targetItem.style.background = '#FFF0ED';
+                        targetItem.style.borderLeft = '4px solid var(--coral)';
+                        targetItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            });
+
+            // ===== 名词解释 mod-link 点击 =====
+            document.querySelectorAll('.glossary-mod-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.dataset.mod;
+                    if (target) jumpToModule(target);
+                });
+            });
+
+            // ===== 速查行点击 =====
+            document.querySelectorAll('.cheat-table tbody tr').forEach(row => {
+                row.style.cursor = 'pointer';
+                row.addEventListener('click', function() {
+                    const target = this.dataset.mod;
+                    if (target) jumpToModule(target);
+                });
+            });
+
+            // ===== 流程图节点点击 =====
+            document.querySelectorAll('.flow-branch .flow-node[data-target]').forEach(node => {
+                node.style.cursor = 'pointer';
+                node.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const target = this.dataset.target;
+                    if (target) jumpToModule(target);
+                });
+            });
+
+            // ===== 方案C：时间线步骤点击切换内容 =====
+            document.querySelectorAll('.timeline-bar-c').forEach(bar => {
+                const steps = bar.querySelectorAll('.timeline-step-c');
+                const parentMod = bar.closest('.mod-content');
+                if (!parentMod) return;
+
+                steps.forEach(step => {
+                    step.addEventListener('click', function() {
+                        const stepNum = this.dataset.step;
+                        steps.forEach(s => s.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const panels = parentMod.querySelectorAll('.content-panel-c');
+                        panels.forEach(p => {
+                            const pId = p.id;
+                            if (pId === bar.id + '-' + stepNum || pId === 'panel' + bar.id.replace('timelineBar', '') + '-' + stepNum) {
+                                p.style.display = 'block';
+                            } else {
+                                p.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            });
+
+            // 初始化：只显示第一个 panel
+            document.querySelectorAll('.mod-content').forEach(container => {
+                const panels = container.querySelectorAll('.content-panel-c');
+                panels.forEach((p, idx) => {
+                    if (idx === 0) {
+                        p.style.display = 'block';
+                    } else {
+                        p.style.display = 'none';
+                    }
+                });
+            });
+
+            // 最终修复：确保每个 timeline-bar 对应的 panel 正确显示
+            document.querySelectorAll('.timeline-bar-c').forEach(bar => {
+                const container = bar.closest('.mod-content');
+                if (!container) return;
+                const panels = container.querySelectorAll('.content-panel-c');
+                const activeStep = bar.querySelector('.timeline-step-c.active');
+                if (!activeStep) return;
+                const stepNum = activeStep.dataset.step;
+                panels.forEach(p => {
+                    const pId = p.id;
+                    if (pId === bar.id + '-' + stepNum || pId === 'panel' + bar.id.replace('timelineBar', '') + '-' + stepNum) {
+                        p.style.display = 'block';
+                    } else {
+                        p.style.display = 'none';
+                    }
+                });
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
