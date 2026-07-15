@@ -1099,6 +1099,48 @@
                 color: #068A1C !important;
             }
         }
+        /* ===== 名词解释折叠功能（新增） ===== */
+.glossary-category {
+    margin-bottom: 20px;
+}
+.glossary-category summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--bg-card-alt);
+    border-radius: 8px 8px 0 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 0;
+    user-select: none;
+}
+.glossary-category summary::-webkit-details-marker {
+    display: none;
+}
+.glossary-category summary h4 {
+    display: inline-block;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+.glossary-category summary h4 i {
+    margin-right: 8px;
+}
+.glossary-category summary::after {
+    content: "▶";
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    transition: transform 0.25s ease;
+}
+.glossary-category[open] summary::after {
+    transform: rotate(90deg);
+}
     </style>
 </head>
 <body>
@@ -1886,129 +1928,158 @@
         </div>
 
         <!-- ============================== -->
-        <!-- TAB 3: 名词解释 -->
-        <!-- ============================== -->
-        <div id="tab-glossary" class="tab-content">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-book"></i> 名词解释 · 全体系术语速查</div>
-                <div class="card-sub"><i class="fas fa-mouse-pointer"></i> 点击术语旁的模块链接可跳转至对应章节</div>
+<!-- TAB 3: 名词解释 -->
+<div id="tab-glossary" class="tab-content">
+    <div class="card">
+        <div class="card-title"><i class="fas fa-book"></i> 名词解释 · 全体系术语速查</div>
+        <div class="card-sub"><i class="fas fa-mouse-pointer"></i> 点击分类标题即可展开/收起</div>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-globe" style="color:var(--teal);"></i> 搜索引擎与 SEO 基础</h4>
-                    <div class="glossary-item"><span class="term">SEO</span><span class="def">Search Engine Optimization，通过优化网站提高自然排名</span><span class="plain">让 Google 觉得你的网站值得推荐，把你的页面排在前面</span></div>
-                    <div class="glossary-item"><span class="term">SEM</span><span class="def">Search Engine Marketing，搜索引擎营销，通常指 Google Ads 付费广告</span><span class="plain">花钱在搜索引擎上买广告位，让用户搜到你的产品</span></div>
-                    <div class="glossary-item"><span class="term">SERP</span><span class="def">Search Engine Results Page，用户搜索后看到的完整结果页面</span><span class="plain">你搜完关键词后看到的那个页面</span><a class="glossary-mod-link" data-mod="mod-4-4">→ 4.4</a></div>
-                    <div class="glossary-item"><span class="term">搜索引擎</span><span class="def">通过爬虫抓取网页、建立索引、提供搜索服务的系统</span><span class="plain">互联网的“图书馆管理员”，帮你找到想要的信息</span></div>
-                    <div class="glossary-item"><span class="term">爬虫/蜘蛛</span><span class="def">搜索引擎派出的程序，沿着链接在互联网上“爬行”抓取网页</span><span class="plain">Google 派来的“信息采集员”，一家一家网站去敲门看内容</span></div>
-                    <div class="glossary-item"><span class="term">抓取</span><span class="def">爬虫访问网页、下载内容的过程</span><span class="plain">采集员到你家门口，把门牌号和屋内情况记录下来</span></div>
-                    <div class="glossary-item"><span class="term">索引</span><span class="def">将抓取到的网页信息存入搜索引擎数据库的过程</span><span class="plain">采集员把记录下来的信息登记进 Google 的“大本营”数据库</span></div>
-                    <div class="glossary-item"><span class="term">排名</span><span class="def">搜索引擎根据算法对索引中的网页进行排序的过程</span><span class="plain">Google 决定谁排第一、谁排第二的过程</span></div>
-                    <div class="glossary-item"><span class="term">抓取预算</span><span class="def">搜索引擎每天分配给一个网站的抓取资源量</span><span class="plain">Google 每天愿意花在你网站上的“采集员工时”</span></div>
-                    <div class="glossary-item"><span class="term">Sitemap</span><span class="def">列出网站所有重要页面的 XML 文件</span><span class="plain">给 Google 的“网站地图”——我家所有房间都在这里了</span><a class="glossary-mod-link" data-mod="mod-4-3">→ 4.3</a></div>
-                </div>
+        <!-- ===== 分类1 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-globe" style="color:var(--teal);"></i> 搜索引擎与 SEO 基础</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">SEO</span><span class="def">Search Engine Optimization，通过优化网站提高自然排名</span><span class="plain">让 Google 觉得你的网站值得推荐，把你的页面排在前面</span></div>
+            <div class="glossary-item"><span class="term">SEM</span><span class="def">Search Engine Marketing，搜索引擎营销，通常指 Google Ads 付费广告</span><span class="plain">花钱在搜索引擎上买广告位，让用户搜到你的产品</span></div>
+            <div class="glossary-item"><span class="term">SERP</span><span class="def">Search Engine Results Page，用户搜索后看到的完整结果页面</span><span class="plain">你搜完关键词后看到的那个页面</span><a class="glossary-mod-link" data-mod="mod-4-4">→ 4.4</a></div>
+            <div class="glossary-item"><span class="term">搜索引擎</span><span class="def">通过爬虫抓取网页、建立索引、提供搜索服务的系统</span><span class="plain">互联网的“图书馆管理员”，帮你找到想要的信息</span></div>
+            <div class="glossary-item"><span class="term">爬虫/蜘蛛</span><span class="def">搜索引擎派出的程序，沿着链接在互联网上“爬行”抓取网页</span><span class="plain">Google 派来的“信息采集员”，一家一家网站去敲门看内容</span></div>
+            <div class="glossary-item"><span class="term">抓取</span><span class="def">爬虫访问网页、下载内容的过程</span><span class="plain">采集员到你家门口，把门牌号和屋内情况记录下来</span></div>
+            <div class="glossary-item"><span class="term">索引</span><span class="def">将抓取到的网页信息存入搜索引擎数据库的过程</span><span class="plain">采集员把记录下来的信息登记进 Google 的“大本营”数据库</span></div>
+            <div class="glossary-item"><span class="term">排名</span><span class="def">搜索引擎根据算法对索引中的网页进行排序的过程</span><span class="plain">Google 决定谁排第一、谁排第二的过程</span></div>
+            <div class="glossary-item"><span class="term">抓取预算</span><span class="def">搜索引擎每天分配给一个网站的抓取资源量</span><span class="plain">Google 每天愿意花在你网站上的“采集员工时”</span></div>
+            <div class="glossary-item"><span class="term">Sitemap</span><span class="def">列出网站所有重要页面的 XML 文件</span><span class="plain">给 Google 的“网站地图”——我家所有房间都在这里了</span><a class="glossary-mod-link" data-mod="mod-4-3">→ 4.3</a></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-chart-bar" style="color:var(--coral);"></i> SEO 工具指标</h4>
-                    <div class="glossary-item"><span class="term">DA</span><span class="def">Domain Authority，Moz 开发的域名权威评分（0-100）</span><span class="plain">给整个网站打的“权威分”——外链越多越好，分越高</span></div>
-                    <div class="glossary-item"><span class="term">DR</span><span class="def">Domain Rating，Ahrefs 开发的域名权威评分（0-100）</span><span class="plain">给整个网站打的“权威分”——外链越多越好，分越高</span></div>
-                    <div class="glossary-item"><span class="term">UR</span><span class="def">URL Rating，Ahrefs 开发的页面权威评分（0-100）</span><span class="plain">给单个页面打的“权威分”——这个页面被多少好网站推荐过</span></div>
-                    <div class="glossary-item"><span class="term">KD</span><span class="def">Keyword Difficulty，关键词难度（0-100）</span><span class="plain">这个词好不好上首页——分数越高越难</span></div>
-                    <div class="glossary-item"><span class="term">AS</span><span class="def">Authority Score，Semrush 的网站权威性评分（0-100）</span><span class="plain">Semrush 给网站打的“靠谱分”</span></div>
-                </div>
+        <!-- ===== 分类2 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-chart-bar" style="color:var(--coral);"></i> SEO 工具指标</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">DA</span><span class="def">Domain Authority，Moz 开发的域名权威评分（0-100）</span><span class="plain">给整个网站打的“权威分”——外链越多越好，分越高</span></div>
+            <div class="glossary-item"><span class="term">DR</span><span class="def">Domain Rating，Ahrefs 开发的域名权威评分（0-100）</span><span class="plain">给整个网站打的“权威分”——外链越多越好，分越高</span></div>
+            <div class="glossary-item"><span class="term">UR</span><span class="def">URL Rating，Ahrefs 开发的页面权威评分（0-100）</span><span class="plain">给单个页面打的“权威分”——这个页面被多少好网站推荐过</span></div>
+            <div class="glossary-item"><span class="term">KD</span><span class="def">Keyword Difficulty，关键词难度（0-100）</span><span class="plain">这个词好不好上首页——分数越高越难</span></div>
+            <div class="glossary-item"><span class="term">AS</span><span class="def">Authority Score，Semrush 的网站权威性评分（0-100）</span><span class="plain">Semrush 给网站打的“靠谱分”</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-robot" style="color:var(--purple);"></i> Google 算法与标准</h4>
-                    <div class="glossary-item"><span class="term">EEAT</span><span class="def">Experience, Expertise, Authoritativeness, Trustworthiness</span><span class="plain">Google 判断“这内容靠不靠谱”的四个标准</span><a class="glossary-mod-link" data-mod="mod-4-5">→ 4.5</a></div>
-                    <div class="glossary-item"><span class="term">BERT</span><span class="def">Google 的 NLP 算法，理解搜索词中词语的上下文关系</span><span class="plain">让 Google 能读懂“苹果”是指水果还是手机</span></div>
-                    <div class="glossary-item"><span class="term">RankBrain</span><span class="def">Google 的机器学习排序系统，理解搜索语义</span><span class="plain">Google 的“猜你想找什么”引擎</span></div>
-                    <div class="glossary-item"><span class="term">实用性内容系统</span><span class="def">Google 自动化系统，优先排序“有用、可靠”的内容</span><span class="plain">Google 判断“这篇文章对用户有没有用”的过滤器</span></div>
-                    <div class="glossary-item"><span class="term">核心更新</span><span class="def">Google 对排名算法进行的重大调整</span><span class="plain">Google 给排名规则“大修”一次，排名会剧烈波动</span></div>
-                    <div class="glossary-item"><span class="term">垃圾内容更新</span><span class="def">Google 针对低质量、欺骗性内容的专项打击</span><span class="plain">Google 清理“垃圾内容”的专项行动</span></div>
-                    <div class="glossary-item"><span class="term">Discover</span><span class="def">Google 移动端的内容推荐流，基于用户兴趣推送</span><span class="plain">Google 版的“猜你喜欢”信息流</span></div>
-                </div>
+        <!-- ===== 分类3 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-robot" style="color:var(--purple);"></i> Google 算法与标准</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">EEAT</span><span class="def">Experience, Expertise, Authoritativeness, Trustworthiness</span><span class="plain">Google 判断“这内容靠不靠谱”的四个标准</span><a class="glossary-mod-link" data-mod="mod-4-5">→ 4.5</a></div>
+            <div class="glossary-item"><span class="term">BERT</span><span class="def">Google 的 NLP 算法，理解搜索词中词语的上下文关系</span><span class="plain">让 Google 能读懂“苹果”是指水果还是手机</span></div>
+            <div class="glossary-item"><span class="term">RankBrain</span><span class="def">Google 的机器学习排序系统，理解搜索语义</span><span class="plain">Google 的“猜你想找什么”引擎</span></div>
+            <div class="glossary-item"><span class="term">实用性内容系统</span><span class="def">Google 自动化系统，优先排序“有用、可靠”的内容</span><span class="plain">Google 判断“这篇文章对用户有没有用”的过滤器</span></div>
+            <div class="glossary-item"><span class="term">核心更新</span><span class="def">Google 对排名算法进行的重大调整</span><span class="plain">Google 给排名规则“大修”一次，排名会剧烈波动</span></div>
+            <div class="glossary-item"><span class="term">垃圾内容更新</span><span class="def">Google 针对低质量、欺骗性内容的专项打击</span><span class="plain">Google 清理“垃圾内容”的专项行动</span></div>
+            <div class="glossary-item"><span class="term">Discover</span><span class="def">Google 移动端的内容推荐流，基于用户兴趣推送</span><span class="plain">Google 版的“猜你喜欢”信息流</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-code" style="color:var(--gold);"></i> 技术 SEO</h4>
-                    <div class="glossary-item"><span class="term">Canonical</span><span class="def">规范标签，告诉搜索引擎哪个 URL 是页面的“主版本”</span><span class="plain">告诉 Google“这个页面有多个网址，但主版本是这一个”</span></div>
-                    <div class="glossary-item"><span class="term">301重定向</span><span class="def">永久重定向，将旧 URL 的权重传递到新 URL</span><span class="plain">“永久搬家了，把原来的信用分都带过去”</span></div>
-                    <div class="glossary-item"><span class="term">302重定向</span><span class="def">临时重定向，通知搜索引擎页面临时移动</span><span class="plain">“暂时挪个地方，信用分先不转”</span></div>
-                    <div class="glossary-item"><span class="term">404错误</span><span class="def">页面不存在时返回的 HTTP 状态码</span><span class="plain">“你要找的页面已经没了”</span></div>
-                    <div class="glossary-item"><span class="term">robots.txt</span><span class="def">告诉搜索引擎哪些页面可以抓取的指令文件</span><span class="plain">给 Google 采集员的“准入名单”——哪些房间可以进</span></div>
-                    <div class="glossary-item"><span class="term">noindex</span><span class="def">告诉搜索引擎“不要把这个页面编入索引”的指令</span><span class="plain">告诉 Google“这个房间不用登记”</span></div>
-                    <div class="glossary-item"><span class="term">hreflang</span><span class="def">告诉搜索引擎同一内容的不同语言/地区版本</span><span class="plain">告诉 Google“这个页面有英文版、中文版、德文版”</span><a class="glossary-mod-link" data-mod="mod-4-15">→ 4.15</a></div>
-                    <div class="glossary-item"><span class="term">RWD</span><span class="def">响应式网页设计，在不同屏幕尺寸上自动适配</span><span class="plain">一个网站自动适配电脑、平板、手机三种屏幕</span></div>
-                </div>
+        <!-- ===== 分类4 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-code" style="color:var(--gold);"></i> 技术 SEO</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">Canonical</span><span class="def">规范标签，告诉搜索引擎哪个 URL 是页面的“主版本”</span><span class="plain">告诉 Google“这个页面有多个网址，但主版本是这一个”</span></div>
+            <div class="glossary-item"><span class="term">301重定向</span><span class="def">永久重定向，将旧 URL 的权重传递到新 URL</span><span class="plain">“永久搬家了，把原来的信用分都带过去”</span></div>
+            <div class="glossary-item"><span class="term">302重定向</span><span class="def">临时重定向，通知搜索引擎页面临时移动</span><span class="plain">“暂时挪个地方，信用分先不转”</span></div>
+            <div class="glossary-item"><span class="term">404错误</span><span class="def">页面不存在时返回的 HTTP 状态码</span><span class="plain">“你要找的页面已经没了”</span></div>
+            <div class="glossary-item"><span class="term">robots.txt</span><span class="def">告诉搜索引擎哪些页面可以抓取的指令文件</span><span class="plain">给 Google 采集员的“准入名单”——哪些房间可以进</span></div>
+            <div class="glossary-item"><span class="term">noindex</span><span class="def">告诉搜索引擎“不要把这个页面编入索引”的指令</span><span class="plain">告诉 Google“这个房间不用登记”</span></div>
+            <div class="glossary-item"><span class="term">hreflang</span><span class="def">告诉搜索引擎同一内容的不同语言/地区版本</span><span class="plain">告诉 Google“这个页面有英文版、中文版、德文版”</span><a class="glossary-mod-link" data-mod="mod-4-15">→ 4.15</a></div>
+            <div class="glossary-item"><span class="term">RWD</span><span class="def">响应式网页设计，在不同屏幕尺寸上自动适配</span><span class="plain">一个网站自动适配电脑、平板、手机三种屏幕</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-link" style="color:var(--coral);"></i> 链接建设</h4>
-                    <div class="glossary-item"><span class="term">Dofollow</span><span class="def">传递页面权重的链接类型</span><span class="plain">“我推荐这个链接，把我的信用分传过去”</span></div>
-                    <div class="glossary-item"><span class="term">Nofollow</span><span class="def">不传递页面权重的链接类型</span><span class="plain">“我不背书，不传信用分”</span></div>
-                    <div class="glossary-item"><span class="term">外链</span><span class="def">从其他网站指向你网站的所有链接</span><span class="plain">所有别人推荐你的链接</span></div>
-                    <div class="glossary-item"><span class="term">反向链接</span><span class="def">从其他网站指向你网站的链接</span><span class="plain">别的网站推荐你的链接——“我推荐这个网站”</span></div>
-                    <div class="glossary-item"><span class="term">客座博客</span><span class="def">在其他网站投稿并获得外链的方式</span><span class="plain">去别人家写文章，顺便留个自家地址</span></div>
-                </div>
+        <!-- ===== 分类5 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-link" style="color:var(--coral);"></i> 链接建设</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">Dofollow</span><span class="def">传递页面权重的链接类型</span><span class="plain">“我推荐这个链接，把我的信用分传过去”</span></div>
+            <div class="glossary-item"><span class="term">Nofollow</span><span class="def">不传递页面权重的链接类型</span><span class="plain">“我不背书，不传信用分”</span></div>
+            <div class="glossary-item"><span class="term">外链</span><span class="def">从其他网站指向你网站的所有链接</span><span class="plain">所有别人推荐你的链接</span></div>
+            <div class="glossary-item"><span class="term">反向链接</span><span class="def">从其他网站指向你网站的链接</span><span class="plain">别的网站推荐你的链接——“我推荐这个网站”</span></div>
+            <div class="glossary-item"><span class="term">客座博客</span><span class="def">在其他网站投稿并获得外链的方式</span><span class="plain">去别人家写文章，顺便留个自家地址</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-bullhorn" style="color:var(--coral);"></i> Google Ads</h4>
-                    <div class="glossary-item"><span class="term">PPC</span><span class="def">Pay Per Click，按点击付费的广告模式</span><span class="plain">有人点你的广告，你才付钱</span></div>
-                    <div class="glossary-item"><span class="term">CPC</span><span class="def">Cost Per Click，每次点击的成本</span><span class="plain">每被点一次，你付多少钱</span></div>
-                    <div class="glossary-item"><span class="term">PMax</span><span class="def">Performance Max，效果最大化广告，覆盖全渠道</span><span class="plain">一个广告系列同时投放在 YouTube、搜索、展示等所有 Google 渠道</span><a class="glossary-mod-link" data-mod="mod-4-8">→ 4.8</a></div>
-                    <div class="glossary-item"><span class="term">AI Max for Search</span><span class="def">2026年新功能，用 AI 自动匹配搜索意图</span><span class="plain">告诉 Google“我的产品是卖什么的”，它自动帮你找客户</span></div>
-                    <div class="glossary-item"><span class="term">信号设计</span><span class="def">设计“让 AI 理解优质流量”的输入信号</span><span class="plain">不是告诉 AI“投什么词”，而是告诉 AI“什么样的人是我的好客户”</span><a class="glossary-mod-link" data-mod="mod-4-8">→ 4.8</a></div>
-                    <div class="glossary-item"><span class="term">质量得分</span><span class="def">Google 给关键词打的 1-10 分</span><span class="plain">Google 给你的广告打的“质量分”——分越高越便宜</span></div>
-                    <div class="glossary-item"><span class="term">广告评级</span><span class="def">决定广告排名的综合得分 = 出价 × 质量得分</span><span class="plain">你的广告能排第几的“总得分”</span></div>
-                    <div class="glossary-item"><span class="term">Smart Bidding</span><span class="def">Google 的自动出价策略，用 AI 优化转化</span><span class="plain">让 Google AI 帮你自动调价，追求最好的转化效果</span></div>
-                    <div class="glossary-item"><span class="term">tCPA</span><span class="def">Target CPA，以“目标转化成本”为导向的智能出价</span><span class="plain">告诉 Google“我希望每次转化花 100 块”，它帮你自动调价</span></div>
-                    <div class="glossary-item"><span class="term">tROAS</span><span class="def">Target ROAS，以“目标广告支出回报率”为导向的智能出价</span><span class="plain">告诉 Google“我希望每花 1 块赚 4 块”，它帮你自动调价</span></div>
-                    <div class="glossary-item"><span class="term">RSA</span><span class="def">Responsive Search Ads，响应式搜索广告</span><span class="plain">你提供多条标题和描述，Google 自动组合测试最佳搭配</span></div>
-                </div>
+        <!-- ===== 分类6 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-bullhorn" style="color:var(--coral);"></i> Google Ads</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">PPC</span><span class="def">Pay Per Click，按点击付费的广告模式</span><span class="plain">有人点你的广告，你才付钱</span></div>
+            <div class="glossary-item"><span class="term">CPC</span><span class="def">Cost Per Click，每次点击的成本</span><span class="plain">每被点一次，你付多少钱</span></div>
+            <div class="glossary-item"><span class="term">PMax</span><span class="def">Performance Max，效果最大化广告，覆盖全渠道</span><span class="plain">一个广告系列同时投放在 YouTube、搜索、展示等所有 Google 渠道</span><a class="glossary-mod-link" data-mod="mod-4-8">→ 4.8</a></div>
+            <div class="glossary-item"><span class="term">AI Max for Search</span><span class="def">2026年新功能，用 AI 自动匹配搜索意图</span><span class="plain">告诉 Google“我的产品是卖什么的”，它自动帮你找客户</span></div>
+            <div class="glossary-item"><span class="term">信号设计</span><span class="def">设计“让 AI 理解优质流量”的输入信号</span><span class="plain">不是告诉 AI“投什么词”，而是告诉 AI“什么样的人是我的好客户”</span><a class="glossary-mod-link" data-mod="mod-4-8">→ 4.8</a></div>
+            <div class="glossary-item"><span class="term">质量得分</span><span class="def">Google 给关键词打的 1-10 分</span><span class="plain">Google 给你的广告打的“质量分”——分越高越便宜</span></div>
+            <div class="glossary-item"><span class="term">广告评级</span><span class="def">决定广告排名的综合得分 = 出价 × 质量得分</span><span class="plain">你的广告能排第几的“总得分”</span></div>
+            <div class="glossary-item"><span class="term">Smart Bidding</span><span class="def">Google 的自动出价策略，用 AI 优化转化</span><span class="plain">让 Google AI 帮你自动调价，追求最好的转化效果</span></div>
+            <div class="glossary-item"><span class="term">tCPA</span><span class="def">Target CPA，以“目标转化成本”为导向的智能出价</span><span class="plain">告诉 Google“我希望每次转化花 100 块”，它帮你自动调价</span></div>
+            <div class="glossary-item"><span class="term">tROAS</span><span class="def">Target ROAS，以“目标广告支出回报率”为导向的智能出价</span><span class="plain">告诉 Google“我希望每花 1 块赚 4 块”，它帮你自动调价</span></div>
+            <div class="glossary-item"><span class="term">RSA</span><span class="def">Responsive Search Ads，响应式搜索广告</span><span class="plain">你提供多条标题和描述，Google 自动组合测试最佳搭配</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-chart-line" style="color:var(--teal);"></i> 数据分析</h4>
-                    <div class="glossary-item"><span class="term">GA4</span><span class="def">Google Analytics 4，基于事件模型的分析工具</span><span class="plain">Google 的“用户行为追踪器”——谁来了、做了什么、从哪里来的</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
-                    <div class="glossary-item"><span class="term">GTM</span><span class="def">Google Tag Manager，统一管理所有追踪代码的工具</span><span class="plain">所有追踪代码的“中央控制台”，不用改网站代码就能添加追踪</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
-                    <div class="glossary-item"><span class="term">Conversion API</span><span class="def">服务器端数据回传接口，绕过浏览器拦截器</span><span class="plain">直接从你的服务器把转化数据发给 Google，更准确、不会被拦截</span></div>
-                    <div class="glossary-item"><span class="term">BigQuery</span><span class="def">Google 的云端数据仓库，可存储和分析海量数据</span><span class="plain">Google 的“超级 Excel”，能处理几亿行数据</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
-                    <div class="glossary-item"><span class="term">Looker Studio</span><span class="def">Google 免费数据可视化工具</span><span class="plain">把 GA4、Google Ads 数据变成漂亮的图表和日报</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
-                    <div class="glossary-item"><span class="term">归因模型</span><span class="def">决定“转化功劳分配给哪些渠道”的规则</span><span class="plain">用户看了 3 个广告才购买，每个广告各占多少功劳？</span></div>
-                    <div class="glossary-item"><span class="term">数据驱动归因</span><span class="def">Google 用机器学习自动分配转化功劳</span><span class="plain">Google AI 根据数据自动判断“哪个渠道功劳最大”</span></div>
-                </div>
+        <!-- ===== 分类7 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-chart-line" style="color:var(--teal);"></i> 数据分析</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">GA4</span><span class="def">Google Analytics 4，基于事件模型的分析工具</span><span class="plain">Google 的“用户行为追踪器”——谁来了、做了什么、从哪里来的</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+            <div class="glossary-item"><span class="term">GTM</span><span class="def">Google Tag Manager，统一管理所有追踪代码的工具</span><span class="plain">所有追踪代码的“中央控制台”，不用改网站代码就能添加追踪</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+            <div class="glossary-item"><span class="term">Conversion API</span><span class="def">服务器端数据回传接口，绕过浏览器拦截器</span><span class="plain">直接从你的服务器把转化数据发给 Google，更准确、不会被拦截</span></div>
+            <div class="glossary-item"><span class="term">BigQuery</span><span class="def">Google 的云端数据仓库，可存储和分析海量数据</span><span class="plain">Google 的“超级 Excel”，能处理几亿行数据</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+            <div class="glossary-item"><span class="term">Looker Studio</span><span class="def">Google 免费数据可视化工具</span><span class="plain">把 GA4、Google Ads 数据变成漂亮的图表和日报</span><a class="glossary-mod-link" data-mod="mod-4-9">→ 4.9</a></div>
+            <div class="glossary-item"><span class="term">归因模型</span><span class="def">决定“转化功劳分配给哪些渠道”的规则</span><span class="plain">用户看了 3 个广告才购买，每个广告各占多少功劳？</span></div>
+            <div class="glossary-item"><span class="term">数据驱动归因</span><span class="def">Google 用机器学习自动分配转化功劳</span><span class="plain">Google AI 根据数据自动判断“哪个渠道功劳最大”</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-microchip" style="color:var(--purple);"></i> AI 与前沿</h4>
-                    <div class="glossary-item"><span class="term">GEO</span><span class="def">Generative Engine Optimization，优化内容在 AI 搜索中被引用</span><span class="plain">让 ChatGPT、Perplexity 等 AI 工具在回答问题时提到你</span><a class="glossary-mod-link" data-mod="mod-4-6">→ 4.6</a></div>
-                    <div class="glossary-item"><span class="term">AIVO</span><span class="def">AI Visibility Optimization，量化品牌在大模型中可见度</span><span class="plain">衡量“AI 推不推荐你”的分数</span><a class="glossary-mod-link" data-mod="mod-4-7">→ 4.7</a></div>
-                    <div class="glossary-item"><span class="term">PSOS</span><span class="def">Prompt-Space Occupancy Score，AIVO 核心 KPI</span><span class="plain">“AI 推荐空间占有率”——在 AI 的回答里，你出现了多少次</span></div>
-                    <div class="glossary-item"><span class="term">AI Overview</span><span class="def">Google 搜索结果顶部的 AI 生成摘要</span><span class="plain">Google AI 直接在搜索结果顶部给你总结答案</span></div>
-                    <div class="glossary-item"><span class="term">知识图谱</span><span class="def">实体关系网络，将“人-事-物”的关系结构化</span><span class="plain">把“人-事-物”的关系画成一张网</span></div>
-                </div>
+        <!-- ===== 分类8 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-microchip" style="color:var(--purple);"></i> AI 与前沿</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">GEO</span><span class="def">Generative Engine Optimization，优化内容在 AI 搜索中被引用</span><span class="plain">让 ChatGPT、Perplexity 等 AI 工具在回答问题时提到你</span><a class="glossary-mod-link" data-mod="mod-4-6">→ 4.6</a></div>
+            <div class="glossary-item"><span class="term">AIVO</span><span class="def">AI Visibility Optimization，量化品牌在大模型中可见度</span><span class="plain">衡量“AI 推不推荐你”的分数</span><a class="glossary-mod-link" data-mod="mod-4-7">→ 4.7</a></div>
+            <div class="glossary-item"><span class="term">PSOS</span><span class="def">Prompt-Space Occupancy Score，AIVO 核心 KPI</span><span class="plain">“AI 推荐空间占有率”——在 AI 的回答里，你出现了多少次</span></div>
+            <div class="glossary-item"><span class="term">AI Overview</span><span class="def">Google 搜索结果顶部的 AI 生成摘要</span><span class="plain">Google AI 直接在搜索结果顶部给你总结答案</span></div>
+            <div class="glossary-item"><span class="term">知识图谱</span><span class="def">实体关系网络，将“人-事-物”的关系结构化</span><span class="plain">把“人-事-物”的关系画成一张网</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-gavel" style="color:var(--gold);"></i> 合规与本地化</h4>
-                    <div class="glossary-item"><span class="term">GDPR</span><span class="def">欧盟通用数据保护条例</span><span class="plain">欧盟的“用户隐私保护法”——收集用户数据必须告知、用户有权删除</span><a class="glossary-mod-link" data-mod="mod-4-14">→ 4.14</a></div>
-                    <div class="glossary-item"><span class="term">CCPA</span><span class="def">美国加州消费者隐私法案</span><span class="plain">加州的“用户隐私保护法”——用户有权知道你要了什么数据</span><a class="glossary-mod-link" data-mod="mod-4-14">→ 4.14</a></div>
-                    <div class="glossary-item"><span class="term">CAN-SPAM</span><span class="def">美国反垃圾邮件法</span><span class="plain">美国的“邮件营销规范”——邮件必须含退订链接、地址等信息</span></div>
-                </div>
+        <!-- ===== 分类9 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-gavel" style="color:var(--gold);"></i> 合规与本地化</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">GDPR</span><span class="def">欧盟通用数据保护条例</span><span class="plain">欧盟的“用户隐私保护法”——收集用户数据必须告知、用户有权删除</span><a class="glossary-mod-link" data-mod="mod-4-14">→ 4.14</a></div>
+            <div class="glossary-item"><span class="term">CCPA</span><span class="def">美国加州消费者隐私法案</span><span class="plain">加州的“用户隐私保护法”——用户有权知道你要了什么数据</span><a class="glossary-mod-link" data-mod="mod-4-14">→ 4.14</a></div>
+            <div class="glossary-item"><span class="term">CAN-SPAM</span><span class="def">美国反垃圾邮件法</span><span class="plain">美国的“邮件营销规范”——邮件必须含退订链接、地址等信息</span></div>
+        </details>
 
-                <div class="glossary-category">
-                    <h4><i class="fas fa-server" style="color:var(--teal);"></i> 自建站与技术基建</h4>
-                    <div class="glossary-item"><span class="term">DNS</span><span class="def">Domain Name System，将域名转换为服务器 IP</span><span class="plain">域名是门牌号，DNS 是门牌号查询系统</span></div>
-                    <div class="glossary-item"><span class="term">SSL</span><span class="def">Secure Sockets Layer，数字安全证书</span><span class="plain">给网站装上“加密锁”，让用户和服务器之间安全通信</span></div>
-                    <div class="glossary-item"><span class="term">VPS</span><span class="def">Virtual Private Server，虚拟专用服务器</span><span class="plain">把一台大房子隔成多个独立小房间，每个房间有独立水电</span></div>
-                    <div class="glossary-item"><span class="term">CDN</span><span class="def">Content Delivery Network，内容分发网络</span><span class="plain">多个厨房同时炒菜，就近上菜，不用等一个厨房做完</span></div>
-                    <div class="glossary-item"><span class="term">WebP</span><span class="def">Google 开发的图片格式，比 JPG 小 30-40%</span><span class="plain">把图片“瘦身”但不损失画质，让网页加载更快</span></div>
-                    <div class="glossary-item"><span class="term">srcset</span><span class="def">响应式图片属性，不同屏幕用不同大小图片</span><span class="plain">告诉浏览器“手机用小图，电脑用大图”，不浪费流量</span></div>
-                    <div class="glossary-item"><span class="term">WordPress</span><span class="def">全球最流行的开源建站系统</span><span class="plain">全球最流行的网站搭建工具，不用写代码也能建站</span></div>
-                    <div class="glossary-item"><span class="term">Elementor</span><span class="def">WordPress 页面构建器，拖拽式设计</span><span class="plain">拖拖拽拽就能设计网页，不用写一行代码</span></div>
-                    <div class="glossary-item"><span class="term">Rank Math / Yoast</span><span class="def">WordPress SEO 插件</span><span class="plain">SEO 小助手，提醒你标题写了没、关键词用对了没</span></div>
-                    <div class="glossary-item"><span class="term">WP Rocket</span><span class="def">WordPress 付费缓存插件</span><span class="plain">把做好的网页“拍张照片”存起来，下次访问直接给照片，秒开</span></div>
-                    <div class="glossary-item"><span class="term">Wordfence</span><span class="def">WordPress 安全插件</span><span class="plain">给网站装“防盗门 + 监控摄像头 + 报警器”</span></div>
-                    <div class="glossary-item"><span class="term">UpdraftPlus</span><span class="def">WordPress 备份插件</span><span class="plain">自动把网站“打包”存到云盘，出事了随时恢复</span></div>
-                    <div class="glossary-item"><span class="term">Cloudflare</span><span class="def">全球 CDN + 安全服务</span><span class="plain">全球加速 + 防攻击 + 域名管理，一站式服务</span></div>
-                    <div class="glossary-item"><span class="term">GSC</span><span class="def">Google Search Console，官方站长工具</span><span class="plain">Google 给站长开的“后台管理系统”，看你的网站在 Google 眼里什么样</span></div>
-                </div>
-            </div>
-        </div>
+        <!-- ===== 分类10 ===== -->
+        <details class="glossary-category">
+            <summary>
+                <h4><i class="fas fa-server" style="color:var(--teal);"></i> 自建站与技术基建</h4>
+            </summary>
+            <div class="glossary-item"><span class="term">DNS</span><span class="def">Domain Name System，将域名转换为服务器 IP</span><span class="plain">域名是门牌号，DNS 是门牌号查询系统</span></div>
+            <div class="glossary-item"><span class="term">SSL</span><span class="def">Secure Sockets Layer，数字安全证书</span><span class="plain">给网站装上“加密锁”，让用户和服务器之间安全通信</span></div>
+            <div class="glossary-item"><span class="term">VPS</span><span class="def">Virtual Private Server，虚拟专用服务器</span><span class="plain">把一台大房子隔成多个独立小房间，每个房间有独立水电</span></div>
+            <div class="glossary-item"><span class="term">CDN</span><span class="def">Content Delivery Network，内容分发网络</span><span class="plain">多个厨房同时炒菜，就近上菜，不用等一个厨房做完</span></div>
+            <div class="glossary-item"><span class="term">WebP</span><span class="def">Google 开发的图片格式，比 JPG 小 30-40%</span><span class="plain">把图片“瘦身”但不损失画质，让网页加载更快</span></div>
+            <div class="glossary-item"><span class="term">srcset</span><span class="def">响应式图片属性，不同屏幕用不同大小图片</span><span class="plain">告诉浏览器“手机用小图，电脑用大图”，不浪费流量</span></div>
+            <div class="glossary-item"><span class="term">WordPress</span><span class="def">全球最流行的开源建站系统</span><span class="plain">全球最流行的网站搭建工具，不用写代码也能建站</span></div>
+            <div class="glossary-item"><span class="term">Elementor</span><span class="def">WordPress 页面构建器，拖拽式设计</span><span class="plain">拖拖拽拽就能设计网页，不用写一行代码</span></div>
+            <div class="glossary-item"><span class="term">Rank Math / Yoast</span><span class="def">WordPress SEO 插件</span><span class="plain">SEO 小助手，提醒你标题写了没、关键词用对了没</span></div>
+            <div class="glossary-item"><span class="term">WP Rocket</span><span class="def">WordPress 付费缓存插件</span><span class="plain">把做好的网页“拍张照片”存起来，下次访问直接给照片，秒开</span></div>
+            <div class="glossary-item"><span class="term">Wordfence</span><span class="def">WordPress 安全插件</span><span class="plain">给网站装“防盗门 + 监控摄像头 + 报警器”</span></div>
+            <div class="glossary-item"><span class="term">UpdraftPlus</span><span class="def">WordPress 备份插件</span><span class="plain">自动把网站“打包”存到云盘，出事了随时恢复</span></div>
+            <div class="glossary-item"><span class="term">Cloudflare</span><span class="def">全球 CDN + 安全服务</span><span class="plain">全球加速 + 防攻击 + 域名管理，一站式服务</span></div>
+            <div class="glossary-item"><span class="term">GSC</span><span class="def">Google Search Console，官方站长工具</span><span class="plain">Google 给站长开的“后台管理系统”，看你的网站在 Google 眼里什么样</span></div>
+        </details>
+    </div>
+</div>
 
         <!-- ============================== -->
         <!-- TAB 4: 速查 -->
@@ -2308,14 +2379,21 @@
                 });
             });
 
-            // ===== 名词解释 mod-link 点击 =====
-            document.querySelectorAll('.glossary-mod-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = this.dataset.mod;
-                    if (target) jumpToModule(target);
-                });
-            });
+            // ===== 名词解释内的 mod-link 点击（增强版：自动展开父级 details） =====
+document.querySelectorAll('.glossary-mod-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = this.dataset.mod;
+        if (!target) return;
+        // 自动展开父级 details（如果有）
+        const parentDetails = this.closest('details');
+        if (parentDetails) {
+            parentDetails.open = true;
+        }
+        // 跳转到模块
+        jumpToModule(target);
+    });
+});
 
             // ===== 速查行点击 =====
             document.querySelectorAll('.cheat-table tbody tr').forEach(row => {
