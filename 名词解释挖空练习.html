@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📖 名词解释 · 挖空记忆练习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #F0F8FF;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            color: #1E293B;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            background: #0AA5F2;
+            color: white;
+            padding: 20px 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(10,165,242,0.3);
+            margin-bottom: 24px;
+        }
+        header h1 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        header h1 i {
+            font-size: 2rem;
+        }
+        .header-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 30px;
+            margin-top: 8px;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+        .header-stats span {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+        .mode-switch {
+            margin: 12px 0 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .mode-btn {
+            background: white;
+            border: 2px solid #B8D4E8;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1E293B;
+        }
+        .mode-btn.active {
+            background: #0AA5F2;
+            border-color: #0AA5F2;
+            color: white;
+        }
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* 分类折叠 */
+        details {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 16px;
+            border: 1px solid #DBEAFE;
+            overflow: hidden;
+        }
+        summary {
+            padding: 14px 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            background: #F8FAFC;
+            border-bottom: 1px solid #DBEAFE;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+            list-style: none;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        summary::after {
+            content: "▶";
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: #94A3B8;
+            transition: transform 0.25s;
+        }
+        details[open] summary::after {
+            transform: rotate(90deg);
+        }
+        summary i {
+            color: #0AA5F2;
+            width: 24px;
+        }
+
+        .cards-container {
+            padding: 16px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* 单个卡片 */
+        .card-item {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 16px 18px;
+            border-left: 4px solid #B8D4E8;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .card-item.correct {
+            border-left-color: #10B981;
+            background: #ECFDF5;
+        }
+        .card-item.wrong {
+            border-left-color: #EF4444;
+            background: #FEF2F2;
+        }
+        .card-item .hint {
+            font-size: 0.95rem;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+        .card-item .hint strong {
+            color: #0AA5F2;
+        }
+        .card-item .hint .def-text {
+            color: #475569;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 4px;
+            border-top: 1px dashed #E2E8F0;
+            padding-top: 6px;
+        }
+        .card-item .row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-item input {
+            flex: 1;
+            min-width: 150px;
+            padding: 8px 14px;
+            border: 2px solid #CBD5E1;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+            background: white;
+        }
+        .card-item input:focus {
+            border-color: #0AA5F2;
+        }
+        .card-item .btn-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .card-item .btn-check {
+            background: #0AA5F2;
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+        .card-item .btn-check:hover {
+            background: #0891D0;
+        }
+        .card-item .btn-show {
+            background: #E2E8F0;
+            border: none;
+            color: #1E293B;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+        .card-item .btn-show:hover {
+            background: #CBD5E1;
+        }
+        .card-item .feedback {
+            margin-top: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-item .feedback .correct-answer {
+            font-weight: 400;
+            color: #475569;
+        }
+        .card-item .feedback .correct-answer code {
+            background: #E2E8F0;
+            padding: 0 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .card-item .feedback .icon {
+            font-size: 1.2rem;
+        }
+
+        .reset-btn {
+            background: white;
+            border: 2px solid #CBD5E1;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        .reset-btn:hover {
+            background: #F1F5F9;
+            border-color: #94A3B8;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #64748B;
+            font-size: 0.85rem;
+            margin-top: 30px;
+            border-top: 1px solid #DBEAFE;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .card-item .row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card-item .btn-group {
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <h1><i class="fas fa-book-open" style="font-style:normal;">📖</i> 名词解释 · 挖空记忆</h1>
+        <div class="header-stats">
+            <span>📊 已答 <span id="answeredCount">0</span> / <span id="totalCount">0</span></span>
+            <span>✅ 正确 <span id="correctCount">0</span></span>
+            <span>❌ 错误 <span id="wrongCount">0</span></span>
+        </div>
+    </header>
+
+    <div class="mode-switch">
+        <button class="mode-btn active" data-mode="plain">💬 看大白话 → 填术语</button>
+        <button class="mode-btn" data-mode="def">📘 看专业解释 → 填术语</button>
+    </div>
+
+    <div id="cardsContainer"></div>
+
+    <button class="reset-btn" id="resetBtn">🔄 重置所有进度</button>
+
+    <div class="footer-note">
+        💡 输入术语（支持中英文/别名），按回车或点击“检查”即可核对。
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 1. 数据定义（直接从原名词解释提取，保证一致）
+    //    这里包含了全部 10 个分类的术语。
+    //    每个对象：{ term, def, plain }，term 可包含 "/" 表示同义词。
+    // ============================================================
+    const glossaryData = [
+        // -------- 分类1：搜索引擎与 SEO 基础 --------
+        { term: "SEO", def: "Search Engine Optimization，通过优化网站提高自然排名", plain: "让 Google 觉得你的网站值得推荐，把你的页面排在前面" },
+        { term: "SEM", def: "Search Engine Marketing，搜索引擎营销，通常指 Google Ads 付费广告", plain: "花钱在搜索引擎上买广告位，让用户搜到你的产品" },
+        { term: "SERP", def: "Search Engine Results Page，用户搜索后看到的完整结果页面", plain: "你搜完关键词后看到的那个页面" },
+        { term: "搜索引擎", def: "通过爬虫抓取网页、建立索引、提供搜索服务的系统", plain: "互联网的“图书馆管理员”，帮你找到想要的信息" },
+        { term: "爬虫/蜘蛛", def: "搜索引擎派出的程序，沿着链接在互联网上“爬行”抓取网页", plain: "Google 派来的“信息采集员”，一家一家网站去敲门看内容" },
+        { term: "抓取", def: "爬虫访问网页、下载内容的过程", plain: "采集员到你家门口，把门牌号和屋内情况记录下来" },
+        { term: "索引", def: "将抓取到的网页信息存入搜索引擎数据库的过程", plain: "采集员把记录下来的信息登记进 Google 的“大本营”数据库" },
+        { term: "排名", def: "搜索引擎根据算法对索引中的网页进行排序的过程", plain: "Google 决定谁排第一、谁排第二的过程" },
+        { term: "抓取预算", def: "搜索引擎每天分配给一个网站的抓取资源量", plain: "Google 每天愿意花在你网站上的“采集员工时”" },
+        { term: "Sitemap", def: "列出网站所有重要页面的 XML 文件", plain: "给 Google 的“网站地图”——我家所有房间都在这里了" },
+
+        // -------- 分类2：SEO 工具指标 --------
+        { term: "DA", def: "Domain Authority，Moz 开发的域名权威评分（0-100）", plain: "给整个网站打的“权威分”——外链越多越好，分越高" },
+        { term: "DR", def: "Domain Rating，Ahrefs 开发的域名权威评分（0-100）", plain: "给整个网站打的“权威分”——外链越多越好，分越高" },
+        { term: "UR", def: "URL Rating，Ahrefs 开发的页面权威评分（0-100）", plain: "给单个页面打的“权威分”——这个页面被多少好网站推荐过" },
+        { term: "KD", def: "Keyword Difficulty，关键词难度（0-100）", plain: "这个词好不好上首页——分数越高越难" },
+        { term: "AS", def: "Authority Score，Semrush 的网站权威性评分（0-100）", plain: "Semrush 给网站打的“靠谱分”" },
+
+        // -------- 分类3：Google 算法与标准 --------
+        { term: "EEAT", def: "Experience, Expertise, Authoritativeness, Trustworthiness", plain: "Google 判断“这内容靠不靠谱”的四个标准" },
+        { term: "BERT", def: "Google 的 NLP 算法，理解搜索词中词语的上下文关系", plain: "让 Google 能读懂“苹果”是指水果还是手机" },
+        { term: "RankBrain", def: "Google 的机器学习排序系统，理解搜索语义", plain: "Google 的“猜你想找什么”引擎" },
+        { term: "实用性内容系统", def: "Google 自动化系统，优先排序“有用、可靠”的内容", plain: "Google 判断“这篇文章对用户有没有用”的过滤器" },
+        { term: "核心更新", def: "Google 对排名算法进行的重大调整", plain: "Google 给排名规则“大修”一次，排名会剧烈波动" },
+        { term: "垃圾内容更新", def: "Google 针对低质量、欺骗性内容的专项打击", plain: "Google 清理“垃圾内容”的专项行动" },
+        { term: "Discover", def: "Google 移动端的内容推荐流，基于用户兴趣推送", plain: "Google 版的“猜你喜欢”信息流" },
+
+        // -------- 分类4：技术 SEO --------
+        { term: "Canonical", def: "规范标签，告诉搜索引擎哪个 URL 是页面的“主版本”", plain: "告诉 Google“这个页面有多个网址，但主版本是这一个”" },
+        { term: "301重定向", def: "永久重定向，将旧 URL 的权重传递到新 URL", plain: "“永久搬家了，把原来的信用分都带过去”" },
+        { term: "302重定向", def: "临时重定向，通知搜索引擎页面临时移动", plain: "“暂时挪个地方，信用分先不转”" },
+        { term: "404错误", def: "页面不存在时返回的 HTTP 状态码", plain: "“你要找的页面已经没了”" },
+        { term: "robots.txt", def: "告诉搜索引擎哪些页面可以抓取的指令文件", plain: "给 Google 采集员的“准入名单”——哪些房间可以进" },
+        { term: "noindex", def: "告诉搜索引擎“不要把这个页面编入索引”的指令", plain: "告诉 Google“这个房间不用登记”" },
+        { term: "hreflang", def: "告诉搜索引擎同一内容的不同语言/地区版本", plain: "告诉 Google“这个页面有英文版、中文版、德文版”" },
+        { term: "RWD", def: "响应式网页设计，在不同屏幕尺寸上自动适配", plain: "一个网站自动适配电脑、平板、手机三种屏幕" },
+
+        // -------- 分类5：链接建设 --------
+        { term: "反向链接/外链", def: "Backlink，指从其他网站指向你网站的链接", plain: "别的网站给你投的“推荐票”，是 SEO 中最核心的排名因素之一" },
+        { term: "Dofollow", def: "传递页面权重（PageRank）的链接类型", plain: "“我推荐这个链接，愿意把我的信用分让渡给你。”" },
+        { term: "Nofollow", def: "不传递权重的链接属性，用于评论区/广告/不可信来源", plain: "“我告诉谷歌我不为这个链接背书，不传信用分。”" },
+        { term: "客座博客", def: "Guest Blogging / Guest Post，在别人网站投稿以换取外链", plain: "“去别人家院子里种一棵树，并在树上挂一个写着自己家地址的铭牌。”" },
+
+        // -------- 分类6：Google Ads --------
+        { term: "PPC", def: "Pay Per Click，按点击付费的广告模式", plain: "有人点你的广告，你才付钱" },
+        { term: "CPC", def: "Cost Per Click，每次点击的成本", plain: "每被点一次，你付多少钱" },
+        { term: "PMax", def: "Performance Max，效果最大化广告，覆盖全渠道", plain: "一个广告系列同时投放在 YouTube、搜索、展示等所有 Google 渠道" },
+        { term: "AI Max for Search", def: "2026年新功能，用 AI 自动匹配搜索意图", plain: "告诉 Google“我的产品是卖什么的”，它自动帮你找客户" },
+        { term: "信号设计", def: "设计“让 AI 理解优质流量”的输入信号", plain: "不是告诉 AI“投什么词”，而是告诉 AI“什么样的人是我的好客户”" },
+        { term: "质量得分", def: "Google 给关键词打的 1-10 分", plain: "Google 给你的广告打的“质量分”——分越高越便宜" },
+        { term: "广告评级", def: "决定广告排名的综合得分 = 出价 × 质量得分", plain: "你的广告能排第几的“总得分”" },
+        { term: "Smart Bidding", def: "Google 的自动出价策略，用 AI 优化转化", plain: "让 Google AI 帮你自动调价，追求最好的转化效果" },
+        { term: "tCPA", def: "Target CPA，以“目标转化成本”为导向的智能出价", plain: "告诉 Google“我希望每次转化花 100 块”，它帮你自动调价" },
+        { term: "tROAS", def: "Target ROAS，以“目标广告支出回报率”为导向的智能出价", plain: "告诉 Google“我希望每花 1 块赚 4 块”，它帮你自动调价" },
+        { term: "RSA", def: "Responsive Search Ads，响应式搜索广告", plain: "你提供多条标题和描述，Google 自动组合测试最佳搭配" },
+
+        // -------- 分类7：数据分析 --------
+        { term: "GA4", def: "Google Analytics 4，基于事件模型的分析工具", plain: "Google 的“用户行为追踪器”——谁来了、做了什么、从哪里来的" },
+        { term: "GTM", def: "Google Tag Manager，统一管理所有追踪代码的工具", plain: "所有追踪代码的“中央控制台”，不用改网站代码就能添加追踪" },
+        { term: "Conversion API", def: "服务器端数据回传接口，绕过浏览器拦截器", plain: "直接从你的服务器把转化数据发给 Google，更准确、不会被拦截" },
+        { term: "BigQuery", def: "Google 的云端数据仓库，可存储和分析海量数据", plain: "Google 的“超级 Excel”，能处理几亿行数据" },
+        { term: "Looker Studio", def: "Google 免费数据可视化工具", plain: "把 GA4、Google Ads 数据变成漂亮的图表和日报" },
+        { term: "归因模型", def: "决定“转化功劳分配给哪些渠道”的规则", plain: "用户看了 3 个广告才购买，每个广告各占多少功劳？" },
+        { term: "数据驱动归因", def: "Google 用机器学习自动分配转化功劳", plain: "Google AI 根据数据自动判断“哪个渠道功劳最大”" },
+
+        // -------- 分类8：AI 与前沿 --------
+        { term: "GEO", def: "Generative Engine Optimization，优化内容在 AI 搜索中被引用", plain: "让 ChatGPT、Perplexity 等 AI 工具在回答问题时提到你" },
+        { term: "AIVO", def: "AI Visibility Optimization，量化品牌在大模型中可见度", plain: "衡量“AI 推不推荐你”的分数" },
+        { term: "PSOS", def: "Prompt-Space Occupancy Score，AIVO 核心 KPI", plain: "“AI 推荐空间占有率”——在 AI 的回答里，你出现了多少次" },
+        { term: "AI Overview", def: "Google 搜索结果顶部的 AI 生成摘要", plain: "Google AI 直接在搜索结果顶部给你总结答案" },
+        { term: "知识图谱", def: "实体关系网络，将“人-事-物”的关系结构化", plain: "把“人-事-物”的关系画成一张网" },
+
+        // -------- 分类9：合规与本地化 --------
+        { term: "GDPR", def: "欧盟通用数据保护条例", plain: "欧盟的“用户隐私保护法”——收集用户数据必须告知、用户有权删除" },
+        { term: "CCPA", def: "美国加州消费者隐私法案", plain: "加州的“用户隐私保护法”——用户有权知道你要了什么数据" },
+        { term: "CAN-SPAM", def: "美国反垃圾邮件法", plain: "美国的“邮件营销规范”——邮件必须含退订链接、地址等信息" },
+
+        // -------- 分类10：自建站与技术基建 --------
+        { term: "DNS", def: "Domain Name System，将域名转换为服务器 IP", plain: "域名是门牌号，DNS 是门牌号查询系统" },
+        { term: "SSL", def: "Secure Sockets Layer，数字安全证书", plain: "给网站装上“加密锁”，让用户和服务器之间安全通信" },
+        { term: "VPS", def: "Virtual Private Server，虚拟专用服务器", plain: "把一台大房子隔成多个独立小房间，每个房间有独立水电" },
+        { term: "CDN", def: "Content Delivery Network，内容分发网络", plain: "多个厨房同时炒菜，就近上菜，不用等一个厨房做完" },
+        { term: "WebP", def: "Google 开发的图片格式，比 JPG 小 30-40%", plain: "把图片“瘦身”但不损失画质，让网页加载更快" },
+        { term: "srcset", def: "响应式图片属性，不同屏幕用不同大小图片", plain: "告诉浏览器“手机用小图，电脑用大图”，不浪费流量" },
+        { term: "WordPress", def: "全球最流行的开源建站系统", plain: "全球最流行的网站搭建工具，不用写代码也能建站" },
+        { term: "Elementor", def: "WordPress 页面构建器，拖拽式设计", plain: "拖拖拽拽就能设计网页，不用写一行代码" },
+        { term: "Rank Math / Yoast", def: "WordPress SEO 插件", plain: "SEO 小助手，提醒你标题写了没、关键词用对了没" },
+        { term: "WP Rocket", def: "WordPress 付费缓存插件", plain: "把做好的网页“拍张照片”存起来，下次访问直接给照片，秒开" },
+        { term: "Wordfence", def: "WordPress 安全插件", plain: "给网站装“防盗门 + 监控摄像头 + 报警器”" },
+        { term: "UpdraftPlus", def: "WordPress 备份插件", plain: "自动把网站“打包”存到云盘，出事了随时恢复" },
+        { term: "Cloudflare", def: "全球 CDN + 安全服务", plain: "全球加速 + 防攻击 + 域名管理，一站式服务" },
+        { term: "GSC", def: "Google Search Console，官方站长工具", plain: "Google 给站长开的“后台管理系统”，看你的网站在 Google 眼里什么样" }
+    ];
+
+    // ============================================================
+    // 2. 分类映射（按顺序）
+    // ============================================================
+    const categoryNames = [
+        "搜索引擎与 SEO 基础",
+        "SEO 工具指标",
+        "Google 算法与标准",
+        "技术 SEO",
+        "链接建设",
+        "Google Ads",
+        "数据分析",
+        "AI 与前沿",
+        "合规与本地化",
+        "自建站与技术基建"
+    ];
+    // 每个分类的起始索引（手动计算）
+    const categoryStartIndices = [0, 10, 15, 22, 30, 34, 45, 52, 57, 60];
+    // 分类总数
+    const totalCategories = categoryNames.length;
+
+    // ============================================================
+    // 3. 核心逻辑
+    // ============================================================
+    let currentMode = 'plain'; // 'plain' 或 'def'
+    let progress = {}; // 存储每个术语的答案状态: { index: { answered: true/false, correct: true/false, userInput: '' } }
+    let termData = glossaryData;
+
+    // DOM 元素
+    const container = document.getElementById('cardsContainer');
+    const answeredSpan = document.getElementById('answeredCount');
+    const totalSpan = document.getElementById('totalCount');
+    const correctSpan = document.getElementById('correctCount');
+    const wrongSpan = document.getElementById('wrongCount');
+
+    // 初始化进度
+    function initProgress() {
+        progress = {};
+        termData.forEach((_, idx) => {
+            progress[idx] = { answered: false, correct: false, userInput: '' };
+        });
+    }
+    initProgress();
+
+    // 更新统计
+    function updateStats() {
+        let answered = 0,
+            correct = 0,
+            wrong = 0;
+        for (let key in progress) {
+            if (progress[key].answered) {
+                answered++;
+                if (progress[key].correct) correct++;
+                else wrong++;
+            }
+        }
+        answeredSpan.textContent = answered;
+        totalSpan.textContent = termData.length;
+        correctSpan.textContent = correct;
+        wrongSpan.textContent = wrong;
+    }
+
+    // 生成卡片 HTML
+    function renderCards() {
+        let html = '';
+        let idx = 0;
+        for (let cat = 0; cat < totalCategories; cat++) {
+            const start = categoryStartIndices[cat];
+            const end = (cat + 1 < totalCategories) ? categoryStartIndices[cat + 1] : termData.length;
+            const items = termData.slice(start, end);
+            if (items.length === 0) continue;
+
+            html += `<details open>`;
+            html += `<summary><i class="fas fa-folder-open" style="font-style:normal;">📂</i> ${categoryNames[cat]}</summary>`;
+            html += `<div class="cards-container">`;
+
+            for (let i = 0; i < items.length; i++) {
+                const data = items[i];
+                const globalIdx = start + i;
+                const hintText = currentMode === 'plain' ? data.plain : data.def;
+                const termText = data.term;
+                const answers = termText.split('/').map(s => s.trim());
+
+                // 进度状态
+                const prog = progress[globalIdx];
+                const isAnswered = prog.answered;
+                const isCorrect = prog.correct;
+                const userInput = prog.userInput || '';
+
+                let feedbackHtml = '';
+                if (isAnswered) {
+                    const icon = isCorrect ? '✅' : '❌';
+                    const colorClass = isCorrect ? 'correct' : 'wrong';
+                    const answerShow = isCorrect ? '' : `<span class="correct-answer">正确答案：<code>${answers.join(' / ')}</code></span>`;
+                    feedbackHtml = `<div class="feedback"><span class="icon">${icon}</span> ${answerShow}</div>`;
+                }
+
+                html += `
+                    <div class="card-item ${isAnswered ? (isCorrect ? 'correct' : 'wrong') : ''}" data-idx="${globalIdx}">
+                        <div class="hint">
+                            <strong>${currentMode === 'plain' ? '💬 大白话' : '📘 专业解释'}</strong>
+                            <span>：${hintText}</span>
+                            ${currentMode === 'plain' ? `<span class="def-text">📖 ${data.def}</span>` : ''}
+                        </div>
+                        <div class="row">
+                            <input type="text" placeholder="输入术语..." value="${userInput}" ${isAnswered ? 'disabled' : ''} />
+                            <div class="btn-group">
+                                ${!isAnswered ? `<button class="btn-check" data-idx="${globalIdx}">检查</button>` : ''}
+                                <button class="btn-show" data-idx="${globalIdx}">${isAnswered ? '重新作答' : '显示答案'}</button>
+                            </div>
+                        </div>
+                        ${feedbackHtml}
+                    </div>
+                `;
+            }
+
+            html += `</div></details>`;
+            idx++;
+        }
+        container.innerHTML = html;
+        updateStats();
+    }
+
+    // 事件绑定（委托）
+    container.addEventListener('click', function(e) {
+        const target = e.target;
+        // 检查按钮
+        if (target.classList.contains('btn-check')) {
+            const idx = parseInt(target.dataset.idx);
+            const card = target.closest('.card-item');
+            const input = card.querySelector('input');
+            const userVal = input.value.trim();
+            if (!userVal) {
+                alert('请先输入答案！');
+                return;
+            }
+            const data = termData[idx];
+            const answers = data.term.split('/').map(s => s.trim());
+            // 忽略大小写、前后空格
+            const matched = answers.some(ans => ans.toLowerCase() === userVal.toLowerCase());
+            progress[idx].answered = true;
+            progress[idx].correct = matched;
+            progress[idx].userInput = userVal;
+            renderCards();
+            // 重新绑定事件（因为重新渲染了）
+            bindEvents();
+            return;
+        }
+
+        // 显示答案 / 重新作答
+        if (target.classList.contains('btn-show')) {
+            const idx = parseInt(target.dataset.idx);
+            const card = target.closest('.card-item');
+            const input = card.querySelector('input');
+            const data = termData[idx];
+            const answers = data.term.split('/').map(s => s.trim());
+
+            // 如果已经作答，则重置该条目
+            if (progress[idx].answered) {
+                progress[idx].answered = false;
+                progress[idx].correct = false;
+                progress[idx].userInput = '';
+                renderCards();
+                bindEvents();
+                return;
+            }
+
+            // 否则填入正确答案（第一个）
+            input.value = answers[0];
+            // 自动触发检查
+            const checkBtn = card.querySelector('.btn-check');
+            if (checkBtn) checkBtn.click();
+            return;
+        }
+    });
+
+    // 回车键支持（委托）
+    container.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const input = e.target;
+            if (input.tagName === 'INPUT' && !input.disabled) {
+                const card = input.closest('.card-item');
+                const checkBtn = card.querySelector('.btn-check');
+                if (checkBtn) checkBtn.click();
+            }
+        }
+    });
+
+    // 绑定事件（每次重新渲染后重新挂载，但已经通过委托处理，无需额外操作）
+    function bindEvents() {
+        // 所有事件已通过委托绑定，无需额外操作
+    }
+
+    // 模式切换
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentMode = this.dataset.mode;
+            // 重置所有进度（切换模式时清空作答状态）
+            initProgress();
+            renderCards();
+        });
+    });
+
+    // 重置所有进度
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        if (confirm('确定要重置所有进度吗？')) {
+            initProgress();
+            renderCards();
+        }
+    });
+
+    // 初始渲染
+    renderCards();
+
+    // 额外：当所有条目都答对时，给个彩蛋效果（可选）
+    // 这里不实现，保持简洁。
+</script>
+
+</body>
+</html>
