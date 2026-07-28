@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab 2 · 底层算法思维 (附加图片版) · 谷歌推广知识体系</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-body: #F8F6F2;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #FAF8F5;
+            --bg-highlight: #FFF4E8;
+            --bg-tab-active: #FF6B35;
+            --primary: #FF6B35;
+            --primary-light: #FF8A5C;
+            --secondary: #3B82F6;
+            --accent: #06B6D4;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --text-dark: #1A202C;
+            --text-muted: #5A6A7A;
+            --border-light: #EDE8E0;
+            --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --font: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        body { font-family: var(--font); background-color: var(--bg-body); min-height: 100vh; padding: 30px 20px; color: var(--text-dark); }
+        .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
+        .app-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
+        .app-header h1 { font-size: 26px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
+        .app-header h1 span { font-weight: 400; font-size: 16px; color: var(--text-muted); }
+        .badge-header { background: var(--primary); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 18px; border-radius: 40px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25); }
+        .tab-nav { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding-bottom: 16px; margin-bottom: 24px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; border-bottom: 2px solid var(--border-light); }
+        .tab-nav::-webkit-scrollbar { height: 4px; }
+        .tab-nav::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+        .tab-btn { flex-shrink: 0; padding: 10px 20px; border: none; background: transparent; border-radius: 40px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: all 0.2s; }
+        .tab-btn.active { background: var(--bg-tab-active); color: #fff; box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35); border-color: var(--bg-tab-active); }
+        .tab-btn:not(.active):hover { background: var(--bg-card-alt); color: var(--primary); }
+        .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+        .panel-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; padding: 12px 16px; background: var(--bg-card-alt); border-radius: 12px; border-left: 4px solid var(--primary-light); line-height: 1.6; }
+        .pill { display: inline-block; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; background: var(--primary); color: #fff; }
+        .internal-link { color: var(--primary); font-weight: 600; text-decoration: underline 2px dotted var(--primary-light); text-underline-offset: 4px; cursor: pointer; }
+        .internal-link:hover { color: var(--secondary); }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .expand-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; transition: all 0.3s ease; display: flex; flex-direction: column; }
+        .expand-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .expand-card summary { padding: 20px; cursor: pointer; list-style: none; display: flex; flex-direction: column; gap: 12px; position: relative; }
+        .expand-card summary::-webkit-details-marker { display: none; }
+        .expand-card summary::after { content: "▼"; position: absolute; right: 20px; bottom: 20px; color: var(--primary); font-size: 12px; transition: transform 0.3s ease; background: var(--bg-highlight); width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .expand-card[open] summary::after { transform: rotate(180deg); background: var(--primary); color: #fff; }
+        .card-real-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-light); }
+        .card-title { font-size: 17px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; padding-right: 30px; }
+        .badge { font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 30px; background: var(--bg-body); color: var(--text-muted); border: 1px solid var(--border-light); }
+        .badge.orange-bg { background: var(--primary); color: #fff; border: none; }
+        .badge.blue-bg { background: var(--secondary); color: #fff; border: none; }
+        .badge.cyan-bg { background: var(--accent); color: #fff; border: none; }
+        .badge.pink-bg { background: var(--pink); color: #fff; border: none; }
+        .badge.purple-bg { background: var(--purple); color: #fff; border: none; }
+        .card-details { padding: 0 20px 24px 20px; border-top: 1px dashed var(--border-light); margin-top: -4px; padding-top: 18px; }
+        .item-list { display: flex; flex-direction: column; gap: 6px; }
+        .item { font-size: 14px; color: var(--text-dark); padding: 4px 0 4px 14px; border-left: 2px dashed var(--accent); line-height: 1.5; }
+        .item .marker { color: var(--secondary); font-weight: 700; margin-right: 4px; }
+        .item .highlight { color: var(--primary); font-weight: 600; }
+        .item .tag { font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 30px; background: var(--bg-highlight); color: var(--primary); margin-left: 6px; }
+        .bubble { background: var(--bg-highlight); padding: 12px 16px; border-radius: 12px; border-left: 4px solid var(--primary); margin-top: 14px; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        .bubble strong { color: var(--primary); }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .app-container { padding: 20px 16px; } }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部 -->
+        <header class="app-header">
+            <h1>📊 谷歌推广知识体系 <span>· Tab 2 · 底层算法思维</span></h1>
+            <span class="badge-header">🧠 6张卡片 · 完整版</span>
+        </header>
+
+        <!-- Tab 导航 -->
+  <nav class="tab-nav">
+            <button class="tab-btn" onclick="location.href='tab0.html'">📚 全局目录</button>
+            <button class="tab-btn" onclick="location.href='tab1.html'">📅 算法更新</button>
+            <button class="tab-btn active" onclick="location.href='tab2.html'">🧠 底层思维</button>
+            <button class="tab-btn" onclick="location.href='tab3.html'">🔧 独立站基建</button>
+            <button class="tab-btn" onclick="location.href='tab4.html'">📝 站内SEO</button>
+            <button class="tab-btn" onclick="location.href='tab5.html'">📤 技术SEO</button>
+            <button class="tab-btn" onclick="location.href='tab6.html'">🔗 站外影响力</button>
+            <button class="tab-btn" onclick="location.href='tab7.html'">💰 谷歌广告</button>
+            <button class="tab-btn" onclick="location.href='tab8.html'">📊 数据分析</button>
+            <button class="tab-btn" onclick="location.href='tab9.html'">📈 转化率(CRO)</button>
+            <button class="tab-btn" onclick="location.href='tab10.html'">🚀 AI Overviews</button>
+        </nav>
+
+        <!-- 标题区 -->
+        <div class="panel-title">🧠 第一层 · 谷歌搜索引擎的工作原理与算法思维</div>
+        <div class="panel-sub">
+            <span class="pill">🔴 先看</span>
+            🗣️ 大白话：谷歌不是“关键词匹配器”，而是“意图理解器 + AI答案生成器”。
+            点击 <span class="internal-link" onclick="location.href='tab0.html'">内链示例</span> 可返回全局目录。
+        </div>
+
+        <!-- 卡片网格（2列布局，结合方案一网络高清图与折叠详情） -->
+        <div class="grid-2">
+            <!-- 卡片1：1.1 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="搜索引擎工作原理" class="card-real-img">
+                    <div class="card-title">📌 1.1 搜索引擎工作原理 <span class="badge blue-bg">基础</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> 抓取（Crawling）→ 索引（Indexing）→ 排名（Ranking）</div>
+                        <div class="item"><span class="marker">•</span> 抓取：Googlebot从已知URL出发，沿超链接逐步浏览</div>
+                        <div class="item"><span class="marker">•</span> 索引：处理抓取到的页面，解析内容并存入数据库</div>
+                        <div class="item"><span class="marker">•</span> 排名：根据数百个信号决定搜索结果的展示顺序</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>谷歌小蜘蛛先顺着链接爬网页，再把内容存进它的图书馆，最后决定给你排第几。</div>
+                </div>
+            </details>
+
+            <!-- 卡片2：1.2 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="核心算法与排名系统" class="card-real-img">
+                    <div class="card-title">📌 1.2 核心算法与排名系统（2025-2026） <span class="badge orange-bg">⭐ 核心</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> BERT / RankBrain / 神经匹配：理解搜索查询的语义和上下文</div>
+                        <div class="item"><span class="marker">•</span> 有用内容系统：现优先评估“信息增益”</div>
+                        <div class="item"><span class="marker">•</span> Passage Ranking（段落排名）：同一文章不同段落可独立排名</div>
+                        <div class="item"><span class="marker">•</span> <span class="highlight">⭐ 信息增益（Information Gain）</span> <span class="tag">2026.03核心信号</span></div>
+                        <div class="item"><span class="marker">•</span> 信息增益不是关于字数的指标，而是关于新增语义内容的指标</div>
+                        <div class="item"><span class="marker">•</span> Preferred Sources（首选来源）——2026.04全球推出</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>谷歌现在不只看你写了多少字，而是看你比已经排名前10的页面多说了什么新东西——如果只是重复别人说过的话，排名会掉。</div>
+                </div>
+            </details>
+
+            <!-- 卡片3：1.3 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="范式转移" class="card-real-img">
+                    <div class="card-title">📌 1.3 SEO vs SIO vs GEO 范式转移 <span class="badge cyan-bg">方向</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> SEO（传统）：抢排名第一（权重持续下降）</div>
+                        <div class="item"><span class="marker">•</span> SIO（搜索意图）：匹配用户需求（仍为核心）</div>
+                        <div class="item"><span class="marker">•</span> GEO（生成式引擎优化）：被AI写进答案（核心指标=引用率）</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>以前你的目标是“让自己排第一”，现在和未来的目标是“让AI在回答问题时提到你”——用户可能根本不需要点击你的链接，答案已经被AI整理好了。</div>
+                </div>
+            </details>
+
+            <!-- 卡片4：1.4 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="E-E-A-T质量框架" class="card-real-img">
+                    <div class="card-title">📌 1.4 ⭐ E-E-A-T 质量框架 <span class="badge pink-bg">硬性门槛</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> <span class="highlight">Experience（经验）</span> — 排第一！“AI装不了亲手做过”</div>
+                        <div class="item"><span class="marker">•</span> Expertise（专业）</div>
+                        <div class="item"><span class="marker">•</span> Authoritativeness（权威）</div>
+                        <div class="item"><span class="marker">•</span> <span class="highlight">Trustworthiness（可信）</span> — 基础底线</div>
+                        <div class="item"><span class="marker">•</span> E-E-A-T已从“加分项”变成排名硬性门槛（入场券）</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>以前E-E-A-T是附加题，现在是必答题——做不好直接没资格参加排名。尤其要注意“经验”这个维度，你得证明自己真的做过，而不是只会说理论。</div>
+                </div>
+            </details>
+
+            <!-- 卡片5：1.5 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="PR值数学传递逻辑" class="card-real-img">
+                    <div class="card-title">📌 1.5 独有内容：PR值（PageRank）数学传递逻辑 <span class="badge purple-bg">历史基础</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> PR值0-10分，通过链接在页面间平均分配</div>
+                        <div class="item"><span class="marker">•</span> 公式：PR(A) = PR(B)/L(B) + PR(C)/L(C) + PR(D)/L(D)</div>
+                        <div class="item"><span class="marker">•</span> 示例：A页PR=5，链接到B/C/D，每个分得约1.67分</div>
+                        <div class="item"><span class="marker">•</span> 关键公式：c=2.5分示例（高质量外链传递更多权重）</div>
+                        <div class="item"><span class="marker">•</span> 良好外链的6大属性：权威性/相关性/锚文本/DoFollow/位置/目标地址</div>
+                        <div class="item"><span class="marker">•</span> NoFollow的影响：会阻止PR值的传递</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>PR值就像“投票权重”，你投出去的票越多，每张票的分量就越轻——所以高质量的外链比一大堆低质量的外链更有价值。</div>
+                </div>
+            </details>
+
+            <!-- 卡片6：1.6 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80" alt="GEO被AI引用实操对策" class="card-real-img">
+                    <div class="card-title">📌 1.6 独有内容：GEO“被AI引用”5大实操对策 <span class="badge orange-bg">行动框架</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> 对策1：前100字直接回答问题（不铺垫背景）</div>
+                        <div class="item"><span class="marker">•</span> 对策2：列表/表格/FAQ结构化（AI偏爱小块状、可直接摘抄的内容）</div>
+                        <div class="item"><span class="marker">•</span> 对策3：强化E-E-A-T信号（真实作者+可验证履历）</div>
+                        <div class="item"><span class="marker">•</span> 对策4：部署完整Schema标记（提升实体密度）</div>
+                        <div class="item"><span class="marker">•</span> 对策5：持续更新内容（AI优先引用新鲜信息）</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>想让AI引用你？记住这5条：开头直接给答案、内容写成可摘抄的结构、证明你是真人专家、给内容贴好标签、定期刷新老文章。</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- 底部导航 -->
+        <div style="margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
+            <span>✨ Tab 2 · 6张卡片 · 完整内容</span>
+            <span><span class="internal-link" onclick="location.href='tab0.html'">← 返回全局目录</span></span>
+        </div>
+    </div>
+</body>
+</html>

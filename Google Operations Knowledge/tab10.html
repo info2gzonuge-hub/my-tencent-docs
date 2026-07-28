@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab 10 · AI Overviews 优化 · 谷歌推广知识体系</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+        /* ================= 全局基础变量与样式 (严格锁死) ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-body: #F8F6F2;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #FAF8F5;
+            --bg-highlight: #FFF4E8;
+            --bg-tab-active: #FF6B35;
+            --primary: #FF6B35;
+            --primary-light: #FF8A5C;
+            --secondary: #1E3A8A; 
+            --accent: #06B6D4;
+            --text-dark: #1A202C;
+            --text-muted: #5A6A7A;
+            --border-light: #EDE8E0;
+            --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 8px 24px rgba(255, 107, 53, 0.15);
+            --radius: 16px;
+            --font: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        body { font-family: var(--font); background-color: var(--bg-body); min-height: 100vh; padding: 30px 20px; color: var(--text-dark); }
+        .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
+        
+        /* 头部与导航锁死款式 */
+        .app-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); gap: 12px; }
+        .app-header h1 { font-size: 26px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
+        .app-header h1 span { font-weight: 400; font-size: 16px; color: var(--text-muted); }
+        .badge-header { background: var(--primary); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 18px; border-radius: 40px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25); }
+        
+        .tab-nav { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding-bottom: 16px; margin-bottom: 24px; scrollbar-width: thin; border-bottom: 2px solid var(--border-light); }
+        .tab-nav::-webkit-scrollbar { height: 4px; }
+        .tab-nav::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+        .tab-btn { flex-shrink: 0; padding: 10px 20px; border: none; background: transparent; border-radius: 40px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: all 0.2s; }
+        .tab-btn.active { background: var(--bg-tab-active); color: #fff; box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35); border-color: var(--bg-tab-active); }
+        .tab-btn:not(.active):hover { background: var(--bg-card-alt); color: var(--primary); }
+        
+        .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+        .panel-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; padding: 12px 16px; background: var(--bg-card-alt); border-radius: 12px; border-left: 4px solid #DC2626; line-height: 1.6; }
+        .pill { display: inline-block; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; border: 1px solid var(--border-light); }
+        .pill.red { background: #DC2626; color: #fff; border: none; }
+        
+        /* 通用排版组件 */
+        .section-header { font-size: 18px; font-weight: 700; color: var(--text-dark); margin: 32px 0 16px; border-bottom: 2px solid var(--border-light); padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .bubble-info { background: var(--bg-highlight); padding: 12px 16px; border-radius: 12px; border: 1px solid #FADCB3; font-size: 13.5px; color: var(--text-dark); line-height: 1.6; margin-bottom: 16px; }
+        .hover-box { transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: default; }
+        .hover-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); z-index: 10; }
+
+        /* ================= 核心数据仪表盘 (图文融合 3:7) ================= */
+        .dashboard-wrapper { display: flex; gap: 20px; margin-bottom: 24px; align-items: stretch; }
+        .dash-image-box { flex: 0 0 28%; background: linear-gradient(135deg, #1E3A8A 0%, #FF6B35 100%); border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; padding: 24px; text-align: center; position: relative; overflow: hidden; box-shadow: inset 0 0 40px rgba(0,0,0,0.2); }
+        .dash-image-box::before { content: ''; position: absolute; width: 200%; height: 200%; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px); top: -50%; left: -50%; animation: bgSlide 20s linear infinite; }
+        @keyframes bgSlide { 100% { transform: translate(50px, 50px); } }
+        .dash-image-title { font-size: 22px; font-weight: 800; z-index: 1; letter-spacing: 1px; margin-bottom: 10px; }
+        .dash-image-sub { font-size: 13px; opacity: 0.9; z-index: 1; line-height: 1.5; }
+        
+        .dash-data-area { flex: 1; display: flex; flex-direction: column; gap: 16px; justify-content: space-between; }
+        .dash-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .dash-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .data-box { background: #fff; border: 1px solid var(--border-light); border-top: 3px solid var(--primary); padding: 14px; border-radius: 8px; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+        .data-val { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 6px; line-height: 1.1; }
+        .data-label { font-size: 12.5px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+        .data-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.4; }
+
+        /* ================= 表格与网格 ================= */
+        .styled-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13.5px; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-light); }
+        .styled-table th { background: var(--primary); color: #fff; font-weight: 600; text-align: left; padding: 12px 14px; }
+        .styled-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-light); color: var(--text-dark); line-height: 1.6; }
+        .styled-table tr:nth-child(even) { background: #FAFAFA; }
+        
+        .center-bordered-table th, .center-bordered-table td { text-align: center; border: 1px solid var(--border-light); vertical-align: middle; }
+
+        .grid-1-1 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+        .framework-detail { background: #FAF8F5; border-left: 4px solid var(--primary); padding: 16px; border-radius: 0 8px 8px 0; height: 100%; }
+        .framework-detail h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+
+        /* ================= 9.2 折叠卡片 (Accordion) ================= */
+        .tactic-details { background: #fff; border: 1px solid #E5E7EB; border-radius: 10px; margin-bottom: 12px; overflow: hidden; transition: all 0.3s; }
+        .tactic-details summary { font-weight: 600; font-size: 14.5px; padding: 16px 20px; cursor: pointer; list-style: none; display: flex; align-items: center; background: #fff; color: var(--text-dark); transition: background 0.2s; user-select: none; }
+        .tactic-details summary:hover { background: var(--bg-card-alt); }
+        .tactic-details summary::-webkit-details-marker { display: none; }
+        .tactic-details summary::before { content: '[+] '; color: var(--primary); font-weight: 800; font-family: monospace; margin-right: 10px; font-size: 16px; }
+        .tactic-details[open] summary::before { content: '[-] '; }
+        .tactic-details[open] { border-color: var(--primary-light); box-shadow: 0 4px 12px rgba(255,107,53,0.08); }
+        .tactic-details[open] summary { border-bottom: 1px dashed var(--border-light); background: var(--bg-highlight); }
+        .tactic-content { padding: 16px 20px; font-size: 13.5px; color: var(--text-dark); line-height: 1.7; background: #fff; }
+        .tactic-content strong { color: var(--primary); }
+        .tactic-box { background: #F3F4F6; padding: 12px 16px; border-radius: 8px; margin-top: 10px; }
+
+        /* ================= 9.3 监控卡片 ================= */
+        .monitor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+        .monitor-card { background: #fff; border: 1px solid var(--border-light); border-top: 4px solid var(--border-light); border-radius: 8px; padding: 20px; }
+        .monitor-card.blue { border-top-color: #3B82F6; }
+        .monitor-card.orange { border-top-color: #F59E0B; }
+        .monitor-card.green { border-top-color: #10B981; }
+        .monitor-title { font-weight: 700; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+
+        /* ================= 9.4 纯CSS点击/悬浮交互 ================= */
+        .fw-nav { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 24px 0 16px; }
+        .fw-node { background: var(--bg-card); border: 2px solid var(--primary-light); padding: 12px 20px; border-radius: 8px; color: var(--text-dark); text-align: center; font-weight: 700; font-size: 14.5px; cursor: pointer; transition: all 0.2s; user-select: none; }
+        .fw-node:hover { background: var(--bg-highlight); }
+        .fw-arrow { color: var(--primary-light); font-size: 20px; font-weight: bold; }
+        
+        .fw-panels { position: relative; margin-bottom: 24px; }
+        .fw-panel { display: none; background: #FAF8F5; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 8px 8px 0; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Radio Input 逻辑 */
+        #fw1:checked ~ .fw-nav label[for="fw1"],
+        #fw2:checked ~ .fw-nav label[for="fw2"],
+        #fw3:checked ~ .fw-nav label[for="fw3"],
+        #fw4:checked ~ .fw-nav label[for="fw4"] { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 12px rgba(255,107,53,0.3); }
+        
+        #fw1:checked ~ .fw-panels #panel1,
+        #fw2:checked ~ .fw-panels #panel2,
+        #fw3:checked ~ .fw-panels #panel3,
+        #fw4:checked ~ .fw-panels #panel4 { display: block; }
+
+        /* ================= 9.5 12项 Checklist ================= */
+        .checklist-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+        .check-list { list-style: none; padding: 0; margin: 0; }
+        .check-list li { position: relative; padding-left: 24px; margin-bottom: 14px; font-size: 13px; color: var(--text-dark); line-height: 1.5; }
+        .check-list li::before { content: '☐'; position: absolute; left: 0; top: -1px; color: var(--text-muted); font-size: 18px; font-weight: bold; }
+
+        @media (max-width: 1024px) {
+            .dashboard-wrapper { flex-direction: column; }
+            .dash-image-box { padding: 40px; }
+            .dash-row-4, .dash-row-3 { grid-template-columns: repeat(2, 1fr); }
+            .grid-1-1 { grid-template-columns: 1fr; }
+            .monitor-grid, .checklist-grid { grid-template-columns: 1fr; }
+            .fw-nav { flex-direction: column; }
+            .fw-arrow { transform: rotate(90deg); }
+        }
+        @media (max-width: 600px) {
+            .dash-row-4, .dash-row-3 { grid-template-columns: 1fr; }
+            .styled-table { display: block; overflow-x: auto; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部区 -->
+        <header class="app-header">
+            <h1>🚀 谷歌推广知识体系 <span>· Tab 10 · AI Overviews 优化</span></h1>
+            <span class="badge-header">🔴 最优先 · 2026生存必修课</span>
+        </header>
+
+        <!-- 导航区 -->
+ <nav class="tab-nav">
+            <button class="tab-btn" onclick="location.href='tab0.html'">📚 全局目录</button>
+            <button class="tab-btn" onclick="location.href='tab1.html'">📅 算法更新</button>
+            <button class="tab-btn" onclick="location.href='tab2.html'">🧠 底层思维</button>
+            <button class="tab-btn" onclick="location.href='tab3.html'">🔧 独立站基建</button>
+            <button class="tab-btn" onclick="location.href='tab4.html'">📝 站内SEO</button>
+            <button class="tab-btn" onclick="location.href='tab5.html'">📤 技术SEO</button>
+            <button class="tab-btn" onclick="location.href='tab6.html'">🔗 站外影响力</button>
+            <button class="tab-btn" onclick="location.href='tab7.html'">💰 谷歌广告</button>
+            <button class="tab-btn" onclick="location.href='tab8.html'">📊 数据分析</button>
+            <button class="tab-btn" onclick="location.href='tab9.html'">📈 转化率(CRO)</button>
+            <button class="tab-btn active" onclick="location.href='tab10.html'">🚀 AI Overviews</button>
+        </nav>
+
+        <!-- 标题区 -->
+        <div class="panel-title">🚀 第九层 · AI Overviews 优化</div>
+        <div class="panel-sub">
+            <span class="pill red">🔴 最优先</span> 
+            🗣️ <strong>大白话：</strong> 你的目标不是“排第一”，而是“被AI写进答案”。38%的引用来自排名前10之外——你不需要排第一也能被引用。
+        </div>
+
+        <!-- 📊 核心数据仪表盘 (左图右数图文融合) -->
+        <h3 class="section-header">📊 核心数据仪表盘</h3>
+        <div class="dashboard-wrapper">
+            <div class="dash-image-box">
+                <div class="dash-image-title">AEO 2026<br>数据图谱</div>
+                <div class="dash-image-sub">AI 搜索引擎正在重塑流量分配逻辑，目标从"被点击"全面转向"被引用"</div>
+            </div>
+            <div class="dash-data-area">
+                <div class="dash-row-3">
+                    <div class="data-box hover-box">
+                        <div class="data-val">86.7%</div>
+                        <div class="data-label">AI 查询触发率</div>
+                        <div class="data-desc">一年内从56.9%增长50%</div>
+                    </div>
+                    <div class="data-box hover-box">
+                        <div class="data-val">约 38%</div>
+                        <div class="data-label">引用非前10页面</div>
+                        <div class="data-desc">越发青睐长尾与精准答案</div>
+                    </div>
+                    <div class="data-box hover-box">
+                        <div class="data-val">约 83%</div>
+                        <div class="data-label">有AI时的零点击率</div>
+                        <div class="data-desc">AI回答了用户就不再点击</div>
+                    </div>
+                </div>
+                <div class="dash-row-4">
+                    <div class="data-box hover-box">
+                        <div class="data-val">60-70%</div>
+                        <div class="data-label">首个品牌点击比</div>
+                        <div class="data-desc">排序决定流量分配</div>
+                    </div>
+                    <div class="data-box hover-box">
+                        <div class="data-val">约 3%</div>
+                        <div class="data-label">B2B品牌出现率</div>
+                        <div class="data-desc">B2B需专门的结构化优化</div>
+                    </div>
+                    <div class="data-box hover-box">
+                        <div class="data-val">25亿+</div>
+                        <div class="data-label">月活用户</div>
+                        <div class="data-desc">覆盖全球超30%人口</div>
+                    </div>
+                    <div class="data-box hover-box">
+                        <div class="data-val">93%</div>
+                        <div class="data-label">AI Mode 零点击</div>
+                        <div class="data-desc">聊天模式下必须争取被引用</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔍 AI Overviews vs 精选摘要 vs AI Mode -->
+        <table class="styled-table hover-box">
+            <thead>
+                <tr>
+                    <th>对比项</th>
+                    <th>精选摘要</th>
+                    <th>AI Overviews</th>
+                    <th>AI Mode</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>定义</strong></td>
+                    <td>从一个排名页面摘取一段文字</td>
+                    <td>Gemini 3从多个网页综合生成新答案</td>
+                    <td>整个界面变成对话式搜索</td>
+                </tr>
+                <tr>
+                    <td><strong>引用来源</strong></td>
+                    <td>1个</td>
+                    <td><strong>3-7个</strong></td>
+                    <td>多个</td>
+                </tr>
+                <tr>
+                    <td><strong>零点击率</strong></td>
+                    <td>约 40%</td>
+                    <td><strong>约 83%</strong></td>
+                    <td><strong>93%</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>转化率</strong></td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>AI搜索访客转化率是<strong>有机访客的 4.4 倍</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 9.1 AI Overviews 的工作原理 -->
+        <h3 class="section-header">9.1 AI Overviews 的工作原理</h3>
+        <div class="bubble-info hover-box">
+            🗣️ <strong>大白话：</strong> 谷歌把“用户问的问题”拆成好几个小问题，同时去搜，再把最好的答案拼在一起给你。如果你的页面在任何一个子问题上胜出，就有机会被引用。
+        </div>
+
+        <div class="grid-1-1">
+            <div class="framework-detail" style="border-left-color: #06B6D4; background: #F0FDF4;">
+                <h4>① 查询扇出（Query Fan-out）机制</h4>
+                <div style="font-size: 13px; color: var(--text-dark); line-height: 1.6; margin-bottom: 8px;">
+                    Gemini 将用户的一个搜索拆解为多个相关的子查询，同时运行这些子查询，将各子查询的最佳信息整合为一个答案。
+                </div>
+                <div style="font-size: 12.5px; color: var(--text-muted); background: #fff; padding: 8px 12px; border-radius: 4px; border: 1px dashed #A7F3D0;">
+                    <strong>💡 示例：</strong> 用户问“如何选择牙齿美白贴？”，Gemini 同时搜索“美白贴成分”、“安全性”、“用户评价”、“价格对比”等多个维度。
+                </div>
+            </div>
+
+            <div class="framework-detail" style="border-left-color: #EAB308; background: #FEFCE8;">
+                <h4>② 引用来源分布与更新</h4>
+                <ul style="padding-left: 16px; margin: 0; font-size: 13px;">
+                    <li>AI Overviews 平均引用 <strong>4-7 个来源</strong>。</li>
+                    <li>首个被引用的品牌获得 <strong>60-70%</strong> 的点击流量。</li>
+                    <li>现已在 <strong>200+ 国家和地区、40+ 语言</strong> 上线。</li>
+                    <li style="margin-top: 6px;"><strong style="color:#D97706;">⭐ 重大更新：</strong> 2026年1月，Google 将 Gemini 3 设为 AI Overviews 的默认模型，全球生效。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 原②改③ 评估信号表格 (居中+边框) -->
+        <h4 style="margin: 16px 0 10px; font-size: 15px;">③ 三个评估信号</h4>
+        <table class="styled-table center-bordered-table hover-box">
+            <thead>
+                <tr>
+                    <th>信号</th>
+                    <th style="width: 45%;">说明</th>
+                    <th>大白话</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>内容质量</strong></td>
+                    <td style="text-align: left;">页面内容准确、原创、有用的程度。AI会评估信息是否真实、是否有数据支撑、是否与权威一致。</td>
+                    <td>你写的东西对不对、好不好、有没有价值</td>
+                </tr>
+                <tr>
+                    <td><strong>来源权威</strong></td>
+                    <td style="text-align: left;">域名和作者在该主题上的可信度。AI会交叉验证多个权威来源，偏好被多次引用的专家或机构。</td>
+                    <td>你在这个领域是不是被认可的专家</td>
+                </tr>
+                <tr>
+                    <td><strong>相关性</strong></td>
+                    <td style="text-align: left;">内容直接回答特定子问题的程度。AI将查询拆解为多个子问题，分别寻找最佳匹配答案。</td>
+                    <td>你的内容是不是正好回答了AI拆出来的那个小问题</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 9.2 五大实操对策 (默认收起) -->
+        <h3 class="section-header">9.2 5大实操对策</h3>
+        <div class="bubble-info hover-box">
+            🗣️ <strong>大白话：</strong> 想让AI引用你？记住这5条核心逻辑，点击卡片展开具体实操方案。
+        </div>
+
+        <details class="tactic-details">
+            <summary>对策 1：前100字直接给答案（核心：抛弃铺垫 | 直击重点）</summary>
+            <div class="tactic-content">
+                <div><strong>🛠️ 怎么做：</strong> 在内容开头的前 100 字内直接给出核心答案，不铺垫背景、不绕弯。</div>
+                <div style="margin: 8px 0;"><strong>💡 示例：</strong> 选美白贴主要看过氧化氢浓度（10%-15%最佳）、牙釉质安全认证和佩戴时长三个核心指标。</div>
+                <div class="tactic-box"><strong>🎯 为什么有效 / 大白话：</strong> AI Overviews 系统偏爱那些开篇就直接回答问题的内容。</div>
+            </div>
+        </details>
+
+        <details class="tactic-details">
+            <summary>对策 2：列表/表格/FAQ 结构化（核心：小块状 | 易摘抄）</summary>
+            <div class="tactic-content">
+                <div><strong>🛠️ 怎么做：</strong><br>
+                - H2 标题用疑问句形式（如“How does X work?”）<br>
+                - 标题下 40-60 字精简答案（即 Atomic Answer）<br>
+                - 多用列表、表格、FAQ 等结构化格式</div>
+                <div style="margin: 8px 0;"><strong>📊 数据：</strong> 78.4% 的 AI 引用来自 H2 标题下的内容。</div>
+                <div class="tactic-box"><strong>🎯 为什么有效 / 大白话：</strong> AI 偏爱小块状、可直接摘抄的内容，结构化格式让 AI 更容易提取信息。</div>
+            </div>
+        </details>
+
+        <details class="tactic-details">
+            <summary>对策 3：强化 E-E-A-T（核心：证明你是真人专家）</summary>
+            <div class="tactic-content">
+                <div><strong>🛠️ 怎么做：</strong><br>
+                - <strong>Experience（经验）：</strong> 用第一人称写真实经历（“我们帮客户实施时发现...”）<br>
+                - <strong>Expertise（专业）：</strong> 作者署名 + Person Schema + 结构化从属关系 + sameAs 链接<br>
+                - <strong>Authoritativeness（权威）：</strong> 在 Wikidata、LinkedIn、Google 知识图谱中解析你的组织<br>
+                - <strong>Trustworthiness（可信）：</strong> AI 会交叉检查你的 Schema、内容和实体图谱寻找矛盾</div>
+                <div class="tactic-box"><strong>🗣️ 大白话：</strong> 证明你是“真人真事”，AI 才敢引用你。</div>
+            </div>
+        </details>
+
+        <details class="tactic-details">
+            <summary>对策 4：部署 Schema 标记（核心：主动给内容贴标签）</summary>
+            <div class="tactic-content">
+                <div><strong>🛠️ 怎么做：</strong><br>
+                - <strong>FAQPage Schema：</strong> 将问答对预打包，每个问答对都是 AI 的候选引用点<br>
+                - <strong>Article Schema：</strong> 标明文章结构、作者、发布时间<br>
+                - <strong>dateModified Schema：</strong> 每次更新内容时同步更新</div>
+                <div style="margin: 8px 0;"><strong>📊 数据：</strong> 实体密度 ≈ 20.6% 的内容更容易被 AI 引用，普通文本仅 5-8%。</div>
+                <div class="tactic-box"><strong>🗣️ 大白话：</strong> 给内容贴好“标签”，告诉 AI 这里是什么。</div>
+            </div>
+        </details>
+
+        <details class="tactic-details">
+            <summary>对策 5：持续更新（核心：定期刷新老文章）</summary>
+            <div class="tactic-content">
+                <div><strong>🛠️ 怎么做：</strong><br>
+                - <strong>建立月度更新机制：</strong> 每月检查排名 5-20 名的旧页面，补充新数据、新案例。<br>
+                - <strong>可见日期：</strong> 每次更新后，更新 <code>dateModified</code> 属性，并在文章顶部添加可见的“最后更新”日期。</div>
+                <div class="tactic-box"><strong>🗣️ 大白话：</strong> AI 喜欢“新鲜出炉”的信息，老内容定期翻新。</div>
+            </div>
+        </details>
+
+       <!-- 9.3 AI可见度监控 -->
+        <h3 class="section-header">9.3 AI可见度监控</h3>
+        
+        <!-- KPI 看板 (横向通栏) -->
+        <div class="bubble-info hover-box" style="border-left: 4px solid #DC2626; background: #FEF2F2; border-color: #FCA5A5;">
+            <div style="font-weight: 700; color: #DC2626; margin-bottom: 6px; font-size: 15px;">🎯 核心理念：双轨考核指标</div>
+            <div style="font-size: 13.5px; color: var(--text-dark); line-height: 1.6;">
+                <strong>① AEO 引用率（核心）：</strong> 我们在目标关键词的 AI 回答中出现的频率（全面取代单纯点击率）。<br>
+                <strong>② AI 声量占比（SOV）：</strong> 在被引用的内容中，我们品牌占据的篇幅或首发排序（首引点击转化最高）。
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1.8fr; gap: 20px; margin-bottom: 24px;" class="monitor-layout hover-box">
+            <!-- 局部专属样式（实现自适应与时间轴） -->
+            <style>
+                @media (max-width: 768px) { .monitor-layout { grid-template-columns: 1fr !important; } }
+                .tool-item { background: #fff; border: 1px solid var(--border-light); padding: 14px; border-radius: 8px; margin-bottom: 12px; }
+                .tool-name { font-weight: 700; color: var(--secondary); font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+                .tool-tag { background: #E0E7FF; color: #4338CA; font-size: 11.5px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+                .tool-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+                .sop-timeline { padding-left: 16px; margin-top: 12px; }
+                .sop-step { position: relative; padding-left: 28px; padding-bottom: 24px; border-left: 2px solid #E5E7EB; }
+                .sop-step:last-child { border-left-color: transparent; padding-bottom: 0; }
+                .sop-step::before { content: ''; position: absolute; left: -7px; top: 0; width: 12px; height: 12px; background: #fff; border: 3px solid #F59E0B; border-radius: 50%; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1); }
+                .sop-title { font-weight: 700; font-size: 14.5px; color: var(--text-dark); margin-bottom: 6px; margin-top: -4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+                .sop-title span { color: #F59E0B; font-size: 12.5px; font-weight: 600; background: #FEF3C7; padding: 2px 8px; border-radius: 4px; }
+                .sop-detail { font-size: 13px; color: var(--text-muted); line-height: 1.6; background: #fff; border: 1px solid var(--border-light); padding: 12px 16px; border-radius: 8px; margin-top: 10px; }
+            </style>
+
+            <!-- 左侧：工具兵器谱 -->
+            <div class="monitor-card blue" style="border-top-color: #3B82F6; padding: 20px;">
+                <div class="monitor-title" style="margin-bottom: 16px;"><span style="color:#3B82F6;">🔧</span> 工具矩阵与用途</div>
+                <div class="tool-item">
+                    <div class="tool-name">Semrush <span class="tool-tag">AI Visibility</span></div>
+                    <div class="tool-desc">追踪高意图商业词是否触发了 AI 面板，以及品牌在其中的排名变化。</div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-name">Otterly <span class="tool-tag">品牌雷达</span></div>
+                    <div class="tool-desc">监控 AI 在回答行业问题时，对我们品牌的提及率和情绪倾向（正面/中立）。</div>
+                </div>
+                <div class="tool-item" style="margin-bottom: 0;">
+                    <div class="tool-name">GSC <span class="tool-tag">进阶排查</span></div>
+                    <div class="tool-desc">导出带来曝光的长尾提问词，反向排查并修补 AI 引用盲区。</div>
+                </div>
+            </div>
+
+            <!-- 右侧：SOP 垂直时间轴 -->
+            <div class="monitor-card orange" style="border-top-color: #F59E0B; padding: 20px;">
+                <div class="monitor-title"><span style="color:#F59E0B;">📅</span> 四步排雷 SOP</div>
+                <div class="sop-timeline">
+                    <div class="sop-step">
+                        <div class="sop-title">Step 1 定向捞词 <span>找准战场</span></div>
+                        <div class="sop-detail">筛选出带来核心转化的 Top 20 商业词汇与长尾词（例如：“过氧化氢美白贴代工” 或 “B2B teeth whitening strips supplier”）。</div>
+                    </div>
+                    <div class="sop-step">
+                        <div class="sop-title">Step 2 查触发率 <span>摸清底细</span></div>
+                        <div class="sop-detail">搜索实测，判断 AI 此时是给出了宽泛的科普答案（我们需要做 FAQ 拦截），还是直接给出了具体的供应商推荐（我们需要强化实体证明）。</div>
+                    </div>
+                    <div class="sop-step">
+                        <div class="sop-title">Step 3 抠细节逆向分析 <span>找竞品抄作业</span></div>
+                        <div class="sop-detail">如果 AI 引用了竞品而没引用我们，逐行排查：竞品页面是不是多了一张参数对比表格？还是多了一项独家的配方数据？</div>
+                    </div>
+                    <div class="sop-step">
+                        <div class="sop-title">Step 4 补丁迭代 <span>重夺阵地</span></div>
+                        <div class="sop-detail">针对性升级我们的页面内容，补充结构化数据，更新 <code>dateModified</code> 标签，并在 GSC 中提交重收录。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9.4 四步优化框架 (纯CSS交互) -->
+        <h3 class="section-header">9.4 四步优化框架</h3>
+        <div class="bubble-info hover-box" style="margin-bottom: 0;">
+            🗣️ <strong>大白话：</strong> 四步走——搞清楚你擅长什么、把内容串起来、贴好标签、证明你是真人。<strong>(点击下方节点查看对应实操文案)</strong>
+        </div>
+
+        <!-- Radio Button 交互逻辑 -->
+        <input type="radio" name="fw" id="fw1" checked hidden>
+        <input type="radio" name="fw" id="fw2" hidden>
+        <input type="radio" name="fw" id="fw3" hidden>
+        <input type="radio" name="fw" id="fw4" hidden>
+
+        <div class="fw-nav hover-box">
+            <label for="fw1" class="fw-node">① 主题地图</label>
+            <div class="fw-arrow">➔</div>
+            <label for="fw2" class="fw-node">② 知识图谱</label>
+            <div class="fw-arrow">➔</div>
+            <label for="fw3" class="fw-node">③ 结构化数据</label>
+            <div class="fw-arrow">➔</div>
+            <label for="fw4" class="fw-node">④ E-E-A-T 适配</label>
+        </div>
+
+        <div style="font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 16px;">
+            <strong>🔗 关联说明：</strong> 四个步骤是前后衔接的递进关系——先定位你能打什么仗(①)，再把弹药串联成体系(②)，然后给每个弹药贴上AI能识别的标签(③)，最后证明你是真枪实弹而不是空包弹(④)。
+        </div>
+
+        <div class="fw-panels">
+            <div class="fw-panel" id="panel1">
+                <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 10px;">① 主题地图 — 找对方向</h4>
+                <ul style="padding-left: 20px; font-size: 13.5px; line-height: 1.7;">
+                    <li>找出你或你团队真正有实战经验的 3-5 个核心领域。</li>
+                    <li>用 Google 搜索这些领域的关键词，看 AI Overviews 是否已经出现。已出现 → 有机会；未出现 → 还没到时候。</li>
+                    <li>每个核心领域列出 20-30 个具体问题（可借助 AnswerThePublic 或字母汤法），作为选题库。</li>
+                </ul>
+            </div>
+            <div class="fw-panel" id="panel2">
+                <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 10px;">② 知识图谱 — 串起内容</h4>
+                <ul style="padding-left: 20px; font-size: 13.5px; line-height: 1.7;">
+                    <li><strong>实体连接：</strong> 每篇新文章至少链接到 2-3 篇站内相关老文章。</li>
+                    <li><strong>实体互认：</strong> 核心概念之间建立“A 是 B 的一种”、“A 与 B 的区别”等关系描述。</li>
+                    <li><strong>Hub 页面：</strong> 为每个核心领域创建一个“汇总指南页”，集中传递权威信号。</li>
+                </ul>
+            </div>
+            <div class="fw-panel" id="panel3">
+                <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 10px;">③ 结构化数据 — 贴好标签</h4>
+                <ul style="padding-left: 20px; font-size: 13.5px; line-height: 1.7;">
+                    <li>按优先级部署 Schema：Article > FAQPage > Product > Breadcrumb > LocalBusiness。</li>
+                    <li>在 WordPress 环境用 RankMath / Seopress 插件生成；其他环境用 Google 结构化数据标记助手或手写 JSON-LD。</li>
+                    <li>用<strong>富媒体搜索结果测试</strong>工具验证是否生效。</li>
+                </ul>
+            </div>
+            <div class="fw-panel" id="panel4">
+                <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 10px;">④ E-E-A-T 适配AI检索 — 证明可信</h4>
+                <ul style="padding-left: 20px; font-size: 13.5px; line-height: 1.7;">
+                    <li><strong>权威：</strong> 在 Wikidata、LinkedIn、Google 知识图谱中认领品牌/个人实体。</li>
+                    <li><strong>专业：</strong> 为每个作者建立独立页面 + Person Schema + sameAs 链接。</li>
+                    <li><strong>可信：</strong> 定期检查 Schema、内容、实体图谱三者信息一致。</li>
+                    <li><strong>经验：</strong> 嵌入真实原始实体（案例截图、项目数据、产品实拍、过程记录）。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 9.5 月度 12 项 Checklist -->
+        <h3 class="section-header">9.5 月度 12 项 Checklist</h3>
+        <div class="bubble-info hover-box" style="margin-bottom: 0;">
+            🗣️ <strong>大白话：</strong> 每月照着这张表打勾，AI 引用率不会差。
+        </div>
+
+        <div class="checklist-grid">
+            <div class="monitor-card orange hover-box">
+                <div class="monitor-title"><span style="color:#FF6B35;">🟧</span> 内容层面 (5项)</div>
+                <ul class="check-list">
+                    <li>每个核心页面在 H2 下放 <strong>40-60字 Atomic Answer</strong></li>
+                    <li>内容中包含列表、表格、步骤等结构化格式</li>
+                    <li>每个内容至少包含 <strong>1个独有信息点</strong>（独家数据/真实案例）</li>
+                    <li>内容中自然提及命名实体（品牌、人物、地点）</li>
+                    <li>定期更新老内容（尤其是 <strong>排名5-20名</strong> 的页面）</li>
+                </ul>
+            </div>
+            <div class="monitor-card blue hover-box">
+                <div class="monitor-title"><span style="color:#06B6D4;">🟦</span> 技术层面 (4项)</div>
+                <ul class="check-list">
+                    <li>确保所有重要页面可被 Google 抓取和索引</li>
+                    <li>部署 <strong>优先级 Schema</strong>（Article/FAQPage/Product）</li>
+                    <li>确保 <strong>品牌信息跨平台一致</strong>（官网、社交媒体、目录）</li>
+                    <li>建立 <strong>作者实体</strong>（Person Schema + 社交链接）</li>
+                </ul>
+            </div>
+            <div class="monitor-card green hover-box">
+                <div class="monitor-title"><span style="color:#10B981;">🟩</span> 监控层面 (3项)</div>
+                <ul class="check-list">
+                    <li><strong>每月</strong>在 Google 搜索核心词，检查 AI 引用</li>
+                    <li>监控 Search Console 中 AI Overviews 和 AI Mode 报告</li>
+                    <li>追踪 <strong>引用率</strong> 而非仅点击率（AI时代核心KPI）</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 底部内链与页脚 (严格锁死) -->
+        <div style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
+            <span>✨ Tab 10 · AI Overviews 优化 · 增加AI监控模块</span>
+            <span>
+                <a href="#" class="internal-link" style="text-decoration:none;">⬅️ 返回全局目录</a> · 
+                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">返回顶部</span>
+            </span>
+        </div>
+    </div>
+</body>
+</html>
