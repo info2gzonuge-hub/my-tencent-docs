@@ -487,8 +487,9 @@
                 <li><strong>技术实现：</strong>API拉取产品数据库 → 填充页面模板 → 批量生成 → 自动提交索引。</li>
             </ul>
         </div>
-        <!-- ============================================================
-     pSEO 精简流程图版（四步骨架 + 一键展开详情）
+       <!-- ============================================================
+     pSEO 精简流程图版（完整版 · 含大白话 + 好处 + 适用场景）
+     插入位置：Tab 8 的 8.4 趋势一（程序化SEO）标题下方
      ============================================================ -->
 <style>
     .pseo-grid {
@@ -647,6 +648,19 @@
     .pseo-detail-wrap .tool-tag.green {
         background: var(--success, #10B981);
     }
+    .pseo-detail-wrap .highlight-box {
+        background: var(--bg-highlight, #FFF4E8);
+        padding: 12px 16px;
+        border-radius: 10px;
+        border-left: 4px solid var(--primary, #FF6B35);
+        margin: 8px 0;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--text-dark, #1A202C);
+    }
+    .pseo-detail-wrap .highlight-box strong {
+        color: var(--primary, #FF6B35);
+    }
     @media (max-width: 720px) {
         .pseo-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
         .pseo-card { padding: 12px 14px; }
@@ -665,7 +679,21 @@
     }
 </style>
 
-<!-- ===== 骨架卡片 ===== -->
+<!-- ============================================================
+     模块说明区（大白话 + 好处 + 适用场景）
+     ============================================================ -->
+<div style="background: var(--bg-card-alt, #FAF8F5); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border-left: 4px solid var(--primary, #FF6B35);">
+    <p style="font-size: 15px; line-height: 1.7; color: var(--text-dark, #1A202C); margin-bottom: 8px;">
+        <strong>🗣️ 大白话</strong>：程序化SEO就是“批量化生产页面”——做一个固定模板，准备一份数据（比如城市列表、产品型号列表），写一段程序自动把数据填进模板，一次性生成成百上千个页面。
+    </p>
+    <p style="font-size: 15px; line-height: 1.7; color: var(--text-dark, #1A202C);">
+        <strong>✅ 好处</strong>：能大量覆盖长尾关键词，精准收割细分搜索流量。尤其适合产品线丰富、SKU众多的B2B网站（如工业零部件、化学品、标准件等品类）。
+    </p>
+</div>
+
+<!-- ============================================================
+     骨架卡片
+     ============================================================ -->
 <p style="font-weight:600; margin: 16px 0 8px 0;">📌 全流程概览（四步）</p>
 <div class="pseo-grid">
     <div class="pseo-card">
@@ -690,12 +718,16 @@
     </div>
 </div>
 
-<!-- ===== 展开按钮 ===== -->
+<!-- ============================================================
+     展开按钮
+     ============================================================ -->
 <button class="pseo-expand-btn" id="pseoExpandBtn">
     📖 展开完整操作指南 <span class="arrow" id="pseoArrow">▼</span>
 </button>
 
-<!-- ===== 详情区（一次性展开全部四步） ===== -->
+<!-- ============================================================
+     详情区（一次性展开全部四步）
+     ============================================================ -->
 <div class="pseo-detail-wrap" id="pseoDetail">
 
     <!-- 步骤① -->
@@ -711,7 +743,9 @@
 | 上海 | 定制美白贴   | 为上海牙科诊所提供专业级定制美白贴 |
 | 深圳 | 定制美白贴   | 为深圳牙科诊所提供专业级定制美白贴 |
         </div>
-        <p>🗣️ 大白话：先把要“填空”的数据准备好，一行就是一个页面。</p>
+        <div class="highlight-box">
+            🗣️ <strong>大白话</strong>：先把要“填空”的数据准备好，一行就是一个页面。
+        </div>
     </div>
 
     <!-- 步骤② -->
@@ -724,7 +758,9 @@
 &lt;p&gt;我们为{city}的牙科诊所提供{product_name}，{service_desc}。&lt;/p&gt;
 &lt;p&gt;联系我们获取专属方案。&lt;/p&gt;
         </div>
-        <p>🗣️ 大白话：画一个“填空模板”，用 <code>{ }</code> 标出哪里会变，其他地方全固定。</p>
+        <div class="highlight-box">
+            🗣️ <strong>大白话</strong>：画一个“填空模板”，用 <code>{ }</code> 标出哪里会变，其他地方全固定。
+        </div>
     </div>
 
     <!-- 步骤③ -->
@@ -760,7 +796,9 @@ Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
             <li>流程：Google Sheets（数据源）→ Webhook（触发器）→ WordPress（自动创建页面）</li>
             <li>费用：Make免费套餐支持每月约1000次操作</li>
         </ul>
-        <p>🗣️ 大白话：让程序把表格里的数据填进模板，然后通过接口自动发布到网站，不用自己上传。</p>
+        <div class="highlight-box">
+            🗣️ <strong>大白话</strong>：让程序把表格里的数据填进模板，然后通过接口自动发布到网站，不用自己上传。
+        </div>
     </div>
 
     <!-- 步骤④ -->
@@ -772,36 +810,34 @@ Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
             <li>输入Sitemap地址 → 点击“提交”</li>
             <li>监控索引状态：GSC → 覆盖率报告 → 查看“有效”页面数量变化</li>
         </ul>
-        <p>🗣️ 大白话：告诉谷歌“我加了一堆新页面，来收录吧”。提交Sitemap就是喊它来干活。</p>
+        <div class="highlight-box">
+            🗣️ <strong>大白话</strong>：告诉谷歌“我加了一堆新页面，来收录吧”。提交Sitemap就是喊它来干活。
+        </div>
     </div>
 
 </div>
 
 <script>
     (function() {
-        const btn = document.getElementById('pseoExpandBtn');
-        const detail = document.getElementById('pseoDetail');
-        const arrow = document.getElementById('pseoArrow');
+        var btn = document.getElementById('pseoExpandBtn');
+        var detail = document.getElementById('pseoDetail');
+        var arrow = document.getElementById('pseoArrow');
 
         btn.addEventListener('click', function() {
-            const isOpen = detail.classList.contains('open');
+            var isOpen = detail.classList.contains('open');
             if (isOpen) {
                 detail.classList.remove('open');
                 arrow.classList.remove('open');
                 btn.innerHTML = '📖 展开完整操作指南 <span class="arrow" id="pseoArrow">▼</span>';
-                // 重新获取箭头元素引用（因为innerHTML重建了DOM）
-                document.getElementById('pseoArrow');
             } else {
                 detail.classList.add('open');
-                const newArrow = document.getElementById('pseoArrow');
+                var newArrow = document.getElementById('pseoArrow');
                 if (newArrow) newArrow.classList.add('open');
                 btn.innerHTML = '📕 收起完整操作指南 <span class="arrow open" id="pseoArrow">▲</span>';
             }
         });
     })();
 </script>
-
-
         
         <!-- 趋势二 -->
         <div class="trend-card">
