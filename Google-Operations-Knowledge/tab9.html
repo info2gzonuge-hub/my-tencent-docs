@@ -487,6 +487,319 @@
                 <li><strong>技术实现：</strong>API拉取产品数据库 → 填充页面模板 → 批量生成 → 自动提交索引。</li>
             </ul>
         </div>
+        <!-- ============================================================
+     pSEO 精简流程图版（四步骨架 + 一键展开详情）
+     ============================================================ -->
+<style>
+    .pseo-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin: 16px 0 8px 0;
+    }
+    .pseo-card {
+        background: #FFFFFF;
+        border: 2px solid var(--border-light, #EDE8E0);
+        border-radius: 12px;
+        padding: 16px 18px;
+        text-align: center;
+        transition: all 0.25s ease;
+        box-shadow: var(--shadow-soft, 0 2px 8px rgba(0,0,0,0.04));
+    }
+    .pseo-card:hover {
+        border-color: var(--primary, #FF6B35);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover, 0 6px 20px rgba(0,0,0,0.08));
+    }
+    .pseo-card .step-num {
+        display: inline-block;
+        background: var(--primary, #FF6B35);
+        color: #fff;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    .pseo-card .step-name {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--text-dark, #1A202C);
+        display: block;
+    }
+    .pseo-card .step-bubble {
+        font-size: 13px;
+        color: var(--text-muted, #5A6A7A);
+        margin-top: 4px;
+        display: block;
+        line-height: 1.4;
+    }
+    .pseo-expand-btn {
+        display: inline-block;
+        background: var(--primary, #FF6B35);
+        color: #fff;
+        border: none;
+        border-radius: 40px;
+        padding: 10px 28px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        margin: 12px 0 4px 0;
+        box-shadow: 0 4px 14px rgba(255, 107, 53, 0.30);
+    }
+    .pseo-expand-btn:hover {
+        background: var(--primary-light, #FF8A5C);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 53, 0.40);
+    }
+    .pseo-expand-btn .arrow {
+        display: inline-block;
+        transition: transform 0.3s ease;
+        margin-left: 6px;
+    }
+    .pseo-expand-btn .arrow.open {
+        transform: rotate(180deg);
+    }
+    .pseo-detail-wrap {
+        display: none;
+        background: var(--bg-card-alt, #FAF8F5);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin: 16px 0 4px 0;
+        border-left: 4px solid var(--primary, #FF6B35);
+        animation: fadeUp 0.35s ease;
+    }
+    .pseo-detail-wrap.open {
+        display: block;
+    }
+    .pseo-detail-wrap .step-block {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed var(--border-light, #EDE8E0);
+    }
+    .pseo-detail-wrap .step-block:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .pseo-detail-wrap .step-block h4 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-dark, #1A202C);
+        margin-bottom: 6px;
+    }
+    .pseo-detail-wrap .step-block h4 .step-tag {
+        display: inline-block;
+        background: var(--primary, #FF6B35);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 1px 12px;
+        border-radius: 30px;
+        margin-right: 8px;
+    }
+    .pseo-detail-wrap .step-block p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text-dark, #1A202C);
+        margin-bottom: 6px;
+    }
+    .pseo-detail-wrap .step-block ul {
+        padding-left: 20px;
+        margin: 6px 0;
+        list-style: disc;
+    }
+    .pseo-detail-wrap .step-block ul li {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--text-muted, #5A6A7A);
+        margin-bottom: 3px;
+    }
+    .pseo-detail-wrap .code-block {
+        background: #1A202C;
+        color: #E2E8F0;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        overflow-x: auto;
+        margin: 8px 0;
+        white-space: pre-wrap;
+        word-break: break-all;
+        line-height: 1.6;
+    }
+    .pseo-detail-wrap .tool-tag {
+        display: inline-block;
+        background: var(--primary, #FF6B35);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 1px 12px;
+        border-radius: 30px;
+        margin: 0 2px;
+    }
+    .pseo-detail-wrap .tool-tag.blue {
+        background: var(--secondary, #3B82F6);
+    }
+    .pseo-detail-wrap .tool-tag.green {
+        background: var(--success, #10B981);
+    }
+    @media (max-width: 720px) {
+        .pseo-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+        .pseo-card { padding: 12px 14px; }
+        .pseo-card .step-name { font-size: 14px; }
+        .pseo-detail-wrap { padding: 16px 18px; }
+    }
+    @media (max-width: 480px) {
+        .pseo-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+        .pseo-card .step-bubble { font-size: 12px; }
+        .pseo-expand-btn { font-size: 13px; padding: 8px 20px; }
+        .pseo-detail-wrap .code-block { font-size: 12px; padding: 10px 12px; }
+    }
+    @keyframes fadeUp {
+        0% { opacity: 0; transform: translateY(10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<!-- ===== 骨架卡片 ===== -->
+<p style="font-weight:600; margin: 16px 0 8px 0;">📌 全流程概览（四步）</p>
+<div class="pseo-grid">
+    <div class="pseo-card">
+        <span class="step-num">①</span>
+        <span class="step-name">准备数据源</span>
+        <span class="step-bubble">🗣️ 要填进模板的数据提前做成表格</span>
+    </div>
+    <div class="pseo-card">
+        <span class="step-num">②</span>
+        <span class="step-name">设计页面模板</span>
+        <span class="step-bubble">🗣️ 画个填空模板，用{ }标出可变位置</span>
+    </div>
+    <div class="pseo-card">
+        <span class="step-num">③</span>
+        <span class="step-name">程序生成页面</span>
+        <span class="step-bubble">🗣️ 程序自动填数据，批量生成页面</span>
+    </div>
+    <div class="pseo-card">
+        <span class="step-num">④</span>
+        <span class="step-name">提交Google</span>
+        <span class="step-bubble">🗣️ 提交Sitemap，告诉谷歌来收录</span>
+    </div>
+</div>
+
+<!-- ===== 展开按钮 ===== -->
+<button class="pseo-expand-btn" id="pseoExpandBtn">
+    📖 展开完整操作指南 <span class="arrow" id="pseoArrow">▼</span>
+</button>
+
+<!-- ===== 详情区（一次性展开全部四步） ===== -->
+<div class="pseo-detail-wrap" id="pseoDetail">
+
+    <!-- 步骤① -->
+    <div class="step-block">
+        <h4><span class="step-tag">步骤①</span> 准备数据源</h4>
+        <p>把所有要批量生成页面的变量整理成表格。用 Google Sheets / Excel / CSV 均可。</p>
+        <p><strong>结构要求</strong>：第一行是变量名（如 <code>city</code>、<code>product_name</code>），下面每行是一条数据。</p>
+        <p><strong>示例（牙科诊所服务）</strong>：</p>
+        <div class="code-block">
+| city | product_name | service_desc |
+|------|--------------|--------------|
+| 北京 | 定制美白贴   | 为北京牙科诊所提供专业级定制美白贴 |
+| 上海 | 定制美白贴   | 为上海牙科诊所提供专业级定制美白贴 |
+| 深圳 | 定制美白贴   | 为深圳牙科诊所提供专业级定制美白贴 |
+        </div>
+        <p>🗣️ 大白话：先把要“填空”的数据准备好，一行就是一个页面。</p>
+    </div>
+
+    <!-- 步骤② -->
+    <div class="step-block">
+        <h4><span class="step-tag">步骤②</span> 设计页面模板</h4>
+        <p>写一个固定的HTML结构，把动态变化的地方用 <strong>占位符</strong> 标记（如 <code>{city}</code>）。</p>
+        <p><strong>示例模板</strong>：</p>
+        <div class="code-block">
+&lt;h1&gt;{city}牙科诊所——专业定制美白贴&lt;/h1&gt;
+&lt;p&gt;我们为{city}的牙科诊所提供{product_name}，{service_desc}。&lt;/p&gt;
+&lt;p&gt;联系我们获取专属方案。&lt;/p&gt;
+        </div>
+        <p>🗣️ 大白话：画一个“填空模板”，用 <code>{ }</code> 标出哪里会变，其他地方全固定。</p>
+    </div>
+
+    <!-- 步骤③ -->
+    <div class="step-block">
+        <h4><span class="step-tag">步骤③</span> 程序生成页面</h4>
+
+        <p><strong>方式A：用代码（适合有技术团队）</strong></p>
+        <ul>
+            <li><span class="tool-tag">Python</span> + <span class="tool-tag blue">Jinja2</span> 模板引擎 → 读CSV数据 → 填进模板 → 输出HTML文件</li>
+            <li><strong>核心代码（3行逻辑）</strong>：</li>
+        </ul>
+        <div class="code-block">
+import pandas as pd
+from jinja2 import Template
+
+data = pd.read_csv("data.csv")
+template = Template(open("template.html").read())
+for _, row in data.iterrows():
+    html = template.render(city=row["city"], product_name=row["product_name"], service_desc=row["service_desc"])
+    with open(f"{row['city']}.html", "w") as f: f.write(html)
+        </div>
+        <ul>
+            <li><strong>对接到 WordPress（推荐）</strong>：调用 <span class="tool-tag blue">WP REST API</span>，直接推送页面到网站后台，无需手动上传文件。</li>
+        </ul>
+        <div class="code-block">
+POST https://yourdomain.com/wp-json/wp/v2/posts
+Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
+        </div>
+
+        <p><strong>方式B：无代码工具（适合无技术团队）</strong></p>
+        <ul>
+            <li><span class="tool-tag green">Make</span>（原Integromat）或 <span class="tool-tag green">Zapier</span></li>
+            <li>流程：Google Sheets（数据源）→ Webhook（触发器）→ WordPress（自动创建页面）</li>
+            <li>费用：Make免费套餐支持每月约1000次操作</li>
+        </ul>
+        <p>🗣️ 大白话：让程序把表格里的数据填进模板，然后通过接口自动发布到网站，不用自己上传。</p>
+    </div>
+
+    <!-- 步骤④ -->
+    <div class="step-block">
+        <h4><span class="step-tag">步骤④</span> 提交Google</h4>
+        <ul>
+            <li>生成完所有页面后，<strong>更新Sitemap</strong>（使用 Yoast SEO 或 RankMath 等插件）</li>
+            <li>登录 <span class="tool-tag">Google Search Console</span> → 左侧菜单点击“Sitemap”</li>
+            <li>输入Sitemap地址 → 点击“提交”</li>
+            <li>监控索引状态：GSC → 覆盖率报告 → 查看“有效”页面数量变化</li>
+        </ul>
+        <p>🗣️ 大白话：告诉谷歌“我加了一堆新页面，来收录吧”。提交Sitemap就是喊它来干活。</p>
+    </div>
+
+</div>
+
+<script>
+    (function() {
+        const btn = document.getElementById('pseoExpandBtn');
+        const detail = document.getElementById('pseoDetail');
+        const arrow = document.getElementById('pseoArrow');
+
+        btn.addEventListener('click', function() {
+            const isOpen = detail.classList.contains('open');
+            if (isOpen) {
+                detail.classList.remove('open');
+                arrow.classList.remove('open');
+                btn.innerHTML = '📖 展开完整操作指南 <span class="arrow" id="pseoArrow">▼</span>';
+                // 重新获取箭头元素引用（因为innerHTML重建了DOM）
+                document.getElementById('pseoArrow');
+            } else {
+                detail.classList.add('open');
+                const newArrow = document.getElementById('pseoArrow');
+                if (newArrow) newArrow.classList.add('open');
+                btn.innerHTML = '📕 收起完整操作指南 <span class="arrow open" id="pseoArrow">▲</span>';
+            }
+        });
+    })();
+</script>
 
         <!-- 趋势二 -->
         <div class="trend-card">
@@ -499,6 +812,399 @@
                 ⚠️ <strong>与逻辑树的关系：</strong>此部分与第3层“站内SEO”的“实体化内容”和“内部链接架构”紧密相关，是实体SEO在CRO层面的延伸应用。
             </div>
         </div>
+        <!-- ============================================================
+     Topic Cluster 折叠交互版（完整文案恢复）
+     插入位置：Tab 8 的 8.4 趋势二（内容集群）标题下方
+     ============================================================ -->
+<style>
+    .cluster-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin: 16px 0 8px 0;
+    }
+    .cluster-card {
+        background: #FFFFFF;
+        border: 2px solid var(--border-light, #EDE8E0);
+        border-radius: 12px;
+        padding: 16px 18px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        user-select: none;
+        box-shadow: var(--shadow-soft, 0 2px 8px rgba(0,0,0,0.04));
+    }
+    .cluster-card:hover {
+        border-color: var(--primary, #FF6B35);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover, 0 6px 20px rgba(0,0,0,0.08));
+    }
+    .cluster-card .step-num {
+        display: inline-block;
+        background: var(--primary, #FF6B35);
+        color: #fff;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    .cluster-card .step-name {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--text-dark, #1A202C);
+        display: block;
+    }
+    .cluster-card .step-bubble {
+        font-size: 13px;
+        color: var(--text-muted, #5A6A7A);
+        margin-top: 4px;
+        display: block;
+        line-height: 1.4;
+    }
+    .cluster-card.active {
+        border-color: var(--primary, #FF6B35);
+        background: var(--bg-highlight, #FFF4E8);
+    }
+    .cluster-detail {
+        display: none;
+        background: var(--bg-card-alt, #FAF8F5);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 12px;
+        border-left: 4px solid var(--primary, #FF6B35);
+        animation: fadeUp 0.3s ease;
+    }
+    .cluster-detail.open {
+        display: block;
+    }
+    .cluster-detail p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text-dark, #1A202C);
+        margin-bottom: 8px;
+    }
+    .cluster-detail ul {
+        padding-left: 20px;
+        margin: 8px 0 8px 0;
+        list-style: disc;
+    }
+    .cluster-detail ul li {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--text-muted, #5A6A7A);
+        margin-bottom: 4px;
+    }
+    .cluster-detail .code-block {
+        background: #1A202C;
+        color: #E2E8F0;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        overflow-x: auto;
+        margin: 8px 0;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    .cluster-detail .tool-tag {
+        display: inline-block;
+        background: var(--primary, #FF6B35);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 1px 12px;
+        border-radius: 30px;
+        margin: 0 2px;
+    }
+    .cluster-detail .tool-tag.blue {
+        background: var(--secondary, #3B82F6);
+    }
+    .cluster-detail .highlight-box {
+        background: var(--bg-highlight, #FFF4E8);
+        padding: 12px 16px;
+        border-radius: 10px;
+        border-left: 4px solid var(--primary, #FF6B35);
+        margin: 8px 0;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--text-dark, #1A202C);
+    }
+    .cluster-detail .highlight-box strong {
+        color: var(--primary, #FF6B35);
+    }
+
+    /* 功能对比表格 */
+    .compare-table-wrap {
+        margin: 16px 0 4px 0;
+        overflow-x: auto;
+    }
+    .compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-soft, 0 2px 8px rgba(0,0,0,0.04));
+    }
+    .compare-table thead {
+        background: var(--bg-body, #F8F6F2);
+        color: var(--text-dark, #1A202C);
+        font-weight: 600;
+    }
+    .compare-table th,
+    .compare-table td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-light, #EDE8E0);
+    }
+    .compare-table tbody tr:hover {
+        background: var(--bg-highlight, #FFF4E8);
+    }
+    .compare-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    .compare-table .winner {
+        color: var(--primary, #FF6B35);
+        font-weight: 700;
+    }
+
+    @media (max-width: 720px) {
+        .cluster-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+        .cluster-card { padding: 12px 14px; }
+        .cluster-card .step-name { font-size: 14px; }
+        .cluster-detail { padding: 16px 18px; }
+        .compare-table { font-size: 12px; }
+        .compare-table th, .compare-table td { padding: 8px 10px; }
+    }
+    @media (max-width: 480px) {
+        .cluster-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+        .cluster-card .step-bubble { font-size: 12px; }
+        .cluster-detail .code-block { font-size: 12px; padding: 10px 12px; }
+    }
+    @keyframes fadeUp {
+        0% { opacity: 0; transform: translateY(10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<!-- ===== 全流程概览（四步骨架） ===== -->
+<p style="font-weight:600; margin: 16px 0 8px 0;">📌 全流程概览（点击任意卡片展开详情）</p>
+<div class="cluster-grid" id="clusterGrid">
+    <div class="cluster-card" data-step="1">
+        <span class="step-num">①</span>
+        <span class="step-name">定大主题</span>
+        <span class="step-bubble">🗣️ 选一个能当专家的领域</span>
+    </div>
+    <div class="cluster-card" data-step="2">
+        <span class="step-num">②</span>
+        <span class="step-name">挖集群选题</span>
+        <span class="step-bubble">🗣️ 用户搜什么就写什么</span>
+    </div>
+    <div class="cluster-card" data-step="3">
+        <span class="step-num">③</span>
+        <span class="step-name">验证流量</span>
+        <span class="step-bubble">🗣️ 先确认有人搜再动笔</span>
+    </div>
+    <div class="cluster-card" data-step="4">
+        <span class="step-num">④</span>
+        <span class="step-name">写+双向链接</span>
+        <span class="step-bubble">🗣️ 分支串支柱，螺丝锁住</span>
+    </div>
+</div>
+
+<!-- ===== 详情区（四步各自独立，完整文案恢复） ===== -->
+
+<!-- 步骤①：定大主题 -->
+<div id="clusterDetail1" class="cluster-detail">
+    <p><strong>① 定大主题</strong></p>
+    <p><span class="tool-tag">Semrush 操作路径</span></p>
+    <ul>
+        <li>登录 Semrush → 左侧菜单点击 <strong>“Content Marketing”</strong> → 选择 <strong>“Topic Research”</strong></li>
+        <li>输入1-3个行业核心词（如 <code>teeth whitening</code>），选择目标国家（如 United States）</li>
+        <li>点击 <strong>“Get content ideas”</strong> → 系统自动生成大量“卡片”，每个卡片代表一个子话题群组</li>
+        <li>浏览卡片 → 点击任意卡片展开，可查看：<strong>热门标题（Headlines）</strong>、<strong>用户常问问题（Questions）</strong>、<strong>相关搜索词（Related Searches）</strong></li>
+        <li><strong>判断标准</strong>：卡片里出现的问题越多、搜索词越丰富 → 用户需求越旺盛 → 越值得做</li>
+    </ul>
+    <p><span class="tool-tag blue">Ahrefs 操作路径</span></p>
+    <ul>
+        <li>登录 Ahrefs → 点击 <strong>“Keywords Explorer”</strong></li>
+        <li>输入行业核心词 → 回车 → 左侧菜单选 <strong>“Matching Terms”</strong>（匹配词报告）</li>
+        <li>点击顶部的 <strong>“Clusters by Parent topic”</strong> 标签 → 系统自动按“父主题”分组</li>
+        <li>每个集群显示：<strong>总搜索量（Total Volume）</strong>、<strong>关键词难度（KD）</strong>、<strong>流量潜力（TP）</strong></li>
+        <li><strong>判断标准</strong>：总搜索量大 + KD &lt; 50 + TP高 → 值得做的主题</li>
+    </ul>
+    <div class="highlight-box">
+        🗣️ <strong>大白话</strong>：Semrush给你看“卡片里的问题多不多”，Ahrefs给你看“这个主题总搜索量大不大”。两个工具可以互补使用。
+    </div>
+</div>
+
+<!-- 步骤②：挖集群选题 -->
+<div id="clusterDetail2" class="cluster-detail">
+    <p><strong>② 挖集群选题</strong></p>
+    <p><span class="tool-tag">Semrush 操作路径</span></p>
+    <ul>
+        <li>在 Topic Research 中，点击任意子话题卡片进入详情视图</li>
+        <li>重点关注 <strong>“Questions”</strong>（用户常问问题）→ 这些就是你“集群文章”的选题</li>
+        <li>同时记录 <strong>“Related Searches”</strong>（相关搜索词）→ 扩充选题库</li>
+        <li>切换到 <strong>Mind Map</strong>（思维导图）视图 → 看到大主题下的所有子话题语义关系网</li>
+        <li>把 Questions 和 Related Searches 里的内容全部记录下来 → 形成你的选题库（目标：10-20个）</li>
+    </ul>
+    <p><span class="tool-tag blue">Ahrefs 操作路径</span></p>
+    <ul>
+        <li>在 Clusters by Parent topic 视图中，点击任意集群左侧的展开符号（“^”）</li>
+        <li>查看该集群包含的所有具体关键词列表</li>
+        <li>重点关注<strong>问题型关键词</strong>（含 how / why / what / when / where / which 的词）</li>
+        <li>把这些关键词记录下来 → 形成你的选题库（目标：10-20个）</li>
+    </ul>
+    <div class="highlight-box">
+        🗣️ <strong>大白话</strong>：Semrush看“卡片里的问题”和“思维导图”，Ahrefs看“展开后的关键词列表”。把用户的问题全抄下来。
+    </div>
+</div>
+
+<!-- 步骤③：验证流量 -->
+<div id="clusterDetail3" class="cluster-detail">
+    <p><strong>③ 验证流量</strong></p>
+    <p><span class="tool-tag">Semrush 操作路径</span></p>
+    <ul>
+        <li>把②中记录的所有选题整理成一个列表</li>
+        <li>打开 <strong>Keyword Overview</strong> 工具（左侧菜单 → SEO → Keyword Overview）</li>
+        <li>批量粘贴选题 → 选择目标国家 → 点击“Analyze”</li>
+        <li>查看每个选题的：<strong>搜索量（Volume）</strong>、<strong>关键词难度（KD%）</strong></li>
+    </ul>
+    <p><span class="tool-tag blue">Ahrefs 操作路径</span></p>
+    <ul>
+        <li>把②中记录的所有选题整理成一个列表</li>
+        <li>在 Keywords Explorer 中批量粘贴 → 回车</li>
+        <li>查看每个选题的：<strong>搜索量</strong>、<strong>关键词难度（KD）</strong>、<strong>流量潜力（TP）</strong></li>
+    </ul>
+    <p><strong>筛选标准</strong>：</p>
+    <ul>
+        <li>✅ 搜索量 ≥ 100（太少没人看）</li>
+        <li>✅ KD ≤ 50（太难排不上去）</li>
+        <li>✅ TP 越高越好（能带来真实流量）</li>
+    </ul>
+    <div class="highlight-box">
+        🗣️ <strong>大白话</strong>：先确认有人搜，再动笔。没流量的话题不值得写。
+    </div>
+</div>
+
+<!-- 步骤④：写 + 双向链接 -->
+<div id="clusterDetail4" class="cluster-detail">
+    <p><strong>④ 写 + 双向链接</strong></p>
+    <ul>
+        <li><strong>写作顺序</strong>：先写分支文章（每篇回答一个具体问题），再写支柱页面（把所有分支整合成全面指南）</li>
+        <li><strong>双向链接操作</strong>：
+            <ul>
+                <li>支柱页面中，提到某个细分问题时，用锚文本链接到对应的分支文章</li>
+                <li>分支文章顶部，加一句“完整指南请见：[链接到支柱页面]”</li>
+            </ul>
+        </li>
+        <li>检查：确保每个分支都有回链到支柱，支柱也链接到所有分支</li>
+    </ul>
+    <div class="highlight-box">
+        🗣️ <strong>大白话</strong>：分支是“零件”，支柱是“组装好的机器”，双向链接就是“螺丝”。Google看到螺丝就知道它们是一套的。
+    </div>
+</div>
+
+<!-- ===== 功能对比表格（独立区块，始终可见） ===== -->
+<div style="margin: 20px 0 4px 0;">
+    <p style="font-weight:600; margin-bottom: 8px;">📊 功能对比：Semrush vs Ahrefs（内容集群）</p>
+    <div class="compare-table-wrap">
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>功能/场景</th>
+                    <th>Semrush</th>
+                    <th>Ahrefs</th>
+                    <th>推荐</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>找大主题</strong></td>
+                    <td>Topic Research输入核心词 → 生成“卡片”展示子话题群组</td>
+                    <td>Keywords Explorer → Clusters by Parent topic → 按总搜索量排序</td>
+                    <td class="winner">平手</td>
+                </tr>
+                <tr>
+                    <td><strong>从零规划集群</strong></td>
+                    <td>Topic Research的Mind Map视图直接展示子话题语义关系网</td>
+                    <td>需先挖词再点Clusters by Parent topic聚类</td>
+                    <td class="winner">🏆 Semrush</td>
+                </tr>
+                <tr>
+                    <td><strong>已有关键词自动聚类</strong></td>
+                    <td>Keyword Strategy Builder → 导入列表 → 点“Cluster this list”</td>
+                    <td>Keywords Explorer中直接点击“Clusters by Parent topic”</td>
+                    <td class="winner">🏆 Ahrefs</td>
+                </tr>
+                <tr>
+                    <td><strong>集群数据展示</strong></td>
+                    <td>显示总搜索量，生成“支柱页+子页面”地图</td>
+                    <td>显示总搜索量、父主题KD、父主题搜索量、流量潜力（TP）</td>
+                    <td class="winner">🏆 Ahrefs</td>
+                </tr>
+                <tr>
+                    <td><strong>易用性</strong></td>
+                    <td>Topic Research对新手友好，输入词就能看卡片结果</td>
+                    <td>功能强大，但需先理解“父主题”概念</td>
+                    <td class="winner">🏆 Semrush</td>
+                </tr>
+                <tr>
+                    <td><strong>最佳使用场景</strong></td>
+                    <td>从零开始规划内容、找选题灵感、可视化内容地图</td>
+                    <td>已有关键词列表、想快速按意图分组、追求数据深度</td>
+                    <td class="winner">—</td>
+                </tr>
+                <tr>
+                    <td><strong>价格门槛</strong></td>
+                    <td>免费版每日有限次Topic Research查询</td>
+                    <td>免费版功能极有限，需付费</td>
+                    <td class="winner">—</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ===== 总结：一句话串联 ===== -->
+<div class="highlight-box" style="margin: 16px 0 4px 0; background: var(--bg-highlight, #FFF4E8); padding: 14px 20px; border-radius: 12px; border-left: 4px solid var(--primary, #FF6B35);">
+    <strong>📝 总结</strong>：用 <span class="tool-tag">Semrush</span> Topic Research 找选题灵感 → 用 <span class="tool-tag blue">Ahrefs</span> Keywords Explorer 验证流量和数据 → 写文章 → 双向链接 → 搞定。
+</div>
+
+<script>
+    (function() {
+        var cards = document.querySelectorAll('.cluster-card');
+        var details = {
+            1: document.getElementById('clusterDetail1'),
+            2: document.getElementById('clusterDetail2'),
+            3: document.getElementById('clusterDetail3'),
+            4: document.getElementById('clusterDetail4')
+        };
+
+        cards.forEach(function(card) {
+            card.addEventListener('click', function() {
+                var step = parseInt(this.dataset.step, 10);
+                var isActive = this.classList.contains('active');
+
+                // 关闭所有详情 + 移除所有激活状态
+                for (var key in details) {
+                    if (details[key]) details[key].classList.remove('open');
+                }
+                cards.forEach(function(c) { c.classList.remove('active'); });
+
+                // 如果之前未激活，则打开当前
+                if (!isActive) {
+                    this.classList.add('active');
+                    if (details[step]) details[step].classList.add('open');
+                }
+            });
+        });
+    })();
+</script>
 
         <!-- 趋势三 -->
         <div class="trend-card" style="margin-bottom: 0;">
