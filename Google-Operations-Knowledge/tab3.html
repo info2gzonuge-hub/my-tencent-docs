@@ -117,6 +117,169 @@
         .highlight-box li { margin-bottom: 6px; }
 
         @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+                /* ============================================================ */
+        /* 手机端响应式适配（屏幕宽度小于 768px）                         */
+        /* ============================================================ */
+        @media (max-width: 768px) {
+
+            .app-container {
+                padding: 16px 12px !important;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .app-header h1 {
+                font-size: 18px !important;
+                flex-wrap: wrap;
+            }
+            .app-header h1 span {
+                font-size: 13px !important;
+                display: block;
+                margin-top: 2px;
+            }
+            .badge-header {
+                font-size: 11px !important;
+                padding: 4px 14px !important;
+            }
+
+            .tab-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 4px;
+                padding-bottom: 10px;
+            }
+            .tab-btn {
+                font-size: 12px !important;
+                padding: 6px 14px !important;
+                flex-shrink: 0;
+            }
+
+            .panel-title {
+                font-size: 18px !important;
+            }
+            .panel-sub {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            .step-flow-list {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 6px !important;
+            }
+            .step-item {
+                min-width: unset !important;
+                padding: 10px 14px !important;
+                font-size: 13px !important;
+                justify-content: center;
+            }
+            .step-arrow {
+                transform: rotate(90deg) !important;
+                justify-content: center;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 14px !important;
+            }
+
+            .app-container table {
+                font-size: 11px !important;
+                min-width: 700px !important;
+            }
+            .app-container table th,
+            .app-container table td {
+                padding: 6px 6px !important;
+                font-size: 11px !important;
+            }
+            .app-container table td span {
+                font-size: 10px !important;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+
+            .plugin-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+            .plugin-card[style*="grid-column: span 2"] {
+                grid-column: span 1 !important;
+            }
+
+            .combo-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+
+            .footer-links {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                font-size: 13px !important;
+            }
+
+            .item-list {
+                padding-left: 0 !important;
+            }
+            .item {
+                font-size: 13px !important;
+                padding-left: 10px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+            code {
+                word-break: break-all !important;
+                font-size: 11px !important;
+            }
+            .highlight-box {
+                padding: 14px 16px !important;
+            }
+            .highlight-box h4 {
+                font-size: 15px !important;
+            }
+            .highlight-box ul {
+                padding-left: 16px !important;
+            }
+            .highlight-box li {
+                font-size: 13px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 10px 8px !important;
+            }
+            .app-header h1 {
+                font-size: 16px !important;
+            }
+            .tab-btn {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+            .app-container table {
+                font-size: 10px !important;
+                min-width: 600px !important;
+            }
+            .app-container table th,
+            .app-container table td {
+                padding: 4px 4px !important;
+                font-size: 10px !important;
+            }
+            .card {
+                padding: 14px 14px !important;
+            }
+            .card .card-title {
+                font-size: 14px !important;
+            }
+            .bubble {
+                font-size: 12px !important;
+                padding: 10px 12px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -554,7 +717,7 @@
                 <span style="font-size: 20px; font-weight: 700; color: var(--text-dark);">📦 插件与工具详解（点击卡片展开）</span>
                 <span style="font-size: 13px; color: var(--text-muted); background: var(--bg-card-alt); padding: 4px 16px; border-radius: 30px; border: 1px solid var(--border-light);">点击卡片查看功能 + 场景 + 大白话</span>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+            <div class="plugin-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
 
                 <!-- 卡片 1：Elementor -->
                 <div class="plugin-card" onclick="toggleCard(this)" style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 18px 20px 16px; box-shadow: var(--shadow-soft); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
@@ -864,7 +1027,7 @@
                 <span style="font-size: 18px; font-weight: 700; color: var(--text-dark);">💎 按网站类型快速组合</span>
                 <span style="font-size: 12px; color: var(--text-muted); background: var(--bg-card); padding: 2px 12px; border-radius: 30px; border: 1px solid var(--border-light);">一键配对</span>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 14px;">
+            <div class="combo-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 14px;">
                 <div style="background: var(--bg-card); padding: 14px 18px; border-radius: 10px; border: 1px solid var(--border-light);">
                     <div style="font-weight: 700; color: var(--text-dark); margin-bottom: 4px;">🆕 新手入门 / 个人博客</div>
                     <div style="color: var(--text-muted);">Elementor + Rank Math + WPForms + LiteSpeed Cache + Site Kit</div>
@@ -888,7 +1051,7 @@
         <!-- ============================================================ -->
 
         <!-- 底部内链与页脚 -->
-        <div style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
+        <div class="footer-links" style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
             <span>✨ Tab 3 · 独立站基建与 WordPress 初始化 — 卡片式实操闭环</span>
             <span>
                 <span class="internal-link" onclick="location.href='tab2.html'">⬅️ 上一章</span> · 
