@@ -94,6 +94,21 @@
         /* 大白话气泡样式 */
         .bubble { background: var(--bg-highlight); padding: 14px 16px; border-radius: 12px; border-left: 4px solid var(--primary); font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: auto; }
         .bubble strong { color: var(--primary); }
+                /* ====== 表格行高亮 ====== */
+        #tool-table-body tr {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        #tool-table-body tr.row-highlight {
+            background-color: #FFF4E8 !important;
+            border-left: 3px solid var(--primary);
+        }
+        #tool-table-body tr.row-highlight td {
+            background-color: #FFF4E8 !important;
+        }
+        #tool-table-body tr:hover {
+            background-color: #FAFAFA;
+        }
 
         /* 警示避坑高亮框 (同样支持定位交互) */
         .highlight-box { background: var(--bg-highlight); padding: 20px 24px; border-radius: var(--radius); border-left: 6px solid var(--primary); margin: 20px 0; line-height: 1.7; border: 1px solid var(--border-light); box-shadow: var(--shadow-soft); scroll-margin-top: 30px; transition: all 0.3s; }
@@ -293,7 +308,7 @@
                             <th style="padding: 10px 10px; text-align: center; font-weight: 700; color: var(--text-dark); font-size: 12px; border: 1px solid var(--border-light);">适用场景</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tool-table-body">
                         <!-- 1. Elementor -->
                         <tr>
                             <td style="padding: 10px 10px; font-weight: 600; color: var(--primary); font-size: 12px; border: 1px solid var(--border-light); white-space: nowrap; overflow: hidden; text-align: center;">🎨 页面设计</td>
@@ -922,6 +937,19 @@
                 cardElement.style.boxShadow = 'var(--shadow-soft)';
             }
         }
+        
+        // ========== 表格行高亮 ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            var rows = document.querySelectorAll('#tool-table-body tr');
+            rows.forEach(function(row) {
+                row.addEventListener('click', function(e) {
+                    rows.forEach(function(r) {
+                        r.classList.remove('row-highlight');
+                    });
+                    this.classList.add('row-highlight');
+                });
+            });
+        });
         // ========== 🆕 新增结束 ==========
     </script>
 </body>
