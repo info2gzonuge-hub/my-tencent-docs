@@ -84,10 +84,11 @@
         .styled-table th, .styled-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border-light); }
         .styled-table tbody tr:hover { background: var(--bg-highlight); }
         .styled-table tbody tr:last-child td { border-bottom: none; }
-        @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .app-container { padding: 20px 16px; } .tree-item .tree-body .child { font-size: 14px; } }
-        @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr 1fr; } .app-header { flex-direction: column; align-items: flex-start; gap: 8px; } }
-                /* ============================================================ */
-        /* 手机端响应式适配（与 tab3 保持一致）                           */
+        .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 8px; }
+
+        /* ============================================================ */
+        /* 手机端响应式适配 - Tab 0 完整版                              */
         /* ============================================================ */
         @media (max-width: 768px) {
 
@@ -134,33 +135,80 @@
                 padding: 10px 14px !important;
             }
 
-            .grid-2 {
-                grid-template-columns: 1fr !important;
-                gap: 14px !important;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+                margin: 12px 0 20px 0 !important;
+            }
+            .stat-card {
+                padding: 12px 14px !important;
+            }
+            .stat-card .number {
+                font-size: 22px !important;
+            }
+            .stat-card .label {
+                font-size: 12px !important;
+            }
+            .stat-card .icon {
+                font-size: 20px !important;
             }
 
-            .expand-card summary {
-                padding: 14px !important;
+            .tree-item summary {
+                padding: 12px 16px !important;
+                font-size: 14px !important;
             }
-            .expand-card summary .card-title {
-                font-size: 15px !important;
-                padding-right: 30px !important;
+            .tree-item summary .summary-left {
+                gap: 8px !important;
+                flex-wrap: wrap !important;
             }
-            .expand-card summary .card-real-img {
-                height: 120px !important;
+            .tree-item summary::after {
+                width: 20px !important;
+                height: 20px !important;
+                font-size: 10px !important;
+                flex-shrink: 0 !important;
             }
-            .expand-card .card-details {
-                padding: 0 14px 18px 14px !important;
+            .tree-item .tree-body {
+                padding: 10px 12px 16px 12px !important;
             }
-            .expand-card .item {
+
+            .tree-item .tree-body .child {
                 font-size: 13px !important;
-                padding-left: 10px !important;
+                padding: 4px 0 4px 10px !important;
+                line-height: 1.5 !important;
                 word-break: break-word !important;
-                overflow-wrap: break-word !important;
             }
-            .expand-card .bubble {
+            .tree-item .tree-body .child .marker {
+                font-size: 12px !important;
+                min-width: 12px !important;
+                flex-shrink: 0 !important;
+            }
+            .tree-item .tree-body .child.sub {
+                padding-left: 20px !important;
+            }
+            .tree-item .tree-body .child.sub-sub {
+                padding-left: 30px !important;
+            }
+
+            .tree-item summary .pill {
+                font-size: 10px !important;
+                padding: 1px 10px !important;
+            }
+
+            .highlight-box {
+                padding: 12px 14px !important;
                 font-size: 13px !important;
-                padding: 10px 14px !important;
+            }
+
+            .styled-table {
+                font-size: 11px !important;
+                min-width: 550px !important;
+                display: table !important;
+                margin-top: 8px !important;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 8px 10px !important;
+                font-size: 11px !important;
             }
 
             .footer-links {
@@ -172,6 +220,7 @@
         }
 
         @media (max-width: 480px) {
+
             .app-container {
                 padding: 10px 8px !important;
             }
@@ -182,28 +231,60 @@
                 font-size: 11px !important;
                 padding: 4px 10px !important;
             }
-            .expand-card summary .card-real-img {
-                height: 90px !important;
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
             }
-            .expand-card summary .card-title {
-                font-size: 14px !important;
-            }
-            .expand-card .item {
-                font-size: 12px !important;
-            }
-            .expand-card .bubble {
-                font-size: 12px !important;
-                padding: 8px 12px !important;
-            }
-            .card {
-                padding: 14px 14px !important;
-            }
-            .card .card-title {
-                font-size: 14px !important;
-            }
-            .bubble {
-                font-size: 12px !important;
+            .stat-card {
                 padding: 10px 12px !important;
+            }
+            .stat-card .number {
+                font-size: 18px !important;
+            }
+            .stat-card .label {
+                font-size: 11px !important;
+            }
+
+            .tree-item summary {
+                padding: 10px 12px !important;
+                font-size: 13px !important;
+            }
+            .tree-item .tree-body {
+                padding: 8px 10px 12px 10px !important;
+            }
+            .tree-item .tree-body .child {
+                font-size: 12px !important;
+                padding: 3px 0 3px 8px !important;
+            }
+            .tree-item .tree-body .child .marker {
+                font-size: 11px !important;
+                min-width: 10px !important;
+            }
+            .tree-item .tree-body .child.sub {
+                padding-left: 16px !important;
+            }
+            .tree-item .tree-body .child.sub-sub {
+                padding-left: 24px !important;
+            }
+            .tree-item summary .pill {
+                font-size: 9px !important;
+                padding: 1px 8px !important;
+            }
+
+            .styled-table {
+                font-size: 9px !important;
+                min-width: 420px !important;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 5px 6px !important;
+                font-size: 9px !important;
+            }
+
+            .highlight-box {
+                padding: 10px 12px !important;
+                font-size: 12px !important;
             }
         }
     </style>
@@ -217,8 +298,8 @@
         </header>
 
         <!-- Tab 导航 -->
-     <nav class="tab-nav">
-            <button class="tab-btn active" onclick="location.href='tab0.html'">📚 全局目录</button>
+        <nav class="tab-nav">
+            <button class="tab-btn active" onclick="location.href='index.html'">📚 全局目录</button>
             <button class="tab-btn" onclick="location.href='tab1.html'">📅 算法更新</button>
             <button class="tab-btn" onclick="location.href='tab2.html'">🧠 底层思维</button>
             <button class="tab-btn" onclick="location.href='tab3.html'">🔧 独立站基建</button>
@@ -582,31 +663,33 @@
 
         <!-- 学习路径速查表 -->
         <h3 style="margin: 30px 0 12px 0; display:flex; align-items:center; gap:8px;"><span>📚</span> 学习路径速查表</h3>
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>阶段</th><th>层级</th><th>优先级</th><th>建议周期</th><th>关键产出</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>🧱 打地基</td><td>第零层 · 算法更新认知</td><td><span class="pill orange">🔴 先看</span></td><td>第1周</td><td>建立算法时间线认知</td></tr>
-                <tr><td></td><td>第一层 · 底层算法思维</td><td><span class="pill orange">🔴 先看</span></td><td>第1-2周</td><td>E-E-A-T审计 + 搜索意图表</td></tr>
-                <tr><td>🏗️ 建房子</td><td>第二层 · 独立站基建</td><td><span class="pill blue">🟡 基础</span></td><td>第2-3周</td><td>可访问的独立站</td></tr>
-                <tr><td></td><td>第三层 · 站内SEO与内容工业化</td><td><span class="pill orange">🔴 核心</span></td><td>第3-8周</td><td>内容工业化体系</td></tr>
-                <tr><td></td><td>第四层 · 技术性SEO</td><td><span class="pill blue">🟡 基础</span></td><td>第3-5周</td><td>网站被谷歌索引</td></tr>
-                <tr><td>📊 数据驱动</td><td>第七层 · 数据分析与追踪</td><td><span class="pill blue">🟡 基础</span></td><td>第6周起</td><td>完整追踪体系</td></tr>
-                <tr><td>🏠 住进去</td><td>第五层 · 站外影响力</td><td><span class="pill cyan">🟢 后续</span></td><td>第8周起</td><td>品牌提及布局</td></tr>
-                <tr><td></td><td>第六层 · 谷歌广告</td><td><span class="pill cyan">🟢 补充</span></td><td>第8周起</td><td>付费流量验证</td></tr>
-                <tr><td></td><td>第八层 · 转化率优化</td><td><span class="pill cyan">🟢 进阶</span></td><td>第10周起</td><td>询盘率提升</td></tr>
-                <tr><td>🚀 贯穿全程</td><td>第九层 · AI Overviews优化</td><td><span class="pill pink">🔴 最优先</span></td><td>贯穿全程</td><td>AI引用覆盖率</td></tr>
-            </tbody>
-        </table>
+        <div class="table-wrap">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>阶段</th><th>层级</th><th>优先级</th><th>建议周期</th><th>关键产出</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>🧱 打地基</td><td>第零层 · 算法更新认知</td><td><span class="pill orange">🔴 先看</span></td><td>第1周</td><td>建立算法时间线认知</td></tr>
+                    <tr><td></td><td>第一层 · 底层算法思维</td><td><span class="pill orange">🔴 先看</span></td><td>第1-2周</td><td>E-E-A-T审计 + 搜索意图表</td></tr>
+                    <tr><td>🏗️ 建房子</td><td>第二层 · 独立站基建</td><td><span class="pill blue">🟡 基础</span></td><td>第2-3周</td><td>可访问的独立站</td></tr>
+                    <tr><td></td><td>第三层 · 站内SEO与内容工业化</td><td><span class="pill orange">🔴 核心</span></td><td>第3-8周</td><td>内容工业化体系</td></tr>
+                    <tr><td></td><td>第四层 · 技术性SEO</td><td><span class="pill blue">🟡 基础</span></td><td>第3-5周</td><td>网站被谷歌索引</td></tr>
+                    <tr><td>📊 数据驱动</td><td>第七层 · 数据分析与追踪</td><td><span class="pill blue">🟡 基础</span></td><td>第6周起</td><td>完整追踪体系</td></tr>
+                    <tr><td>🏠 住进去</td><td>第五层 · 站外影响力</td><td><span class="pill cyan">🟢 后续</span></td><td>第8周起</td><td>品牌提及布局</td></tr>
+                    <tr><td></td><td>第六层 · 谷歌广告</td><td><span class="pill cyan">🟢 补充</span></td><td>第8周起</td><td>付费流量验证</td></tr>
+                    <tr><td></td><td>第八层 · 转化率优化</td><td><span class="pill cyan">🟢 进阶</span></td><td>第10周起</td><td>询盘率提升</td></tr>
+                    <tr><td>🚀 贯穿全程</td><td>第九层 · AI Overviews优化</td><td><span class="pill pink">🔴 最优先</span></td><td>贯穿全程</td><td>AI引用覆盖率</td></tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="highlight-box" style="margin-top:20px;">
             <strong>💡 节点统计：</strong> 第零层 10个 · 第一层 6个 · 第二层 4个 · 第三层 7个 · 第四层 3个 · 第五层 3个 · 第六层 4个 · 第七层 5个 · 第八层 3个 · 第九层 5个 = <strong>共50+个子节点</strong>，严格按照终版树形图完整呈现，无删减、无合并、无改写。
         </div>
 
-        <div class="footer-links" style="margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
+        <div class="footer-links">
             <span>✨ Tab 0 · 全局完整目录 — 精确至终版树形图</span>
             <span>点击 <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">返回顶部</span></span>
         </div>
