@@ -164,28 +164,37 @@
             .card .card-title { font-size: 15px !important; flex-wrap: wrap; gap: 8px; }
             .card .card-title span:last-child { font-size: 12px !important; }
 
+            /* 5.1 / 5.2 手机端折叠 */
             .card-body { display: none; }
             .fold-indicator { display: inline-block; font-size: 14px; color: var(--primary); margin-left: 8px; transition: transform 0.3s ease; }
             .fold-indicator.open { transform: rotate(180deg); }
+
+            /* ---- 内容宽度与换行 ---- */
+            .card-body {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: visible !important;
+            }
 
             .item { font-size: 13px !important; line-height: 1.6 !important; }
             .item .bubble { font-size: 13px !important; padding: 10px 14px !important; }
             .action-path { font-size: 12px !important; padding: 8px 12px !important; }
 
-            /* ====== ✅ 修复：大白话换行 ====== */
+            /* 大白话强制换行 */
             .bubble {
                 font-size: 13px !important;
                 padding: 10px 14px !important;
                 word-break: break-word !important;
                 overflow-wrap: break-word !important;
                 white-space: normal !important;
+                max-width: 100% !important;
             }
 
             .danger-box { padding: 12px 14px !important; }
             .danger-box h5 { font-size: 13px !important; }
             .danger-box ul { font-size: 12px !important; padding-left: 16px !important; }
 
-            /* ====== 5.2 品牌提及手机端修复 ====== */
+            /* ====== 5.2 品牌提及手机端 ====== */
             .badge-row { gap: 6px !important; }
             .brand-badge { font-size: 11px !important; padding: 4px 10px !important; white-space: nowrap !important; }
 
@@ -199,6 +208,7 @@
                 word-break: break-word !important;
                 overflow-wrap: break-word !important;
                 white-space: normal !important;
+                max-width: 100% !important;
             }
             .data-card::before {
                 left: -15px !important;
@@ -210,16 +220,11 @@
                 font-size: 13px !important;
             }
 
-            /* ====== ✅ 修复：移除 overflow:hidden，允许表格滚动 ====== */
-            .card-body {
-                max-width: 100% !important;
-                overflow: visible !important;
-            }
-
             /* ====== 对比表格 ====== */
+            /* 表格宽度：确保可滚动 */
             .schema-table {
                 font-size: 12px !important;
-                min-width: 560px !important;
+                min-width: 620px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -229,12 +234,13 @@
                 white-space: normal !important;
                 word-break: break-word !important;
             }
+            /* 列宽比例：第一列 20%，第二列 30%，第三列 50% */
             .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 25% !important; }
+            .schema-table td:nth-child(1) { width: 20% !important; }
             .schema-table th:nth-child(2),
-            .schema-table td:nth-child(2) { width: 35% !important; }
+            .schema-table td:nth-child(2) { width: 30% !important; }
             .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 40% !important; }
+            .schema-table td:nth-child(3) { width: 50% !important; }
 
             /* ====== SOP 底部 ====== */
             .sop-section { padding: 18px 14px !important; }
@@ -269,14 +275,14 @@
 
             .item { font-size: 12px !important; }
             .item .bubble { font-size: 12px !important; padding: 8px 12px !important; }
-            .bubble { font-size: 12px !important; padding: 8px 12px !important; word-break: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
+            .bubble { font-size: 12px !important; padding: 8px 12px !important; word-break: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; max-width: 100% !important; }
             .action-path { font-size: 11px !important; }
 
             .step-grid { grid-template-columns: 1fr !important; }
 
             .schema-table {
                 font-size: 10px !important;
-                min-width: 440px !important;
+                min-width: 480px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -287,18 +293,18 @@
                 word-break: break-word !important;
             }
             .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 28% !important; }
+            .schema-table td:nth-child(1) { width: 22% !important; }
             .schema-table th:nth-child(2),
-            .schema-table td:nth-child(2) { width: 32% !important; }
+            .schema-table td:nth-child(2) { width: 30% !important; }
             .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 40% !important; }
+            .schema-table td:nth-child(3) { width: 48% !important; }
 
             .sop-table-wrap .schema-table { min-width: 480px !important; font-size: 10px !important; }
             .sop-table-wrap .schema-table th,
             .sop-table-wrap .schema-table td { padding: 4px 5px !important; font-size: 10px !important; }
 
             .brand-badge { font-size: 10px !important; padding: 3px 8px !important; }
-            .data-card { font-size: 11px !important; padding: 8px 10px !important; }
+            .data-card { font-size: 11px !important; padding: 8px 10px !important; max-width: 100% !important; }
             .data-card strong { font-size: 12px !important; }
 
             .sop-title { font-size: 15px !important; }
@@ -306,8 +312,8 @@
             .step-card h4 { font-size: 13px !important; }
             .step-card p { font-size: 11px !important; }
 
-            /* ====== ✅ 修复：480px 下也允许表格滚动 ====== */
             .card-body {
+                width: 100% !important;
                 max-width: 100% !important;
                 overflow: visible !important;
             }
@@ -434,9 +440,9 @@
                     <div class="table-wrap">
                         <table class="schema-table hover-box" style="background: #fff;">
                             <colgroup>
-                                <col style="width:25%;">
-                                <col style="width:35%;">
-                                <col style="width:40%;">
+                                <col style="width:20%;">
+                                <col style="width:30%;">
+                                <col style="width:50%;">
                             </colgroup>
                             <thead>
                                 <tr>
@@ -636,13 +642,11 @@
             var arrow5_2 = document.getElementById('arrow5_2');
 
             if (isMobile) {
-                // 切换到手机端：显示箭头，如果内容为空则默认收起
                 if (arrow5_1) { arrow5_1.style.display = 'inline-block'; }
                 if (arrow5_2) { arrow5_2.style.display = 'inline-block'; }
                 if (body5_1 && body5_1.style.display === '') { body5_1.style.display = 'none'; if (arrow5_1) arrow5_1.textContent = '▼'; }
                 if (body5_2 && body5_2.style.display === '') { body5_2.style.display = 'none'; if (arrow5_2) arrow5_2.textContent = '▼'; }
             } else {
-                // 切换到桌面端：强制展开，隐藏箭头
                 if (body5_1) { body5_1.style.display = 'block'; if (arrow5_1) { arrow5_1.style.display = 'none'; arrow5_1.textContent = '▼'; } }
                 if (body5_2) { body5_2.style.display = 'block'; if (arrow5_2) { arrow5_2.style.display = 'none'; arrow5_2.textContent = '▼'; } }
             }
