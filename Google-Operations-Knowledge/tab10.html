@@ -227,6 +227,7 @@
         </div>
 
         <!-- 🔍 AI Overviews vs 精选摘要 vs AI Mode -->
+    <div class="table-wrap">
         <table class="styled-table hover-box">
             <thead>
                 <tr>
@@ -263,6 +264,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
 
         <!-- 9.1 AI Overviews 的工作原理 -->
         <h3 class="section-header">9.1 AI Overviews 的工作原理</h3>
@@ -294,6 +296,7 @@
 
         <!-- 原②改③ 评估信号表格 (居中+边框) -->
         <h4 style="margin: 16px 0 10px; font-size: 15px;">③ 三个评估信号</h4>
+    <div class="table-wrap">
         <table class="styled-table center-bordered-table hover-box">
             <thead>
                 <tr>
@@ -320,6 +323,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
 
         <!-- 9.2 五大实操对策 (默认收起) -->
         <h3 class="section-header">9.2 5大实操对策</h3>
@@ -410,6 +414,379 @@
                 .sop-title { font-weight: 700; font-size: 14.5px; color: var(--text-dark); margin-bottom: 6px; margin-top: -4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
                 .sop-title span { color: #F59E0B; font-size: 12.5px; font-weight: 600; background: #FEF3C7; padding: 2px 8px; border-radius: 4px; }
                 .sop-detail { font-size: 13px; color: var(--text-muted); line-height: 1.6; background: #fff; border: 1px solid var(--border-light); padding: 12px 16px; border-radius: 8px; margin-top: 10px; }
+                    /* ============================================================ */
+        /* 手机端响应式适配（与 tab3 保持一致）                           */
+        /* ============================================================ */
+
+        /* ---------- 768px 断点 ---------- */
+        @media (max-width: 768px) {
+
+            /* 容器 */
+            .app-container {
+                padding: 16px 12px !important;
+            }
+
+            /* 头部 */
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .app-header h1 {
+                font-size: 18px !important;
+                flex-wrap: wrap;
+            }
+            .app-header h1 span {
+                font-size: 13px !important;
+                display: block;
+                margin-top: 2px;
+            }
+            .badge-header {
+                font-size: 11px !important;
+                padding: 4px 14px !important;
+            }
+
+            /* 导航 */
+            .tab-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 4px;
+                padding-bottom: 10px;
+            }
+            .tab-btn {
+                font-size: 12px !important;
+                padding: 6px 14px !important;
+                flex-shrink: 0;
+            }
+
+            /* 标题 */
+            .panel-title {
+                font-size: 18px !important;
+            }
+            .panel-sub {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* section-header */
+            .section-header {
+                font-size: 16px !important;
+                margin: 24px 0 12px !important;
+            }
+
+            /* 气泡信息 */
+            .bubble-info {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== dashboard-wrapper 仪表盘 ====== */
+            .dashboard-wrapper {
+                flex-direction: column !important;
+                gap: 14px !important;
+            }
+            .dash-image-box {
+                flex: 0 0 auto !important;
+                padding: 20px !important;
+                min-height: 120px !important;
+            }
+            .dash-image-title {
+                font-size: 18px !important;
+            }
+            .dash-image-sub {
+                font-size: 12px !important;
+            }
+
+            /* 数据行：3列和4列都变成2列 */
+            .dash-row-3,
+            .dash-row-4 {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+            .data-box {
+                padding: 10px 12px !important;
+            }
+            .data-val {
+                font-size: 18px !important;
+            }
+            .data-label {
+                font-size: 11.5px !important;
+            }
+            .data-desc {
+                font-size: 10.5px !important;
+            }
+
+            /* ====== 表格 ====== */
+            .styled-table {
+                font-size: 12px !important;
+                min-width: 600px !important;
+                display: table !important;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 8px 10px !important;
+                font-size: 12px !important;
+            }
+
+            /* 表格容器 */
+            .table-wrap {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                margin-bottom: 12px !important;
+            }
+
+            /* 评估信号表格（已有 center-bordered-table 类） */
+            .center-bordered-table {
+                font-size: 12px !important;
+                min-width: 500px !important;
+                display: table !important;
+            }
+            .center-bordered-table th,
+            .center-bordered-table td {
+                padding: 8px 10px !important;
+                font-size: 12px !important;
+            }
+
+            /* ====== grid-1-1（两个框架卡片） ====== */
+            .grid-1-1 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+            .framework-detail {
+                padding: 14px !important;
+            }
+            .framework-detail h4 {
+                font-size: 14px !important;
+            }
+            .framework-detail div,
+            .framework-detail ul {
+                font-size: 12.5px !important;
+            }
+
+            /* ====== 5大实操对策折叠卡片 ====== */
+            .tactic-details summary {
+                font-size: 13.5px !important;
+                padding: 12px 16px !important;
+            }
+            .tactic-content {
+                font-size: 12.5px !important;
+                padding: 12px 16px !important;
+            }
+            .tactic-box {
+                font-size: 12.5px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== monitor-layout（工具矩阵 + SOP时间轴） ====== */
+            .monitor-layout {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+            .monitor-card {
+                padding: 16px !important;
+            }
+            .monitor-title {
+                font-size: 14px !important;
+            }
+            .tool-item {
+                padding: 10px 12px !important;
+            }
+            .tool-name {
+                font-size: 13px !important;
+            }
+            .tool-desc {
+                font-size: 12px !important;
+            }
+            .sop-timeline {
+                padding-left: 12px !important;
+            }
+            .sop-step {
+                padding-left: 24px !important;
+                padding-bottom: 18px !important;
+            }
+            .sop-title {
+                font-size: 13.5px !important;
+            }
+            .sop-detail {
+                font-size: 12px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== 四步优化框架（fw-nav） ====== */
+            .fw-nav {
+                flex-direction: column !important;
+                gap: 6px !important;
+            }
+            .fw-node {
+                width: 100% !important;
+                max-width: 320px !important;
+                margin: 0 auto !important;
+                padding: 10px 16px !important;
+                font-size: 13.5px !important;
+            }
+            .fw-arrow {
+                transform: rotate(90deg) !important;
+                font-size: 16px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+                text-align: center !important;
+            }
+            .fw-panel {
+                padding: 14px 16px !important;
+            }
+            .fw-panel h4 {
+                font-size: 14px !important;
+            }
+            .fw-panel ul {
+                font-size: 12.5px !important;
+                padding-left: 16px !important;
+            }
+
+            /* ====== 12项 Checklist ====== */
+            .checklist-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+            .check-list li {
+                font-size: 12.5px !important;
+                padding-left: 22px !important;
+                margin-bottom: 10px !important;
+            }
+            .check-list li::before {
+                font-size: 16px !important;
+            }
+
+            /* ====== 底部 ====== */
+            .footer-links {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                font-size: 13px !important;
+            }
+        }
+
+        /* ---------- 480px 断点（小屏手机） ---------- */
+        @media (max-width: 480px) {
+
+            .app-container {
+                padding: 10px 8px !important;
+            }
+            .app-header h1 {
+                font-size: 16px !important;
+            }
+            .tab-btn {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+
+            .section-header {
+                font-size: 14px !important;
+                margin: 18px 0 10px !important;
+            }
+
+            .dash-image-box {
+                padding: 16px !important;
+            }
+            .dash-image-title {
+                font-size: 16px !important;
+            }
+
+            .dash-row-3,
+            .dash-row-4 {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+            .data-val {
+                font-size: 16px !important;
+            }
+            .data-label {
+                font-size: 10.5px !important;
+            }
+            .data-desc {
+                font-size: 10px !important;
+            }
+
+            .styled-table {
+                font-size: 10px !important;
+                min-width: 480px !important;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 5px 6px !important;
+                font-size: 10px !important;
+            }
+
+            .center-bordered-table {
+                font-size: 10px !important;
+                min-width: 400px !important;
+            }
+            .center-bordered-table th,
+            .center-bordered-table td {
+                padding: 5px 6px !important;
+                font-size: 10px !important;
+            }
+
+            .framework-detail {
+                padding: 12px !important;
+            }
+            .framework-detail h4 {
+                font-size: 13px !important;
+            }
+            .framework-detail div,
+            .framework-detail ul {
+                font-size: 11.5px !important;
+            }
+
+            .tactic-details summary {
+                font-size: 12.5px !important;
+                padding: 10px 14px !important;
+            }
+            .tactic-content {
+                font-size: 11.5px !important;
+                padding: 10px 14px !important;
+            }
+
+            .fw-node {
+                font-size: 12.5px !important;
+                padding: 8px 14px !important;
+            }
+            .fw-panel {
+                padding: 12px 14px !important;
+            }
+            .fw-panel h4 {
+                font-size: 13px !important;
+            }
+            .fw-panel ul {
+                font-size: 11.5px !important;
+            }
+
+            .check-list li {
+                font-size: 11.5px !important;
+                padding-left: 20px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .monitor-card {
+                padding: 12px !important;
+            }
+            .tool-item {
+                padding: 8px 10px !important;
+            }
+            .tool-name {
+                font-size: 12px !important;
+            }
+            .tool-desc {
+                font-size: 11px !important;
+            }
+            .sop-title {
+                font-size: 12.5px !important;
+            }
+            .sop-detail {
+                font-size: 11px !important;
+                padding: 8px 12px !important;
+            }
+        }
             </style>
 
             <!-- 左侧：工具兵器谱 -->
@@ -552,7 +929,7 @@
         </div>
 
         <!-- 底部内链与页脚 (严格锁死) -->
-        <div style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
+        <div class="footer-links" style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
             <span>✨ Tab 10 · AI Overviews 优化 · 增加AI监控模块</span>
             <span>
                 <a href="#" class="internal-link" style="text-decoration:none;">⬅️ 返回全局目录</a> · 
