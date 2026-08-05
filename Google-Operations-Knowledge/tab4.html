@@ -97,11 +97,29 @@
         .highlight-box li { margin-bottom: 6px; }
 
         /* ============================================================ */
-        /* 表格系统                                                    */
+        /* 表格系统（严格按照截图格式：无缩进，全宽）                    */
         /* ============================================================ */
-        .schema-table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 14px; table-layout: fixed; }
-        .schema-table th { background: #FAFAFA; color: var(--text-dark); font-weight: 700; text-align: left; padding: 14px 16px; border: 1px solid #E5E7EB; }
-        .schema-table td { padding: 14px 16px; border: 1px solid #E5E7EB; color: var(--text-dark); line-height: 1.6; }
+        .schema-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 20px;
+            font-size: 14px;
+            table-layout: fixed;
+        }
+        .schema-table th {
+            background: #FAFAFA;
+            color: var(--text-dark);
+            font-weight: 700;
+            text-align: left;
+            padding: 14px 16px;
+            border: 1px solid #E5E7EB;
+        }
+        .schema-table td {
+            padding: 14px 16px;
+            border: 1px solid #E5E7EB;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
         .schema-table tr:nth-child(even) { background: #FFFFFF; }
         .schema-table tr:nth-child(odd) { background: #FAFAFA; }
 
@@ -113,7 +131,7 @@
         .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
 
         /* ============================================================ */
-        /* 手机端响应式适配（≤768px）                                    */
+        /* 手机端响应式适配                                              */
         /* ============================================================ */
         @media (max-width: 768px) {
 
@@ -139,22 +157,12 @@
 
             .item { font-size: 13px !important; padding-left: 10px !important; word-break: break-word !important; overflow-wrap: break-word !important; }
 
-            /* ====== 所有文本强制换行 ====== */
-            .card p,
-            .card div,
-            .card span,
-            .card strong,
-            .card .item,
-            .card .card-title,
-            .bubble {
-                word-break: break-word !important;
-                overflow-wrap: break-word !important;
-                white-space: normal !important;
-            }
-
             .bubble {
                 font-size: 13px !important;
                 padding: 10px 14px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+                white-space: normal !important;
             }
 
             .stage-banner { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; padding: 12px 16px !important; }
@@ -166,10 +174,10 @@
             /* 四宫格 → 单列 */
             .card > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
 
-            /* ====== 表格适配（768以下）- 修复版 ====== */
+            /* ====== 3.4 表格：完整适配 ====== */
             .schema-table {
                 font-size: 12px !important;
-                min-width: 720px !important;
+                min-width: 620px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -179,13 +187,13 @@
                 white-space: normal !important;
                 word-break: break-word !important;
             }
-            /* 列宽固定比例：第一列 8%，第二列 22%，第三列 70% */
+            /* 列宽：第一列 10%，第二列 28%，第三列 62% */
             .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 8% !important; }
+            .schema-table td:nth-child(1) { width: 10% !important; }
             .schema-table th:nth-child(2),
-            .schema-table td:nth-child(2) { width: 22% !important; }
+            .schema-table td:nth-child(2) { width: 28% !important; }
             .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 70% !important; }
+            .schema-table td:nth-child(3) { width: 62% !important; }
 
             .highlight-box { padding: 14px 16px !important; }
             .highlight-box h4 { font-size: 15px !important; }
@@ -245,7 +253,6 @@
                 </p>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
-                    <!-- 信息类 -->
                     <div class="card-inner-highlight" style="margin-bottom: 0;">
                         <div style="font-size: 15px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px;">💡 Informational (信息类)</div>
                         <div class="item-list" style="margin-bottom:0; font-size: 13px;">
@@ -256,7 +263,6 @@
                             <div class="item" style="padding-left:10px;"><strong>B2B适配：</strong><code class="schema-tag" style="color:#06B6D4; border-color:#A5F3FC; background:#ECFEFF;">辅助引流</code> 吸引潜在B端经销商或初创品牌客户。</div>
                         </div>
                     </div>
-                    <!-- 导航类 -->
                     <div class="card-inner-highlight" style="margin-bottom: 0;">
                         <div style="font-size: 15px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px;">📍 Navigational (导航类)</div>
                         <div class="item-list" style="margin-bottom:0; font-size: 13px;">
@@ -267,7 +273,6 @@
                             <div class="item" style="padding-left:10px;"><strong>B2B适配：</strong><code class="schema-tag" style="color:#06B6D4; border-color:#A5F3FC; background:#ECFEFF;">品牌沉淀</code> 承接老客户复购或展会后搜公司名考察。</div>
                         </div>
                     </div>
-                    <!-- 商业类 -->
                     <div class="card-inner-highlight" style="margin-bottom: 0; background: #FFF4E8; border-color: #FADCB3;">
                         <div style="font-size: 15px; font-weight: 700; color: #D97706; margin-bottom: 8px;">⚖️ Commercial (商业类)</div>
                         <div class="item-list" style="margin-bottom:0; font-size: 13px;">
@@ -278,7 +283,6 @@
                             <div class="item" style="padding-left:10px;"><strong>B2B适配：</strong><code class="schema-tag" style="color: red; font-weight: 900;">⭐ 重点调查</code>大订单前必经的"货比三家"阶段。</div>
                         </div>
                     </div>
-                    <!-- 交易类 -->
                     <div class="card-inner-highlight" style="margin-bottom: 0; background: #FFF4E8; border-color: #FADCB3;">
                         <div style="font-size: 15px; font-weight: 700; color: #D97706; margin-bottom: 8px;">💰 Transactional (交易类)</div>
                         <div class="item-list" style="margin-bottom:0; font-size: 13px;">
@@ -417,24 +421,31 @@
             </div>
         </div>
 
-        <!-- ===== 3.4 结构化数据（完全平铺，无折叠） ===== -->
+        <!-- ============================================================ -->
+        <!-- 3.4 结构化数据（严格按照截图格式：标题 → 说明 → 表格 → 大白话） -->
+        <!-- 表格无缩进，全宽展示                                        -->
+        <!-- ============================================================ -->
         <div class="grid-2" style="grid-template-columns: 1fr;">
             <div class="card">
                 <div>
+
+                    <!-- 标题 -->
                     <div class="card-title" style="border-bottom: none; padding-bottom: 0; margin-bottom: 8px;">
                         🚀 3.4 ⭐ 结构化数据 (Schema): AI 引用的"加速器"
                     </div>
 
+                    <!-- 核心数据支撑说明 -->
                     <p style="font-size:14px; color:var(--text-dark); margin-bottom:4px; margin-top: 12px;">
                         <strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：
                     </p>
 
+                    <!-- 表格（无缩进，全宽展示） -->
                     <div class="table-wrap">
                         <table class="schema-table">
                             <colgroup>
-                                <col style="width:8%;">
-                                <col style="width:22%;">
-                                <col style="width:70%;">
+                                <col style="width:10%;">
+                                <col style="width:28%;">
+                                <col style="width:62%;">
                             </colgroup>
                             <thead>
                                 <tr>
@@ -444,18 +455,40 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><strong>Priority 1</strong></td><td><code class="schema-tag">Article</code> (文章)</td><td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td></tr>
-                                <tr><td><strong>Priority 2</strong></td><td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td><td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td></tr>
-                                <tr><td><strong>Priority 3</strong></td><td><code class="schema-tag">Product</code> (商品)</td><td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td></tr>
-                                <tr><td><strong>Priority 4</strong></td><td><code class="schema-tag">Breadcrumb</code> (面包屑)</td><td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td></tr>
-                                <tr><td><strong>Priority 5</strong></td><td><code class="schema-tag">LocalBusiness</code> (本地商家)</td><td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td></tr>
+                                <tr>
+                                    <td><strong>Priority 1</strong></td>
+                                    <td><code class="schema-tag">Article</code> (文章)</td>
+                                    <td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 2</strong></td>
+                                    <td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td>
+                                    <td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 3</strong></td>
+                                    <td><code class="schema-tag">Product</code> (商品)</td>
+                                    <td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 4</strong></td>
+                                    <td><code class="schema-tag">Breadcrumb</code> (面包屑)</td>
+                                    <td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 5</strong></td>
+                                    <td><code class="schema-tag">LocalBusiness</code> (本地商家)</td>
+                                    <td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
+                    <!-- 大白话 -->
                     <div class="bubble">
                         🗣️ <strong>大白话：</strong>什么是 Schema？说白了就是给你的网页背上贴好标准规范的"条形码标签"！AI 爬虫看几亿个网页眼睛都花了，你贴上 FAQ 和产品标签，它一眼就能识别要点，直接抽走给用户看，曝光率暴增！
                     </div>
+
                 </div>
             </div>
         </div>
