@@ -158,14 +158,12 @@
             .panel-title { font-size: 18px !important; }
             .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
 
-            /* ---- 双栏变单列 ---- */
             .grid-6-4 { grid-template-columns: 1fr !important; gap: 14px !important; }
 
             .card { padding: 16px 16px !important; }
             .card .card-title { font-size: 15px !important; flex-wrap: wrap; gap: 8px; }
             .card .card-title span:last-child { font-size: 12px !important; }
 
-            /* ---- 5.1 / 5.2 手机端折叠 ---- */
             .card-body { display: none; }
             .fold-indicator { display: inline-block; font-size: 14px; color: var(--primary); margin-left: 8px; transition: transform 0.3s ease; }
             .fold-indicator.open { transform: rotate(180deg); }
@@ -180,20 +178,40 @@
             .danger-box h5 { font-size: 13px !important; }
             .danger-box ul { font-size: 12px !important; padding-left: 16px !important; }
 
-            /* ---- 5.2 品牌提及专用 ---- */
-            .badge-row { gap: 8px !important; }
-            .brand-badge { font-size: 12px !important; padding: 6px 12px !important; }
+            /* ====== 5.2 品牌提及手机端修复 ====== */
+            .badge-row { gap: 6px !important; }
+            .brand-badge { font-size: 11px !important; padding: 4px 10px !important; white-space: nowrap !important; }
 
-            .flow-data-container { padding-left: 16px !important; }
-            .flow-data-container::before { left: 4px !important; }
-            .data-card { padding: 10px 12px !important; font-size: 12px !important; }
-            .data-card::before { left: -15px !important; width: 8px !important; height: 8px !important; top: 12px !important; }
-            .data-card strong { font-size: 13px !important; }
+            .flow-data-container {
+                max-width: 100% !important;
+                padding-left: 14px !important;
+            }
+            .data-card {
+                padding: 10px 12px !important;
+                font-size: 12px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+                white-space: normal !important;
+            }
+            .data-card::before {
+                left: -15px !important;
+                width: 8px !important;
+                height: 8px !important;
+                top: 12px !important;
+            }
+            .data-card strong {
+                font-size: 13px !important;
+            }
 
-            /* ---- 对比表格 ---- */
+            .card-body {
+                max-width: 100% !important;
+                overflow: hidden !important;
+            }
+
+            /* ====== 对比表格 ====== */
             .schema-table {
                 font-size: 12px !important;
-                min-width: 500px !important;
+                min-width: 560px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -203,7 +221,6 @@
                 white-space: normal !important;
                 word-break: break-word !important;
             }
-            /* 固定列宽 */
             .schema-table th:nth-child(1),
             .schema-table td:nth-child(1) { width: 25% !important; }
             .schema-table th:nth-child(2),
@@ -211,7 +228,7 @@
             .schema-table th:nth-child(3),
             .schema-table td:nth-child(3) { width: 40% !important; }
 
-            /* ---- SOP 底部 ---- */
+            /* ====== SOP 底部 ====== */
             .sop-section { padding: 18px 14px !important; }
             .sop-title { font-size: 17px !important; }
 
@@ -251,7 +268,7 @@
 
             .schema-table {
                 font-size: 10px !important;
-                min-width: 400px !important;
+                min-width: 440px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -272,7 +289,7 @@
             .sop-table-wrap .schema-table th,
             .sop-table-wrap .schema-table td { padding: 4px 5px !important; font-size: 10px !important; }
 
-            .brand-badge { font-size: 11px !important; padding: 4px 10px !important; }
+            .brand-badge { font-size: 10px !important; padding: 3px 8px !important; }
             .data-card { font-size: 11px !important; padding: 8px 10px !important; }
             .data-card strong { font-size: 12px !important; }
 
@@ -320,7 +337,6 @@
 
             <!-- ===== 左栏：5.1 外链建设 ===== -->
             <div class="card hover-box">
-                <!-- 标题行：PC端无折叠功能，手机端点击整体折叠 -->
                 <div class="card-title" id="title5_1" onclick="toggleCard('body5_1','arrow5_1')">
                     <span>🔗 5.1 外链建设 (传统基石)</span>
                     <span style="font-size: 13px; font-weight: 400; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
@@ -328,8 +344,6 @@
                         <span class="fold-indicator" id="arrow5_1">▼</span>
                     </span>
                 </div>
-
-                <!-- 内容体：PC端展开，手机端默认折叠 -->
                 <div class="card-body" id="body5_1">
                     <h5 style="color: var(--secondary); margin: 4px 0 12px; font-size: 15px;">① 核心获取方法</h5>
                     <div class="item-list">
@@ -339,20 +353,17 @@
                             <span class="action-path"><strong>操作路径：</strong>用 Ahrefs Content Explorer 搜索行业关键词 → 筛选有"Write for Us"投稿入口的网站 → 邮件联系编辑 → 提交文章 → 发布上线。</span>
                             <div style="font-size: 13px; color: #DC2626; margin-top: 6px;">2026新标准：内容必须真人撰写、有实际价值，禁止AI批量生成。</div>
                         </div>
-
                         <div class="item" style="border-top: 1px dashed #E5E7EB; padding-top: 16px;">
                             <strong>⭐ PR媒体稿</strong> —— 通过权威新闻媒体发布品牌动态稿件，附带网站链接。
                             <div class="bubble">🗣️ <strong>大白话：</strong>在正规新闻网站上发一篇关于你品牌的"新闻报道"，里面带上你的网站链接，像大公司做的那样。</div>
                             <span class="action-path"><strong>操作路径：</strong>找第三方公关渠道扩展媒体资源 → 用 ahrefs/semrush 验证媒体域名权威性（DA≥60优先）→ 首段品牌词做锚文本，文末放"了解更多"跳转链接。</span>
                         </div>
-
                         <div class="item" style="border-top: 1px dashed #E5E7EB; padding-top: 16px;">
                             <strong>其他补充手段：</strong><br>
                             <span style="display: block; margin-top: 6px;"><strong>摩天楼技术</strong> —— 找到行业内被引用最多的内容，做一个更好的版本，再主动推荐给引用过旧版本的人（非核心，可做可不做）</span>
                             <span style="display: block; margin-top: 6px;"><strong>APL外链</strong> —— 与优质博客主合作，或收购优质站点自建链接资源库，一般需付费（非核心，预算充足时可考虑）</span>
                         </div>
                     </div>
-
                     <h5 style="color: var(--secondary); margin: 20px 0 10px; font-size: 15px;">② 评判标准 (2026年)</h5>
                     <ul style="padding-left: 20px; font-size: 13.5px; color: var(--text-dark); line-height: 1.8;">
                         <li><strong>权威性：</strong> DR/AS值 > 50分优先</li>
@@ -360,7 +371,6 @@
                         <li><strong>属性：</strong> DoFollow优先（传递PR值）</li>
                         <li><strong>位置：</strong> 内容主体内 > 侧边栏 > 页脚</li>
                     </ul>
-
                     <div class="danger-box hover-box">
                         <h5>③ 2026年无效/危险外链（⚠️ 不要碰）</h5>
                         <ul>
@@ -375,8 +385,6 @@
 
             <!-- ===== 右栏：5.2 品牌提及 ===== -->
             <div class="card hover-box" style="border-color: #FADCB3; background: linear-gradient(to bottom right, #FFFFFF, #FFFBF5); box-shadow: 0 4px 20px rgba(217, 119, 6, 0.08);">
-
-                <!-- 标题行：PC端无折叠功能，手机端点击整体折叠 -->
                 <div class="card-title" id="title5_2" onclick="toggleCard('body5_2','arrow5_2')">
                     <span>⭐ 5.2 品牌提及 (GEO 新引擎)</span>
                     <span style="font-size: 13px; font-weight: 700; color: #D97706; display: flex; align-items: center; gap: 8px;">
@@ -384,19 +392,15 @@
                         <span class="fold-indicator" id="arrow5_2">▼</span>
                     </span>
                 </div>
-
-                <!-- 内容体：PC端展开，手机端默认折叠 -->
                 <div class="card-body" id="body5_2">
                     <div class="bubble" style="margin-top: 0;">
                         🗣️ <strong>大白话：</strong>以前谷歌看谁给你拉横幅（外链），现在 AI 看街头巷尾谁在讨论你（提及）。只要真实用户都在聊你的品牌，哪怕没留网址，AI 也会把你当成行业大佬。
                     </div>
-
                     <div class="badge-row">
                         <span class="brand-badge yt">▶ YouTube</span>
                         <span class="brand-badge rd">👾 Reddit</span>
                         <span class="brand-badge im">📰 行业媒体</span>
                     </div>
-
                     <h5 style="color: #D97706; margin: 20px 0 12px; font-size: 15px;">① 三大数据支撑 (AI 训练基石)</h5>
                     <div class="flow-data-container">
                         <div class="data-card hover-box">
@@ -412,7 +416,6 @@
                             → 结论：品牌提及已经从"品牌建设"升级为"SEO战略"
                         </div>
                     </div>
-
                     <h5 style="color: #D97706; margin: 20px 0 10px; font-size: 15px;">② 外链 vs 提及的本质区别</h5>
                     <div class="table-wrap">
                         <table class="schema-table hover-box" style="background: #fff;">
@@ -461,7 +464,6 @@
         <!-- ============================================================ -->
         <div class="sop-section">
             <div class="sop-title">⭐ 重点：品牌提及实操四步法</div>
-
             <div class="step-grid">
                 <div class="step-card hover-box">
                     <div class="step-num">1</div>
@@ -471,7 +473,6 @@
                     <p><strong>监控平台：</strong> 社交媒体、论坛、博客、播客、新闻网站、评论区</p>
                     <p><strong>操作频率：</strong> 每周查看一次新提及，标记重要提及</p>
                 </div>
-
                 <div class="step-card hover-box" style="border: 2px solid var(--primary); box-shadow: 0 4px 16px rgba(255, 107, 53, 0.15);">
                     <div class="step-num">2</div>
                     <h4>📣 第二步：在第三方平台主动布局</h4>
@@ -481,7 +482,6 @@
                     </p>
                     <p style="font-size: 12px; color: #D97706; background: #FFFBEB; padding: 4px;">⚠️ 切记：自然露出，拒绝刷量。</p>
                 </div>
-
                 <div class="step-card hover-box">
                     <div class="step-num">3</div>
                     <h4>🔗 第三步：将无链接提及转化为链接</h4>
@@ -490,7 +490,6 @@
                     <p style="font-style: italic; background: #F3F4F6; padding: 8px; border-radius: 4px; font-size: 12px; margin: 8px 0;">"感谢您提到我们的品牌！如果方便的话，可以添加一个指向我们官网的链接吗？方便您的读者了解更多信息。"</p>
                     <p style="font-size: 12px; font-weight: 600;">成功率一般在10%-30%，坚持做就有积累</p>
                 </div>
-
                 <div class="step-card hover-box" style="border-color: #FCA5A5; background: #FEF2F2;">
                     <div class="step-num" style="background: #DC2626;">4</div>
                     <h4 style="color: #DC2626; border-bottom-color: #FCA5A5;">⚠️ 第四步：红线警告</h4>
@@ -503,12 +502,10 @@
                     <p style="font-size: 12px; color: #DC2626; margin-top: 10px; font-weight: 600;">后果：比不做更严重，可能导致整个网站被降权或惩罚</p>
                 </div>
             </div>
-
             <div class="connector-wrap">
                 <div class="connector-line"></div>
                 <div class="arrow-down"></div>
             </div>
-
             <!-- 底部大表格 -->
             <div class="sop-table-wrap hover-box">
                 <div style="background: var(--bg-card-alt); padding: 14px 20px; font-weight: 700; border-bottom: 1px solid #E5E7EB; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
@@ -581,12 +578,12 @@
     <script>
         // ===== 5.1 / 5.2 折叠切换（手机端专用） =====
         function toggleCard(bodyId, arrowId) {
+            // PC端（>768px）不执行任何操作
+            if (window.innerWidth > 768) return;
+
             var body = document.getElementById(bodyId);
             var arrow = document.getElementById(arrowId);
             if (!body) return;
-
-            // 只在手机端生效（≤768px）
-            if (window.innerWidth > 768) return;
 
             if (body.style.display === 'none' || body.style.display === '') {
                 body.style.display = 'block';
@@ -610,12 +607,9 @@
                 if (body5_1) { body5_1.style.display = 'none'; if (arrow5_1) arrow5_1.textContent = '▼'; }
                 if (body5_2) { body5_2.style.display = 'none'; if (arrow5_2) arrow5_2.textContent = '▼'; }
             } else {
-                // 桌面端：默认展开
-                if (body5_1) { body5_1.style.display = 'block'; if (arrow5_1) arrow5_1.textContent = '▼'; }
-                if (body5_2) { body5_2.style.display = 'block'; if (arrow5_2) arrow5_2.textContent = '▼'; }
-                // 桌面端箭头隐藏（PC端不显示箭头）
-                if (arrow5_1) arrow5_1.style.display = 'none';
-                if (arrow5_2) arrow5_2.style.display = 'none';
+                // 桌面端：默认展开，隐藏箭头
+                if (body5_1) { body5_1.style.display = 'block'; if (arrow5_1) { arrow5_1.style.display = 'none'; arrow5_1.textContent = '▼'; } }
+                if (body5_2) { body5_2.style.display = 'block'; if (arrow5_2) { arrow5_2.style.display = 'none'; arrow5_2.textContent = '▼'; } }
             }
         });
 
@@ -628,11 +622,9 @@
             var arrow5_2 = document.getElementById('arrow5_2');
 
             if (isMobile) {
-                // 切换到手机端：如果当前是展开状态，保持展开；否则收起
-                // 只处理箭头显示
-                if (arrow5_1) arrow5_1.style.display = 'inline-block';
-                if (arrow5_2) arrow5_2.style.display = 'inline-block';
-                // 如果 body 是空的（未设置过），默认收起
+                // 切换到手机端：显示箭头，如果内容为空则默认收起
+                if (arrow5_1) { arrow5_1.style.display = 'inline-block'; }
+                if (arrow5_2) { arrow5_2.style.display = 'inline-block'; }
                 if (body5_1 && body5_1.style.display === '') { body5_1.style.display = 'none'; if (arrow5_1) arrow5_1.textContent = '▼'; }
                 if (body5_2 && body5_2.style.display === '') { body5_2.style.display = 'none'; if (arrow5_2) arrow5_2.textContent = '▼'; }
             } else {
