@@ -121,6 +121,296 @@
         @media (max-width: 600px) {
             .step-grid { grid-template-columns: 1fr; }
         }
+                /* ============================================================ */
+        /* 手机端响应式适配（与 tab3 保持一致）                           */
+        /* ============================================================ */
+        @media (max-width: 768px) {
+
+            .app-container {
+                padding: 16px 12px !important;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .app-header h1 {
+                font-size: 18px !important;
+                flex-wrap: wrap;
+            }
+            .app-header h1 span {
+                font-size: 13px !important;
+                display: block;
+                margin-top: 2px;
+            }
+            .badge-header {
+                font-size: 11px !important;
+                padding: 4px 14px !important;
+            }
+
+            .tab-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 4px;
+                padding-bottom: 10px;
+            }
+            .tab-btn {
+                font-size: 12px !important;
+                padding: 6px 14px !important;
+                flex-shrink: 0;
+            }
+
+            .panel-title {
+                font-size: 18px !important;
+            }
+            .panel-sub {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== 6:4 双栏 → 单列 ====== */
+            .grid-6-4 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+
+            /* ====== 卡片通用 ====== */
+            .card {
+                padding: 16px 16px !important;
+            }
+            .card .card-title {
+                font-size: 15px !important;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .card .card-title span:last-child {
+                font-size: 12px !important;
+            }
+
+            .item {
+                font-size: 13px !important;
+                line-height: 1.6 !important;
+            }
+            .item .bubble {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+            .action-path {
+                font-size: 12px !important;
+                padding: 8px 12px !important;
+            }
+
+            .bubble {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== 危险框 ====== */
+            .danger-box {
+                padding: 12px 14px !important;
+            }
+            .danger-box h5 {
+                font-size: 13px !important;
+            }
+            .danger-box ul {
+                font-size: 12px !important;
+                padding-left: 16px !important;
+            }
+
+            /* ====== 品牌提及徽章 ====== */
+            .badge-row {
+                gap: 8px !important;
+            }
+            .brand-badge {
+                font-size: 12px !important;
+                padding: 6px 12px !important;
+            }
+
+            /* ====== 流动数据卡片 ====== */
+            .flow-data-container {
+                padding-left: 16px !important;
+            }
+            .flow-data-container::before {
+                left: 4px !important;
+            }
+            .data-card {
+                padding: 10px 12px !important;
+                font-size: 12px !important;
+            }
+            .data-card::before {
+                left: -15px !important;
+                width: 8px !important;
+                height: 8px !important;
+                top: 12px !important;
+            }
+            .data-card strong {
+                font-size: 13px !important;
+            }
+
+            /* ====== 对比表格 ====== */
+            .schema-table {
+                font-size: 12px !important;
+                min-width: 500px !important;
+                display: table !important;
+            }
+            .schema-table th,
+            .schema-table td {
+                padding: 8px 10px !important;
+                font-size: 12px !important;
+            }
+
+            /* ====== SOP 底部区域 ====== */
+            .sop-section {
+                padding: 18px 14px !important;
+            }
+            .sop-title {
+                font-size: 17px !important;
+            }
+
+            .step-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+            }
+            .step-card {
+                padding: 14px 12px !important;
+            }
+            .step-card h4 {
+                font-size: 14px !important;
+            }
+            .step-card p {
+                font-size: 12px !important;
+            }
+            .step-num {
+                width: 24px !important;
+                height: 24px !important;
+                font-size: 12px !important;
+                top: -12px !important;
+                left: 12px !important;
+            }
+
+            .connector-line {
+                height: 20px !important;
+            }
+            .arrow-down {
+                border-left-width: 6px !important;
+                border-right-width: 6px !important;
+                border-top-width: 8px !important;
+            }
+
+            /* ====== 底部表格容器 ====== */
+            .sop-table-wrap {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+            .sop-table-wrap > div {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+                flex-wrap: wrap !important;
+            }
+            .sop-table-wrap .schema-table {
+                min-width: 600px !important;
+                font-size: 12px !important;
+            }
+            .sop-table-wrap .schema-table th,
+            .sop-table-wrap .schema-table td {
+                padding: 6px 8px !important;
+                font-size: 12px !important;
+            }
+
+            /* ====== 底部 ====== */
+            .footer-links {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                font-size: 13px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .app-container {
+                padding: 10px 8px !important;
+            }
+            .app-header h1 {
+                font-size: 16px !important;
+            }
+            .tab-btn {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+
+            .card {
+                padding: 12px 12px !important;
+            }
+            .card .card-title {
+                font-size: 14px !important;
+            }
+
+            .item {
+                font-size: 12px !important;
+            }
+            .item .bubble {
+                font-size: 12px !important;
+                padding: 8px 12px !important;
+            }
+            .bubble {
+                font-size: 12px !important;
+                padding: 8px 12px !important;
+            }
+            .action-path {
+                font-size: 11px !important;
+            }
+
+            .step-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .schema-table {
+                font-size: 10px !important;
+                min-width: 400px !important;
+            }
+            .schema-table th,
+            .schema-table td {
+                padding: 5px 6px !important;
+                font-size: 10px !important;
+            }
+
+            .sop-table-wrap .schema-table {
+                min-width: 480px !important;
+                font-size: 10px !important;
+            }
+            .sop-table-wrap .schema-table th,
+            .sop-table-wrap .schema-table td {
+                padding: 4px 5px !important;
+                font-size: 10px !important;
+            }
+
+            .brand-badge {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+            .data-card {
+                font-size: 11px !important;
+                padding: 8px 10px !important;
+            }
+            .data-card strong {
+                font-size: 12px !important;
+            }
+
+            .sop-title {
+                font-size: 15px !important;
+            }
+            .step-card {
+                padding: 12px 10px !important;
+            }
+            .step-card h4 {
+                font-size: 13px !important;
+            }
+            .step-card p {
+                font-size: 11px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -377,7 +667,7 @@
         </div>
 
         <!-- 底部内链与页脚 -->
-        <div style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
+        <div class="footer-links" style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
             <span>✨ Tab 6 · 对比双栏 + 底部深度区 — 构建真实的品牌引力波</span>
             <span>
                 <span class="internal-link" onclick="location.href='tab0.html'">⬅️ 返回全局目录</span> · 
