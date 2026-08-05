@@ -87,7 +87,8 @@
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } 60% { transform: translateY(-3px); } }
         .sop-table-wrap { background: #fff; border: 1px solid #FADCB3; border-radius: 12px; overflow: hidden; }
         .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
-                /* 卡片折叠 */
+
+        /* ====== 卡片折叠通用 ====== */
         .card-body {
             transition: all 0.3s ease;
             overflow: hidden;
@@ -97,21 +98,26 @@
         }
         .card-arrow {
             transition: transform 0.3s ease;
+            display: inline-block;
         }
         .card-arrow.rotated {
             transform: rotate(180deg);
         }
 
-        @media (max-width: 768px) {
-            .card-body {
-                display: none;
-            }
-            .card-body.collapsed {
-                display: none;
-            }
-            .card-body.mobile-open {
-                display: block !important;
-            }
+        /* ====== 5.2 内部数据折叠 ====== */
+        .data-fold-content {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .data-fold-content.collapsed {
+            display: none;
+        }
+        .data-fold-arrow {
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .data-fold-arrow.rotated {
+            transform: rotate(180deg);
         }
 
         /* ============================================================ */
@@ -179,6 +185,14 @@
                 font-size: 12px !important;
             }
 
+            /* 5.1 和 5.2 手机端默认折叠（通过 JS 控制） */
+            .card-body {
+                display: none;
+            }
+            .card-body.mobile-open {
+                display: block !important;
+            }
+
             .item {
                 font-size: 13px !important;
                 line-height: 1.6 !important;
@@ -234,6 +248,14 @@
             }
             .data-card strong {
                 font-size: 13px !important;
+            }
+
+            /* 5.2 内部数据折叠：手机端默认收起 */
+            .data-fold-content {
+                display: none;
+            }
+            .data-fold-content.mobile-open {
+                display: block !important;
             }
 
             .schema-table {
@@ -423,15 +445,16 @@
             <span class="pill green">🟢 后续发力</span> 外链从"唯一标准"降为"重要之一"，品牌提及决定 AI 是否认识你。
         </div>
 
-              <!-- 双栏对比区 -->
+        <!-- ===== 双栏对比区 ===== -->
         <div class="grid-6-4">
+
             <!-- 左栏：5.1 外链建设 -->
             <div class="card hover-box">
-                <div class="card-title" style="cursor: pointer; user-select: none;" onclick="toggleCardContent(this, 'cardLeft')">
+                <div class="card-title" style="cursor: pointer; user-select: none;" onclick="toggleCard('cardLeft', 'cardLeftArrow')">
                     <span>🔗 5.1 外链建设 (传统基石)</span>
                     <span style="font-size: 13px; font-weight: 400; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
                         <span>权重约 45%</span>
-                        <span class="card-arrow" id="cardLeftArrow" style="font-size: 14px; color: var(--primary); transition: transform 0.3s;">▼</span>
+                        <span class="card-arrow" id="cardLeftArrow" style="font-size: 14px; color: var(--primary);">▼</span>
                     </span>
                 </div>
                 <div class="card-body" id="cardLeft">
@@ -479,79 +502,92 @@
 
             <!-- 右栏：5.2 品牌提及 -->
             <div class="card hover-box" style="border-color: #FADCB3; background: linear-gradient(to bottom right, #FFFFFF, #FFFBF5); box-shadow: 0 4px 20px rgba(217, 119, 6, 0.08);">
-                <div class="card-title" style="cursor: pointer; user-select: none;" onclick="toggleCardContent(this, 'cardRight')">
+                <!-- 5.2 主标题（控制整个卡片折叠） -->
+                <div class="card-title" style="cursor: pointer; user-select: none;" onclick="toggleCard('cardRight', 'cardRightArrow')">
                     <span>⭐ 5.2 品牌提及 (GEO 新引擎)</span>
                     <span style="font-size: 13px; font-weight: 700; color: #D97706; display: flex; align-items: center; gap: 8px;">
                         <span style="background: #FEF3C7; padding: 2px 8px; border-radius: 4px;">权重约 55%</span>
-                        <span class="card-arrow" id="cardRightArrow" style="font-size: 14px; color: var(--primary); transition: transform 0.3s;">▼</span>
+                        <span class="card-arrow" id="cardRightArrow" style="font-size: 14px; color: var(--primary);">▼</span>
                     </span>
                 </div>
                 <div class="card-body" id="cardRight">
+
+                    <!-- 大白话（始终可见） -->
                     <div class="bubble" style="margin-top: 0;">
                         🗣️ <strong>大白话：</strong>以前谷歌看谁给你拉横幅（外链），现在 AI 看街头巷尾谁在讨论你（提及）。只要真实用户都在聊你的品牌，哪怕没留网址，AI 也会把你当成行业大佬。
                     </div>
 
+                    <!-- 三大核心阵地徽章（始终可见） -->
                     <div class="badge-row">
                         <span class="brand-badge yt">▶ YouTube</span>
                         <span class="brand-badge rd">👾 Reddit</span>
                         <span class="brand-badge im">📰 行业媒体</span>
                     </div>
 
-                    <h5 style="color: #D97706; margin: 20px 0 12px; font-size: 15px;">① 三大数据支撑 (AI 训练基石)</h5>
-                    <div class="flow-data-container">
-                        <div class="data-card hover-box">
-                            <strong>谷歌与Reddit签署每年$6000万数据授权协议</strong>
-                            → Reddit是AI训练的核心来源，品牌在Reddit上被真实用户讨论，AI更容易认识你
+                    <!-- ===== 5.2 内部可折叠区域：三大数据支撑 + 对比表格 ===== -->
+                    <div style="margin-top: 8px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; padding: 6px 0; border-top: 1px dashed var(--border-light);" onclick="toggleDataFold()">
+                            <span style="font-weight: 700; font-size: 15px; color: var(--text-dark);">📊 详细数据与对比</span>
+                            <span class="data-fold-arrow" id="dataFoldArrow" style="font-size: 14px; color: var(--primary);">▼</span>
                         </div>
-                        <div class="data-card hover-box">
-                            <strong>YouTube提及与AI品牌可见度相关性最强</strong>
-                            → 来源：Ahrefs对75,000个品牌的研究。YouTube上的品牌提及（包括口播）直接提升AI引用率
-                        </div>
-                        <div class="data-card hover-box">
-                            <strong>提及量前25%的品牌，AI引用率是后25%的10倍以上</strong>
-                            → 结论：品牌提及已经从"品牌建设"升级为"SEO战略"
-                        </div>
-                    </div>
+                        <div class="data-fold-content" id="dataFoldContent">
+                            <h5 style="color: #D97706; margin: 16px 0 12px; font-size: 15px;">① 三大数据支撑 (AI 训练基石)</h5>
+                            <div class="flow-data-container">
+                                <div class="data-card hover-box">
+                                    <strong>谷歌与Reddit签署每年$6000万数据授权协议</strong>
+                                    → Reddit是AI训练的核心来源，品牌在Reddit上被真实用户讨论，AI更容易认识你
+                                </div>
+                                <div class="data-card hover-box">
+                                    <strong>YouTube提及与AI品牌可见度相关性最强</strong>
+                                    → 来源：Ahrefs对75,000个品牌的研究。YouTube上的品牌提及（包括口播）直接提升AI引用率
+                                </div>
+                                <div class="data-card hover-box">
+                                    <strong>提及量前25%的品牌，AI引用率是后25%的10倍以上</strong>
+                                    → 结论：品牌提及已经从"品牌建设"升级为"SEO战略"
+                                </div>
+                            </div>
 
-                    <h5 style="color: #D97706; margin: 20px 0 10px; font-size: 15px;">② 外链 vs 提及的本质区别</h5>
-                    <div class="table-wrap">
-                        <table class="schema-table hover-box" style="background: #fff;">
-                            <thead>
-                                <tr>
-                                    <th style="width: 25%;">对比维度</th>
-                                    <th style="width: 35%;">🔗 外链</th>
-                                    <th style="width: 40%;">⭐ 品牌提及</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>作用对象</strong></td>
-                                    <td>提升单个页面</td>
-                                    <td>建立整个品牌</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>需要链接</strong></td>
-                                    <td>需要</td>
-                                    <td style="color: #D97706; font-weight: 600;">不需要</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>适用场景</strong></td>
-                                    <td>传统SEO排名</td>
-                                    <td>AI答案引用率</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>权重占比</strong></td>
-                                    <td>约45%</td>
-                                    <td style="font-weight: 600;">约55%</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <h5 style="color: #D97706; margin: 20px 0 10px; font-size: 15px;">② 外链 vs 提及的本质区别</h5>
+                            <div class="table-wrap">
+                                <table class="schema-table hover-box" style="background: #fff;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 25%;">对比维度</th>
+                                            <th style="width: 35%;">🔗 外链</th>
+                                            <th style="width: 40%;">⭐ 品牌提及</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>作用对象</strong></td>
+                                            <td>提升单个页面</td>
+                                            <td>建立整个品牌</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>需要链接</strong></td>
+                                            <td>需要</td>
+                                            <td style="color: #D97706; font-weight: 600;">不需要</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>适用场景</strong></td>
+                                            <td>传统SEO排名</td>
+                                            <td>AI答案引用率</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>权重占比</strong></td>
+                                            <td>约45%</td>
+                                            <td style="font-weight: 600;">约55%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SOP 四步法 -->
+        <!-- ===== SOP 四步法 ===== -->
         <div class="sop-section">
             <div class="sop-title">⭐ 重点：品牌提及实操四步法</div>
 
@@ -662,84 +698,126 @@
             </span>
         </div>
     </div>
+
     <script>
-    // 卡片折叠切换
-    function toggleCardContent(titleElement, cardId) {
-        var body = document.getElementById(cardId);
-        var arrow = titleElement.querySelector('.card-arrow');
-        if (body) {
+        // ===== 5.1 / 5.2 卡片级折叠 =====
+        function toggleCard(cardId, arrowId) {
+            var body = document.getElementById(cardId);
+            var arrow = document.getElementById(arrowId);
+            if (!body) return;
+
             if (body.classList.contains('collapsed') || body.style.display === 'none') {
                 body.classList.remove('collapsed');
                 body.style.display = 'block';
-                if (arrow) arrow.classList.add('rotated');
+                if (arrow) arrow.textContent = '▲';
             } else {
                 body.classList.add('collapsed');
                 body.style.display = 'none';
-                if (arrow) arrow.classList.remove('rotated');
+                if (arrow) arrow.textContent = '▼';
             }
         }
-    }
 
-    // 手机端默认收起，桌面端默认展开
-    document.addEventListener('DOMContentLoaded', function() {
-        var isMobile = window.innerWidth <= 768;
-        var leftBody = document.getElementById('cardLeft');
-        var rightBody = document.getElementById('cardRight');
-        var leftArrow = document.getElementById('cardLeftArrow');
-        var rightArrow = document.getElementById('cardRightArrow');
+        // ===== 5.2 内部数据折叠 =====
+        function toggleDataFold() {
+            var content = document.getElementById('dataFoldContent');
+            var arrow = document.getElementById('dataFoldArrow');
+            if (!content) return;
 
-        if (isMobile) {
-            // 手机端默认收起
-            if (leftBody) {
-                leftBody.classList.add('collapsed');
-                leftBody.style.display = 'none';
-                if (leftArrow) leftArrow.classList.remove('rotated');
-            }
-            if (rightBody) {
-                rightBody.classList.add('collapsed');
-                rightBody.style.display = 'none';
-                if (rightArrow) rightArrow.classList.remove('rotated');
-            }
-        } else {
-            // 桌面端默认展开
-            if (leftBody) {
-                leftBody.classList.remove('collapsed');
-                leftBody.style.display = 'block';
-                if (leftArrow) leftArrow.classList.add('rotated');
-            }
-            if (rightBody) {
-                rightBody.classList.remove('collapsed');
-                rightBody.style.display = 'block';
-                if (rightArrow) rightArrow.classList.add('rotated');
+            if (content.classList.contains('collapsed') || content.style.display === 'none') {
+                content.classList.remove('collapsed');
+                content.style.display = 'block';
+                if (arrow) arrow.textContent = '▲';
+            } else {
+                content.classList.add('collapsed');
+                content.style.display = 'none';
+                if (arrow) arrow.textContent = '▼';
             }
         }
-    });
 
-    // 窗口大小变化时重新判断
-    window.addEventListener('resize', function() {
-        var isMobile = window.innerWidth <= 768;
-        var leftBody = document.getElementById('cardLeft');
-        var rightBody = document.getElementById('cardRight');
-        var leftArrow = document.getElementById('cardLeftArrow');
-        var rightArrow = document.getElementById('cardRightArrow');
+        // ===== 页面加载时，根据屏幕宽度决定折叠状态 =====
+        document.addEventListener('DOMContentLoaded', function() {
+            var isMobile = window.innerWidth <= 768;
 
-        if (isMobile) {
-            // 切换到手机端：如果当前是展开状态，保持展开；否则收起
-            // 不强制收起，保留用户当前选择
-        } else {
-            // 切换到桌面端：自动展开
-            if (leftBody) {
-                leftBody.classList.remove('collapsed');
-                leftBody.style.display = 'block';
-                if (leftArrow) leftArrow.classList.add('rotated');
+            // 5.1 和 5.2 卡片主体
+            var leftBody = document.getElementById('cardLeft');
+            var rightBody = document.getElementById('cardRight');
+            var leftArrow = document.getElementById('cardLeftArrow');
+            var rightArrow = document.getElementById('cardRightArrow');
+
+            if (isMobile) {
+                // 手机端：默认收起
+                if (leftBody) {
+                    leftBody.classList.add('collapsed');
+                    leftBody.style.display = 'none';
+                    if (leftArrow) leftArrow.textContent = '▼';
+                }
+                if (rightBody) {
+                    rightBody.classList.add('collapsed');
+                    rightBody.style.display = 'none';
+                    if (rightArrow) rightArrow.textContent = '▼';
+                }
+                // 5.2 内部数据：默认收起
+                var dataContent = document.getElementById('dataFoldContent');
+                var dataArrow = document.getElementById('dataFoldArrow');
+                if (dataContent) {
+                    dataContent.classList.add('collapsed');
+                    dataContent.style.display = 'none';
+                    if (dataArrow) dataArrow.textContent = '▼';
+                }
+            } else {
+                // 桌面端：默认展开
+                if (leftBody) {
+                    leftBody.classList.remove('collapsed');
+                    leftBody.style.display = 'block';
+                    if (leftArrow) leftArrow.textContent = '▲';
+                }
+                if (rightBody) {
+                    rightBody.classList.remove('collapsed');
+                    rightBody.style.display = 'block';
+                    if (rightArrow) rightArrow.textContent = '▲';
+                }
+                // 5.2 内部数据：桌面端默认展开
+                var dataContent = document.getElementById('dataFoldContent');
+                var dataArrow = document.getElementById('dataFoldArrow');
+                if (dataContent) {
+                    dataContent.classList.remove('collapsed');
+                    dataContent.style.display = 'block';
+                    if (dataArrow) dataArrow.textContent = '▲';
+                }
             }
-            if (rightBody) {
-                rightBody.classList.remove('collapsed');
-                rightBody.style.display = 'block';
-                if (rightArrow) rightArrow.classList.add('rotated');
+        });
+
+        // ===== 窗口大小变化时，切换到桌面端自动展开 =====
+        window.addEventListener('resize', function() {
+            var isMobile = window.innerWidth <= 768;
+            var leftBody = document.getElementById('cardLeft');
+            var rightBody = document.getElementById('cardRight');
+            var leftArrow = document.getElementById('cardLeftArrow');
+            var rightArrow = document.getElementById('cardRightArrow');
+
+            if (!isMobile) {
+                // 切换到桌面端：自动展开 5.1 和 5.2
+                if (leftBody) {
+                    leftBody.classList.remove('collapsed');
+                    leftBody.style.display = 'block';
+                    if (leftArrow) leftArrow.textContent = '▲';
+                }
+                if (rightBody) {
+                    rightBody.classList.remove('collapsed');
+                    rightBody.style.display = 'block';
+                    if (rightArrow) rightArrow.textContent = '▲';
+                }
+                // 5.2 内部数据也展开
+                var dataContent = document.getElementById('dataFoldContent');
+                var dataArrow = document.getElementById('dataFoldArrow');
+                if (dataContent) {
+                    dataContent.classList.remove('collapsed');
+                    dataContent.style.display = 'block';
+                    if (dataArrow) dataArrow.textContent = '▲';
+                }
             }
-        }
-    });
-</script>
+            // 手机端不强制收起，保留用户当前选择
+        });
+    </script>
 </body>
 </html>
