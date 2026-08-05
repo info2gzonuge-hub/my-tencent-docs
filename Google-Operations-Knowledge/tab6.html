@@ -172,7 +172,14 @@
             .item .bubble { font-size: 13px !important; padding: 10px 14px !important; }
             .action-path { font-size: 12px !important; padding: 8px 12px !important; }
 
-            .bubble { font-size: 13px !important; padding: 10px 14px !important; }
+            /* ====== ✅ 修复：大白话换行 ====== */
+            .bubble {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+                white-space: normal !important;
+            }
 
             .danger-box { padding: 12px 14px !important; }
             .danger-box h5 { font-size: 13px !important; }
@@ -203,9 +210,10 @@
                 font-size: 13px !important;
             }
 
+            /* ====== ✅ 修复：移除 overflow:hidden，允许表格滚动 ====== */
             .card-body {
                 max-width: 100% !important;
-                overflow: hidden !important;
+                overflow: visible !important;
             }
 
             /* ====== 对比表格 ====== */
@@ -261,7 +269,7 @@
 
             .item { font-size: 12px !important; }
             .item .bubble { font-size: 12px !important; padding: 8px 12px !important; }
-            .bubble { font-size: 12px !important; padding: 8px 12px !important; }
+            .bubble { font-size: 12px !important; padding: 8px 12px !important; word-break: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
             .action-path { font-size: 11px !important; }
 
             .step-grid { grid-template-columns: 1fr !important; }
@@ -297,6 +305,12 @@
             .step-card { padding: 12px 10px !important; }
             .step-card h4 { font-size: 13px !important; }
             .step-card p { font-size: 11px !important; }
+
+            /* ====== ✅ 修复：480px 下也允许表格滚动 ====== */
+            .card-body {
+                max-width: 100% !important;
+                overflow: visible !important;
+            }
         }
     </style>
 </head>
