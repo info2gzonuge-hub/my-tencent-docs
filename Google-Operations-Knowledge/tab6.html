@@ -118,8 +118,8 @@
             .step-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
             .connector-line, .arrow-down { margin-left: 0; }
         }
-        @media (max-width: 600px) {
-            .step-grid { grid-template-columns: 1fr; }
+        @media (max-width: 768px) {
+            .step-grid { grid-template-columns: 1fr !important; }
         }
                 /* ============================================================ */
         /* 手机端响应式适配（与 tab3 保持一致）                           */
@@ -525,37 +525,39 @@
                 </div>
 
                 <h5 style="color: #D97706; margin: 20px 0 10px; font-size: 15px;">② 外链 vs 提及的本质区别</h5>
-                <table class="schema-table hover-box" style="background: #fff;">
-                    <thead>
-                        <tr>
-                            <th style="width: 25%;">对比维度</th>
-                            <th style="width: 35%;">🔗 外链</th>
-                            <th style="width: 40%;">⭐ 品牌提及</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>作用对象</strong></td>
-                            <td>提升单个页面</td>
-                            <td>建立整个品牌</td>
-                        </tr>
-                        <tr>
-                            <td><strong>需要链接</strong></td>
-                            <td>需要</td>
-                            <td style="color: #D97706; font-weight: 600;">不需要</td>
-                        </tr>
-                        <tr>
-                            <td><strong>适用场景</strong></td>
-                            <td>传统SEO排名</td>
-                            <td>AI答案引用率</td>
-                        </tr>
-                        <tr>
-                            <td><strong>权重占比</strong></td>
-                            <td>约45%</td>
-                            <td style="font-weight: 600;">约55%</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrap">
+                    <table class="schema-table hover-box" style="background: #fff;">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">对比维度</th>
+                                <th style="width: 35%;">🔗 外链</th>
+                                <th style="width: 40%;">⭐ 品牌提及</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>作用对象</strong></td>
+                                <td>提升单个页面</td>
+                                <td>建立整个品牌</td>
+                            </tr>
+                            <tr>
+                                <td><strong>需要链接</strong></td>
+                                <td>需要</td>
+                                <td style="color: #D97706; font-weight: 600;">不需要</td>
+                            </tr>
+                            <tr>
+                                <td><strong>适用场景</strong></td>
+                                <td>传统SEO排名</td>
+                                <td>AI答案引用率</td>
+                            </tr>
+                            <tr>
+                                <td><strong>权重占比</strong></td>
+                                <td>约45%</td>
+                                <td style="font-weight: 600;">约55%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
         </div>
@@ -621,48 +623,50 @@
                 <div style="background: var(--bg-card-alt); padding: 14px 20px; font-weight: 700; border-bottom: 1px solid #E5E7EB; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
                     <span>📣 第二步详细拆解：第三方平台主动布局指南</span>
                 </div>
-                <table class="schema-table" style="margin: 0; border: none; font-size: 14px;">
-                    <thead>
-                        <tr style="background: #fff;">
-                            <th style="border-left: none; width: 12%;">平台</th>
-                            <th style="width: 15%;">优先级</th>
-                            <th style="width: 35%;">操作方式</th>
-                            <th style="border-right: none; width: 38%;">⚠️ 注意</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="border-left: none;">YouTube</td>
-                            <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td>
-                            <td>发布产品演示、教程、客户案例视频</td>
-                            <td style="border-right: none;">视频描述中自然包含品牌名和官网链接</td>
-                        </tr>
-                        <tr>
-                            <td style="border-left: none;">Reddit</td>
-                            <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td>
-                            <td>在相关subreddit参与讨论、回答问题</td>
-                            <td style="border-right: none;"><strong>严格禁止硬广！</strong> 以提供价值为主，自然提及品牌</td>
-                        </tr>
-                        <tr>
-                            <td style="border-left: none;">行业媒体</td>
-                            <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td>
-                            <td>投稿客座文章、争取被报道</td>
-                            <td style="border-right: none;">提供独家数据或专家观点，增加被引用概率</td>
-                        </tr>
-                        <tr>
-                            <td style="border-left: none;">Quora</td>
-                            <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td>
-                            <td>回答行业相关问题，自然提及品牌</td>
-                            <td style="border-right: none;">回答要详细有用，品牌放在文末“相关资源”</td>
-                        </tr>
-                        <tr>
-                            <td style="border-left: none; border-bottom: none;">LinkedIn</td>
-                            <td style="color: #D97706; letter-spacing: 2px; border-bottom: none;">⭐⭐⭐</td>
-                            <td style="border-bottom: none;">发布专业内容、参与行业讨论</td>
-                            <td style="border-right: none; border-bottom: none;">个人账号互动率高于公司页面</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrap">
+                    <table class="schema-table" style="margin: 0; border: none; font-size: 14px;">
+                        <thead>
+                            <tr style="background: #fff;">
+                                <th style="border-left: none; width: 12%;">平台</th>
+                                <th style="width: 15%;">优先级</th>
+                                <th style="width: 35%;">操作方式</th>
+                                <th style="border-right: none; width: 38%;">⚠️ 注意</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border-left: none;">YouTube</td>
+                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td>
+                                <td>发布产品演示、教程、客户案例视频</td>
+                                <td style="border-right: none;">视频描述中自然包含品牌名和官网链接</td>
+                            </tr>
+                            <tr>
+                                <td style="border-left: none;">Reddit</td>
+                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td>
+                                <td>在相关subreddit参与讨论、回答问题</td>
+                                <td style="border-right: none;"><strong>严格禁止硬广！</strong> 以提供价值为主，自然提及品牌</td>
+                            </tr>
+                            <tr>
+                                <td style="border-left: none;">行业媒体</td>
+                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td>
+                                <td>投稿客座文章、争取被报道</td>
+                                <td style="border-right: none;">提供独家数据或专家观点，增加被引用概率</td>
+                            </tr>
+                            <tr>
+                                <td style="border-left: none;">Quora</td>
+                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td>
+                                <td>回答行业相关问题，自然提及品牌</td>
+                                <td style="border-right: none;">回答要详细有用，品牌放在文末“相关资源”</td>
+                            </tr>
+                            <tr>
+                                <td style="border-left: none; border-bottom: none;">LinkedIn</td>
+                                <td style="color: #D97706; letter-spacing: 2px; border-bottom: none;">⭐⭐⭐</td>
+                                <td style="border-bottom: none;">发布专业内容、参与行业讨论</td>
+                                <td style="border-right: none; border-bottom: none;">个人账号互动率高于公司页面</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
