@@ -74,6 +74,31 @@
         .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
         .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
 
+        /* 3.4 折叠样式 */
+        .schema-fold-content {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .schema-fold-content.collapsed {
+            display: none;
+        }
+        .schema-arrow {
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .schema-arrow.rotated {
+            transform: rotate(180deg);
+        }
+        /* 手机端默认折叠，桌面端默认展开 */
+        @media (max-width: 768px) {
+            .schema-fold-content {
+                display: none;
+            }
+            .schema-fold-content.mobile-open {
+                display: block !important;
+            }
+        }
+
         /* ============================================================ */
         /* 手机端响应式适配                                              */
         /* ============================================================ */
@@ -259,14 +284,6 @@
                 font-size: 9px !important;
                 padding: 1px 4px !important;
             }
-        }
-                /* 折叠动画 */
-        #schemaContent {
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        #schemaContent.collapsed {
-            display: none;
         }
     </style>
 </head>
@@ -487,67 +504,62 @@
             </div>
         </div>
 
-       <!-- 表格2：3.4 结构化数据（带折叠） -->
-<div class="grid-2" style="grid-template-columns: 1fr;">
-    <div class="card">
-        <div>
-            <div class="card-title" style="cursor: pointer; user-select: none;" onclick="toggleCardContent(this)">
-                🚀 3.4 ⭐ 结构化数据 (Schema): AI 引用的"加速器"
-                <span style="font-size: 13px; color: var(--primary); transition: transform 0.3s;" id="schemaArrow">▼</span>
-            </div>
-            <div id="schemaContent">
-                <p style="font-size:14px; color:var(--text-dark); margin-bottom:4px;">
-                    <strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：
-                </p>
+        <!-- 3.4 结构化数据（带折叠功能） -->
+        <div class="grid-2" style="grid-template-columns: 1fr;">
+            <div class="card">
+                <div>
+                    <div class="card-title" style="cursor: pointer; user-select: none;" onclick="toggleSchemaFold(this)">
+                        🚀 3.4 ⭐ 结构化数据 (Schema): AI 引用的"加速器"
+                        <span class="schema-arrow" id="schemaArrow">▼</span>
+                    </div>
+                    <div class="schema-fold-content" id="schemaContent">
+                        <p style="font-size:14px; color:var(--text-dark); margin-bottom:4px;">
+                            <strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：
+                        </p>
 
-                <div class="table-wrap">
-                    <table class="schema-table">
-                        <thead>
-                            <tr>
-                                <th style="width:12%;">优先级</th>
-                                <th style="width:28%;">Schema 类型</th>
-                                <th style="width:60%;">实际核心作用与 AI 联动价值</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Priority 1</strong></td>
-                                <td><code class="schema-tag">Article</code> (文章)</td>
-                                <td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 2</strong></td>
-                                <td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td>
-                                <td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 3</strong></td>
-                                <td><code class="schema-tag">Product</code> (商品)</td>
-                                <td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 4</strong></td>
-                                <td><code class="schema-tag">Breadcrumb</code> (面包屑)</td>
-                                <td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 5</strong></td>
-                                <td><code class="schema-tag">LocalBusiness</code> (本地商家)</td>
-                                <td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        <div class="table-wrap">
+                            <table class="schema-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:12%;">优先级</th>
+                                        <th style="width:28%;">Schema 类型</th>
+                                        <th style="width:60%;">实际核心作用与 AI 联动价值</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Priority 1</strong></td>
+                                        <td><code class="schema-tag">Article</code> (文章)</td>
+                                        <td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Priority 2</strong></td>
+                                        <td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td>
+                                        <td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Priority 3</strong></td>
+                                        <td><code class="schema-tag">Product</code> (商品)</td>
+                                        <td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Priority 4</strong></td>
+                                        <td><code class="schema-tag">Breadcrumb</code> (面包屑)</td>
+                                        <td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Priority 5</strong></td>
+                                        <td><code class="schema-tag">LocalBusiness</code> (本地商家)</td>
+                                        <td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                <div class="bubble">
-                    🗣️ <strong>大白话：</strong>什么是 Schema？说白了就是给你的网页背上贴好标准规范的"条形码标签"！AI 爬虫看几亿个网页眼睛都花了，你贴上 FAQ 和产品标签，它一眼就能识别要点，直接抽走给用户看，曝光率暴增！
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-                <div class="bubble">
-                    🗣️ <strong>大白话：</strong>什么是 Schema？说白了就是给你的网页背上贴好标准规范的"条形码标签"！AI 爬虫看几亿个网页眼睛都花了，你贴上 FAQ 和产品标签，它一眼就能识别要点，直接抽走给用户看，曝光率暴增！
+                        <div class="bubble">
+                            🗣️ <strong>大白话：</strong>什么是 Schema？说白了就是给你的网页背上贴好标准规范的"条形码标签"！AI 爬虫看几亿个网页眼睛都花了，你贴上 FAQ 和产品标签，它一眼就能识别要点，直接抽走给用户看，曝光率暴增！
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -561,18 +573,56 @@
             </span>
         </div>
     </div>
+
     <script>
-    function toggleCardContent(titleElement) {
-        var content = document.getElementById('schemaContent');
-        var arrow = document.getElementById('schemaArrow');
-        if (content.classList.contains('collapsed')) {
-            content.classList.remove('collapsed');
-            arrow.textContent = '▲';
-        } else {
-            content.classList.add('collapsed');
-            arrow.textContent = '▼';
+        // 3.4 折叠切换
+        function toggleSchemaFold(titleElement) {
+            var content = document.getElementById('schemaContent');
+            var arrow = document.getElementById('schemaArrow');
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                content.style.display = 'block';
+                arrow.textContent = '▲';
+            } else {
+                content.classList.add('collapsed');
+                content.style.display = 'none';
+                arrow.textContent = '▼';
+            }
         }
-    }
-</script>
+
+        // 页面加载时，根据屏幕宽度决定折叠状态
+        document.addEventListener('DOMContentLoaded', function() {
+            var content = document.getElementById('schemaContent');
+            var arrow = document.getElementById('schemaArrow');
+            var isMobile = window.innerWidth <= 768;
+
+            if (isMobile) {
+                // 手机端：默认折叠
+                content.classList.add('collapsed');
+                content.style.display = 'none';
+                arrow.textContent = '▼';
+            } else {
+                // 桌面端：默认展开
+                content.classList.remove('collapsed');
+                content.style.display = 'block';
+                arrow.textContent = '▲';
+            }
+        });
+
+        // 窗口大小变化时重新判断
+        window.addEventListener('resize', function() {
+            var content = document.getElementById('schemaContent');
+            var arrow = document.getElementById('schemaArrow');
+            var isMobile = window.innerWidth <= 768;
+
+            // 只在用户未手动操作时自动切换，这里简单处理：
+            // 如果切换到桌面端且内容处于折叠状态，自动展开
+            if (!isMobile && content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                content.style.display = 'block';
+                arrow.textContent = '▲';
+            }
+        });
+    </script>
 </body>
 </html>
