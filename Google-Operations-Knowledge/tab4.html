@@ -108,58 +108,6 @@
         .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
 
         /* ============================================================ */
-        /* 3.4 折叠专用样式                                            */
-        /* ============================================================ */
-        .fold-header {
-            cursor: pointer;
-            user-select: none;
-        }
-        .fold-header:hover .fold-title {
-            color: var(--primary);
-        }
-        .fold-arrow {
-            display: inline-block;
-            transition: transform 0.3s ease;
-            font-size: 14px;
-            color: var(--primary);
-            margin-left: 8px;
-        }
-        .fold-arrow.open {
-            transform: rotate(180deg);
-        }
-        .fold-body {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .fold-body.open {
-            display: block;
-            opacity: 1;
-        }
-        /* 3.4 折叠内部文字 */
-        .fold-body p {
-            font-size: 14px;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-            margin-top: 12px;
-        }
-        .fold-body .bubble {
-            font-size: 13px;
-        }
-        .fold-body .schema-table {
-            font-size: 14px;
-            table-layout: fixed;
-        }
-        .fold-body .schema-table th,
-        .fold-body .schema-table td {
-            font-size: 14px;
-            padding: 14px 16px;
-        }
-        .fold-body code {
-            font-size: 13.5px;
-        }
-
-        /* ============================================================ */
         /* 底部                                                         */
         /* ============================================================ */
         .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
@@ -215,7 +163,7 @@
                 white-space: normal !important;
                 word-break: break-word !important;
             }
-            /* 固定列宽 */
+            /* colgroup 在手机上不生效，用 nth-child 固定列宽 */
             .schema-table th:nth-child(1),
             .schema-table td:nth-child(1) { width: 12% !important; }
             .schema-table th:nth-child(2),
@@ -228,38 +176,6 @@
             .highlight-box ul { padding-left: 16px !important; }
             .highlight-box li { font-size: 13px !important; }
             .highlight-box .bubble { font-size: 13px !important; }
-
-            /* ====== 3.4 折叠内容手机端 ====== */
-            .fold-body p {
-                font-size: 13px !important;
-                margin-top: 10px !important;
-            }
-            .fold-body .bubble {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
-            .fold-body .schema-table {
-                font-size: 12px !important;
-                min-width: 560px !important;
-                table-layout: fixed !important;
-            }
-            .fold-body .schema-table th,
-            .fold-body .schema-table td {
-                font-size: 12px !important;
-                padding: 8px 10px !important;
-                white-space: normal !important;
-                word-break: break-word !important;
-            }
-            .fold-body .schema-table th:nth-child(1),
-            .fold-body .schema-table td:nth-child(1) { width: 12% !important; }
-            .fold-body .schema-table th:nth-child(2),
-            .fold-body .schema-table td:nth-child(2) { width: 28% !important; }
-            .fold-body .schema-table th:nth-child(3),
-            .fold-body .schema-table td:nth-child(3) { width: 60% !important; }
-            .fold-body code {
-                font-size: 11px !important;
-                padding: 2px 6px !important;
-            }
 
             .footer-links { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; font-size: 13px !important; }
         }
@@ -280,7 +196,7 @@
 
             .schema-table {
                 font-size: 10px !important;
-                min-width: 440px !important;
+                min-width: 480px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -296,37 +212,6 @@
             .schema-table td:nth-child(2) { width: 30% !important; }
             .schema-table th:nth-child(3),
             .schema-table td:nth-child(3) { width: 56% !important; }
-
-            .fold-body p {
-                font-size: 12px !important;
-                margin-top: 8px !important;
-            }
-            .fold-body .bubble {
-                font-size: 12px !important;
-                padding: 8px 12px !important;
-            }
-            .fold-body .schema-table {
-                font-size: 10px !important;
-                min-width: 440px !important;
-                table-layout: fixed !important;
-            }
-            .fold-body .schema-table th,
-            .fold-body .schema-table td {
-                font-size: 10px !important;
-                padding: 5px 6px !important;
-                white-space: normal !important;
-                word-break: break-word !important;
-            }
-            .fold-body .schema-table th:nth-child(1),
-            .fold-body .schema-table td:nth-child(1) { width: 14% !important; }
-            .fold-body .schema-table th:nth-child(2),
-            .fold-body .schema-table td:nth-child(2) { width: 30% !important; }
-            .fold-body .schema-table th:nth-child(3),
-            .fold-body .schema-table td:nth-child(3) { width: 56% !important; }
-            .fold-body code {
-                font-size: 9px !important;
-                padding: 1px 4px !important;
-            }
 
             code.schema-tag,
             code.cmd { font-size: 9px !important; padding: 1px 4px !important; }
@@ -553,47 +438,44 @@
             </div>
         </div>
 
-        <!-- ===== 3.4 结构化数据（带折叠功能） ===== -->
+        <!-- ===== 3.4 结构化数据（完全平铺，无折叠） ===== -->
         <div class="grid-2" style="grid-template-columns: 1fr;">
             <div class="card">
                 <div>
-                    <!-- 折叠标题 -->
-                    <div class="card-title fold-header" onclick="toggleFold()" style="border-bottom: none; padding-bottom: 0; margin-bottom: 8px;">
-                        <span class="fold-title">🚀 3.4 ⭐ 结构化数据 (Schema): AI 引用的"加速器"</span>
-                        <span class="fold-arrow" id="foldArrow">▼</span>
+                    <div class="card-title" style="border-bottom: none; padding-bottom: 0; margin-bottom: 8px;">
+                        🚀 3.4 ⭐ 结构化数据 (Schema): AI 引用的"加速器"
                     </div>
 
-                    <!-- 折叠内容 -->
-                    <div class="fold-body" id="foldBody">
-                        <p><strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：</p>
+                    <p style="font-size:14px; color:var(--text-dark); margin-bottom:4px; margin-top: 12px;">
+                        <strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：
+                    </p>
 
-                        <div class="table-wrap">
-                            <table class="schema-table">
-                                <colgroup>
-                                    <col style="width:12%;">
-                                    <col style="width:28%;">
-                                    <col style="width:60%;">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th>优先级</th>
-                                        <th>Schema 类型</th>
-                                        <th>实际核心作用与 AI 联动价值</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td><strong>Priority 1</strong></td><td><code class="schema-tag">Article</code> (文章)</td><td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td></tr>
-                                    <tr><td><strong>Priority 2</strong></td><td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td><td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td></tr>
-                                    <tr><td><strong>Priority 3</strong></td><td><code class="schema-tag">Product</code> (商品)</td><td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td></tr>
-                                    <tr><td><strong>Priority 4</strong></td><td><code class="schema-tag">Breadcrumb</code> (面包屑)</td><td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td></tr>
-                                    <tr><td><strong>Priority 5</strong></td><td><code class="schema-tag">LocalBusiness</code> (本地商家)</td><td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="table-wrap">
+                        <table class="schema-table">
+                            <colgroup>
+                                <col style="width:12%;">
+                                <col style="width:28%;">
+                                <col style="width:60%;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>优先级</th>
+                                    <th>Schema 类型</th>
+                                    <th>实际核心作用与 AI 联动价值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Priority 1</strong></td><td><code class="schema-tag">Article</code> (文章)</td><td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td></tr>
+                                <tr><td><strong>Priority 2</strong></td><td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td><td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td></tr>
+                                <tr><td><strong>Priority 3</strong></td><td><code class="schema-tag">Product</code> (商品)</td><td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td></tr>
+                                <tr><td><strong>Priority 4</strong></td><td><code class="schema-tag">Breadcrumb</code> (面包屑)</td><td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td></tr>
+                                <tr><td><strong>Priority 5</strong></td><td><code class="schema-tag">LocalBusiness</code> (本地商家)</td><td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        <div class="bubble">
-                            🗣️ <strong>大白话：</strong>什么是 Schema？说白了就是给你的网页背上贴好标准规范的"条形码标签"！AI 爬虫看几亿个网页眼睛都花了，你贴上 FAQ 和产品标签，它一眼就能识别要点，直接抽走给用户看，曝光率暴增！
-                        </div>
+                    <div class="bubble">
+                        🗣️ <strong>大白话：</strong>什么是 Schema？说白了就是给你的网页背上贴好标准规范的"条形码标签"！AI 爬虫看几亿个网页眼睛都花了，你贴上 FAQ 和产品标签，它一眼就能识别要点，直接抽走给用户看，曝光率暴增！
                     </div>
                 </div>
             </div>
@@ -610,57 +492,5 @@
         </div>
 
     </div>
-
-    <script>
-        // ===== 3.4 折叠功能 =====
-        var foldBody = document.getElementById('foldBody');
-        var foldArrow = document.getElementById('foldArrow');
-        var isFoldOpen = false;
-
-        function isMobile() {
-            return window.innerWidth <= 768;
-        }
-
-        function toggleFold() {
-            isFoldOpen = !isFoldOpen;
-            if (isFoldOpen) {
-                foldBody.classList.add('open');
-                foldArrow.classList.add('open');
-                foldArrow.textContent = '▲';
-            } else {
-                foldBody.classList.remove('open');
-                foldArrow.classList.remove('open');
-                foldArrow.textContent = '▼';
-            }
-        }
-
-        // 页面加载时设置初始状态
-        document.addEventListener('DOMContentLoaded', function() {
-            if (isMobile()) {
-                // 手机端：默认折叠
-                foldBody.classList.remove('open');
-                foldArrow.classList.remove('open');
-                foldArrow.textContent = '▼';
-                isFoldOpen = false;
-            } else {
-                // 桌面端：默认展开
-                foldBody.classList.add('open');
-                foldArrow.classList.add('open');
-                foldArrow.textContent = '▲';
-                isFoldOpen = true;
-            }
-        });
-
-        // 窗口大小变化：切换到桌面端自动展开
-        window.addEventListener('resize', function() {
-            if (!isMobile() && !isFoldOpen) {
-                foldBody.classList.add('open');
-                foldArrow.classList.add('open');
-                foldArrow.textContent = '▲';
-                isFoldOpen = true;
-            }
-        });
-    </script>
-
 </body>
 </html>
