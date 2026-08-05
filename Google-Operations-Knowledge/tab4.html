@@ -114,7 +114,6 @@
 
         /* ============================================================ */
         /* 手机端响应式适配（≤768px）                                    */
-        /* 只做 768 以下适配，不考虑 480                               */
         /* ============================================================ */
         @media (max-width: 768px) {
 
@@ -140,31 +139,22 @@
 
             .item { font-size: 13px !important; padding-left: 10px !important; word-break: break-word !important; overflow-wrap: break-word !important; }
 
-            /* ====== 大白话气泡换行 ====== */
-            .bubble {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-                word-break: break-word !important;
-                overflow-wrap: break-word !important;
-                white-space: normal !important;
-            }
-
-            /* ====== 3.4 正文文案自动换行 ====== */
-            .card p {
-                word-break: break-word !important;
-                overflow-wrap: break-word !important;
-                white-space: normal !important;
-                font-size: 13px !important;
-            }
-
-            /* ====== 卡片内所有文本强制换行（兜底） ====== */
+            /* ====== 所有文本强制换行 ====== */
+            .card p,
             .card div,
             .card span,
             .card strong,
             .card .item,
-            .card .card-title {
+            .card .card-title,
+            .bubble {
                 word-break: break-word !important;
                 overflow-wrap: break-word !important;
+                white-space: normal !important;
+            }
+
+            .bubble {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
             }
 
             .stage-banner { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; padding: 12px 16px !important; }
@@ -176,10 +166,10 @@
             /* 四宫格 → 单列 */
             .card > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
 
-            /* ====== 表格适配（768以下） ====== */
+            /* ====== 表格适配（768以下）- 修复版 ====== */
             .schema-table {
                 font-size: 12px !important;
-                min-width: 600px !important;
+                min-width: 720px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -189,13 +179,13 @@
                 white-space: normal !important;
                 word-break: break-word !important;
             }
-            /* 列宽固定比例 */
+            /* 列宽固定比例：第一列 8%，第二列 22%，第三列 70% */
             .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 10% !important; }
+            .schema-table td:nth-child(1) { width: 8% !important; }
             .schema-table th:nth-child(2),
-            .schema-table td:nth-child(2) { width: 25% !important; }
+            .schema-table td:nth-child(2) { width: 22% !important; }
             .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 65% !important; }
+            .schema-table td:nth-child(3) { width: 70% !important; }
 
             .highlight-box { padding: 14px 16px !important; }
             .highlight-box h4 { font-size: 15px !important; }
@@ -442,9 +432,9 @@
                     <div class="table-wrap">
                         <table class="schema-table">
                             <colgroup>
-                                <col style="width:12%;">
-                                <col style="width:28%;">
-                                <col style="width:60%;">
+                                <col style="width:8%;">
+                                <col style="width:22%;">
+                                <col style="width:70%;">
                             </colgroup>
                             <thead>
                                 <tr>
