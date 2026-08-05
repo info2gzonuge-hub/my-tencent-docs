@@ -124,6 +124,280 @@
             .styled-table { display: block; overflow-x: auto; white-space: nowrap; }
             .micro-card-grid { grid-template-columns: 1fr; }
         }
+                /* ============================================================ */
+        /* 手机端响应式适配（与 tab3 保持一致）                           */
+        /* ============================================================ */
+        @media (max-width: 768px) {
+
+            .app-container {
+                padding: 16px 12px !important;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .app-header h1 {
+                font-size: 18px !important;
+                flex-wrap: wrap;
+            }
+            .app-header h1 span {
+                font-size: 13px !important;
+                display: block;
+                margin-top: 2px;
+            }
+            .badge-header {
+                font-size: 11px !important;
+                padding: 4px 14px !important;
+            }
+
+            .tab-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 4px;
+                padding-bottom: 10px;
+            }
+            .tab-btn {
+                font-size: 12px !important;
+                padding: 6px 14px !important;
+                flex-shrink: 0;
+            }
+
+            .panel-title {
+                font-size: 18px !important;
+            }
+            .panel-sub {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== section-header ====== */
+            .section-header {
+                font-size: 16px !important;
+                margin: 24px 0 12px !important;
+            }
+
+            /* ====== 架构图 ====== */
+            .arch-diagram {
+                flex-direction: column !important;
+                gap: 6px !important;
+                margin: 16px 0 !important;
+            }
+            .arch-node {
+                padding: 10px 16px !important;
+                font-size: 14px !important;
+                width: 100% !important;
+                max-width: 320px !important;
+                margin: 0 auto !important;
+                min-width: unset !important;
+            }
+            .arch-node span {
+                font-size: 11px !important;
+            }
+            .arch-arrow {
+                transform: rotate(90deg) !important;
+                font-size: 16px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+                text-align: center !important;
+            }
+
+            /* ====== 气泡信息 ====== */
+            .bubble-info {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== 表格：横向滚动 ====== */
+            .styled-table {
+                font-size: 12px !important;
+                min-width: 600px !important;
+                display: table !important;
+                border-radius: 6px !important;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 8px 10px !important;
+                font-size: 12px !important;
+            }
+            /* 表格容器滚动 */
+            .table-wrap {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                margin-bottom: 12px !important;
+            }
+
+            /* ====== micro-card-grid（卡片网格） ====== */
+            .micro-card-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            .micro-card {
+                padding: 12px 14px !important;
+            }
+            .micro-card-title {
+                font-size: 13.5px !important;
+            }
+            .micro-card-desc {
+                font-size: 12.5px !important;
+            }
+
+            /* ====== list-breakdown ====== */
+            .list-breakdown {
+                padding: 12px 14px !important;
+            }
+            .list-breakdown li {
+                font-size: 12.5px !important;
+                flex-wrap: wrap !important;
+            }
+            .list-breakdown .tag {
+                font-size: 10px !important;
+                padding: 1px 6px !important;
+            }
+
+            /* ====== rule-list 步骤 ====== */
+            .rule-list {
+                padding: 14px !important;
+                gap: 8px !important;
+            }
+            .rule-item {
+                padding: 12px 14px !important;
+                flex-wrap: wrap !important;
+                gap: 10px !important;
+            }
+            .rule-num {
+                font-size: 12px !important;
+                padding: 2px 10px !important;
+            }
+            .rule-core {
+                font-size: 13.5px !important;
+            }
+            .rule-why {
+                font-size: 12px !important;
+                padding: 3px 8px !important;
+            }
+            .step-arrow-down {
+                font-size: 16px !important;
+                margin: -2px 0 !important;
+            }
+
+            /* ====== 数据速查（4列 → 2列） ====== */
+            .data-dashboard {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+                margin: 16px 0 8px !important;
+            }
+            .data-box {
+                padding: 12px !important;
+            }
+            .data-val {
+                font-size: 20px !important;
+            }
+            .data-label {
+                font-size: 11.5px !important;
+            }
+            .data-desc {
+                font-size: 11px !important;
+            }
+
+            /* ====== tag 标签 ====== */
+            .tag {
+                font-size: 10px !important;
+                padding: 1px 6px !important;
+            }
+            .tag.green,
+            .tag.blue,
+            .tag.update,
+            .tag.alert,
+            .tag.ai {
+                font-size: 10px !important;
+                padding: 1px 6px !important;
+            }
+
+            /* ====== 底部 ====== */
+            .footer-links {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                font-size: 13px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .app-container {
+                padding: 10px 8px !important;
+            }
+            .app-header h1 {
+                font-size: 16px !important;
+            }
+            .tab-btn {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+
+            .section-header {
+                font-size: 14px !important;
+                margin: 18px 0 10px !important;
+            }
+
+            .arch-node {
+                font-size: 13px !important;
+                padding: 8px 14px !important;
+            }
+
+            .styled-table {
+                font-size: 10px !important;
+                min-width: 480px !important;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 5px 6px !important;
+                font-size: 10px !important;
+            }
+
+            .micro-card {
+                padding: 10px 12px !important;
+            }
+            .micro-card-title {
+                font-size: 13px !important;
+            }
+            .micro-card-desc {
+                font-size: 12px !important;
+            }
+
+            .list-breakdown li {
+                font-size: 11.5px !important;
+            }
+
+            .rule-core {
+                font-size: 13px !important;
+            }
+            .rule-why {
+                font-size: 11px !important;
+            }
+
+            .data-dashboard {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            .data-val {
+                font-size: 18px !important;
+            }
+            .data-label {
+                font-size: 10.5px !important;
+            }
+            .data-desc {
+                font-size: 10px !important;
+            }
+
+            .bubble-info {
+                font-size: 12px !important;
+                padding: 8px 12px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -290,6 +564,7 @@
         </div>
 
         <!-- 归因模型表格 -->
+    <div class="table-wrap">
         <table class="styled-table">
             <thead>
                 <tr>
@@ -326,6 +601,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
 
         <!-- 7.4 受众群体与再营销 -->
         <h3 class="section-header">7.4 受众群体与再营销</h3>
@@ -351,6 +627,7 @@
 
         <!-- 7.5 用户体验追踪工具 -->
         <h3 class="section-header">7.5 用户体验追踪工具</h3>
+    <div class="table-wrap">
         <table class="styled-table">
             <thead>
                 <tr>
@@ -381,6 +658,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
 
         <!-- 核心数据速查看板 (底部) -->
         <h3 class="section-header" style="border: none; margin-bottom: 0;">📊 核心数据速查</h3>
@@ -408,7 +686,7 @@
         </div>
 
         <!-- 底部内链与页脚 (严格锁死) -->
-        <div style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
+        <div class="footer-links" style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
             <span>✨ Tab 8 · 数据分析与追踪 · 流程图+卡片布局</span>
             <span>
                 <a href="#" class="internal-link" style="text-decoration:none;">⬅️ 返回全局目录</a> · 
