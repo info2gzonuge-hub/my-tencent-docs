@@ -113,7 +113,8 @@
         .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
 
         /* ============================================================ */
-        /* 手机端响应式适配                                              */
+        /* 手机端响应式适配（≤768px）                                    */
+        /* 只做 768 以下适配，不考虑 480                               */
         /* ============================================================ */
         @media (max-width: 768px) {
 
@@ -139,7 +140,32 @@
 
             .item { font-size: 13px !important; padding-left: 10px !important; word-break: break-word !important; overflow-wrap: break-word !important; }
 
-            .bubble { font-size: 13px !important; padding: 10px 14px !important; }
+            /* ====== 大白话气泡换行 ====== */
+            .bubble {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+                white-space: normal !important;
+            }
+
+            /* ====== 3.4 正文文案自动换行 ====== */
+            .card p {
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+                white-space: normal !important;
+                font-size: 13px !important;
+            }
+
+            /* ====== 卡片内所有文本强制换行（兜底） ====== */
+            .card div,
+            .card span,
+            .card strong,
+            .card .item,
+            .card .card-title {
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
 
             .stage-banner { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; padding: 12px 16px !important; }
             .stage-title { font-size: 14px !important; }
@@ -150,10 +176,10 @@
             /* 四宫格 → 单列 */
             .card > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
 
-            /* ====== 表格通用 ====== */
+            /* ====== 表格适配（768以下） ====== */
             .schema-table {
                 font-size: 12px !important;
-                min-width: 560px !important;
+                min-width: 600px !important;
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -163,13 +189,13 @@
                 white-space: normal !important;
                 word-break: break-word !important;
             }
-            /* colgroup 在手机上不生效，用 nth-child 固定列宽 */
+            /* 列宽固定比例 */
             .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 12% !important; }
+            .schema-table td:nth-child(1) { width: 10% !important; }
             .schema-table th:nth-child(2),
-            .schema-table td:nth-child(2) { width: 28% !important; }
+            .schema-table td:nth-child(2) { width: 25% !important; }
             .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 60% !important; }
+            .schema-table td:nth-child(3) { width: 65% !important; }
 
             .highlight-box { padding: 14px 16px !important; }
             .highlight-box h4 { font-size: 15px !important; }
@@ -178,43 +204,6 @@
             .highlight-box .bubble { font-size: 13px !important; }
 
             .footer-links { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; font-size: 13px !important; }
-        }
-
-        @media (max-width: 480px) {
-
-            .app-container { padding: 10px 8px !important; }
-            .app-header h1 { font-size: 16px !important; }
-            .tab-btn { font-size: 11px !important; padding: 4px 10px !important; }
-
-            .card { padding: 12px 12px !important; }
-            .card .card-title { font-size: 14px !important; }
-
-            .item { font-size: 12px !important; }
-            .bubble { font-size: 12px !important; padding: 8px 12px !important; }
-
-            .stage-title { font-size: 13px !important; }
-
-            .schema-table {
-                font-size: 10px !important;
-                min-width: 480px !important;
-                table-layout: fixed !important;
-            }
-            .schema-table th,
-            .schema-table td {
-                padding: 5px 6px !important;
-                font-size: 10px !important;
-                white-space: normal !important;
-                word-break: break-word !important;
-            }
-            .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 14% !important; }
-            .schema-table th:nth-child(2),
-            .schema-table td:nth-child(2) { width: 30% !important; }
-            .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 56% !important; }
-
-            code.schema-tag,
-            code.cmd { font-size: 9px !important; padding: 1px 4px !important; }
         }
     </style>
 </head>
