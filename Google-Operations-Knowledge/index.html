@@ -86,6 +86,126 @@
         .styled-table tbody tr:last-child td { border-bottom: none; }
         @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .app-container { padding: 20px 16px; } .tree-item .tree-body .child { font-size: 14px; } }
         @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr 1fr; } .app-header { flex-direction: column; align-items: flex-start; gap: 8px; } }
+                /* ============================================================ */
+        /* 手机端响应式适配（与 tab3 保持一致）                           */
+        /* ============================================================ */
+        @media (max-width: 768px) {
+
+            .app-container {
+                padding: 16px 12px !important;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .app-header h1 {
+                font-size: 18px !important;
+                flex-wrap: wrap;
+            }
+            .app-header h1 span {
+                font-size: 13px !important;
+                display: block;
+                margin-top: 2px;
+            }
+            .badge-header {
+                font-size: 11px !important;
+                padding: 4px 14px !important;
+            }
+
+            .tab-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 4px;
+                padding-bottom: 10px;
+            }
+            .tab-btn {
+                font-size: 12px !important;
+                padding: 6px 14px !important;
+                flex-shrink: 0;
+            }
+
+            .panel-title {
+                font-size: 18px !important;
+            }
+            .panel-sub {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+
+            .expand-card summary {
+                padding: 14px !important;
+            }
+            .expand-card summary .card-title {
+                font-size: 15px !important;
+                padding-right: 30px !important;
+            }
+            .expand-card summary .card-real-img {
+                height: 120px !important;
+            }
+            .expand-card .card-details {
+                padding: 0 14px 18px 14px !important;
+            }
+            .expand-card .item {
+                font-size: 13px !important;
+                padding-left: 10px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+            .expand-card .bubble {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            .footer-links {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                font-size: 13px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 10px 8px !important;
+            }
+            .app-header h1 {
+                font-size: 16px !important;
+            }
+            .tab-btn {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+            .expand-card summary .card-real-img {
+                height: 90px !important;
+            }
+            .expand-card summary .card-title {
+                font-size: 14px !important;
+            }
+            .expand-card .item {
+                font-size: 12px !important;
+            }
+            .expand-card .bubble {
+                font-size: 12px !important;
+                padding: 8px 12px !important;
+            }
+            .card {
+                padding: 14px 14px !important;
+            }
+            .card .card-title {
+                font-size: 14px !important;
+            }
+            .bubble {
+                font-size: 12px !important;
+                padding: 10px 12px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -486,7 +606,7 @@
             <strong>💡 节点统计：</strong> 第零层 10个 · 第一层 6个 · 第二层 4个 · 第三层 7个 · 第四层 3个 · 第五层 3个 · 第六层 4个 · 第七层 5个 · 第八层 3个 · 第九层 5个 = <strong>共50+个子节点</strong>，严格按照终版树形图完整呈现，无删减、无合并、无改写。
         </div>
 
-        <div style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; font-size:14px; color:var(--text-muted);">
+        <div class="footer-links" style="margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
             <span>✨ Tab 0 · 全局完整目录 — 精确至终版树形图</span>
             <span>点击 <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">返回顶部</span></span>
         </div>
