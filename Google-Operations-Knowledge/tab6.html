@@ -89,35 +89,37 @@
         .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
 
         /* ====== 卡片折叠通用 ====== */
-        .card-body {
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        .card-body.collapsed {
-            display: none;
-        }
-        .card-arrow {
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-        .card-arrow.rotated {
-            transform: rotate(180deg);
-        }
+        .card-body { transition: all 0.3s ease; overflow: hidden; }
+        .card-body.collapsed { display: none; }
+        .card-arrow { transition: transform 0.3s ease; display: inline-block; }
+        .card-arrow.rotated { transform: rotate(180deg); }
 
-        /* ====== 5.2 内部数据折叠 ====== */
-        .data-fold-content {
-            transition: all 0.3s ease;
-            overflow: hidden;
+        /* ====== 5.2 内部三级折叠 ====== */
+        .sub-fold-content { transition: all 0.3s ease; overflow: hidden; }
+        .sub-fold-content.collapsed { display: none; }
+        .sub-fold-arrow { transition: transform 0.3s ease; display: inline-block; font-size: 12px; color: var(--primary); margin-left: 6px; }
+        .sub-fold-arrow.rotated { transform: rotate(180deg); }
+
+        .fold-toggle-label {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-light);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dark);
         }
-        .data-fold-content.collapsed {
-            display: none;
-        }
-        .data-fold-arrow {
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-        .data-fold-arrow.rotated {
-            transform: rotate(180deg);
+        .fold-toggle-label:hover { color: var(--primary); }
+
+        /* 手机端默认折叠样式 */
+        @media (max-width: 768px) {
+            .card-body { display: none; }
+            .card-body.mobile-open { display: block !important; }
+            .sub-fold-content { display: none; }
+            .sub-fold-content.mobile-open { display: block !important; }
         }
 
         /* ============================================================ */
@@ -125,297 +127,95 @@
         /* ============================================================ */
         @media (max-width: 768px) {
 
-            .app-container {
-                padding: 16px 12px !important;
-            }
+            .app-container { padding: 16px 12px !important; }
+            .app-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .app-header h1 { font-size: 18px !important; flex-wrap: wrap; }
+            .app-header h1 span { font-size: 13px !important; display: block; margin-top: 2px; }
+            .badge-header { font-size: 11px !important; padding: 4px 14px !important; }
 
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .app-header h1 {
-                font-size: 18px !important;
-                flex-wrap: wrap;
-            }
-            .app-header h1 span {
-                font-size: 13px !important;
-                display: block;
-                margin-top: 2px;
-            }
-            .badge-header {
-                font-size: 11px !important;
-                padding: 4px 14px !important;
-            }
+            .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
+            .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
 
-            .tab-nav {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                gap: 4px;
-                padding-bottom: 10px;
-            }
-            .tab-btn {
-                font-size: 12px !important;
-                padding: 6px 14px !important;
-                flex-shrink: 0;
-            }
+            .panel-title { font-size: 18px !important; }
+            .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
 
-            .panel-title {
-                font-size: 18px !important;
-            }
-            .panel-sub {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
+            .grid-6-4 { grid-template-columns: 1fr !important; gap: 14px !important; }
 
-            .grid-6-4 {
-                grid-template-columns: 1fr !important;
-                gap: 14px !important;
-            }
+            .card { padding: 16px 16px !important; }
+            .card .card-title { font-size: 15px !important; flex-wrap: wrap; gap: 8px; }
+            .card .card-title span:last-child { font-size: 12px !important; }
 
-            .card {
-                padding: 16px 16px !important;
-            }
-            .card .card-title {
-                font-size: 15px !important;
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-            .card .card-title span:last-child {
-                font-size: 12px !important;
-            }
+            .item { font-size: 13px !important; line-height: 1.6 !important; }
+            .item .bubble { font-size: 13px !important; padding: 10px 14px !important; }
+            .action-path { font-size: 12px !important; padding: 8px 12px !important; }
+            .bubble { font-size: 13px !important; padding: 10px 14px !important; }
 
-            /* 5.1 和 5.2 手机端默认折叠（通过 JS 控制） */
-            .card-body {
-                display: none;
-            }
-            .card-body.mobile-open {
-                display: block !important;
-            }
+            .danger-box { padding: 12px 14px !important; }
+            .danger-box h5 { font-size: 13px !important; }
+            .danger-box ul { font-size: 12px !important; padding-left: 16px !important; }
 
-            .item {
-                font-size: 13px !important;
-                line-height: 1.6 !important;
-            }
-            .item .bubble {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
-            .action-path {
-                font-size: 12px !important;
-                padding: 8px 12px !important;
-            }
+            .badge-row { gap: 8px !important; }
+            .brand-badge { font-size: 12px !important; padding: 6px 12px !important; }
 
-            .bubble {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
+            .flow-data-container { padding-left: 16px !important; }
+            .flow-data-container::before { left: 4px !important; }
+            .data-card { padding: 10px 12px !important; font-size: 12px !important; }
+            .data-card::before { left: -15px !important; width: 8px !important; height: 8px !important; top: 12px !important; }
+            .data-card strong { font-size: 13px !important; }
 
-            .danger-box {
-                padding: 12px 14px !important;
-            }
-            .danger-box h5 {
-                font-size: 13px !important;
-            }
-            .danger-box ul {
-                font-size: 12px !important;
-                padding-left: 16px !important;
-            }
+            .schema-table { font-size: 12px !important; min-width: 500px !important; display: table !important; }
+            .schema-table th, .schema-table td { padding: 8px 10px !important; font-size: 12px !important; }
 
-            .badge-row {
-                gap: 8px !important;
-            }
-            .brand-badge {
-                font-size: 12px !important;
-                padding: 6px 12px !important;
-            }
+            .sop-section { padding: 18px 14px !important; }
+            .sop-title { font-size: 17px !important; }
 
-            .flow-data-container {
-                padding-left: 16px !important;
-            }
-            .flow-data-container::before {
-                left: 4px !important;
-            }
-            .data-card {
-                padding: 10px 12px !important;
-                font-size: 12px !important;
-            }
-            .data-card::before {
-                left: -15px !important;
-                width: 8px !important;
-                height: 8px !important;
-                top: 12px !important;
-            }
-            .data-card strong {
-                font-size: 13px !important;
-            }
+            .step-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            .step-card { padding: 14px 12px !important; }
+            .step-card h4 { font-size: 14px !important; }
+            .step-card p { font-size: 12px !important; }
+            .step-num { width: 24px !important; height: 24px !important; font-size: 12px !important; top: -12px !important; left: 12px !important; }
 
-            /* 5.2 内部数据折叠：手机端默认收起 */
-            .data-fold-content {
-                display: none;
-            }
-            .data-fold-content.mobile-open {
-                display: block !important;
-            }
+            .connector-line { height: 20px !important; }
+            .arrow-down { border-left-width: 6px !important; border-right-width: 6px !important; border-top-width: 8px !important; }
 
-            .schema-table {
-                font-size: 12px !important;
-                min-width: 500px !important;
-                display: table !important;
-            }
-            .schema-table th,
-            .schema-table td {
-                padding: 8px 10px !important;
-                font-size: 12px !important;
-            }
+            .sop-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+            .sop-table-wrap > div { font-size: 13px !important; padding: 10px 14px !important; flex-wrap: wrap !important; }
+            .sop-table-wrap .schema-table { min-width: 600px !important; font-size: 12px !important; }
+            .sop-table-wrap .schema-table th, .sop-table-wrap .schema-table td { padding: 6px 8px !important; font-size: 12px !important; }
 
-            .sop-section {
-                padding: 18px 14px !important;
-            }
-            .sop-title {
-                font-size: 17px !important;
-            }
-
-            .step-grid {
-                grid-template-columns: 1fr !important;
-                gap: 12px !important;
-            }
-            .step-card {
-                padding: 14px 12px !important;
-            }
-            .step-card h4 {
-                font-size: 14px !important;
-            }
-            .step-card p {
-                font-size: 12px !important;
-            }
-            .step-num {
-                width: 24px !important;
-                height: 24px !important;
-                font-size: 12px !important;
-                top: -12px !important;
-                left: 12px !important;
-            }
-
-            .connector-line {
-                height: 20px !important;
-            }
-            .arrow-down {
-                border-left-width: 6px !important;
-                border-right-width: 6px !important;
-                border-top-width: 8px !important;
-            }
-
-            .sop-table-wrap {
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-            }
-            .sop-table-wrap > div {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-                flex-wrap: wrap !important;
-            }
-            .sop-table-wrap .schema-table {
-                min-width: 600px !important;
-                font-size: 12px !important;
-            }
-            .sop-table-wrap .schema-table th,
-            .sop-table-wrap .schema-table td {
-                padding: 6px 8px !important;
-                font-size: 12px !important;
-            }
-
-            .footer-links {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 6px !important;
-                font-size: 13px !important;
-            }
+            .footer-links { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; font-size: 13px !important; }
         }
 
         @media (max-width: 480px) {
 
-            .app-container {
-                padding: 10px 8px !important;
-            }
-            .app-header h1 {
-                font-size: 16px !important;
-            }
-            .tab-btn {
-                font-size: 11px !important;
-                padding: 4px 10px !important;
-            }
+            .app-container { padding: 10px 8px !important; }
+            .app-header h1 { font-size: 16px !important; }
+            .tab-btn { font-size: 11px !important; padding: 4px 10px !important; }
 
-            .card {
-                padding: 12px 12px !important;
-            }
-            .card .card-title {
-                font-size: 14px !important;
-            }
+            .card { padding: 12px 12px !important; }
+            .card .card-title { font-size: 14px !important; }
 
-            .item {
-                font-size: 12px !important;
-            }
-            .item .bubble {
-                font-size: 12px !important;
-                padding: 8px 12px !important;
-            }
-            .bubble {
-                font-size: 12px !important;
-                padding: 8px 12px !important;
-            }
-            .action-path {
-                font-size: 11px !important;
-            }
+            .item { font-size: 12px !important; }
+            .item .bubble { font-size: 12px !important; padding: 8px 12px !important; }
+            .bubble { font-size: 12px !important; padding: 8px 12px !important; }
+            .action-path { font-size: 11px !important; }
 
-            .step-grid {
-                grid-template-columns: 1fr !important;
-            }
+            .step-grid { grid-template-columns: 1fr !important; }
 
-            .schema-table {
-                font-size: 10px !important;
-                min-width: 400px !important;
-            }
-            .schema-table th,
-            .schema-table td {
-                padding: 5px 6px !important;
-                font-size: 10px !important;
-            }
+            .schema-table { font-size: 10px !important; min-width: 400px !important; }
+            .schema-table th, .schema-table td { padding: 5px 6px !important; font-size: 10px !important; }
 
-            .sop-table-wrap .schema-table {
-                min-width: 480px !important;
-                font-size: 10px !important;
-            }
-            .sop-table-wrap .schema-table th,
-            .sop-table-wrap .schema-table td {
-                padding: 4px 5px !important;
-                font-size: 10px !important;
-            }
+            .sop-table-wrap .schema-table { min-width: 480px !important; font-size: 10px !important; }
+            .sop-table-wrap .schema-table th, .sop-table-wrap .schema-table td { padding: 4px 5px !important; font-size: 10px !important; }
 
-            .brand-badge {
-                font-size: 11px !important;
-                padding: 4px 10px !important;
-            }
-            .data-card {
-                font-size: 11px !important;
-                padding: 8px 10px !important;
-            }
-            .data-card strong {
-                font-size: 12px !important;
-            }
+            .brand-badge { font-size: 11px !important; padding: 4px 10px !important; }
+            .data-card { font-size: 11px !important; padding: 8px 10px !important; }
+            .data-card strong { font-size: 12px !important; }
 
-            .sop-title {
-                font-size: 15px !important;
-            }
-            .step-card {
-                padding: 12px 10px !important;
-            }
-            .step-card h4 {
-                font-size: 13px !important;
-            }
-            .step-card p {
-                font-size: 11px !important;
-            }
+            .sop-title { font-size: 15px !important; }
+            .step-card { padding: 12px 10px !important; }
+            .step-card h4 { font-size: 13px !important; }
+            .step-card p { font-size: 11px !important; }
         }
     </style>
 </head>
@@ -466,20 +266,17 @@
                             <span class="action-path"><strong>操作路径：</strong>用 Ahrefs Content Explorer 搜索行业关键词 → 筛选有"Write for Us"投稿入口的网站 → 邮件联系编辑 → 提交文章 → 发布上线。</span>
                             <div style="font-size: 13px; color: #DC2626; margin-top: 6px;">2026新标准：内容必须真人撰写、有实际价值，禁止AI批量生成。</div>
                         </div>
-
                         <div class="item" style="border-top: 1px dashed #E5E7EB; padding-top: 16px;">
                             <strong>⭐ PR媒体稿</strong> —— 通过权威新闻媒体发布品牌动态稿件，附带网站链接。
                             <div class="bubble">🗣️ <strong>大白话：</strong>在正规新闻网站上发一篇关于你品牌的"新闻报道"，里面带上你的网站链接，像大公司做的那样。</div>
                             <span class="action-path"><strong>操作路径：</strong>找第三方公关渠道扩展媒体资源 → 用 ahrefs/semrush 验证媒体域名权威性（DA≥60优先）→ 首段品牌词做锚文本，文末放"了解更多"跳转链接。</span>
                         </div>
-
                         <div class="item" style="border-top: 1px dashed #E5E7EB; padding-top: 16px;">
                             <strong>其他补充手段：</strong><br>
                             <span style="display: block; margin-top: 6px;"><strong>摩天楼技术</strong> —— 找到行业内被引用最多的内容，做一个更好的版本，再主动推荐给引用过旧版本的人（非核心，可做可不做）</span>
                             <span style="display: block; margin-top: 6px;"><strong>APL外链</strong> —— 与优质博客主合作，或收购优质站点自建链接资源库，一般需付费（非核心，预算充足时可考虑）</span>
                         </div>
                     </div>
-
                     <h5 style="color: var(--secondary); margin: 20px 0 10px; font-size: 15px;">② 评判标准 (2026年)</h5>
                     <ul style="padding-left: 20px; font-size: 13.5px; color: var(--text-dark); line-height: 1.8;">
                         <li><strong>权威性：</strong> DR/AS值 > 50分优先</li>
@@ -487,7 +284,6 @@
                         <li><strong>属性：</strong> DoFollow优先（传递PR值）</li>
                         <li><strong>位置：</strong> 内容主体内 > 侧边栏 > 页脚</li>
                     </ul>
-
                     <div class="danger-box hover-box">
                         <h5>③ 2026年无效/危险外链（⚠️ 不要碰）</h5>
                         <ul>
@@ -502,6 +298,7 @@
 
             <!-- 右栏：5.2 品牌提及 -->
             <div class="card hover-box" style="border-color: #FADCB3; background: linear-gradient(to bottom right, #FFFFFF, #FFFBF5); box-shadow: 0 4px 20px rgba(217, 119, 6, 0.08);">
+
                 <!-- 5.2 主标题（控制整个卡片折叠） -->
                 <div class="card-title" style="cursor: pointer; user-select: none;" onclick="toggleCard('cardRight', 'cardRightArrow')">
                     <span>⭐ 5.2 品牌提及 (GEO 新引擎)</span>
@@ -510,6 +307,7 @@
                         <span class="card-arrow" id="cardRightArrow" style="font-size: 14px; color: var(--primary);">▼</span>
                     </span>
                 </div>
+
                 <div class="card-body" id="cardRight">
 
                     <!-- 大白话（始终可见） -->
@@ -524,63 +322,68 @@
                         <span class="brand-badge im">📰 行业媒体</span>
                     </div>
 
-                    <!-- ===== 5.2 内部可折叠区域：三大数据支撑 + 对比表格 ===== -->
+                    <!-- ===== 5.2 内部折叠区域 ===== -->
+                    <!-- 第一层：详细数据与对比（主折叠） -->
                     <div style="margin-top: 8px;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; padding: 6px 0; border-top: 1px dashed var(--border-light);" onclick="toggleDataFold()">
-                            <span style="font-weight: 700; font-size: 15px; color: var(--text-dark);">📊 详细数据与对比</span>
-                            <span class="data-fold-arrow" id="dataFoldArrow" style="font-size: 14px; color: var(--primary);">▼</span>
+                        <div class="fold-toggle-label" onclick="toggleSubFold('dataMainFold', 'dataMainArrow')">
+                            <span>📊 详细数据与对比</span>
+                            <span class="sub-fold-arrow" id="dataMainArrow">▼</span>
                         </div>
-                        <div class="data-fold-content" id="dataFoldContent">
-                            <h5 style="color: #D97706; margin: 16px 0 12px; font-size: 15px;">① 三大数据支撑 (AI 训练基石)</h5>
-                            <div class="flow-data-container">
-                                <div class="data-card hover-box">
-                                    <strong>谷歌与Reddit签署每年$6000万数据授权协议</strong>
-                                    → Reddit是AI训练的核心来源，品牌在Reddit上被真实用户讨论，AI更容易认识你
+                        <div class="sub-fold-content" id="dataMainFold">
+
+                            <!-- ===== 三大数据支撑 ===== -->
+                            <!-- 第二层：三大数据支撑（子折叠） -->
+                            <div style="margin-top: 12px;">
+                                <div class="fold-toggle-label" onclick="toggleSubFold('dataCardsFold', 'dataCardsArrow')" style="padding-left: 12px; border-left: 2px solid var(--primary-light);">
+                                    <span>📌 三大数据支撑 (AI 训练基石)</span>
+                                    <span class="sub-fold-arrow" id="dataCardsArrow">▼</span>
                                 </div>
-                                <div class="data-card hover-box">
-                                    <strong>YouTube提及与AI品牌可见度相关性最强</strong>
-                                    → 来源：Ahrefs对75,000个品牌的研究。YouTube上的品牌提及（包括口播）直接提升AI引用率
-                                </div>
-                                <div class="data-card hover-box">
-                                    <strong>提及量前25%的品牌，AI引用率是后25%的10倍以上</strong>
-                                    → 结论：品牌提及已经从"品牌建设"升级为"SEO战略"
+                                <div class="sub-fold-content" id="dataCardsFold" style="padding-left: 12px;">
+                                    <div class="flow-data-container" style="margin-top: 8px;">
+                                        <div class="data-card hover-box">
+                                            <strong>谷歌与Reddit签署每年$6000万数据授权协议</strong>
+                                            → Reddit是AI训练的核心来源，品牌在Reddit上被真实用户讨论，AI更容易认识你
+                                        </div>
+                                        <div class="data-card hover-box">
+                                            <strong>YouTube提及与AI品牌可见度相关性最强</strong>
+                                            → 来源：Ahrefs对75,000个品牌的研究。YouTube上的品牌提及（包括口播）直接提升AI引用率
+                                        </div>
+                                        <div class="data-card hover-box">
+                                            <strong>提及量前25%的品牌，AI引用率是后25%的10倍以上</strong>
+                                            → 结论：品牌提及已经从"品牌建设"升级为"SEO战略"
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <h5 style="color: #D97706; margin: 20px 0 10px; font-size: 15px;">② 外链 vs 提及的本质区别</h5>
-                            <div class="table-wrap">
-                                <table class="schema-table hover-box" style="background: #fff;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 25%;">对比维度</th>
-                                            <th style="width: 35%;">🔗 外链</th>
-                                            <th style="width: 40%;">⭐ 品牌提及</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>作用对象</strong></td>
-                                            <td>提升单个页面</td>
-                                            <td>建立整个品牌</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>需要链接</strong></td>
-                                            <td>需要</td>
-                                            <td style="color: #D97706; font-weight: 600;">不需要</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>适用场景</strong></td>
-                                            <td>传统SEO排名</td>
-                                            <td>AI答案引用率</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>权重占比</strong></td>
-                                            <td>约45%</td>
-                                            <td style="font-weight: 600;">约55%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <!-- ===== 对比表格 ===== -->
+                            <!-- 第二层：对比表格（子折叠） -->
+                            <div style="margin-top: 8px;">
+                                <div class="fold-toggle-label" onclick="toggleSubFold('tableFold', 'tableArrow')" style="padding-left: 12px; border-left: 2px solid var(--accent);">
+                                    <span>📋 外链 vs 提及 对比表</span>
+                                    <span class="sub-fold-arrow" id="tableArrow">▼</span>
+                                </div>
+                                <div class="sub-fold-content" id="tableFold" style="padding-left: 12px;">
+                                    <div class="table-wrap">
+                                        <table class="schema-table hover-box" style="background: #fff;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 25%;">对比维度</th>
+                                                    <th style="width: 35%;">🔗 外链</th>
+                                                    <th style="width: 40%;">⭐ 品牌提及</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td><strong>作用对象</strong></td><td>提升单个页面</td><td>建立整个品牌</td></tr>
+                                                <tr><td><strong>需要链接</strong></td><td>需要</td><td style="color: #D97706; font-weight: 600;">不需要</td></tr>
+                                                <tr><td><strong>适用场景</strong></td><td>传统SEO排名</td><td>AI答案引用率</td></tr>
+                                                <tr><td><strong>权重占比</strong></td><td>约45%</td><td style="font-weight: 600;">约55%</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -590,7 +393,6 @@
         <!-- ===== SOP 四步法 ===== -->
         <div class="sop-section">
             <div class="sop-title">⭐ 重点：品牌提及实操四步法</div>
-
             <div class="step-grid">
                 <div class="step-card hover-box">
                     <div class="step-num">1</div>
@@ -600,17 +402,12 @@
                     <p><strong>监控平台：</strong> 社交媒体、论坛、博客、播客、新闻网站、评论区</p>
                     <p><strong>操作频率：</strong> 每周查看一次新提及，标记重要提及</p>
                 </div>
-
                 <div class="step-card hover-box" style="border: 2px solid var(--primary); box-shadow: 0 4px 16px rgba(255, 107, 53, 0.15);">
                     <div class="step-num">2</div>
                     <h4>📣 第二步：在第三方平台主动布局</h4>
-                    <p style="text-align: center; margin-top: 20px; font-size: 14px; color: var(--primary); font-weight: 600;">
-                        平台要求<br>
-                        👇 详见下方专属表格
-                    </p>
+                    <p style="text-align: center; margin-top: 20px; font-size: 14px; color: var(--primary); font-weight: 600;">平台要求<br>👇 详见下方专属表格</p>
                     <p style="font-size: 12px; color: #D97706; background: #FFFBEB; padding: 4px;">⚠️ 切记：自然露出，拒绝刷量。</p>
                 </div>
-
                 <div class="step-card hover-box">
                     <div class="step-num">3</div>
                     <h4>🔗 第三步：将无链接提及转化为链接</h4>
@@ -619,7 +416,6 @@
                     <p style="font-style: italic; background: #F3F4F6; padding: 8px; border-radius: 4px; font-size: 12px; margin: 8px 0;">"感谢您提到我们的品牌！如果方便的话，可以添加一个指向我们官网的链接吗？方便您的读者了解更多信息。"</p>
                     <p style="font-size: 12px; font-weight: 600;">成功率一般在10%-30%，坚持做就有积累</p>
                 </div>
-
                 <div class="step-card hover-box" style="border-color: #FCA5A5; background: #FEF2F2;">
                     <div class="step-num" style="background: #DC2626;">4</div>
                     <h4 style="color: #DC2626; border-bottom-color: #FCA5A5;">⚠️ 第四步：红线警告</h4>
@@ -632,12 +428,10 @@
                     <p style="font-size: 12px; color: #DC2626; margin-top: 10px; font-weight: 600;">后果：比不做更严重，可能导致整个网站被降权或惩罚</p>
                 </div>
             </div>
-
             <div class="connector-wrap">
                 <div class="connector-line"></div>
                 <div class="arrow-down"></div>
             </div>
-
             <!-- 底部大表格 -->
             <div class="sop-table-wrap hover-box">
                 <div style="background: var(--bg-card-alt); padding: 14px 20px; font-weight: 700; border-bottom: 1px solid #E5E7EB; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
@@ -654,36 +448,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="border-left: none;">YouTube</td>
-                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td>
-                                <td>发布产品演示、教程、客户案例视频</td>
-                                <td style="border-right: none;">视频描述中自然包含品牌名和官网链接</td>
-                            </tr>
-                            <tr>
-                                <td style="border-left: none;">Reddit</td>
-                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td>
-                                <td>在相关subreddit参与讨论、回答问题</td>
-                                <td style="border-right: none;"><strong>严格禁止硬广！</strong> 以提供价值为主，自然提及品牌</td>
-                            </tr>
-                            <tr>
-                                <td style="border-left: none;">行业媒体</td>
-                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td>
-                                <td>投稿客座文章、争取被报道</td>
-                                <td style="border-right: none;">提供独家数据或专家观点，增加被引用概率</td>
-                            </tr>
-                            <tr>
-                                <td style="border-left: none;">Quora</td>
-                                <td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td>
-                                <td>回答行业相关问题，自然提及品牌</td>
-                                <td style="border-right: none;">回答要详细有用，品牌放在文末"相关资源"</td>
-                            </tr>
-                            <tr>
-                                <td style="border-left: none; border-bottom: none;">LinkedIn</td>
-                                <td style="color: #D97706; letter-spacing: 2px; border-bottom: none;">⭐⭐⭐</td>
-                                <td style="border-bottom: none;">发布专业内容、参与行业讨论</td>
-                                <td style="border-right: none; border-bottom: none;">个人账号互动率高于公司页面</td>
-                            </tr>
+                            <tr><td style="border-left: none;">YouTube</td><td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td><td>发布产品演示、教程、客户案例视频</td><td style="border-right: none;">视频描述中自然包含品牌名和官网链接</td></tr>
+                            <tr><td style="border-left: none;">Reddit</td><td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐⭐</td><td>在相关subreddit参与讨论、回答问题</td><td style="border-right: none;"><strong>严格禁止硬广！</strong> 以提供价值为主，自然提及品牌</td></tr>
+                            <tr><td style="border-left: none;">行业媒体</td><td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td><td>投稿客座文章、争取被报道</td><td style="border-right: none;">提供独家数据或专家观点，增加被引用概率</td></tr>
+                            <tr><td style="border-left: none;">Quora</td><td style="color: #D97706; letter-spacing: 2px;">⭐⭐⭐⭐</td><td>回答行业相关问题，自然提及品牌</td><td style="border-right: none;">回答要详细有用，品牌放在文末"相关资源"</td></tr>
+                            <tr><td style="border-left: none; border-bottom: none;">LinkedIn</td><td style="color: #D97706; letter-spacing: 2px; border-bottom: none;">⭐⭐⭐</td><td style="border-bottom: none;">发布专业内容、参与行业讨论</td><td style="border-right: none; border-bottom: none;">个人账号互动率高于公司页面</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -705,7 +474,6 @@
             var body = document.getElementById(cardId);
             var arrow = document.getElementById(arrowId);
             if (!body) return;
-
             if (body.classList.contains('collapsed') || body.style.display === 'none') {
                 body.classList.remove('collapsed');
                 body.style.display = 'block';
@@ -717,12 +485,11 @@
             }
         }
 
-        // ===== 5.2 内部数据折叠 =====
-        function toggleDataFold() {
-            var content = document.getElementById('dataFoldContent');
-            var arrow = document.getElementById('dataFoldArrow');
+        // ===== 5.2 内部子折叠（通用） =====
+        function toggleSubFold(contentId, arrowId) {
+            var content = document.getElementById(contentId);
+            var arrow = document.getElementById(arrowId);
             if (!content) return;
-
             if (content.classList.contains('collapsed') || content.style.display === 'none') {
                 content.classList.remove('collapsed');
                 content.style.display = 'block';
@@ -744,79 +511,51 @@
             var leftArrow = document.getElementById('cardLeftArrow');
             var rightArrow = document.getElementById('cardRightArrow');
 
+            // 5.2 内部子折叠元素
+            var dataMain = document.getElementById('dataMainFold');
+            var dataMainArrow = document.getElementById('dataMainArrow');
+            var dataCards = document.getElementById('dataCardsFold');
+            var dataCardsArrow = document.getElementById('dataCardsArrow');
+            var tableFold = document.getElementById('tableFold');
+            var tableArrow = document.getElementById('tableArrow');
+
             if (isMobile) {
-                // 手机端：默认收起
-                if (leftBody) {
-                    leftBody.classList.add('collapsed');
-                    leftBody.style.display = 'none';
-                    if (leftArrow) leftArrow.textContent = '▼';
-                }
-                if (rightBody) {
-                    rightBody.classList.add('collapsed');
-                    rightBody.style.display = 'none';
-                    if (rightArrow) rightArrow.textContent = '▼';
-                }
-                // 5.2 内部数据：默认收起
-                var dataContent = document.getElementById('dataFoldContent');
-                var dataArrow = document.getElementById('dataFoldArrow');
-                if (dataContent) {
-                    dataContent.classList.add('collapsed');
-                    dataContent.style.display = 'none';
-                    if (dataArrow) dataArrow.textContent = '▼';
-                }
+                // 手机端：5.1 和 5.2 卡片主体收起
+                if (leftBody) { leftBody.classList.add('collapsed'); leftBody.style.display = 'none'; if (leftArrow) leftArrow.textContent = '▼'; }
+                if (rightBody) { rightBody.classList.add('collapsed'); rightBody.style.display = 'none'; if (rightArrow) rightArrow.textContent = '▼'; }
+
+                // 手机端：5.2 内部所有子折叠全部收起
+                if (dataMain) { dataMain.classList.add('collapsed'); dataMain.style.display = 'none'; if (dataMainArrow) dataMainArrow.textContent = '▼'; }
+                if (dataCards) { dataCards.classList.add('collapsed'); dataCards.style.display = 'none'; if (dataCardsArrow) dataCardsArrow.textContent = '▼'; }
+                if (tableFold) { tableFold.classList.add('collapsed'); tableFold.style.display = 'none'; if (tableArrow) tableArrow.textContent = '▼'; }
             } else {
-                // 桌面端：默认展开
-                if (leftBody) {
-                    leftBody.classList.remove('collapsed');
-                    leftBody.style.display = 'block';
-                    if (leftArrow) leftArrow.textContent = '▲';
-                }
-                if (rightBody) {
-                    rightBody.classList.remove('collapsed');
-                    rightBody.style.display = 'block';
-                    if (rightArrow) rightArrow.textContent = '▲';
-                }
-                // 5.2 内部数据：桌面端默认展开
-                var dataContent = document.getElementById('dataFoldContent');
-                var dataArrow = document.getElementById('dataFoldArrow');
-                if (dataContent) {
-                    dataContent.classList.remove('collapsed');
-                    dataContent.style.display = 'block';
-                    if (dataArrow) dataArrow.textContent = '▲';
-                }
+                // 桌面端：5.1 和 5.2 卡片主体展开
+                if (leftBody) { leftBody.classList.remove('collapsed'); leftBody.style.display = 'block'; if (leftArrow) leftArrow.textContent = '▲'; }
+                if (rightBody) { rightBody.classList.remove('collapsed'); rightBody.style.display = 'block'; if (rightArrow) rightArrow.textContent = '▲'; }
+
+                // 桌面端：5.2 内部"详细数据与对比"展开，但下面的子项保持收起（用户按需点击）
+                if (dataMain) { dataMain.classList.remove('collapsed'); dataMain.style.display = 'block'; if (dataMainArrow) dataMainArrow.textContent = '▲'; }
+                if (dataCards) { dataCards.classList.add('collapsed'); dataCards.style.display = 'none'; if (dataCardsArrow) dataCardsArrow.textContent = '▼'; }
+                if (tableFold) { tableFold.classList.add('collapsed'); tableFold.style.display = 'none'; if (tableArrow) tableArrow.textContent = '▼'; }
             }
         });
 
-        // ===== 窗口大小变化时，切换到桌面端自动展开 =====
+        // ===== 窗口大小变化时，切换到桌面端自动展开主折叠 =====
         window.addEventListener('resize', function() {
             var isMobile = window.innerWidth <= 768;
             var leftBody = document.getElementById('cardLeft');
             var rightBody = document.getElementById('cardRight');
             var leftArrow = document.getElementById('cardLeftArrow');
             var rightArrow = document.getElementById('cardRightArrow');
+            var dataMain = document.getElementById('dataMainFold');
+            var dataMainArrow = document.getElementById('dataMainArrow');
 
             if (!isMobile) {
-                // 切换到桌面端：自动展开 5.1 和 5.2
-                if (leftBody) {
-                    leftBody.classList.remove('collapsed');
-                    leftBody.style.display = 'block';
-                    if (leftArrow) leftArrow.textContent = '▲';
-                }
-                if (rightBody) {
-                    rightBody.classList.remove('collapsed');
-                    rightBody.style.display = 'block';
-                    if (rightArrow) rightArrow.textContent = '▲';
-                }
-                // 5.2 内部数据也展开
-                var dataContent = document.getElementById('dataFoldContent');
-                var dataArrow = document.getElementById('dataFoldArrow');
-                if (dataContent) {
-                    dataContent.classList.remove('collapsed');
-                    dataContent.style.display = 'block';
-                    if (dataArrow) dataArrow.textContent = '▲';
-                }
+                if (leftBody) { leftBody.classList.remove('collapsed'); leftBody.style.display = 'block'; if (leftArrow) leftArrow.textContent = '▲'; }
+                if (rightBody) { rightBody.classList.remove('collapsed'); rightBody.style.display = 'block'; if (rightArrow) rightArrow.textContent = '▲'; }
+                // 桌面端展开"详细数据与对比"
+                if (dataMain) { dataMain.classList.remove('collapsed'); dataMain.style.display = 'block'; if (dataMainArrow) dataMainArrow.textContent = '▲'; }
             }
-            // 手机端不强制收起，保留用户当前选择
         });
     </script>
 </body>
