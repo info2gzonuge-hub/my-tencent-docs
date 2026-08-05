@@ -379,37 +379,39 @@
                 </div>
 
                 <!-- 实操转化表 -->
-                <table class="schema-table" style="margin-bottom: 20px;">
-                    <thead>
-                        <tr>
-                            <th style="width:15%;">搜索意图战略</th>
-                            <th style="width:35%;">传统 SEO 战术 (已过时)</th>
-                            <th style="width:50%;">🤖 GEO 时代实操执行 (机器可读)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>信息类</strong></td>
-                            <td>写 2000 字长篇大论，把关键词塞进各个段落。</td>
-                            <td><strong>部署 Atomic Answer：</strong>在 H1/H2 下方部署 50-100 字原子答案，直接给 1-2-3 步骤结论，供 AI 直接摘抄。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>导航类</strong></td>
-                            <td>仅优化品牌词的 Title 和 Description。</td>
-                            <td><strong>塑造实体 (Entity) 权威：</strong>完善 About Us 的资质、真实工厂地址，提升在 AI 知识图谱中的置信度。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>商业类</strong></td>
-                            <td>写测评软文，堆砌“最好”、“最强”等形容词。</td>
-                            <td><strong>投喂结构化对比数据：</strong>用对比表格 (Comparison Matrix) 替代大段文字，清晰列出成分、溶解时间等硬核数据。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>交易类</strong></td>
-                            <td>在页面里狂堆 Wholesale, Price 等交易词。</td>
-                            <td><strong>B2B 专属 Schema 标记：</strong>用机器语言强喂 AI，底层代码植入 Product、Manufacturer、MOQ、Lead Time 等标签。</td>
-                        </tr>
-                    </tbody>
-                </table>
+                               <div class="table-wrap">
+                    <table class="schema-table" style="margin-bottom: 20px;">
+                        <thead>
+                            <tr>
+                                <th style="width:15%;">搜索意图战略</th>
+                                <th style="width:35%;">传统 SEO 战术 (已过时)</th>
+                                <th style="width:50%;">🤖 GEO 时代实操执行 (机器可读)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>信息类</strong></td>
+                                <td>写 2000 字长篇大论，把关键词塞进各个段落。</td>
+                                <td><strong>部署 Atomic Answer：</strong>在 H1/H2 下方部署 50-100 字原子答案，直接给 1-2-3 步骤结论，供 AI 直接摘抄。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>导航类</strong></td>
+                                <td>仅优化品牌词的 Title 和 Description。</td>
+                                <td><strong>塑造实体 (Entity) 权威：</strong>完善 About Us 的资质、真实工厂地址，提升在 AI 知识图谱中的置信度。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>商业类</strong></td>
+                                <td>写测评软文，堆砌“最好”、“最强”等形容词。</td>
+                                <td><strong>投喂结构化对比数据：</strong>用对比表格 (Comparison Matrix) 替代大段文字，清晰列出成分、溶解时间等硬核数据。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>交易类</strong></td>
+                                <td>在页面里狂堆 Wholesale, Price 等交易词。</td>
+                                <td><strong>B2B 专属 Schema 标记：</strong>用机器语言强喂 AI，底层代码植入 Product、Manufacturer、MOQ、Lead Time 等标签。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="bubble">
@@ -526,42 +528,44 @@
                         <strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：
                     </p>
                     
-                    <table class="schema-table">
-                        <thead>
-                            <tr>
-                                <th style="width:12%;">优先级</th>
-                                <th style="width:28%;">Schema 类型</th>
-                                <th style="width:60%;">实际核心作用与 AI 联动价值</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Priority 1</strong></td>
-                                <td><code class="schema-tag">Article</code> (文章)</td>
-                                <td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 2</strong></td>
-                                <td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td>
-                                <td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 3</strong></td>
-                                <td><code class="schema-tag">Product</code> (商品)</td>
-                                <td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 4</strong></td>
-                                <td><code class="schema-tag">Breadcrumb</code> (面包屑)</td>
-                                <td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Priority 5</strong></td>
-                                <td><code class="schema-tag">LocalBusiness</code> (本地商家)</td>
-                                <td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-wrap">
+                        <table class="schema-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:12%;">优先级</th>
+                                    <th style="width:28%;">Schema 类型</th>
+                                    <th style="width:60%;">实际核心作用与 AI 联动价值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Priority 1</strong></td>
+                                    <td><code class="schema-tag">Article</code> (文章)</td>
+                                    <td>让 AI 迅速理解这是一篇正规专业文章，明确解析标题、作者、发布与修改时间。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 2</strong></td>
+                                    <td><code class="schema-tag">FAQ / HowTo</code> (问答/教程)</td>
+                                    <td>直接回答用户的具体问题，<strong>最容易被谷歌与 AI 抓取为精选片段或答案引用。</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 3</strong></td>
+                                    <td><code class="schema-tag">Product</code> (商品)</td>
+                                    <td>将独立站产品信息结构化（展示价格、SKU、库存状态及用户星级评价）。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 4</strong></td>
+                                    <td><code class="schema-tag">Breadcrumb</code> (面包屑)</td>
+                                    <td>清晰展示页面层级结构（首页 > 分类 > 产品名），强化站内权重传递路径。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority 5</strong></td>
+                                    <td><code class="schema-tag">LocalBusiness</code> (本地商家)</td>
+                                    <td>针对 B 端展示公司实体地址、联系电话与工作时间，拉升品牌 E-E-A-T 真实度。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- 严格还原图内大白话 -->
                 <div class="bubble">
