@@ -95,6 +95,195 @@
         .schema-table tr:nth-child(odd) { background: #FAFAFA; }
 
         @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+                /* ============================================================ */
+        /* 手机端响应式适配（与 tab3 保持一致）                           */
+        /* ============================================================ */
+        @media (max-width: 768px) {
+
+            .app-container {
+                padding: 16px 12px !important;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .app-header h1 {
+                font-size: 18px !important;
+                flex-wrap: wrap;
+            }
+            .app-header h1 span {
+                font-size: 13px !important;
+                display: block;
+                margin-top: 2px;
+            }
+            .badge-header {
+                font-size: 11px !important;
+                padding: 4px 14px !important;
+            }
+
+            .tab-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 4px;
+                padding-bottom: 10px;
+            }
+            .tab-btn {
+                font-size: 12px !important;
+                padding: 6px 14px !important;
+                flex-shrink: 0;
+            }
+
+            .panel-title {
+                font-size: 18px !important;
+            }
+            .panel-sub {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== 卡片网格 ====== */
+            .grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+
+            .card {
+                padding: 16px 16px !important;
+            }
+            .card .card-title {
+                font-size: 15px !important;
+            }
+
+            .card-inner-highlight {
+                padding: 12px 14px !important;
+            }
+
+            .item {
+                font-size: 13px !important;
+                padding-left: 10px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+
+            .bubble {
+                font-size: 13px !important;
+                padding: 10px 14px !important;
+            }
+
+            /* ====== stage-banner 阶段标题 ====== */
+            .stage-banner {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 8px !important;
+                padding: 12px 16px !important;
+            }
+            .stage-title {
+                font-size: 14px !important;
+            }
+            .stage-tag {
+                font-size: 10px !important;
+            }
+
+            /* ====== flow-connector 箭头 ====== */
+            .flow-connector {
+                font-size: 18px !important;
+                height: 28px !important;
+                margin: -4px 0 !important;
+            }
+
+            /* ====== 四宫格（四大搜索意图） ====== */
+            .card > div > div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* ====== 表格：横向滚动 ====== */
+            .schema-table {
+                font-size: 12px !important;
+                min-width: 600px !important;
+                display: table !important;
+            }
+            .schema-table th,
+            .schema-table td {
+                padding: 8px 10px !important;
+                font-size: 12px !important;
+            }
+
+            /* ====== 高亮框 ====== */
+            .highlight-box {
+                padding: 14px 16px !important;
+            }
+            .highlight-box h4 {
+                font-size: 15px !important;
+            }
+            .highlight-box ul {
+                padding-left: 16px !important;
+            }
+            .highlight-box li {
+                font-size: 13px !important;
+            }
+            .highlight-box .bubble {
+                font-size: 13px !important;
+            }
+
+            /* ====== 底部 ====== */
+            .footer-links {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                font-size: 13px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .app-container {
+                padding: 10px 8px !important;
+            }
+            .app-header h1 {
+                font-size: 16px !important;
+            }
+            .tab-btn {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+
+            .card {
+                padding: 12px 12px !important;
+            }
+            .card .card-title {
+                font-size: 14px !important;
+            }
+
+            .item {
+                font-size: 12px !important;
+            }
+            .bubble {
+                font-size: 12px !important;
+                padding: 8px 12px !important;
+            }
+
+            .stage-title {
+                font-size: 13px !important;
+            }
+
+            .schema-table {
+                font-size: 10px !important;
+                min-width: 480px !important;
+            }
+            .schema-table th,
+            .schema-table td {
+                padding: 5px 6px !important;
+                font-size: 10px !important;
+            }
+
+            code.schema-tag,
+            code.cmd {
+                font-size: 9px !important;
+                padding: 1px 4px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -382,7 +571,7 @@
         </div>
 
         <!-- 底部内链与页脚 -->
-        <div style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
+        <div class="footer-links" style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
             <span>✨ Tab 4 · 站内SEO与内容工业化 — 工业化产线引导闭环</span>
             <span>
                 <span class="internal-link" onclick="location.href='tab3.html'">⬅️ 上一章</span> · 
