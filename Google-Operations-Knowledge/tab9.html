@@ -588,7 +588,55 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ================= 三大流量引擎对比区样式 ================= */
+        /* ====== 新增：pSEO 模块下方的独立卡片区 ====== */
+        .card-section-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-soft);
+        }
+        .card-section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-light);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-section-box ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        .card-section-box li {
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .card-section-box li strong {
+            color: var(--text-dark);
+        }
+        .card-section-box .code-block {
+            background: #1A202C;
+            color: #E2E8F0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 8px 0 16px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.6;
+        }
+
+        /* ================= 三大流量引擎对比及悬浮特效表格 ================= */
         .strategy-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -636,6 +684,7 @@
             line-height: 1.6;
         }
 
+        /* 统一的 hover 悬浮表格样式 */
         .matrix-table-wrap {
             width: 100%;
             max-width: 100%;
@@ -645,15 +694,16 @@
             border-radius: 12px;
             border: 1px solid var(--border-light, #EDE8E0);
             box-shadow: var(--shadow-soft, 0 2px 12px rgba(0,0,0,0.04));
+            background: #fff;
         }
-        .matrix-table {
+        .hover-translate-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
             table-layout: fixed;
             min-width: 960px;
         }
-        .matrix-table th {
+        .hover-translate-table th {
             font-weight: 700;
             padding: 16px;
             text-align: left;
@@ -661,30 +711,97 @@
             border-right: 1px solid var(--border-light, #EDE8E0);
             color: var(--text-dark, #1A202C);
         }
-        .matrix-table td {
+        .hover-translate-table td {
             padding: 16px;
             border-bottom: 1px solid var(--border-light, #EDE8E0);
             border-right: 1px solid var(--border-light, #EDE8E0);
             line-height: 1.6;
             color: var(--text-dark, #1A202C);
             vertical-align: top;
+            /* 交互基础属性 */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
         }
-        .matrix-table th:last-child, 
-        .matrix-table td:last-child {
+        .hover-translate-table th:last-child, 
+        .hover-translate-table td:last-child {
             border-right: none;
         }
-        .matrix-table tr:last-child td {
+        .hover-translate-table tr:last-child td {
             border-bottom: none;
         }
-        
-        /* 独立背景色区分视觉边界 */
-        .matrix-table colgroup col:nth-child(1) { width: 14%; background: #FFFFFF; }
-        .matrix-table colgroup col:nth-child(2) { width: 24%; background: #FAFAFA; } 
-        .matrix-table colgroup col:nth-child(3) { width: 31%; background: #F0F7FF; } 
-        .matrix-table colgroup col:nth-child(4) { width: 31%; background: #FFF9F2; } 
 
-        .matrix-table strong { color: var(--primary, #FF6B35); }
-        .matrix-table .danger-text { color: #DC2626; font-weight: 600; }
+        /* Hover 触发的通用浮起特效 */
+        .hover-translate-table td:hover,
+        .hover-translate-table td.active-pop {
+            transform: translateY(-4px);
+            z-index: 10;
+            background-color: #FFFFFF !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+        }
+
+        /* 矩阵一：三大引擎对比底色与边框 */
+        .t1-matrix colgroup col:nth-child(1) { width: 14%; background: #FFFFFF; }
+        .t1-matrix colgroup col:nth-child(2) { width: 24%; background: #FAFAFA; } 
+        .t1-matrix colgroup col:nth-child(3) { width: 31%; background: #F0F7FF; } 
+        .t1-matrix colgroup col:nth-child(4) { width: 31%; background: #FFF9F2; } 
+        
+        .t1-matrix td:nth-child(2):hover, .t1-matrix td:nth-child(2).active-pop { border: 2px solid #D1D5DB !important; box-shadow: 0 8px 24px rgba(107, 114, 128, 0.15); }
+        .t1-matrix td:nth-child(3):hover, .t1-matrix td:nth-child(3).active-pop { border: 2px solid #93C5FD !important; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18); }
+        .t1-matrix td:nth-child(4):hover, .t1-matrix td:nth-child(4).active-pop { border: 2px solid #FCD34D !important; box-shadow: 0 8px 24px rgba(217, 119, 6, 0.15); }
+
+        /* 矩阵二：WP vs Shopify 运营对比底色与边框 */
+        .t2-matrix colgroup col:nth-child(1) { width: 16%; background: #FFFFFF; }
+        .t2-matrix colgroup col:nth-child(2) { width: 28%; background: #F0F7FF; } 
+        .t2-matrix colgroup col:nth-child(3) { width: 28%; background: #F0FDF4; } 
+        .t2-matrix colgroup col:nth-child(4) { width: 28%; background: #FFF9F2; } 
+
+        .t2-matrix td:nth-child(2):hover, .t2-matrix td:nth-child(2).active-pop { border: 2px solid #93C5FD !important; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18); }
+        .t2-matrix td:nth-child(3):hover, .t2-matrix td:nth-child(3).active-pop { border: 2px solid #86EFAC !important; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.18); }
+        .t2-matrix td:nth-child(4):hover, .t2-matrix td:nth-child(4).active-pop { border: 2px solid #FCD34D !important; box-shadow: 0 8px 24px rgba(217, 119, 6, 0.15); }
+
+        .hover-translate-table strong { color: var(--primary, #FF6B35); }
+        .hover-translate-table .danger-text { color: #DC2626; font-weight: 600; }
+
+        /* ====== 聚合页实操卡片区 ====== */
+        .agg-step-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .agg-step-card {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--purple); /* 左侧紫色彩色边框 */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 丝滑动画过渡 */
+        }
+        /* 鼠标悬浮微动特效 */
+        .agg-step-card:hover {
+            transform: translateY(-4px); /* 向上悬浮一点点 */
+            box-shadow: var(--shadow-hover); /* 阴影加深加强立体感 */
+            border-right-color: #CBD5E1;
+            border-top-color: #CBD5E1;
+            border-bottom-color: #CBD5E1;
+        }
+        .agg-step-card h5 {
+            font-size: 15px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            border-bottom: 1px dashed var(--border-light);
+            padding-bottom: 8px;
+        }
+        .agg-step-card p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
 
         /* ====== Topic Cluster 模块样式 ====== */
         .cluster-grid {
@@ -821,434 +938,112 @@
         /* ============================================================ */
         @media (max-width: 768px) {
 
-            .app-container {
-                padding: 16px 12px !important;
-            }
+            .app-container { padding: 16px 12px !important; }
 
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .app-header h1 {
-                font-size: 18px !important;
-                flex-wrap: wrap;
-            }
-            .app-header h1 span {
-                font-size: 13px !important;
-                display: block;
-                margin-top: 2px;
-            }
-            .badge-header {
-                font-size: 11px !important;
-                padding: 4px 14px !important;
-            }
+            .app-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .app-header h1 { font-size: 18px !important; flex-wrap: wrap; }
+            .app-header h1 span { font-size: 13px !important; display: block; margin-top: 2px; }
+            .badge-header { font-size: 11px !important; padding: 4px 14px !important; }
 
-            .tab-nav {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                gap: 4px;
-                padding-bottom: 10px;
-            }
-            .tab-btn {
-                font-size: 12px !important;
-                padding: 6px 14px !important;
-                flex-shrink: 0;
-            }
+            .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
+            .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
 
-            .panel-title {
-                font-size: 18px !important;
-            }
-            .panel-sub {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
+            .panel-title { font-size: 18px !important; }
+            .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
 
-            .section-title {
-                font-size: 17px !important;
-                margin-top: 28px !important;
-                margin-bottom: 12px !important;
-            }
+            .section-title { font-size: 17px !important; margin-top: 28px !important; margin-bottom: 12px !important; }
+            .plain-talk { font-size: 13px !important; padding: 12px 14px !important; margin-bottom: 20px !important; }
 
-            .plain-talk {
-                font-size: 13px !important;
-                padding: 12px 14px !important;
-                margin-bottom: 20px !important;
-            }
+            .dashboard-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            .dash-card { padding: 16px !important; }
+            .dash-num { font-size: 24px !important; }
 
-            .dashboard-grid {
-                grid-template-columns: 1fr !important;
-                gap: 12px !important;
-            }
-            .dash-card {
-                padding: 16px !important;
-            }
-            .dash-num {
-                font-size: 24px !important;
-            }
+            .center-bordered-table { font-size: 12px !important; min-width: 500px !important; display: table !important; }
+            .center-bordered-table th, .center-bordered-table td { padding: 8px 10px !important; font-size: 12px !important; }
 
-            .center-bordered-table {
-                font-size: 12px !important;
-                min-width: 500px !important;
-                display: table !important;
-            }
-            .center-bordered-table th,
-            .center-bordered-table td {
-                padding: 8px 10px !important;
-                font-size: 12px !important;
-            }
-
-            .funnel-grid {
-                grid-template-columns: 1fr !important;
-                gap: 12px !important;
-            }
-            .funnel-card {
-                padding: 14px 16px !important;
-            }
+            .funnel-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            .funnel-card { padding: 14px 16px !important; }
             .funnel-card:not(:last-child)::after {
-                content: '↓' !important;
-                right: 50% !important;
-                top: auto !important;
-                bottom: -18px !important;
-                transform: translateX(50%) !important;
-                font-size: 18px !important;
+                content: '↓' !important; right: 50% !important; top: auto !important; bottom: -18px !important;
+                transform: translateX(50%) !important; font-size: 18px !important;
             }
 
-            .scroll-wrapper {
-                gap: 10px !important;
-                padding-bottom: 12px !important;
-            }
-            .expand-card {
-                flex: 0 0 240px !important;
-                padding: 12px 14px !important;
-            }
-            .expand-card .short-desc {
-                font-size: 12.5px !important;
-            }
-            .expand-content {
-                font-size: 12.5px !important;
-            }
+            .scroll-wrapper { gap: 10px !important; padding-bottom: 12px !important; }
+            .expand-card { flex: 0 0 240px !important; padding: 12px 14px !important; }
+            .expand-card .short-desc { font-size: 12.5px !important; }
+            .expand-content { font-size: 12.5px !important; }
 
-            .elements-grid {
-                grid-template-columns: 1fr !important;
-                gap: 16px !important;
-            }
-            .element-card {
-                padding: 20px 16px 16px 16px !important;
-            }
-            .element-badge {
-                font-size: 11px !important;
-                padding: 3px 10px !important;
-                top: -10px !important;
-                left: 12px !important;
-            }
+            .elements-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .element-card { padding: 20px 16px 16px 16px !important; }
+            .element-badge { font-size: 11px !important; padding: 3px 10px !important; top: -10px !important; left: 12px !important; }
 
-            .trend-card {
-                padding: 16px !important;
-            }
-            .trend-card h4 {
-                font-size: 15px !important;
-            }
-            .trend-card p {
-                font-size: 13px !important;
-            }
-            .trend-card ul {
-                font-size: 12.5px !important;
-            }
-            .trend-card .logic-tree-box {
-                font-size: 12.5px !important;
-                padding: 10px !important;
-            }
+            .trend-card { padding: 16px !important; }
+            .trend-card h4 { font-size: 15px !important; }
+            .trend-card p { font-size: 13px !important; }
+            .trend-card ul { font-size: 12.5px !important; }
+            .trend-card .logic-tree-box { font-size: 12.5px !important; padding: 10px !important; }
 
-            .pseo-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 10px !important;
-            }
-            .pseo-card {
-                padding: 12px 14px !important;
-            }
-            .pseo-card .step-name {
-                font-size: 14px !important;
-            }
-            .pseo-card .step-bubble {
-                font-size: 12px !important;
-            }
-            .pseo-expand-btn {
-                font-size: 13px !important;
-                padding: 8px 20px !important;
-            }
-            .pseo-detail-wrap {
-                padding: 14px 16px !important;
-            }
-            .pseo-detail-wrap .step-block h4 {
-                font-size: 14px !important;
-            }
-            .pseo-detail-wrap .step-block p {
-                font-size: 13px !important;
-            }
-            .pseo-detail-wrap .step-block ul li {
-                font-size: 12.5px !important;
-            }
-            .pseo-detail-wrap .code-block {
-                font-size: 11px !important;
-                padding: 8px 12px !important;
-            }
+            .pseo-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+            .pseo-card { padding: 12px 14px !important; }
+            .pseo-card .step-name { font-size: 14px !important; }
+            .pseo-card .step-bubble { font-size: 12px !important; }
+            .pseo-expand-btn { font-size: 13px !important; padding: 8px 20px !important; }
+            .pseo-detail-wrap { padding: 14px 16px !important; }
+            .pseo-detail-wrap .step-block h4 { font-size: 14px !important; }
+            .pseo-detail-wrap .step-block p { font-size: 13px !important; }
+            .pseo-detail-wrap .step-block ul li { font-size: 12.5px !important; }
+            .pseo-detail-wrap .code-block { font-size: 11px !important; padding: 8px 12px !important; }
 
-            /* 三大流量引擎移动端适配 */
-            .strategy-grid {
-                grid-template-columns: 1fr !important;
-                gap: 16px !important;
-            }
-            .strategy-card {
-                padding: 20px 16px !important;
-            }
-            .strategy-icon {
-                font-size: 28px !important;
-            }
+            .card-section-box { padding: 16px 14px !important; }
+            .card-section-title { font-size: 15px !important; }
+            .card-section-box li { font-size: 13px !important; }
 
-            .matrix-table {
-                min-width: 800px !important; 
-                font-size: 13px !important;
-            }
-            .matrix-table th {
-                padding: 12px 14px !important;
-                font-size: 13px !important; 
-            }
-            .matrix-table td {
-                padding: 12px 14px !important;
-                font-size: 13px !important;
-            }
-            .matrix-table th:nth-child(1), 
-            .matrix-table td:nth-child(1) {
-                white-space: nowrap !important;
-                width: auto !important;
-            }
-            .matrix-table colgroup col:nth-child(1) { width: 16% !important; }
-            .matrix-table colgroup col:nth-child(2) { width: 28% !important; }
-            .matrix-table colgroup col:nth-child(3) { width: 28% !important; }
-            .matrix-table colgroup col:nth-child(4) { width: 28% !important; }
+            .strategy-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .strategy-card { padding: 20px 16px !important; }
+            .strategy-icon { font-size: 28px !important; }
 
-            .cluster-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 10px !important;
-            }
-            .cluster-card {
-                padding: 12px 14px !important;
-            }
-            .cluster-card .step-name {
-                font-size: 14px !important;
-            }
-            .cluster-card .step-bubble {
-                font-size: 12px !important;
-            }
-            .cluster-detail {
-                padding: 14px 16px !important;
-            }
-            .cluster-detail p {
-                font-size: 13px !important;
-            }
-            .cluster-detail ul li {
-                font-size: 12.5px !important;
-            }
+            .agg-step-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            .agg-step-card { padding: 16px 14px !important; }
 
-            .compare-table {
-                font-size: 12px !important;
-                min-width: 500px !important;
-                display: table !important;
-            }
-            .compare-table th,
-            .compare-table td {
-                padding: 6px 8px !important;
-                font-size: 11px !important;
-            }
-            .compare-table-wrap {
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-            }
+            /* 移动端悬浮特效表格极致适配 */
+            .hover-translate-table { min-width: 800px !important; font-size: 13px !important; }
+            .hover-translate-table th { padding: 12px 14px !important; font-size: 13px !important; }
+            .hover-translate-table td { padding: 12px 14px !important; font-size: 13px !important; }
+            .hover-translate-table th:nth-child(1), .hover-translate-table td:nth-child(1) { white-space: nowrap !important; width: auto !important; }
+            .t1-matrix colgroup col:nth-child(1) { width: 16% !important; }
+            .t1-matrix colgroup col:nth-child(2) { width: 28% !important; }
+            .t1-matrix colgroup col:nth-child(3) { width: 28% !important; }
+            .t1-matrix colgroup col:nth-child(4) { width: 28% !important; }
+            .t2-matrix colgroup col:nth-child(1) { width: 16% !important; }
+            .t2-matrix colgroup col:nth-child(2) { width: 28% !important; }
+            .t2-matrix colgroup col:nth-child(3) { width: 28% !important; }
+            .t2-matrix colgroup col:nth-child(4) { width: 28% !important; }
+            .hover-translate-table td:hover, .hover-translate-table td.active-pop { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); }
 
-            .tool-tag {
-                font-size: 10px !important;
-                padding: 1px 6px !important;
-            }
+            .cluster-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+            .cluster-card { padding: 12px 14px !important; }
+            .cluster-card .step-name { font-size: 14px !important; }
+            .cluster-card .step-bubble { font-size: 12px !important; }
+            .cluster-detail { padding: 14px 16px !important; }
+            .cluster-detail p { font-size: 13px !important; }
+            .cluster-detail ul li { font-size: 12.5px !important; }
 
-            .footer-links {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 6px !important;
-                font-size: 13px !important;
-            }
+            .compare-table { font-size: 12px !important; min-width: 500px !important; display: table !important; }
+            .compare-table th, .compare-table td { padding: 6px 8px !important; font-size: 11px !important; }
+            .compare-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+
+            .tool-tag { font-size: 10px !important; padding: 1px 6px !important; }
+
+            .footer-links { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; font-size: 13px !important; }
         }
 
         @media (max-width: 480px) {
-
-            .app-container {
-                padding: 10px 8px !important;
-            }
-            .app-header h1 {
-                font-size: 16px !important;
-            }
-            .tab-btn {
-                font-size: 11px !important;
-                padding: 4px 10px !important;
-            }
-
-            .section-title {
-                font-size: 15px !important;
-                margin-top: 20px !important;
-            }
-
-            .plain-talk {
-                font-size: 12px !important;
-                padding: 10px 12px !important;
-            }
-
-            .dash-num {
-                font-size: 20px !important;
-            }
-
-            .center-bordered-table {
-                font-size: 10px !important;
-                min-width: 400px !important;
-            }
-            .center-bordered-table th,
-            .center-bordered-table td {
-                padding: 5px 6px !important;
-                font-size: 10px !important;
-            }
-
-            .expand-card {
-                flex: 0 0 200px !important;
-                padding: 10px 12px !important;
-            }
-            .expand-card .short-desc {
-                font-size: 11.5px !important;
-            }
-            .expand-content {
-                font-size: 11.5px !important;
-            }
-
-            .element-card {
-                padding: 16px 12px 12px 12px !important;
-            }
-
-            .pseo-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 8px !important;
-            }
-            .pseo-card .step-name {
-                font-size: 13px !important;
-            }
-            .pseo-card .step-bubble {
-                font-size: 11px !important;
-            }
-            .pseo-detail-wrap .code-block {
-                font-size: 10px !important;
-                padding: 6px 10px !important;
-            }
-            .pseo-detail-wrap .step-block h4 {
-                font-size: 13px !important;
-            }
-            .pseo-detail-wrap .step-block p {
-                font-size: 12px !important;
-            }
-            .pseo-detail-wrap .step-block ul li {
-                font-size: 11.5px !important;
-            }
-
-            .cluster-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 8px !important;
-            }
-            .cluster-card .step-name {
-                font-size: 13px !important;
-            }
-            .cluster-card .step-bubble {
-                font-size: 11px !important;
-            }
-            .cluster-detail p {
-                font-size: 12px !important;
-            }
-            .cluster-detail ul li {
-                font-size: 11.5px !important;
-            }
-
-            .compare-table {
-                font-size: 10px !important;
-                min-width: 400px !important;
-            }
-            .compare-table th,
-            .compare-table td {
-                padding: 4px 5px !important;
-                font-size: 9px !important;
-            }
-
-            .trend-card h4 {
-                font-size: 14px !important;
-            }
-            .trend-card p {
-                font-size: 12px !important;
-            }
-            .trend-card ul {
-                font-size: 11.5px !important;
-            }
-            .trend-card .logic-tree-box {
-                font-size: 11.5px !important;
-                padding: 8px 10px !important;
-            }
-
-            .tool-tag {
-                font-size: 9px !important;
-                padding: 0 4px !important;
-            }
+            .app-container { padding: 10px 8px !important; }
+            .app-header h1 { font-size: 16px !important; }
+            .tab-btn { font-size: 11px !important; padding: 4px 10px !important; }
+            .section-title { font-size: 15px !important; margin-top: 20px !important; }
+            .plain-talk { font-size: 12px !important; padding: 10px 12px !important; }
         }
-        /* ========== 👇 从这里开始复制：悬浮特效 CSS 👇 ========== */
-        .matrix-table td {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative; 
-            z-index: 1;
-            cursor: pointer; 
-        }
-
-        /* 统一的悬浮与点击激活态 */
-        .matrix-table td:hover,
-        .matrix-table td.active-pop {
-            transform: scale(1.04);
-            z-index: 10;
-            background-color: #FFFFFF !important; 
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            border-radius: 8px; 
-            border: 1px solid var(--primary-light, #FF8A5C) !important; 
-        }
-
-        /* 针对不同列匹配对应的专属光晕与边框色 */
-        /* 第二列：聚合页 (原灰底) */
-        .matrix-table td:nth-child(2):hover,
-        .matrix-table td:nth-child(2).active-pop {
-            box-shadow: 0 8px 24px rgba(107, 114, 128, 0.15);
-            border-color: #D1D5DB !important;
-        }
-        /* 第三列：pSEO (原极淡蓝) */
-        .matrix-table td:nth-child(3):hover,
-        .matrix-table td:nth-child(3).active-pop {
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
-            border-color: #93C5FD !important;
-        }
-        /* 第四列：内容集群 (原极淡橙) */
-        .matrix-table td:nth-child(4):hover,
-        .matrix-table td:nth-child(4).active-pop {
-            box-shadow: 0 8px 24px rgba(217, 119, 6, 0.15);
-            border-color: #FCD34D !important;
-        }
-
-        /* 手机端专项防抖约束 */
-        @media (max-width: 768px) {
-            .matrix-table td:hover,
-            .matrix-table td.active-pop {
-                transform: scale(1.02); /* 压低缩放率，防止破坏横滑体验 */
-                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-            }
-        }
-        /* ========== 👆 到这里结束复制：悬浮特效 CSS 👆 ========== */
     </style>
 </head>
 <body>
@@ -1368,7 +1163,6 @@
         </div>
 
         <div class="scroll-wrapper">
-            <!-- 卡片 1-7 省略，与原来一致，为了节省篇幅 -->
             <details class="expand-card">
                 <summary>
                     <div style="font-size: 16px;">1. 首屏身份认同</div>
@@ -1532,155 +1326,12 @@
             </div>
         </div>
 
-        <!-- EDM 脚注 -->
         <div style="margin-top: 20px; font-size: 13.5px; color: var(--text-muted); border-top: 1px dashed var(--border-light); padding-top: 12px;">
             📬 <strong>邮件营销（EDM）补充：</strong>用户离开后，通过 <span class="mailerlite-highlight">MailerLite</span> 等工具发送欢迎邮件和定期更新。每 3-6 个月清理一次不活跃订阅者。2026年全面向 AI 驱动的个性化营销转型。
         </div>
 
         <!-- ================= 8.4 2026新增趋势 ================= -->
         <h3 class="section-title">8.4 ⭐ 2026新增趋势</h3>
-        <div class="plain-talk">
-            🗣️ <strong>大白话：</strong>2026年的CRO不是"做好一个着陆页"，而是系统化、规模化、持续化的优化工程。
-        </div>
-
-        <!-- 趋势一 -->
-        <div class="trend-card">
-            <h4 style="color: var(--primary); margin-top: 0;">趋势一：程序化SEO（pSEO）与规模化着陆页--DeepSeek置顶也整合了聚合页和pSEO的区别以及做法</h4>
-            <p style="font-size: 14px;">对于SKU众多的B2B网站，通过"数据库 + 模板"自动生成数千个高度相关的着陆页，精准收割长尾词。</p>
-            <ul style="font-size: 13.5px; color: var(--text-muted); padding-left: 20px; margin-top: 8px;">
-                <li><strong>核心原则：</strong>每个页面需保证 ≥60% 的独特性。</li>
-                <li><strong>技术实现：</strong>API拉取产品数据库 → 填充页面模板 → 批量生成 → 自动提交索引。</li>
-            </ul>
-        </div>
-
-        <!-- pSEO 流程图模块 -->
-        <div style="background: var(--bg-card-alt, #FAF8F5); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border-left: 4px solid var(--primary, #FF6B35);">
-            <p style="font-size: 15px; line-height: 1.7; color: var(--text-dark, #1A202C); margin-bottom: 8px;">
-                <strong>🗣️ 大白话</strong>：程序化SEO就是"批量化生产页面"——做一个固定模板，准备一份数据，写一段程序自动把数据填进模板，一次性生成成百上千个页面。
-            </p>
-            <p style="font-size: 15px; line-height: 1.7; color: var(--text-dark, #1A202C);">
-                <strong>✅ 好处</strong>：能大量覆盖长尾关键词，精准收割细分搜索流量。尤其适合产品线丰富、SKU众多的B2B网站。
-            </p>
-        </div>
-
-        <p style="font-weight:600; margin: 16px 0 8px 0;">📌 全流程概览（四步）</p>
-        <div class="pseo-grid">
-            <div class="pseo-card">
-                <span class="step-num">①</span>
-                <span class="step-name">准备数据源</span>
-                <span class="step-bubble">🗣️ 要填进模板的数据提前做成表格</span>
-            </div>
-            <div class="pseo-card">
-                <span class="step-num">②</span>
-                <span class="step-name">设计页面模板</span>
-                <span class="step-bubble">🗣️ 画个填空模板，用{ }标出可变位置</span>
-            </div>
-            <div class="pseo-card">
-                <span class="step-num">③</span>
-                <span class="step-name">程序生成页面</span>
-                <span class="step-bubble">🗣️ 程序自动填数据，批量生成页面</span>
-            </div>
-            <div class="pseo-card">
-                <span class="step-num">④</span>
-                <span class="step-name">提交Google</span>
-                <span class="step-bubble">🗣️ 提交Sitemap，告诉谷歌来收录</span>
-            </div>
-        </div>
-
-        <button class="pseo-expand-btn" id="pseoExpandBtn">
-            📖 展开完整操作指南 <span class="arrow" id="pseoArrow">▼</span>
-        </button>
-
-        <div class="pseo-detail-wrap" id="pseoDetail">
-            <!-- 步骤① -->
-            <div class="step-block">
-                <h4><span class="step-tag">步骤①</span> 准备数据源</h4>
-                <p>把所有要批量生成页面的变量整理成表格。用 Google Sheets / Excel / CSV 均可。</p>
-                <p><strong>结构要求</strong>：第一行是变量名（如 <code>city</code>、<code>product_name</code>），下面每行是一条数据。</p>
-                <div class="code-block">
-| city | product_name | service_desc |
-|------|--------------|--------------|
-| 北京 | 定制美白贴   | 为北京牙科诊所提供专业级定制美白贴 |
-| 上海 | 定制美白贴   | 为上海牙科诊所提供专业级定制美白贴 |
-| 深圳 | 定制美白贴   | 为深圳牙科诊所提供专业级定制美白贴 |
-                </div>
-                <div class="highlight-box">🗣️ <strong>大白话</strong>：先把要"填空"的数据准备好，一行就是一个页面。</div>
-            </div>
-            <!-- 步骤② -->
-            <div class="step-block">
-                <h4><span class="step-tag">步骤②</span> 设计页面模板</h4>
-                <p>写一个固定的HTML结构，把动态变化的地方用 <strong>占位符</strong> 标记（如 <code>{city}</code>）。</p>
-                <div class="code-block">
-&lt;h1&gt;{city}牙科诊所——专业定制美白贴&lt;/h1&gt;
-&lt;p&gt;我们为{city}的牙科诊所提供{product_name}，{service_desc}。&lt;/p&gt;
-&lt;p&gt;联系我们获取专属方案。&lt;/p&gt;
-                </div>
-                <div class="highlight-box">🗣️ <strong>大白话</strong>：画一个"填空模板"，用 <code>{ }</code> 标出哪里会变，其他地方全固定。</div>
-            </div>
-            <!-- 步骤③ -->
-            <div class="step-block">
-                <h4><span class="step-tag">步骤③</span> 程序生成页面</h4>
-                <p><strong>方式A：用代码（适合有技术团队）</strong></p>
-                <ul>
-                    <li><span class="tool-tag">Python</span> + <span class="tool-tag blue">Jinja2</span> 模板引擎 → 读CSV数据 → 填进模板 → 输出HTML文件</li>
-                </ul>
-                <div class="code-block">
-import pandas as pd
-from jinja2 import Template
-
-data = pd.read_csv("data.csv")
-template = Template(open("template.html").read())
-for _, row in data.iterrows():
-    html = template.render(city=row["city"], product_name=row["product_name"], service_desc=row["service_desc"])
-    with open(f"{row['city']}.html", "w") as f: f.write(html)
-                </div>
-                <ul>
-                    <li><strong>对接到 WordPress（推荐）</strong>：调用 <span class="tool-tag blue">WP REST API</span>，直接推送页面到网站后台。</li>
-                </ul>
-                <div class="code-block">
-POST https://yourdomain.com/wp-json/wp/v2/posts
-Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
-                </div>
-                <p><strong>方式B：无代码工具（适合无技术团队）</strong></p>
-                <ul>
-                    <li><span class="tool-tag green">Make</span>（原Integromat）或 <span class="tool-tag green">Zapier</span></li>
-                    <li>流程：Google Sheets（数据源）→ Webhook（触发器）→ WordPress（自动创建页面）</li>
-                </ul>
-                <div class="highlight-box">🗣️ <strong>大白话</strong>：让程序把表格里的数据填进模板，然后通过接口自动发布到网站，不用自己上传。</div>
-            </div>
-            <!-- 步骤④ -->
-            <div class="step-block">
-                <h4><span class="step-tag">步骤④</span> 提交Google</h4>
-                <ul>
-                    <li>生成完所有页面后，<strong>更新Sitemap</strong>（使用 Yoast SEO 或 RankMath 等插件）</li>
-                    <li>登录 <span class="tool-tag">Google Search Console</span> → 左侧菜单点击"Sitemap"</li>
-                    <li>输入Sitemap地址 → 点击"提交"</li>
-                </ul>
-                <div class="highlight-box">🗣️ <strong>大白话</strong>：告诉谷歌"我加了一堆新页面，来收录吧"。提交Sitemap就是喊它来干活。</div>
-            </div>
-        </div>
-
-        <script>
-            (function() {
-                var btn = document.getElementById('pseoExpandBtn');
-                var detail = document.getElementById('pseoDetail');
-                var arrow = document.getElementById('pseoArrow');
-
-                btn.addEventListener('click', function() {
-                    var isOpen = detail.classList.contains('open');
-                    if (isOpen) {
-                        detail.classList.remove('open');
-                        arrow.classList.remove('open');
-                        btn.innerHTML = '📖 展开完整操作指南 <span class="arrow" id="pseoArrow">▼</span>';
-                    } else {
-                        detail.classList.add('open');
-                        var newArrow = document.getElementById('pseoArrow');
-                        if (newArrow) newArrow.classList.add('open');
-                        btn.innerHTML = '📕 收起完整操作指南 <span class="arrow open" id="pseoArrow">▲</span>';
-                    }
-                });
-            })();
-        </script>
 
         <!-- ================= 核心对比区：三大流量引擎 ================= -->
         <h3 class="section-title">🆚 核心战略对比：聚合页 vs pSEO vs 内容集群</h3>
@@ -1710,9 +1361,9 @@ Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
             </div>
         </div>
 
-        <!-- 深度对比矩阵表 -->
+        <!-- 深度对比矩阵表 (悬浮特效版) -->
         <div class="matrix-table-wrap">
-            <table class="matrix-table">
+            <table class="hover-translate-table t1-matrix">
                 <colgroup>
                     <col>
                     <col>
@@ -1742,41 +1393,263 @@ Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
                     </tr>
                     <tr>
                         <td><strong>适用搜索意图</strong></td>
-                        <td><strong>中长尾 / 导航类</strong><br>（客户想找某个类目的合集）</td>
-                        <td><strong>极长尾 / 明确交易类</strong><br>（客户搜索极度具体的定制需求）</td>
-                        <td><strong>核心大词 / 商业信息类</strong><br>（客户处于研究、学习、对比阶段）</td>
+                        <td><strong>中长尾 / 导航类</strong><br>（想找某个类目的合集）</td>
+                        <td><strong>极长尾 / 明确交易类</strong><br>（搜索极度具体的定制需求）</td>
+                        <td><strong>核心大词 / 商业信息类</strong><br>（处于研究、学习、对比阶段）</td>
                     </tr>
                     <tr>
                         <td><strong>页面规模</strong></td>
-                        <td>几十 到 数百个（受限于你网站已有的 SKU 或文章总数）。</td>
+                        <td>几十 到 数百个（受限于网站已有的 SKU 或文章总数）。</td>
                         <td>几千 到 上万个（取决于数据库行数，理论上无限）。</td>
-                        <td>几个集群，每个集群十数篇文章（受限于人工创作的精力）。</td>
+                        <td>几个集群，每个集群十数篇文章（受限于人工精力）。</td>
                     </tr>
                     <tr>
                         <td><strong>B2B 实战举例</strong></td>
                         <td>“无过氧化氢美白牙贴系列”、“U型干贴代工案例库”。</td>
                         <td>“德国牙科诊所专用紫光美白贴片批发”、“纽约定制美白牙贴 OEM 工厂”。</td>
-                        <td>支柱页：“牙科诊所美白贴片采购终极指南”<br>集群页：“凝胶贴与干贴成分硬核对比”。</td>
+                        <td>支柱页：“牙科诊所美白贴片采购指南”<br>集群页：“凝胶贴与干贴成分硬核对比”。</td>
                     </tr>
                     <tr>
                         <td><strong>技术实现门槛</strong></td>
-                        <td>极低。CMS 自带的分类/标签功能，或简单的 Filter 插件即可搞定。</td>
-                        <td>较高。需准备结构化数据表，用 API 或自动化工具（如 Make）将数据注入模板。</td>
-                        <td>无需代码技术。但极度依赖人工的话题策划能力（Semrush 调研）与业务 Know-how。</td>
+                        <td>极低。CMS 自带功能，或简单的 Filter 插件即可搞定。</td>
+                        <td>较高。需借助 WP All Import 或自动化工具。</td>
+                        <td>无需代码。极度依赖人工话题策划（Semrush）与业务 Know-how。</td>
                     </tr>
                     <tr>
                         <td><strong>致命避坑点</strong></td>
-                        <td><span class="danger-text">“内容稀薄”</span>：如果聚合页下只有 2 个产品且无文字说明，极易被谷歌判定为低价值页面。</td>
-                        <td><span class="danger-text">“批量垃圾 (Spam)”</span>：如果模板千篇一律仅替换了地名，极易触发算法惩罚导致整站降权。</td>
-                        <td><span class="danger-text">“关键词自相残杀”</span>：子文章主题如果区分度不够，会导致几篇文章互抢同一个词的排名。</td>
+                        <td><span class="danger-text">“内容稀薄”</span>：只有 2 个产品且无文字说明，极易被判为低价值页面。</td>
+                        <td><span class="danger-text">“批量垃圾 (Spam)”</span>：模板千篇一律仅替换地名，极易触发算法降权。</td>
+                        <td><span class="danger-text">“关键词互残”</span>：子文章主题区分度不够，导致互抢排名。</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- 趋势二 -->
+        <!-- ================= 聚合页 WP 实操与对比 ================= -->
+        <h3 class="section-title">🛠️ 附加指南：聚合页 (Aggregation Pages) WP 超详细实操与平台对比</h3>
+        <div class="plain-talk">
+            🗣️ <strong>大白话：</strong>做聚合页绝不是“点一下按钮就自动做好”。在 WordPress 里，运营人员只要搞懂“后台哪里点、URL 怎么留、上下两段文案怎么填”，就能搭建出一个符合 2026 谷歌 GEO 标准的百万流量承接页。
+        </div>
+
+        <div class="agg-step-grid">
+            <div class="agg-step-card">
+                <h5>📍 第一步：后台定位与属性归类</h5>
+                <p><strong>点击路径：</strong>登录 WP 后台 ➔ 点击左侧 Products ➔ 选择 Categories (分类)。</p>
+                <p>填写名称（如：Purple Teeth Whitening Strips），填写纯英文 Slug 别名（如 purple-whitening-strips）。保存后，去商品列表批量勾选对应产品打上此标签。</p>
+            </div>
+            <div class="agg-step-card">
+                <h5>🔗 第二步：URL 生成与版面勾勒</h5>
+                <p>WP 会自动生成如 <code>yourdomain.com/product-category/purple-whitening-strips/</code> 的瀑布流页面。</p>
+                <p><strong>运营优化：</strong>去 WP 左侧 Settings ➔ Permalinks 中，剔除无意义的层级前缀，确保 URL 尽量扁平化。</p>
+            </div>
+            <div class="agg-step-card">
+                <h5>🚀 第三步：双区注入 SEO/GEO 灵魂</h5>
+                <p><strong>顶部（H1+导购）：</strong>填写 100-200 字导购，明确写入起订量 (MOQ)、认证资质（FDA/CE），响应交易意图。</p>
+                <p><strong>底部（FAQ+结构化标签）：</strong>在列表下方补充 3-4 个 FAQ，并务必开启 <strong>FAQ Schema</strong>，强喂给谷歌 AI Overviews（AIO）抽取。</p>
+            </div>
+        </div>
+
+        <p style="font-weight:600; margin: 16px 0 8px 0;">📊 2026 谷歌 SEO 视角：WordPress vs Shopify 高级运营对比</p>
+        <div class="matrix-table-wrap">
+            <table class="hover-translate-table t2-matrix">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>对比维度</th>
+                        <th>🔵 WordPress (WooCommerce)</th>
+                        <th>🟢 Shopify</th>
+                        <th>2026 谷歌 SEO & GEO 算法要点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>防低质内容 (Thin Content) 双区布局</strong></td>
+                        <td><strong>完全自由（满分）。</strong> 轻松在列表顶部放简介，底部放长文/FAQ/案例。</td>
+                        <td><strong>受限。</strong> 原生仅支持顶部描述，底部加长文案需修改 Liquid 代码或买 App。</td>
+                        <td>E-E-A-T 算法极度厌恶“纯图片空白聚合页”，必须靠上下文提供信息增益。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GEO / AIO 结构化数据控制</strong></td>
+                        <td><strong>深度支持（0代码）。</strong> 配合 RankMath 轻松植入 Product / FAQ Schema。</td>
+                        <td><strong>依赖 App 或主题。</strong> 默认 Schema 简陋，需安装 Schema App。</td>
+                        <td>AI 搜索引擎全靠 JSON-LD 标签识别聚合页中的参数与 MOQ。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>多重条件筛选与 URL 伪静态</strong></td>
+                        <td><strong>极强。</strong> 配合 FacetWP 插件，可将“薄荷味 + U型贴”筛选结果自动生成独立静态 URL，实现 SEO 裂变。</td>
+                        <td><strong>一般。</strong> 筛选常生成带 <code>?pf_t=</code> 参数的 URL，难以裂变新词。</td>
+                        <td>把组合筛选页转化为“独立伪静态 URL”，能多收录数千个长尾词。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>URL 层级与伪静态控制</strong></td>
+                        <td><strong>自定义程度 100%。</strong> 可随意去除 <code>/product-category/</code> 前缀，极致扁平。</td>
+                        <td><strong>固定结构。</strong> 强制包含 <code>/collections/</code>，层级无法缩减。</td>
+                        <td>扁平化的 URL 结构能让页面获得更高的初始权重传递。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CWV 页面性能优化</strong></td>
+                        <td><strong>上下限极高。</strong> 需配置缓存插件及 WebP 压缩，优化后性能卓越。</td>
+                        <td><strong>托管式稳定。</strong> CDN 由官方托管，但难以深入做 CSS/JS 极速裁剪。</td>
+                        <td>页面加载速度与 INP 是 2026 硬性排名指标。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>数据追踪与零方数据收集</strong></td>
+                        <td><strong>完全自由。</strong> 可直连 MailerLite 等，部署 Data Manager API 强化转化。</td>
+                        <td><strong>依赖生态。</strong> 需指定 App 并支付月费。</td>
+                        <td>零方数据（用户主动勾选的采购偏好）是 Cookieless 时代核心转化资产。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>综合运营 ROI 与长远成本</strong></td>
+                        <td><strong>前期有门槛，长期成本极低。</strong> 适合主打内容矩阵与复杂 SKU 的 B2B。</td>
+                        <td><strong>上手极快，月费随规模暴涨。</strong> 适合主打 PPC 付费投流的 B2C/DTC。</td>
+                        <td>免费自然流量（SEO）的 ROI 远超付费广告。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 趋势一：pSEO -->
+        <h3 class="section-title">8.5 ⭐ 趋势一：程序化SEO（pSEO）与规模化着陆页</h3>
         <div class="trend-card">
-            <h4 style="color: var(--primary); margin-top: 0;">趋势二：内容集群（Topic Cluster）架构</h4>
+            <div class="plain-talk" style="margin-top: 12px; margin-bottom: 16px;">
+                🗣️ <strong>大白话：</strong>以前做 pSEO 是“换汤不换药”，把“纽约美白牙贴”换成“洛杉矶美白牙贴”就想去骗流量。但在 2026 年，谷歌算法一秒钟就能看穿这种“批量制造的垃圾”。现在的高级玩法是：建立多维度的数据库，用免代码工具自动拼装出 1000 个“有真实数据支撑、有差异化价值”的专属页面。
+            </div>
+
+            <p style="font-weight:600; margin: 16px 0 8px 0;">📌 全流程概览（四步）</p>
+            <div class="pseo-grid">
+                <div class="pseo-card">
+                    <span class="step-num">①</span>
+                    <span class="step-name">实体数据库</span>
+                    <span class="step-bubble">多维度数据表</span>
+                </div>
+                <div class="pseo-card">
+                    <span class="step-num">②</span>
+                    <span class="step-name">高动态模板</span>
+                    <span class="step-bubble">设计变量占位</span>
+                </div>
+                <div class="pseo-card">
+                    <span class="step-num">③</span>
+                    <span class="step-name">傻瓜组装</span>
+                    <span class="step-bubble">插件批量生成</span>
+                </div>
+                <div class="pseo-card">
+                    <span class="step-num">④</span>
+                    <span class="step-name">极速收录</span>
+                    <span class="step-bubble">API主动提交</span>
+                </div>
+            </div>
+
+            <button class="pseo-expand-btn" id="pseoExpandBtn">
+                📖 展开详细步骤 <span class="arrow" id="pseoArrow">▼</span>
+            </button>
+
+            <!-- 折叠面板内容：高级心法与说明 -->
+            <div class="pseo-detail-wrap" id="pseoDetail">
+                <div class="step-block">
+                    <h4><span class="step-tag">步骤①</span> 准备多维“实体数据库” (拒绝单一替换)</h4>
+                    <p>不要只准备地名或核心词！2026 年谷歌看重的是“信息增益”。你需要用 Excel/Google Sheets 准备一张多维度的矩阵表，确保每个生成的页面都有独特的价值。</p>
+                    <ul>
+                        <li><strong>基础字段：</strong> 城市/国家（如：德国）、核心产品（如：U型干贴）。</li>
+                        <li><strong>增益字段（决定排名的关键）：</strong> 对应的本地化痛点（如：符合欧盟 CE 标准）、本地化物流时效（如：法兰克福仓 3 天达）、对应的客户评价（如：某柏林诊所的真实反馈）。</li>
+                    </ul>
+                </div>
+                <div class="step-block">
+                    <h4><span class="step-tag">步骤②</span> 设计“高动态”版面模板 (防 Spam 降权)</h4>
+                    <p>如果几千个页面的排版一模一样，只换了几个词，极易被谷歌 K 站。在 WordPress 中用 Elementor 等编辑器画一个模板，必须保证 ≥60% 的区域是动态调用的。</p>
+                    <ul>
+                        <li><strong>动态标题与导购 (H1 & Intro)：</strong> `{城市}牙科诊所专用——{核心产品}批发方案`。</li>
+                        <li><strong>动态对比数据框 (GEO 抓取重点)：</strong> 调用表格里的参数，生成该产品与其他竞品的硬核参数对比表。</li>
+                        <li><strong>动态 FAQ 模块：</strong> 专门回答 `{城市}` 客户最关心的问题，并务必在模板底部开启 <strong>FAQ Schema</strong>，让谷歌 AI (AIO) 能直接抽走这些问答。</li>
+                    </ul>
+                </div>
+                <div class="step-block">
+                    <h4><span class="step-tag">步骤③</span> 傻瓜式批量组装与发布 (免敲代码)</h4>
+                    <p>忘掉复杂的 Python 脚本，WordPress 站长有更高效的“无代码”落地方案：</p>
+                    <ul>
+                        <li><strong>方案 A（最稳妥：WP All Import 插件）：</strong> 将准备好的 Excel 表格直接导入插件，在后台用拖拽的方式，把表格里的列名拉到页面模板框里。</li>
+                        <li><strong>方案 B（最智能：Make + AI 工作流）：</strong> 使用 Make 绑定数据表，串接 ChatGPT 接口，让 AI 根据表格生成独特导购前言，最后通过 WP API 自动发布。</li>
+                    </ul>
+                </div>
+                <div class="step-block">
+                    <h4><span class="step-tag">步骤④</span> 极速收录与“滴水穿石”策略</h4>
+                    <p>生成了页面不代表有流量，2026 年干等 Sitemap 抓取太慢，且容易引起警觉。</p>
+                    <ul>
+                        <li><strong>秒级收录：</strong> 配置 Google Indexing API。生成新页面的同时，主动给谷歌发信号，实现分钟级收录。</li>
+                        <li><strong>防风控发布 (Drip feed)：</strong> 千万不要在一天之内突然上线 5000 个页面。通过定时发布功能，每天只释放 20-50 个页面，安全过渡谷歌沙盒期。</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <script>
+                (function() {
+                    var btn = document.getElementById('pseoExpandBtn');
+                    var detail = document.getElementById('pseoDetail');
+                    var arrow = document.getElementById('pseoArrow');
+    
+                    btn.addEventListener('click', function() {
+                        var isOpen = detail.classList.contains('open');
+                        if (isOpen) {
+                            detail.classList.remove('open');
+                            arrow.classList.remove('open');
+                            btn.innerHTML = '📖 展开详细步骤 <span class="arrow" id="pseoArrow">▼</span>';
+                        } else {
+                            detail.classList.add('open');
+                            var newArrow = document.getElementById('pseoArrow');
+                            if (newArrow) newArrow.classList.add('open');
+                            btn.innerHTML = '📕 收起详细步骤 <span class="arrow open" id="pseoArrow">▲</span>';
+                        }
+                    });
+                })();
+            </script>
+        </div>
+
+        <!-- pSEO 底部三连卡片：落地/心法/代码 -->
+        <div class="card-section-box">
+            <div class="card-section-title">👨‍💻 (一) 苦逼运营落地篇（4 步傻瓜式操作）</div>
+            <ul>
+                <li><strong>步骤① 填个表格 (准备“弹药库”)：</strong><br>打开 Excel，第一行写好表头（如：城市、主推产品、物流痛点）。下面一行行填具体数据，填完另存为 CSV 文件。</li>
+                <li><strong>步骤② 画个空模板 (留出“填空位”)：</strong><br>在 WordPress 里像平时发文章一样新建页面，把固定不变的导购套话写好。遇到需要变动的地方写占位符（如：专为 {城市} 诊所定制的 {主推产品}）。</li>
+                <li><strong>步骤③ 连线拖拽 (让插件做苦力)：</strong><br>在 WP 后台安装 WP All Import 插件。上传 CSV，界面右边是数据，左边是网页。你只需要按住鼠标，把表格里的 {城市} 拖拽到左边的标题框里，像玩连连看一样，全程 0 代码。</li>
+                <li><strong>步骤④ 一键爆兵 (执行发布)：</strong><br>点击运行，几百个排版精美、文案各异的独立着陆页就全自动建好了。</li>
+            </ul>
+        </div>
+
+        <div class="card-section-box">
+            <div class="card-section-title">🧠 (二) 高级运营心法篇（2026 防风控策略）</div>
+            <ul>
+                <li><strong>多维实体数据库 (拒菜单一替换)：</strong> 表格里千万别只填地名！加入“针对性资质(CE/FDA)”、“本地物流时效”、“真实评价”等增益数据，确保生成页面有 ≥60% 的独特性。</li>
+                <li><strong>高动态版面模板 (防 Spam 降权)：</strong> 调用表格数据，生成独一无二的产品参数对比表，并务必在底部开启 FAQ Schema，让谷歌直接抽走这些问答。</li>
+                <li><strong>防风控发布 (Drip feed) 与秒收录：</strong> 一次性秒发 3000 个页面极易触发沙盒风控。在插件里设置每天自动释放 20 篇。同时配置 Google Indexing API，做到“每天发 20 篇，谷歌秒收录 20 篇”，无声无息铺满长尾词。</li>
+            </ul>
+        </div>
+
+        <div class="card-section-box">
+            <div class="card-section-title">⚙️ (三) 极客代码备查篇（供技术团队对接）</div>
+            <ul>
+                <li><strong>Python + Jinja2 模板合成代码：</strong></li>
+            </ul>
+            <div class="code-block">import pandas as pd
+from jinja2 import Template
+data = pd.read_csv("data.csv")
+template = Template(open("template.html").read())
+for _, row in data.iterrows():
+    html = template.render(city=row["city"], product_name=row["product_name"])
+    with open(f"{row['city']}.html", "w") as f: f.write(html)</div>
+            <ul>
+                <li><strong>对接到 WordPress (WP REST API)：</strong></li>
+            </ul>
+            <div class="code-block">POST https://yourdomain.com/wp-json/wp/v2/posts
+Body: { "title": "{city}牙科诊所方案", "content": "...", "status": "publish" }</div>
+        </div>
+
+        <!-- 趋势二 -->
+        <h3 class="section-title">8.6 ⭐ 趋势二：内容集群（Topic Cluster）架构</h3>
+        <div class="trend-card">
             <p style="font-size: 14px;">围绕核心主题建立"支柱页面"，再拆出细分话题的"集群内容"，用双向内链串成知识网络。这比单篇孤立页面更容易获得排名和 AI Overviews 引用。</p>
             <div style="font-size: 13.5px; background: var(--bg-card-alt); padding: 12px; border-radius: 4px; margin-top: 10px; border: 1px solid var(--border-light);">
                 <strong>B2B示例：</strong>以"牙齿美白干贴"做支柱页，向下拆分出"薄荷味的过氧化氢牙齿美白干贴"和"椰子味的亚氯酸钠也就是不含过氧化氢的牙齿美白干性贴片"做集群页，内部互相链接。
@@ -1954,8 +1827,8 @@ Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
         </script>
 
         <!-- 趋势三 -->
+        <h3 class="section-title">8.7 ⭐ 趋势三：AI驱动的CRO</h3>
         <div class="trend-card" style="margin-bottom: 0;">
-            <h4 style="color: var(--primary); margin-top: 0;">趋势三：AI驱动的CRO</h4>
             <div class="table-wrap">
                 <table class="center-bordered-table" style="margin-top: 10px;">
                     <thead>
@@ -2005,31 +1878,21 @@ Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
                 const scrollPos = activeBtn.offsetLeft - (nav.offsetWidth / 2) + (activeBtn.offsetWidth / 2);
                 nav.scrollLeft = scrollPos;
             }
-        });
-    </script>
-    <!-- ========== 👇 从这里开始复制：悬浮特效 JS 👇 ========== -->
-    <script>
-        (function() {
-            // 获取对比矩阵表中的所有 td 单元格
-            const matrixCells = document.querySelectorAll('.matrix-table td');
             
-            // 手机端点击单元格时触发特效
+            // 添加悬浮表格的交互控制
+            const matrixCells = document.querySelectorAll('.hover-translate-table td');
             matrixCells.forEach(cell => {
                 cell.addEventListener('click', function(e) {
-                    e.stopPropagation(); // 阻止事件冒泡到 document
-                    // 移除其他所有单元格的激活态
+                    e.stopPropagation();
                     matrixCells.forEach(c => c.classList.remove('active-pop'));
-                    // 激活当前点击的单元格
                     this.classList.add('active-pop');
                 });
             });
 
-            // 点击页面空白处，自动收起所有特效
             document.addEventListener('click', function() {
                 matrixCells.forEach(c => c.classList.remove('active-pop'));
             });
-        })();
+        });
     </script>
-    <!-- ========== 👆 到这里结束复制：悬浮特效 JS 👆 ========== -->
 </body>
 </html>
