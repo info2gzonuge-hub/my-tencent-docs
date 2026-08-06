@@ -97,33 +97,17 @@
         .highlight-box li { margin-bottom: 6px; }
 
         /* ============================================================ */
-        /* 表格系统（严格按照截图格式：无缩进，全宽）                    */
+        /* 表格系统                                                    */
         /* ============================================================ */
-        .schema-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0 20px;
-            font-size: 14px;
-            table-layout: fixed;
-        }
-        .schema-table th {
-            background: #FAFAFA;
-            color: var(--text-dark);
-            font-weight: 700;
-            text-align: left;
-            padding: 14px 16px;
-            border: 1px solid #E5E7EB;
-        }
-        .schema-table td {
-            padding: 14px 16px;
-            border: 1px solid #E5E7EB;
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+        .schema-table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 14px; table-layout: fixed; }
+        .schema-table th { background: #FAFAFA; color: var(--text-dark); font-weight: 700; text-align: left; padding: 14px 16px; border: 1px solid #E5E7EB; }
+        .schema-table td { padding: 14px 16px; border: 1px solid #E5E7EB; color: var(--text-dark); line-height: 1.6; }
         .schema-table tr:nth-child(even) { background: #FFFFFF; }
         .schema-table tr:nth-child(odd) { background: #FAFAFA; }
 
-        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; width: 100%; max-width: 100%; }
+        
+        .mobile-adapt-text { font-size: 14px; color: var(--text-dark); margin-bottom: 4px; margin-top: 12px; }
 
         /* ============================================================ */
         /* 底部                                                         */
@@ -171,13 +155,15 @@
 
             .flow-connector { font-size: 18px !important; height: 28px !important; margin: -4px 0 !important; }
 
-            /* 四宫格 → 单列 */
             .card > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+            
+            /* ⚠️核心修复1：降低大段文案的手机端字号 */
+            .mobile-adapt-text { font-size: 13px !important; line-height: 1.6 !important; }
 
-            /* ====== 3.4 表格：完整适配 ====== */
+            /* ⚠️核心修复2：表格完全适配与防止优先级断行 */
             .schema-table {
                 font-size: 12px !important;
-                min-width: 620px !important;
+                min-width: 500px !important; /* 缩小最低宽度，防过度滚动 */
                 table-layout: fixed !important;
             }
             .schema-table th,
@@ -187,13 +173,13 @@
                 white-space: normal !important;
                 word-break: break-word !important;
             }
-            /* 列宽：第一列 10%，第二列 28%，第三列 62% */
+            /* 首列绝对禁止换行，适度分配比例 */
             .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 10% !important; }
+            .schema-table td:nth-child(1) { width: 22% !important; white-space: nowrap !important; }
             .schema-table th:nth-child(2),
             .schema-table td:nth-child(2) { width: 28% !important; }
             .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 62% !important; }
+            .schema-table td:nth-child(3) { width: 50% !important; }
 
             .highlight-box { padding: 14px 16px !important; }
             .highlight-box h4 { font-size: 15px !important; }
@@ -422,8 +408,7 @@
         </div>
 
         <!-- ============================================================ -->
-        <!-- 3.4 结构化数据（严格按照截图格式：标题 → 说明 → 表格 → 大白话） -->
-        <!-- 表格无缩进，全宽展示                                        -->
+        <!-- 3.4 结构化数据                                              -->
         <!-- ============================================================ -->
         <div class="grid-2" style="grid-template-columns: 1fr;">
             <div class="card">
@@ -434,18 +419,18 @@
                         🚀 3.4 ⭐ 结构化数据 (Schema): AI 引用的"加速器"
                     </div>
 
-                    <!-- 核心数据支撑说明 -->
-                    <p style="font-size:14px; color:var(--text-dark); margin-bottom:4px; margin-top: 12px;">
+                    <!-- 核心数据支撑说明（已移除内联样式font-size，加入mobile-adapt-text类） -->
+                    <p class="mobile-adapt-text">
                         <strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：
                     </p>
 
-                    <!-- 表格（无缩进，全宽展示） -->
+                    <!-- 表格（已移除无效的内联宽度，靠CSS精确控制响应式） -->
                     <div class="table-wrap">
                         <table class="schema-table">
                             <colgroup>
-                                <col style="width:10%;">
-                                <col style="width:28%;">
-                                <col style="width:62%;">
+                                <col style="width:15%;">
+                                <col style="width:25%;">
+                                <col style="width:60%;">
                             </colgroup>
                             <thead>
                                 <tr>
