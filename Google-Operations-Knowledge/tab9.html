@@ -1201,6 +1201,54 @@
                 padding: 0 4px !important;
             }
         }
+        /* ========== 👇 从这里开始复制：悬浮特效 CSS 👇 ========== */
+        .matrix-table td {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative; 
+            z-index: 1;
+            cursor: pointer; 
+        }
+
+        /* 统一的悬浮与点击激活态 */
+        .matrix-table td:hover,
+        .matrix-table td.active-pop {
+            transform: scale(1.04);
+            z-index: 10;
+            background-color: #FFFFFF !important; 
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            border-radius: 8px; 
+            border: 1px solid var(--primary-light, #FF8A5C) !important; 
+        }
+
+        /* 针对不同列匹配对应的专属光晕与边框色 */
+        /* 第二列：聚合页 (原灰底) */
+        .matrix-table td:nth-child(2):hover,
+        .matrix-table td:nth-child(2).active-pop {
+            box-shadow: 0 8px 24px rgba(107, 114, 128, 0.15);
+            border-color: #D1D5DB !important;
+        }
+        /* 第三列：pSEO (原极淡蓝) */
+        .matrix-table td:nth-child(3):hover,
+        .matrix-table td:nth-child(3).active-pop {
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
+            border-color: #93C5FD !important;
+        }
+        /* 第四列：内容集群 (原极淡橙) */
+        .matrix-table td:nth-child(4):hover,
+        .matrix-table td:nth-child(4).active-pop {
+            box-shadow: 0 8px 24px rgba(217, 119, 6, 0.15);
+            border-color: #FCD34D !important;
+        }
+
+        /* 手机端专项防抖约束 */
+        @media (max-width: 768px) {
+            .matrix-table td:hover,
+            .matrix-table td.active-pop {
+                transform: scale(1.02); /* 压低缩放率，防止破坏横滑体验 */
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            }
+        }
+        /* ========== 👆 到这里结束复制：悬浮特效 CSS 👆 ========== */
     </style>
 </head>
 <body>
@@ -1959,5 +2007,29 @@ Body: { "title": "{city}牙科诊所", "content": "...", "status": "publish" }
             }
         });
     </script>
+    <!-- ========== 👇 从这里开始复制：悬浮特效 JS 👇 ========== -->
+    <script>
+        (function() {
+            // 获取对比矩阵表中的所有 td 单元格
+            const matrixCells = document.querySelectorAll('.matrix-table td');
+            
+            // 手机端点击单元格时触发特效
+            matrixCells.forEach(cell => {
+                cell.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 阻止事件冒泡到 document
+                    // 移除其他所有单元格的激活态
+                    matrixCells.forEach(c => c.classList.remove('active-pop'));
+                    // 激活当前点击的单元格
+                    this.classList.add('active-pop');
+                });
+            });
+
+            // 点击页面空白处，自动收起所有特效
+            document.addEventListener('click', function() {
+                matrixCells.forEach(c => c.classList.remove('active-pop'));
+            });
+        })();
+    </script>
+    <!-- ========== 👆 到这里结束复制：悬浮特效 JS 👆 ========== -->
 </body>
 </html>
