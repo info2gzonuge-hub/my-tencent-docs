@@ -99,15 +99,31 @@
         /* ============================================================ */
         /* 表格系统                                                    */
         /* ============================================================ */
-        .schema-table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 14px; table-layout: fixed; }
-        .schema-table th { background: #FAFAFA; color: var(--text-dark); font-weight: 700; text-align: left; padding: 14px 16px; border: 1px solid #E5E7EB; }
-        .schema-table td { padding: 14px 16px; border: 1px solid #E5E7EB; color: var(--text-dark); line-height: 1.6; }
+        .schema-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 20px;
+            font-size: 14px;
+            table-layout: fixed;
+        }
+        .schema-table th {
+            background: #FAFAFA;
+            color: var(--text-dark);
+            font-weight: 700;
+            text-align: left;
+            padding: 14px 16px;
+            border: 1px solid #E5E7EB;
+        }
+        .schema-table td {
+            padding: 14px 16px;
+            border: 1px solid #E5E7EB;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
         .schema-table tr:nth-child(even) { background: #FFFFFF; }
         .schema-table tr:nth-child(odd) { background: #FAFAFA; }
 
-        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; width: 100%; max-width: 100%; }
-        
-        .mobile-adapt-text { font-size: 14px; color: var(--text-dark); margin-bottom: 4px; margin-top: 12px; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
 
         /* ============================================================ */
         /* 底部                                                         */
@@ -134,11 +150,13 @@
 
             .grid-2 { grid-template-columns: 1fr !important; gap: 14px !important; }
 
-            .card { padding: 16px 16px !important; }
+            /* ⚠️ 核心修复1：加入 min-width: 0，防止内部过长表格撑破外部卡片宽度 */
+            .card { padding: 16px 16px !important; min-width: 0 !important; }
             .card .card-title { font-size: 15px !important; }
 
             .card-inner-highlight { padding: 12px 14px !important; }
 
+            /* 提升 App 视觉观感：统一字体与行高 */
             .item { font-size: 13px !important; padding-left: 10px !important; word-break: break-word !important; overflow-wrap: break-word !important; }
 
             .bubble {
@@ -149,37 +167,52 @@
                 white-space: normal !important;
             }
 
+            /* ⚠️ 核心修复2：大段文案适配，压制内联字体大小 */
+            .mobile-adapt-text { font-size: 13px !important; line-height: 1.6 !important; }
+
             .stage-banner { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; padding: 12px 16px !important; }
             .stage-title { font-size: 14px !important; }
             .stage-tag { font-size: 10px !important; }
 
             .flow-connector { font-size: 18px !important; height: 28px !important; margin: -4px 0 !important; }
 
+            /* 四宫格 → 单列 */
             .card > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
-            
-            /* ⚠️核心修复1：降低大段文案的手机端字号 */
-            .mobile-adapt-text { font-size: 13px !important; line-height: 1.6 !important; }
 
-            /* ⚠️核心修复2：表格完全适配与防止优先级断行 */
+            /* ====== 基础表格适配（适用3.1表格） ====== */
+            .table-wrap {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+
             .schema-table {
-                font-size: 12px !important;
-                min-width: 500px !important; /* 缩小最低宽度，防过度滚动 */
-                table-layout: fixed !important;
+                font-size: 13px !important;
+                min-width: 600px !important; /* 宽度确保够大，激发右拉滑动 */
+                table-layout: auto !important; /* 释放表格自由缩放，保证 nowrap 生效 */
             }
             .schema-table th,
             .schema-table td {
-                padding: 8px 10px !important;
-                font-size: 12px !important;
+                padding: 10px 12px !important;
+                font-size: 13px !important;
                 white-space: normal !important;
                 word-break: break-word !important;
             }
-            /* 首列绝对禁止换行，适度分配比例 */
-            .schema-table th:nth-child(1),
-            .schema-table td:nth-child(1) { width: 22% !important; white-space: nowrap !important; }
-            .schema-table th:nth-child(2),
-            .schema-table td:nth-child(2) { width: 28% !important; }
-            .schema-table th:nth-child(3),
-            .schema-table td:nth-child(3) { width: 50% !important; }
+
+            /* ⚠️ 核心修复3：3.4专项表格 —— 前两列绝对不换行 */
+            .schema-table-34 th:nth-child(1),
+            .schema-table-34 td:nth-child(1),
+            .schema-table-34 th:nth-child(2),
+            .schema-table-34 td:nth-child(2) {
+                white-space: nowrap !important;
+                width: auto !important;
+            }
+
+            /* 防止 HTML 里的 <col> 标签宽度干扰 */
+            .schema-table col {
+                width: auto !important;
+            }
 
             .highlight-box { padding: 14px 16px !important; }
             .highlight-box h4 { font-size: 15px !important; }
@@ -419,18 +452,18 @@
                         🚀 3.4 ⭐ 结构化数据 (Schema): AI 引用的"加速器"
                     </div>
 
-                    <!-- 核心数据支撑说明（已移除内联样式font-size，加入mobile-adapt-text类） -->
-                    <p class="mobile-adapt-text">
+                    <!-- 核心数据支撑说明（已加入 mobile-adapt-text 压制手机端字号） -->
+                    <p class="mobile-adapt-text" style="font-size:14px; color:var(--text-dark); margin-bottom:4px; margin-top: 12px;">
                         <strong>核心数据支撑：</strong>实体密度达到 <strong>20.6%</strong> 的内容，被 AI 引用的概率远高于普通文本（普通仅 5-8%）。使用 RankMath 或 Seopress 插件，由高到低部署以下 Schema 标签：
                     </p>
 
-                    <!-- 表格（已移除无效的内联宽度，靠CSS精确控制响应式） -->
+                    <!-- 表格（已添加专属 schema-table-34 类，彻底隔离控制） -->
                     <div class="table-wrap">
-                        <table class="schema-table">
+                        <table class="schema-table schema-table-34">
                             <colgroup>
-                                <col style="width:15%;">
-                                <col style="width:25%;">
-                                <col style="width:60%;">
+                                <col style="width:10%;">
+                                <col style="width:28%;">
+                                <col style="width:62%;">
                             </colgroup>
                             <thead>
                                 <tr>
