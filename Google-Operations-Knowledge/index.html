@@ -35,7 +35,7 @@
         .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
         
         /* ============================================================ */
-        /* 视频 Banner 样式                                             */
+        /* 视频 Banner 样式 (移动端极限优化版)                          */
         /* ============================================================ */
         .video-banner-container {
             width: 100%;
@@ -44,24 +44,43 @@
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow-soft);
-            background-color: var(--bg-card-alt);
+            background-color: #E2E8F0; /* 加深一点的背景色，作为骨架屏 */
             border: 1px solid var(--border-light);
-            aspect-ratio: 16 / 9; /* 完美锁定比例，拒绝变形和加载黑块 */
+            aspect-ratio: 16 / 9; 
             line-height: 0;
             position: relative;
-            transition: all 0.3s ease; /* 增加平滑过渡动画 */
+            transition: all 0.3s ease;
         }
-        /* 增加细腻的向上平移 Hover 效果，保持交互克制与优雅 */
+        
+        /* 增加 CSS 伪元素：在视频还没缓冲出来前，显示“正在加载”提示文字 */
+        .video-banner-container::before {
+            content: "🎥 动态画面正在缓冲，请稍候...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 0;
+            text-align: center;
+            width: 100%;
+        }
+
         .video-banner-container:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-hover);
             border-color: var(--primary-light);
         }
+        
         .video-banner-container video {
             width: 100%;
             height: 100%;
             display: block;
-            object-fit: cover; /* 保证画面填满且不变形 */
+            object-fit: cover;
+            position: relative;
+            z-index: 1; /* 视频加载出来后，会自动盖住底层的“正在加载”文字 */
+            background-color: transparent;
         }
 
         .app-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
@@ -118,9 +137,6 @@
         .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
         .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 8px; }
 
-        /* ============================================================ */
-        /* 手机端响应式适配 - Tab 0 完整版                              */
-        /* ============================================================ */
         @media (max-width: 768px) {
             .app-container { padding: 16px 12px !important; }
             .app-header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -130,8 +146,8 @@
             .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
             .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
             
-            /* 手机端视频 Banner 间距微调 */
             .video-banner-container { margin-bottom: 16px; border-radius: 12px; }
+            .video-banner-container::before { font-size: 12px; } /* 手机端字体缩小 */
 
             .panel-title { font-size: 18px !important; }
             .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
@@ -186,10 +202,9 @@
 
         <!-- 视频 Banner 区 -->
         <div class="video-banner-container">
-            <!-- 加入了全套移动端兼容代码 -->
-            <video autoplay="autoplay" loop="loop" muted="muted" playsinline="true" webkit-playsinline="true" x5-playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="false">
+            <!-- 增加了 preload="auto" 和所有移动端内联播放属性 -->
+            <video id="hero-video" autoplay="autoplay" loop="loop" muted="muted" playsinline="true" webkit-playsinline="true" x5-playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="false" preload="auto">
                 <source src="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/assets/banner.mp4" type="video/mp4">
-                您的浏览器不支持 HTML5 视频。
             </video>
         </div>
 
@@ -590,5 +605,22 @@
             <span>点击 <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">返回顶部</span></span>
         </div>
     </div>
+
+    <!-- 针对微信和移动端浏览器的强制唤醒脚本 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var video = document.getElementById('hero-video');
+            
+            // 微信特有 API 唤醒视频
+            document.addEventListener("WeixinJSBridgeReady", function() {
+                if (video && video.paused) { video.play(); }
+            }, false);
+
+            // 保底机制：用户第一次触摸屏幕时，强行触发播放
+            document.body.addEventListener('touchstart', function() {
+                if (video && video.paused) { video.play(); }
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>
