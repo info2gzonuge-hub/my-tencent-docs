@@ -1046,6 +1046,39 @@
             .section-title { font-size: 15px !important; margin-top: 20px !important; }
             .plain-talk { font-size: 12px !important; padding: 10px 12px !important; }
         }
+        /* ========== 👇 从这里开始复制：手机端卡片与表格溢出修复 👇 ========== */
+        
+        /* 1. 修复 Grid 布局被内部宽表格强制撑破屏幕的经典 Bug */
+        .pseo-action-card, .pseo-logic-card {
+            min-width: 0; 
+        }
+        
+        /* 2. 强制限制表格外包装的最大宽度，并开启 iOS 丝滑滚动 */
+        .inner-table-wrapper {
+            max-width: 100%;
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* 3. 手机端专项深度压小适配 */
+        @media (max-width: 768px) {
+            .inner-table-wrapper {
+                margin: 12px -10px; /* 让表格在卡片内部向两侧稍微延伸，争取更多显示空间 */
+                width: calc(100% + 20px);
+                border-radius: 6px;
+            }
+            .inner-table {
+                min-width: 460px !important; /* 适当压低表格的最小宽度 */
+                font-size: 11.5px !important; /* 缩小手机端表格内的字号 */
+            }
+            .inner-table th, .inner-table td {
+                padding: 6px 8px !important; /* 压缩单元格内边距 */
+            }
+            .pseo-card-body {
+                word-wrap: break-word; 
+                overflow-wrap: break-word; /* 强制长文本自动换行，绝不允许撑拉屏幕 */
+            }
+        }
+        /* ========== 👆 到这里结束复制：手机端卡片与表格溢出修复 👆 ========== */
     </style>
 </head>
 <body>
