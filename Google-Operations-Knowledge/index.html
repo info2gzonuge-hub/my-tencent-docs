@@ -33,6 +33,37 @@
         }
         body { font-family: var(--font); background-color: var(--bg-body); min-height: 100vh; padding: 30px 20px; color: var(--text-dark); }
         .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
+        
+        /* ============================================================ */
+        /* 视频 Banner 样式                                             */
+        /* ============================================================ */
+        .video-banner-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 24px auto;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            background-color: var(--bg-card-alt);
+            border: 1px solid var(--border-light);
+            aspect-ratio: 16 / 9; /* 完美锁定比例，拒绝变形和加载黑块 */
+            line-height: 0;
+            position: relative;
+            transition: all 0.3s ease; /* 增加平滑过渡动画 */
+        }
+        /* 增加细腻的向上平移 Hover 效果，保持交互克制与优雅 */
+        .video-banner-container:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        .video-banner-container video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover; /* 保证画面填满且不变形 */
+        }
+
         .app-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
         .app-header h1 { font-size: 26px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
         .app-header h1 span { font-weight: 400; font-size: 16px; color: var(--text-muted); }
@@ -91,201 +122,57 @@
         /* 手机端响应式适配 - Tab 0 完整版                              */
         /* ============================================================ */
         @media (max-width: 768px) {
+            .app-container { padding: 16px 12px !important; }
+            .app-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .app-header h1 { font-size: 18px !important; flex-wrap: wrap; }
+            .app-header h1 span { font-size: 13px !important; display: block; margin-top: 2px; }
+            .badge-header { font-size: 11px !important; padding: 4px 14px !important; }
+            .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
+            .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
+            
+            /* 手机端视频 Banner 间距微调 */
+            .video-banner-container { margin-bottom: 16px; border-radius: 12px; }
 
-            .app-container {
-                padding: 16px 12px !important;
-            }
-
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .app-header h1 {
-                font-size: 18px !important;
-                flex-wrap: wrap;
-            }
-            .app-header h1 span {
-                font-size: 13px !important;
-                display: block;
-                margin-top: 2px;
-            }
-            .badge-header {
-                font-size: 11px !important;
-                padding: 4px 14px !important;
-            }
-
-            .tab-nav {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                gap: 4px;
-                padding-bottom: 10px;
-            }
-            .tab-btn {
-                font-size: 12px !important;
-                padding: 6px 14px !important;
-                flex-shrink: 0;
-            }
-
-            .panel-title {
-                font-size: 18px !important;
-            }
-            .panel-sub {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 10px !important;
-                margin: 12px 0 20px 0 !important;
-            }
-            .stat-card {
-                padding: 12px 14px !important;
-            }
-            .stat-card .number {
-                font-size: 22px !important;
-            }
-            .stat-card .label {
-                font-size: 12px !important;
-            }
-            .stat-card .icon {
-                font-size: 20px !important;
-            }
-
-            .tree-item summary {
-                padding: 12px 16px !important;
-                font-size: 14px !important;
-            }
-            .tree-item summary .summary-left {
-                gap: 8px !important;
-                flex-wrap: wrap !important;
-            }
-            .tree-item summary::after {
-                width: 20px !important;
-                height: 20px !important;
-                font-size: 10px !important;
-                flex-shrink: 0 !important;
-            }
-            .tree-item .tree-body {
-                padding: 10px 12px 16px 12px !important;
-            }
-
-            .tree-item .tree-body .child {
-                font-size: 13px !important;
-                padding: 4px 0 4px 10px !important;
-                line-height: 1.5 !important;
-                word-break: break-word !important;
-            }
-            .tree-item .tree-body .child .marker {
-                font-size: 12px !important;
-                min-width: 12px !important;
-                flex-shrink: 0 !important;
-            }
-            .tree-item .tree-body .child.sub {
-                padding-left: 20px !important;
-            }
-            .tree-item .tree-body .child.sub-sub {
-                padding-left: 30px !important;
-            }
-
-            .tree-item summary .pill {
-                font-size: 10px !important;
-                padding: 1px 10px !important;
-            }
-
-            .highlight-box {
-                padding: 12px 14px !important;
-                font-size: 13px !important;
-            }
-
-            .styled-table {
-                font-size: 11px !important;
-                min-width: 550px !important;
-                display: table !important;
-                margin-top: 8px !important;
-            }
-            .styled-table th,
-            .styled-table td {
-                padding: 8px 10px !important;
-                font-size: 11px !important;
-            }
-
-            .footer-links {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 6px !important;
-                font-size: 13px !important;
-            }
+            .panel-title { font-size: 18px !important; }
+            .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; margin: 12px 0 20px 0 !important; }
+            .stat-card { padding: 12px 14px !important; }
+            .stat-card .number { font-size: 22px !important; }
+            .stat-card .label { font-size: 12px !important; }
+            .stat-card .icon { font-size: 20px !important; }
+            .tree-item summary { padding: 12px 16px !important; font-size: 14px !important; }
+            .tree-item summary .summary-left { gap: 8px !important; flex-wrap: wrap !important; }
+            .tree-item summary::after { width: 20px !important; height: 20px !important; font-size: 10px !important; flex-shrink: 0 !important; }
+            .tree-item .tree-body { padding: 10px 12px 16px 12px !important; }
+            .tree-item .tree-body .child { font-size: 13px !important; padding: 4px 0 4px 10px !important; line-height: 1.5 !important; word-break: break-word !important; }
+            .tree-item .tree-body .child .marker { font-size: 12px !important; min-width: 12px !important; flex-shrink: 0 !important; }
+            .tree-item .tree-body .child.sub { padding-left: 20px !important; }
+            .tree-item .tree-body .child.sub-sub { padding-left: 30px !important; }
+            .tree-item summary .pill { font-size: 10px !important; padding: 1px 10px !important; }
+            .highlight-box { padding: 12px 14px !important; font-size: 13px !important; }
+            .styled-table { font-size: 11px !important; min-width: 550px !important; display: table !important; margin-top: 8px !important; }
+            .styled-table th, .styled-table td { padding: 8px 10px !important; font-size: 11px !important; }
+            .footer-links { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; font-size: 13px !important; }
         }
 
         @media (max-width: 480px) {
-
-            .app-container {
-                padding: 10px 8px !important;
-            }
-            .app-header h1 {
-                font-size: 16px !important;
-            }
-            .tab-btn {
-                font-size: 11px !important;
-                padding: 4px 10px !important;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 8px !important;
-            }
-            .stat-card {
-                padding: 10px 12px !important;
-            }
-            .stat-card .number {
-                font-size: 18px !important;
-            }
-            .stat-card .label {
-                font-size: 11px !important;
-            }
-
-            .tree-item summary {
-                padding: 10px 12px !important;
-                font-size: 13px !important;
-            }
-            .tree-item .tree-body {
-                padding: 8px 10px 12px 10px !important;
-            }
-            .tree-item .tree-body .child {
-                font-size: 12px !important;
-                padding: 3px 0 3px 8px !important;
-            }
-            .tree-item .tree-body .child .marker {
-                font-size: 11px !important;
-                min-width: 10px !important;
-            }
-            .tree-item .tree-body .child.sub {
-                padding-left: 16px !important;
-            }
-            .tree-item .tree-body .child.sub-sub {
-                padding-left: 24px !important;
-            }
-            .tree-item summary .pill {
-                font-size: 9px !important;
-                padding: 1px 8px !important;
-            }
-
-            .styled-table {
-                font-size: 9px !important;
-                min-width: 420px !important;
-            }
-            .styled-table th,
-            .styled-table td {
-                padding: 5px 6px !important;
-                font-size: 9px !important;
-            }
-
-            .highlight-box {
-                padding: 10px 12px !important;
-                font-size: 12px !important;
-            }
+            .app-container { padding: 10px 8px !important; }
+            .app-header h1 { font-size: 16px !important; }
+            .tab-btn { font-size: 11px !important; padding: 4px 10px !important; }
+            .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+            .stat-card { padding: 10px 12px !important; }
+            .stat-card .number { font-size: 18px !important; }
+            .stat-card .label { font-size: 11px !important; }
+            .tree-item summary { padding: 10px 12px !important; font-size: 13px !important; }
+            .tree-item .tree-body { padding: 8px 10px 12px 10px !important; }
+            .tree-item .tree-body .child { font-size: 12px !important; padding: 3px 0 3px 8px !important; }
+            .tree-item .tree-body .child .marker { font-size: 11px !important; min-width: 10px !important; }
+            .tree-item .tree-body .child.sub { padding-left: 16px !important; }
+            .tree-item .tree-body .child.sub-sub { padding-left: 24px !important; }
+            .tree-item summary .pill { font-size: 9px !important; padding: 1px 8px !important; }
+            .styled-table { font-size: 9px !important; min-width: 420px !important; }
+            .styled-table th, .styled-table td { padding: 5px 6px !important; font-size: 9px !important; }
+            .highlight-box { padding: 10px 12px !important; font-size: 12px !important; }
         }
     </style>
 </head>
@@ -296,6 +183,14 @@
             <h1>📊 谷歌推广知识体系 <span>· Tab 0 · 全局完整目录</span></h1>
             <span class="badge-header">🌳 精确至终版树形图</span>
         </header>
+
+        <!-- 视频 Banner 区 -->
+        <div class="video-banner-container">
+            <video autoplay muted loop playsinline>
+                <source src="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/assets/banner.mp4" type="video/mp4">
+                您的浏览器不支持 HTML5 视频。
+            </video>
+        </div>
 
         <!-- Tab 导航 -->
         <nav class="tab-nav">
