@@ -186,7 +186,8 @@
 
         <!-- 视频 Banner 区 -->
         <div class="video-banner-container">
-            <video autoplay muted loop playsinline>
+            <!-- 加入了全套移动端兼容代码 -->
+            <video autoplay="autoplay" loop="loop" muted="muted" playsinline="true" webkit-playsinline="true" x5-playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="false">
                 <source src="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/assets/banner.mp4" type="video/mp4">
                 您的浏览器不支持 HTML5 视频。
             </video>
