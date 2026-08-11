@@ -1554,141 +1554,223 @@
             🗣️ <strong>大白话：</strong>以前做 pSEO 是“换汤不换药”，把“纽约美白牙贴”换成“洛杉矶美白牙贴”就想去骗流量。但在 2026 年，谷歌算法一秒钟就能看穿这种“批量制造的垃圾”。现在的高级玩法是：建立多维度的数据库，用免代码工具自动拼装出 1000 个“有真实数据支撑、有差异化价值”的专属页面。
         </div>
 
-        <!-- 第一行：一行四列 落地篇 -->
-        <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">🚀 (一) 苦逼运营落地篇（点击卡片展开详细实操）</div>
+        <!-- ========== 👇 从这里开始替换 👇 ========== -->
+        <!-- 第一行：落地篇 (PC端左导航右宽屏 / 手机端垂直折叠) -->
+        <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">🚀 (一) 苦逼运营落地篇（实操分解）</div>
         <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px; background: #FFF4E8; padding: 10px 14px; border-radius: 8px; border-left: 4px solid var(--primary);">
             🗣️ <strong>大白话：</strong>不用写一行代码，把表格里的词填到模板的坑位里，让工具替你跑腿，一键生成几百个美白牙贴的长尾词独立站页面。
         </div>
 
-        <div class="pseo-4col-grid">
-            <!-- 步骤 1 -->
-            <div class="pseo-action-card clickable" onclick="togglePseoStep(this)">
-                <div class="pseo-card-header">
-                    <span class="badge">①</span> 填个表格
-                </div>
-                <div class="pseo-card-summary">准备“弹药库”</div>
-                <div class="pseo-expand-indicator">▼ 展开详细步骤</div>
-                <div class="pseo-card-body">
-                    <ul>
-                        <li><strong>小白实操指引：</strong></li>
-                        <li>1. 新建一个空的 Excel 表格。</li>
-                        <li>2. 在表头第一行用纯英文写下变量名：<code>Region</code> (地区)、<code>Product</code> (产品)、<code>Formula</code> (成分)、<code>Selling_Point</code> (卖点)、<code>Cert</code> (资质)。<strong>（⚠️新手避坑：表头切记只用纯英文，不要加空格和中文！）</strong></li>
-                        <li>3. 填入你的多市场定制美白牙贴业务数据，另存为 <strong>CSV</strong> 格式。</li>
-                        <li><strong>实操举例：</strong> 建立如下“多维实体数据表”：</li>
-                    </ul>
-                    <div class="inner-table-wrapper">
-                        <table class="inner-table">
-                            <thead>
-                                <tr>
-                                    <th>目标地区 <code>{Region}</code></th>
-                                    <th>主推产品线 <code>{Product}</code></th>
-                                    <th>成分策略 <code>{Formula}</code></th>
-                                    <th>差异化卖点 <code>{Selling_Point}</code></th>
-                                    <th>信任壁垒 <code>{Cert}</code></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>洛杉矶 (北美)</strong></td>
-                                    <td>经典干贴 / 凝胶贴</td>
-                                    <td><strong>6%~10% HP</strong></td>
-                                    <td>高浓度快速起效，迎合北美快节奏美白需求</td>
-                                    <td>FDA 注册</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>柏林 (欧洲)</strong></td>
-                                    <td>零敏紫光牙贴</td>
-                                    <td><strong>PAP/无HP</strong></td>
-                                    <td>符合欧盟严苛法规，温和不酸牙，安全可售</td>
-                                    <td>CE 认证</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>迪拜 (中东)</strong></td>
-                                    <td>植萃美白贴片</td>
-                                    <td><strong>100%零酒精配方</strong></td>
-                                    <td>尊重当地文化禁忌，提供高端温和的个护体验</td>
-                                    <td>Halal 清真认证</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <style>
+            /* 方案二：PC 端左导航右宽屏，手机端垂直折叠分离适配 */
+            .pseo-adaptive-wrapper { display: flex; gap: 24px; margin-bottom: 24px; align-items: flex-start; }
+            .pseo-tabs-nav { flex: 0 0 260px; display: flex; flex-direction: column; gap: 12px; }
+            .pseo-tab-btn {
+                background: #FFFFFF; border: 1px solid var(--border-light); border-right: 4px solid transparent;
+                padding: 16px; border-radius: 12px; text-align: left; cursor: pointer; transition: all 0.3s; box-shadow: var(--shadow-soft);
+            }
+            .pseo-tab-btn.active, .pseo-tab-btn:hover {
+                background: #F4F8FD; border-color: #D6E4F8; border-right-color: var(--purple);
+                transform: translateX(4px); box-shadow: var(--shadow-hover);
+            }
+            .pseo-tab-btn .title { font-size: 16px; font-weight: 700; color: var(--secondary); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+            .pseo-tab-btn .badge {
+                background: var(--secondary); color: #fff; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px;
+            }
+            .pseo-tab-btn .sub { font-size: 13px; color: var(--text-muted); padding-left: 32px; }
+            
+            .pseo-tabs-content { flex: 1; min-width: 0; }
+            .pseo-tab-pane {
+                display: none; background: #FFFFFF; border: 1px solid #D6E4F8; border-top: 4px solid var(--secondary);
+                border-radius: 12px; padding: 24px; box-shadow: var(--shadow-soft); animation: fadeIn 0.3s ease;
+            }
+            .pseo-tab-pane.active { display: block; }
+            
+            .pseo-mobile-accordion { display: none; }
+            .pseo-pane-inner ul { padding-left: 16px; margin-bottom: 12px; }
+            .pseo-pane-inner li { margin-bottom: 8px; color: var(--text-dark); line-height: 1.6; font-size: 13.5px; }
+
+            @media (max-width: 768px) {
+                .pseo-adaptive-wrapper { display: block; }
+                .pseo-tabs-nav { display: none; } /* 手机端隐藏左侧导航 */
+                .pseo-tabs-content { display: flex; flex-direction: column; gap: 12px; }
+                .pseo-tab-pane {
+                    display: block; border: 1px solid var(--border-light); border-left: 4px solid var(--purple); border-top: 1px solid var(--border-light);
+                    padding: 0; border-radius: 12px; box-shadow: var(--shadow-soft); animation: none;
+                }
+                .pseo-mobile-accordion {
+                    display: flex; justify-content: space-between; align-items: center; width: 100%;
+                    background: #F4F8FD; border: none; padding: 16px; border-radius: 12px;
+                    font-size: 15px; font-weight: 700; color: var(--secondary); cursor: pointer; text-align: left;
+                }
+                .pseo-mobile-accordion .title-wrap { display: flex; align-items: center; gap: 8px; }
+                .pseo-mobile-accordion .badge {
+                    background: var(--secondary); color: #fff; width: 22px; height: 22px;
+                    display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px;
+                }
+                .pseo-mobile-accordion .indicator { font-size: 12px; color: var(--primary); font-weight: 600; }
+                .pseo-pane-inner { display: none; padding: 16px; border-top: 1px dashed #D6E4F8; }
+                .pseo-pane-inner.open { display: block; }
+            }
+        </style>
+
+        <div class="pseo-adaptive-wrapper">
+            <!-- PC端左侧导航 -->
+            <div class="pseo-tabs-nav">
+                <button class="pseo-tab-btn active" onclick="switchPseoTab(1)">
+                    <div class="title"><span class="badge">①</span> 填个表格</div>
+                    <div class="sub">准备“弹药库”</div>
+                </button>
+                <button class="pseo-tab-btn" onclick="switchPseoTab(2)">
+                    <div class="title"><span class="badge">②</span> 画个空模板</div>
+                    <div class="sub">留出“填空位”</div>
+                </button>
+                <button class="pseo-tab-btn" onclick="switchPseoTab(3)">
+                    <div class="title"><span class="badge">③</span> 连线拖拽</div>
+                    <div class="sub">让插件做苦力</div>
+                </button>
+                <button class="pseo-tab-btn" onclick="switchPseoTab(4)">
+                    <div class="title"><span class="badge">④</span> 一键爆兵</div>
+                    <div class="sub">执行发布与收录</div>
+                </button>
+            </div>
+
+            <!-- 内容展示区 -->
+            <div class="pseo-tabs-content">
+                <!-- 步骤1 -->
+                <div class="pseo-tab-pane active" id="pseo-pane-1">
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(1)">
+                        <div class="title-wrap"><span class="badge">①</span> 填个表格</div>
+                        <span class="indicator" id="pseo-ind-1">▲ 收起详细步骤</span>
+                    </button>
+                    <div class="pseo-pane-inner open" id="pseo-inner-1">
+                        <ul>
+                            <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
+                            <li>1. 新建一个空的 Excel 表格。</li>
+                            <li>2. 在表头第一行用纯英文写下变量名：<code>Region</code> (地区)、<code>Product</code> (产品)、<code>Formula</code> (成分)、<code>Selling_Point</code> (卖点)、<code>Cert</code> (资质)。<strong>（⚠️新手避坑：表头切记只用纯英文，不要加空格和中文！）</strong></li>
+                            <li>3. 填入你的多市场定制美白牙贴业务数据，另存为 <strong>CSV</strong> 格式。</li>
+                            <li><strong style="color: var(--secondary);">实操举例：</strong> 建立如下“多维实体数据表”：</li>
+                        </ul>
+                        <div class="inner-table-wrapper">
+                            <table class="inner-table">
+                                <thead>
+                                    <tr>
+                                        <th>目标地区 <code>{Region}</code></th>
+                                        <th>主推产品线 <code>{Product}</code></th>
+                                        <th>成分策略 <code>{Formula}</code></th>
+                                        <th>差异化卖点 <code>{Selling_Point}</code></th>
+                                        <th>信任壁垒 <code>{Cert}</code></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>洛杉矶 (北美)</strong></td>
+                                        <td>经典干贴 / 凝胶贴</td>
+                                        <td><strong>6%~10% HP</strong></td>
+                                        <td>高浓度快速起效，迎合北美快节奏美白需求</td>
+                                        <td>FDA 注册</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>柏林 (欧洲)</strong></td>
+                                        <td>零敏紫光牙贴</td>
+                                        <td><strong>PAP/无HP</strong></td>
+                                        <td>符合欧盟严苛法规，温和不酸牙，安全可售</td>
+                                        <td>CE 认证</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>迪拜 (中东)</strong></td>
+                                        <td>植萃美白贴片</td>
+                                        <td><strong>100%零酒精配方</strong></td>
+                                        <td>尊重当地文化禁忌，提供高端温和的个护体验</td>
+                                        <td>Halal 清真认证</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 步骤 2 -->
-            <div class="pseo-action-card clickable" onclick="togglePseoStep(this)">
-                <div class="pseo-card-header">
-                    <span class="badge">②</span> 画个空模板
+                <!-- 步骤2 -->
+                <div class="pseo-tab-pane" id="pseo-pane-2">
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(2)">
+                        <div class="title-wrap"><span class="badge">②</span> 画个空模板</div>
+                        <span class="indicator" id="pseo-ind-2">▼ 展开详细步骤</span>
+                    </button>
+                    <div class="pseo-pane-inner" id="pseo-inner-2">
+                        <ul>
+                            <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
+                            <li>1. 登录 WordPress 后台，点击新建页面。</li>
+                            <li>2. 正常编写导购套话。遇到需要根据表格变动的地方，用大括号 <code>{ }</code> 括起来当占位符。</li>
+                            <li><strong style="color: var(--secondary);">实操举例：</strong></li>
+                            <li><strong>标题框输入：</strong> <code>寻找 {Region} 顶级供应商？批发定制 {Product} 终极指南</code></li>
+                            <li><strong>正文框输入：</strong> <code>我们深知 {Region} 市场的严苛准入要求。本系列专供产品采用 {Formula}，完美实现 {Selling_Point}。问：出口需要什么资质？答：我们提供完整的 {Cert}，助您无忧清关。</code></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="pseo-card-summary">留出“填空位”</div>
-                <div class="pseo-expand-indicator">▼ 展开详细步骤</div>
-                <div class="pseo-card-body">
-                    <ul>
-                        <li><strong>小白实操指引：</strong></li>
-                        <li>1. 登录 WordPress 后台，点击新建页面。</li>
-                        <li>2. 正常编写导购套话。遇到需要根据表格变动的地方，用大括号 <code>{ }</code> 括起来当占位符。</li>
-                        <li><strong>实操举例：</strong></li>
-                        <li><strong>标题框输入：</strong> <code>寻找 {Region} 顶级供应商？批发定制 {Product} 终极指南</code></li>
-                        <li><strong>正文框输入：</strong> <code>我们深知 {Region} 市场的严苛准入要求。本系列专供产品采用 {Formula}，完美实现 {Selling_Point}。问：出口需要什么资质？答：我们提供完整的 {Cert}，助您无忧清关。</code></li>
-                    </ul>
-                </div>
-            </div>
 
-            <!-- 步骤 3 -->
-            <div class="pseo-action-card clickable" onclick="togglePseoStep(this)">
-                <div class="pseo-card-header">
-                    <span class="badge">③</span> 连线拖拽
+                <!-- 步骤3 -->
+                <div class="pseo-tab-pane" id="pseo-pane-3">
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(3)">
+                        <div class="title-wrap"><span class="badge">③</span> 连线拖拽</div>
+                        <span class="indicator" id="pseo-ind-3">▼ 展开详细步骤</span>
+                    </button>
+                    <div class="pseo-pane-inner" id="pseo-inner-3">
+                        <ul>
+                            <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
+                            <li>1. 在 WP 安装并激活 <strong>WP All Import</strong> 插件。上传存好的 CSV 文件。</li>
+                            <li>2. 进入拖拽界面时，右边是表格字段（如 Region, Cert），左侧是你的空模板。</li>
+                            <li>3. <strong>关键动作：</strong> 鼠标点住右边的 <code>{Region}</code>，拖拽到左边标题大括号处。像玩连连看一样全拖好。</li>
+                            <li>4. <em>高阶进阶：</em> 将 <code>{Cert}</code> 拖拽到下方 RankMath SEO 的 <code>Description</code> 框，让搜出来的几百个页面摘要都切中当地痛点。</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="pseo-card-summary">让插件做苦力</div>
-                <div class="pseo-expand-indicator">▼ 展开详细步骤</div>
-                <div class="pseo-card-body">
-                    <ul>
-                        <li><strong>小白实操指引：</strong></li>
-                        <li>1. 在 WP 安装并激活 <strong>WP All Import</strong> 插件。上传存好的 CSV 文件。</li>
-                        <li>2. 进入拖拽界面时，右边是表格字段（如 Region, Cert），左侧是你的空模板。</li>
-                        <li>3. <strong>关键动作：</strong> 鼠标点住右边的 <code>{Region}</code>，拖拽到左边标题大括号处。像玩连连看一样全拖好。</li>
-                        <li>4. <em>高阶进阶：</em> 将 <code>{Cert}</code> 拖拽到下方 RankMath SEO 的 <code>Description</code> 框，让搜出来的几百个页面摘要都切中当地痛点。</li>
-                    </ul>
-                </div>
-            </div>
 
-            <!-- 步骤 4 -->
-            <div class="pseo-action-card clickable" onclick="togglePseoStep(this)">
-                <div class="pseo-card-header">
-                    <span class="badge">④</span> 一键爆兵
-                </div>
-                <div class="pseo-card-summary">执行发布与收录</div>
-                <div class="pseo-expand-indicator">▼ 展开详细步骤</div>
-                <div class="pseo-card-body">
-                    <ul>
-                        <li><strong>小白实操指引：</strong></li>
-                        <li>1. 确认无误后点击运行，泡杯咖啡，全自动生成几百个本地化着陆页。</li>
-                        <li><strong>2. 提交收录：</strong></li>
-                        <li>生成所有页面后，更新 <strong>Sitemap</strong>（通过 Yoast 或 RankMath）。</li>
-                        <li>登录 <strong>Google Search Console</strong>，点击左侧 Sitemap，粘贴地址并提交。</li>
-                        <li>监控状态：GSC ➔ 覆盖率报告 ➔ 查看“有效”页面变化。</li>
-                    </ul>
+                <!-- 步骤4 -->
+                <div class="pseo-tab-pane" id="pseo-pane-4">
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(4)">
+                        <div class="title-wrap"><span class="badge">④</span> 一键爆兵</div>
+                        <span class="indicator" id="pseo-ind-4">▼ 展开详细步骤</span>
+                    </button>
+                    <div class="pseo-pane-inner" id="pseo-inner-4">
+                        <ul>
+                            <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
+                            <li>1. 确认无误后点击运行，泡杯咖啡，全自动生成几百个本地化着陆页。</li>
+                            <li><strong style="color: var(--secondary);">2. 提交收录：</strong></li>
+                            <li>生成所有页面后，更新 <strong>Sitemap</strong>（通过 Yoast 或 RankMath）。</li>
+                            <li>登录 <strong>Google Search Console</strong>，点击左侧 Sitemap，粘贴地址并提交。</li>
+                            <li>监控状态：GSC ➔ 覆盖率报告 ➔ 查看“有效”页面变化。</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script>
-            // 4列步骤卡片折叠交互
-            function togglePseoStep(card) {
-                const body = card.querySelector('.pseo-card-body');
-                const indicator = card.querySelector('.pseo-expand-indicator');
-                
-                if (body.classList.contains('open')) {
-                    body.classList.remove('open');
-                    card.classList.remove('active');
-                    indicator.textContent = '▼ 展开详细步骤';
+            // PC端：切换左侧Tab
+            function switchPseoTab(step) {
+                const btns = document.querySelectorAll('.pseo-tab-btn');
+                btns.forEach(btn => btn.classList.remove('active'));
+                btns[step-1].classList.add('active');
+
+                const panes = document.querySelectorAll('.pseo-tab-pane');
+                panes.forEach(pane => pane.classList.remove('active'));
+                document.getElementById('pseo-pane-' + step).classList.add('active');
+            }
+
+            // 手机端：点击垂直手风琴展开/收起
+            function toggleMobileAccordion(step) {
+                const inner = document.getElementById('pseo-inner-' + step);
+                const ind = document.getElementById('pseo-ind-' + step);
+                if (inner.classList.contains('open')) {
+                    inner.classList.remove('open');
+                    ind.textContent = '▼ 展开详细步骤';
                 } else {
-                    body.classList.add('open');
-                    card.classList.add('active');
-                    indicator.textContent = '▲ 收起详细步骤';
+                    inner.classList.add('open');
+                    ind.textContent = '▲ 收起详细步骤';
                 }
             }
         </script>
+        <!-- ========== 👆 到这里结束替换 👆 ========== -->
 
         <!-- 逻辑与公式 -->
         <div class="pseo-logic-grid">
