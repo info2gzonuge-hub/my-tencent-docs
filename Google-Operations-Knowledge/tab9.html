@@ -1794,24 +1794,73 @@
             </div>
         </div>
 
+      <!-- ========== 👇 从这里开始替换 👇 ========== -->
+        <style>
+            /* 针对(二)和(三)非对称排版与对齐优化 */
+            .pseo-2col-grid {
+                display: grid;
+                grid-template-columns: 58fr 42fr; /* 给予左侧更多宽度，使左右内容底部留白自然对齐 */
+                gap: 20px;
+                margin-bottom: 24px;
+                align-items: stretch; /* 强制左右两张卡片等高、底部对齐 */
+            }
+            
+            /* (二)紫罗兰专属高亮主题卡片 */
+            .pseo-action-card.purple-theme {
+                background: #F5F3FF; 
+                border: 1px solid #DDD6FE;
+                border-left: 4px solid var(--purple, #8B5CF6);
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+            .pseo-action-card.purple-theme:hover {
+                transform: translateY(-4px); /* 保留上浮特效 */
+                box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+                border-color: #C4B5FD;
+                border-left-color: var(--purple, #8B5CF6);
+            }
+            .pseo-action-card.purple-theme .theme-title {
+                color: var(--purple, #8B5CF6);
+            }
+            .pseo-action-card.purple-theme .plain-talk-box {
+                background: #EDE9FE;
+                border-left: 4px solid var(--purple, #8B5CF6);
+            }
+            .pseo-action-card.purple-theme strong.p-highlight {
+                color: var(--purple, #8B5CF6);
+            }
+
+            /* (三)极客代码卡片常规上浮 */
+            .pseo-action-card.static:hover {
+                transform: translateY(-4px); /* 保留上浮特效 */
+                box-shadow: var(--shadow-hover);
+            }
+
+            /* 手机端响应式垂直堆叠 */
+            @media (max-width: 768px) {
+                .pseo-2col-grid { grid-template-columns: 1fr !important; }
+            }
+        </style>
+
         <!-- 第二行：一行两列 心法与代码 -->
         <div class="pseo-2col-grid">
-            <!-- 心法篇 -->
-            <div class="pseo-action-card static">
-                <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">🧠 (二) 高级运营心法篇（2026 防风控策略）</div>
-                <div style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; background: #FFF4E8; padding: 10px 14px; border-radius: 8px; border-left: 4px solid var(--primary);">
-                    🗣️ <strong>大白话：</strong>谷歌不傻，纯替换地名的批量页面秒被封。核心是给每个页面加“独家料”，控制发布节奏，假装是真人慢慢更新的。
+            <!-- 心法篇 (紫底) -->
+            <div class="pseo-action-card purple-theme">
+                <div class="theme-title" style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">🧠 (二) 高级运营心法篇（2026 防风控落地指南）</div>
+                <div class="plain-talk-box" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; padding: 10px 14px; border-radius: 8px;">
+                    🗣️ <strong class="p-highlight">大白话：</strong>谷歌不傻，纯替换地名的批量页面秒被封。核心是给每个页面加“独家料”，控制发布节奏，假装是真人团队在每天慢慢更新高质量内容。
                 </div>
-                <ul style="padding-left: 16px; color: var(--text-dark); line-height: 1.6; font-size: 14px;">
-                    <li style="margin-bottom: 12px;"><strong>多维实体数据库 (拒菜单一替换)：</strong> 表格里千万别只填地名！加入“针对性资质(CE/FDA)”、“本地物流时效”、“真实评价”等增益数据，确保生成页面有 ≥60% 的独特性。</li>
-                    <li style="margin-bottom: 12px;"><strong>高动态版面模板 (防 Spam 降权)：</strong> 调用表格数据，生成独一无二的产品参数对比表，并务必在底部开启 <strong>FAQ Schema</strong>，让谷歌直接抽走这些问答。</li>
-                    <li><strong>防风控发布 (Drip feed) 与秒收录：</strong> 一次性秒发 3000 个页面极易触发沙盒风控。在插件里设置每天自动释放 20 篇。同时配置 Google Indexing API，做到“每天发 20 篇，谷歌秒收录 20 篇”，无声无息铺满长尾词。</li>
+                <ul style="padding-left: 16px; color: var(--text-dark); line-height: 1.6; font-size: 14px; margin-bottom: 0;">
+                    <li style="margin-bottom: 12px;"><strong class="p-highlight">多维实体数据库（建表时怎么防封？）：</strong>在建 Excel 数据表时，强制要求自己多加 3 列“本地化增益变量”。不能只有 <code>{Region}</code>，必须加上 <code>{Cert_Requirement}</code> (当地准入要求)、<code>{Local_Logistics}</code> (本地时效)。<br><strong>实操落地：</strong>比如中东迪拜那一行，必须在证书列填上“提供完全零酒精的 Halal 清真认证”。把这些业务独家信息塞进去，程序生成的页面查重率自然就降下来了。</li>
+                    
+                    <li style="margin-bottom: 12px;"><strong class="p-highlight">高动态版面模板（画模板时怎么防 Spam？）：</strong>在 WordPress (比如 Elementor) 画模板时，千万别全是一大段静态套话！<br><strong>实操落地：</strong>使用“动态标签(Dynamic Tags)”，在页面里拉一个折叠问答区（Accordion）。标题写死为：“发往 <code>{Region}</code> 需要多久？”，答案内容动态调用表格里的 <code>{Local_Logistics}</code> 字段。<br><span style="color:#DC2626; font-weight:600;">最关键操作：</span>在 Yoast 或 RankMath 插件的底部面板，必须手动把这个区块设置为 <strong>FAQ Schema</strong>，强迫谷歌爬虫把你的问答抓取走。</li>
+                    
+                    <li><strong class="p-highlight">防风控发布与秒收录（后台怎么点？）：</strong><span style="color:#DC2626; font-weight:600;">绝对不要在插件里点击“一次性全部发布”！</span>几千个页面瞬间上线必进沙盒。<br><strong>实操落地：</strong><br>1. 在 WP All Import 的最后一步发布设置中，找到“批处理 / Drip Feed”选项，设定为“每天仅自动释放 20 篇”。<br>2. 在 WP 后台免费安装 <code>Google Indexing API</code> 插件，并在设置里勾选“发布新文章时自动向谷歌 API 推送”。这样就能做到每天工具自动发 20 篇，谷歌立马收录 20 篇，闷声抢占长尾词。</li>
                 </ul>
             </div>
 
-            <!-- 代码篇 -->
+            <!-- 代码篇 (白底常规) -->
             <div class="pseo-action-card static">
-                <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">⚙️ (三) 极客代码备查篇（供技术团队对接）</div>
+                <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px;">⚙️ (三) 极客代码备查篇（供技术团队对接）</div>
                 <div style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; background: #FFF4E8; padding: 10px 14px; border-radius: 8px; border-left: 4px solid var(--primary);">
                     🗣️ <strong>大白话：</strong>如果你手下有懂技术的开发小哥，直接把这段代码扔给他，连插件的钱都省了，通过接口分分钟批量发版。
                 </div>
@@ -1823,15 +1872,26 @@ from jinja2 import Template
 data = pd.read_csv("data.csv")
 template = Template(open("template.html").read())
 for _, row in data.iterrows():
-    html = template.render(city=row["Region"], product_name=row["Product"])
-    with open(f"{row['Region']}_strips.html", "w") as f: f.write(html)</div>
+    html = template.render(
+        city=row["Region"], 
+        product=row["Product"],
+        cert=row["Cert_Requirement"]
+    )
+    with open(f"{row['Region']}_strips.html", "w") as f: 
+        f.write(html)</div>
                 <ul style="padding-left: 16px; color: var(--text-dark); font-size: 14px; margin-bottom: 6px;">
                     <li><strong>对接到 WP (REST API)：</strong></li>
                 </ul>
-                <div class="code-block">POST https://yourdomain.com/wp-json/wp/v2/posts
-Body: { "title": "寻找 {Region} 顶级供应商", "content": "...", "status": "publish" }</div>
+                <div class="code-block" style="margin-bottom:0;">POST https://yourdomain.com/wp-json/wp/v2/posts
+Headers: { "Authorization": "Bearer YOUR_TOKEN" }
+Body: { 
+    "title": "寻找 {Region} 顶级供应商", 
+    "content": "...", 
+    "status": "publish" 
+}</div>
             </div>
         </div>
+        <!-- ========== 👆 到这里结束替换 👆 ========== -->
 
         <!-- 趋势二 -->
         <h3 class="section-title">8.6 ⭐ 趋势二：内容集群（Topic Cluster）架构</h3>
