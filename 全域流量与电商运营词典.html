@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全域流量与电商运营词典</title>
+    
+    <style>
+        /* =========================================
+           全局变量：多巴胺色系与系统级抗疲劳字体
+           ========================================= */
+        :root {
+            /* 回归常规专业系统字体，干净清爽 */
+            --font-main: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Microsoft YaHei', sans-serif;
+            
+            --text-main: #334155; 
+            --text-sub: #64748B;
+            --border-color: #E2E8F0;
+            --container-width: 1280px;
+            
+            /* 主题1：薄荷海盐绿 (SEO) */
+            --t1-main: #059669; --t1-border: #A7F3D0; --t1-bg-light: #ECFDF5;
+            /* 主题2：蜜桃元气橙 (Ads) */
+            --t2-main: #EA580C; --t2-border: #FDBA74; --t2-bg-light: #FFF7ED;
+            /* 主题3：梦幻香芋紫 (Amazon) */
+            --t3-main: #7C3AED; --t3-border: #DDD6FE; --t3-bg-light: #FAF5FF;
+            /* 主题4：晴空宝宝蓝 (WP) */
+            --t4-main: #2563EB; --t4-border: #BFDBFE; --t4-bg-light: #EFF6FF;
+            /* 主题5：甜心樱花粉 (AI) */
+            --t5-main: #E11D48; --t5-border: #FECDD3; --t5-bg-light: #FFF1F2;
+            
+            --quiz-blue: #0AA5F2;
+        }
+
+        body { font-family: var(--font-main); color: var(--text-main); margin: 0; padding: 20px; line-height: 1.6; transition: background 0.4s ease, color 0.4s ease; }
+        .container { max-width: var(--container-width); margin: 0 auto; }
+        
+        /* =========================================
+           五色背景切换器
+           ========================================= */
+        .theme-switcher-btn {
+            position: fixed; bottom: 30px; right: 30px; z-index: 999;
+            background: white; border: 1px solid var(--border-color); border-radius: 50px;
+            padding: 10px 20px; font-size: 0.95rem; font-weight: 600; color: var(--text-main);
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
+        }
+        .theme-switcher-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: var(--quiz-blue); color: var(--quiz-blue); }
+        
+        .theme-menu {
+            position: fixed; bottom: 80px; right: 30px; z-index: 998;
+            background: white; padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 8px;
+            opacity: 0; pointer-events: none; transform: translateY(10px); transition: 0.3s;
+        }
+        .theme-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .theme-option {
+            padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;
+            border: 1px solid transparent; transition: 0.2s; text-align: center; color: var(--text-sub);
+        }
+        .theme-option:hover { background: #F1F5F9; }
+        .theme-option.active { border-color: var(--quiz-blue); background: #F0F8FF; color: var(--quiz-blue); }
+
+        /* --- 5 款背景风格 --- */
+        body.bg-white  { background: #FFFFFF; } /* 1. 原生纯白 */
+        body.bg-green  { background: #E8F5E9; } /* 2. 初芽薄荷绿 */
+        body.bg-yellow { background: #FFFBE6; } /* 3. 晨光奶酪黄 */
+        body.bg-purple { background: #F3E8FF; } /* 4. 心动紫罗兰 */
+        
+        /* 5. 极夜深邃黑 (赛博模式特化) */
+        body.bg-dark { background: #0A0F1D; color: #F8FAFC; }
+        body.bg-dark .header-section h1 { color: #F8FAFC; }
+        body.bg-dark .sidebar, body.bg-dark .sub-cat-details, body.bg-dark .card-item { background: #1E293B; border-color: #334155; }
+        body.bg-dark .sub-cat-summary, body.bg-dark .dopamine-table th { background: #0A0F1D; color: #CBD5E1; border-color: #334155; }
+        body.bg-dark .menu-item { color: #CBD5E1; }
+        body.bg-dark .menu-item:hover:not(.active) { background: #0A0F1D; }
+        body.bg-dark .table-row td { border-bottom-color: #334155; }
+        body.bg-dark .term-cn, body.bg-dark .def-text, body.bg-dark .plain-text, body.bg-dark .card-item .hint { color: #E2E8F0; }
+        body.bg-dark .mode-btn, body.bg-dark .reset-btn, body.bg-dark .card-item .btn-show { background: #1E293B; color: #E2E8F0; border-color: #334155; }
+        body.bg-dark .mode-btn:hover, body.bg-dark .reset-btn:hover, body.bg-dark .card-item .btn-show:hover { background: #0A0F1D; }
+        body.bg-dark .card-item input { background: #0A0F1D; color: #F8FAFC; border-color: #334155; }
+        body.bg-dark .quiz-subcat-title { color: #F8FAFC; }
+        body.bg-dark .quiz-pill { background: #1E293B; border-color: #334155; color: #CBD5E1; }
+        body.bg-dark .quiz-pill:hover { background: #0A0F1D; }
+        body.bg-dark .quiz-pill.active { background: var(--quiz-blue); color: white; border-color: var(--quiz-blue); }
+
+        /* 气泡在暗黑模式下的赛博霓虹描边 */
+        body.bg-dark .theme-1 .bubble { background: #1E293B; border-color: var(--t1-main); color: #F8FAFC; }
+        body.bg-dark .theme-2 .bubble { background: #1E293B; border-color: var(--t2-main); color: #F8FAFC; }
+        body.bg-dark .theme-3 .bubble { background: #1E293B; border-color: var(--t3-main); color: #F8FAFC; }
+        body.bg-dark .theme-4 .bubble { background: #1E293B; border-color: var(--t4-main); color: #F8FAFC; }
+        body.bg-dark .theme-5 .bubble { background: #1E293B; border-color: var(--t5-main); color: #F8FAFC; }
+
+        /* =========================================
+           基础布局排版
+           ========================================= */
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .header-section h1 { font-size: 1.8rem; color: #0F172A; margin-bottom: 15px; font-weight: 700; transition: color 0.4s ease; }
+        .main-tabs { display: flex; gap: 15px; justify-content: center; }
+        .main-tabs button {
+            font-family: var(--font-main); font-weight: 600; font-size: 1rem;
+            background: white; color: var(--text-sub); border: 1px solid var(--border-color); padding: 10px 30px; border-radius: 8px; cursor: pointer; transition: 0.2s;
+        }
+        .main-tabs button.active { background: var(--quiz-blue); color: white; border-color: var(--quiz-blue); box-shadow: 0 4px 10px rgba(10,165,242,0.2); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ====================================
+           TAB 1：分屏工作台 (侧栏 + 气泡折叠表格)
+           ==================================== */
+        .split-layout { display: flex; gap: 20px; align-items: flex-start; }
+        
+        .sidebar { width: 260px; position: sticky; top: 20px; display: flex; flex-direction: column; gap: 8px; background: white; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.02); transition: 0.4s ease; }
+        .menu-item { padding: 12px 15px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: 0.2s; background: transparent; border: 1px solid transparent; }
+        .menu-item:hover:not(.active) { background: #F1F5F9; }
+        
+        .menu-item.active.theme-1 { background: var(--t1-bg-light); color: var(--t1-main); border-color: var(--t1-border); }
+        .menu-item.active.theme-2 { background: var(--t2-bg-light); color: var(--t2-main); border-color: var(--t2-border); }
+        .menu-item.active.theme-3 { background: var(--t3-bg-light); color: var(--t3-main); border-color: var(--t3-border); }
+        .menu-item.active.theme-4 { background: var(--t4-bg-light); color: var(--t4-main); border-color: var(--t4-border); }
+        .menu-item.active.theme-5 { background: var(--t5-bg-light); color: var(--t5-main); border-color: var(--t5-border); }
+        
+        .content-area { flex: 1; }
+        .sub-cat-details { background: white; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.03); overflow: hidden; transition: 0.4s ease; }
+        .sub-cat-summary { padding: 16px 24px; font-weight: 700; font-size: 1.1rem; cursor: pointer; background: #F8FAFC; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; list-style: none; user-select: none; transition: 0.4s ease; }
+        .sub-cat-summary::-webkit-details-marker { display: none; }
+        
+        .arrow-icon { font-size: 0.9rem; color: #94A3B8; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .sub-cat-details[open] .arrow-icon { transform: rotate(180deg); color: inherit; }
+
+        /* 表格与气泡区块隔离设计 */
+        .dopamine-table { width: 100%; border-collapse: collapse; }
+        .dopamine-table th { text-align: left; padding: 16px 24px; color: var(--text-sub); font-weight: 600; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); background: transparent; transition: 0.4s ease; }
+        .table-row td { padding: 20px 24px; vertical-align: top; border-bottom: 1px solid var(--border-color); }
+        .table-row:last-child td { border-bottom: none; }
+
+        .term-box { display: inline-block; padding: 10px 15px; border-radius: 10px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; margin-left: -15px; }
+        .term-en { font-size: 1.05rem; font-weight: 700; display: block; margin-bottom: 4px; }
+        .term-cn { font-size: 0.85rem; color: var(--text-sub); }
+
+        .bubble { padding: 16px; border-radius: 12px; font-size: 0.95rem; line-height: 1.7; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; border: 1px solid transparent; }
+        .bubble-plain { border-left-width: 4px; border-left-style: solid; font-weight: 500; }
+
+        /* 👑 核心交互重构：行级联动悬浮 (整行Hover时，内部模块同步悬浮且不变色) */
+        .table-row:hover .term-box, .table-row:hover .bubble { 
+            transform: translateY(-4px); 
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06); 
+        }
+        body.bg-dark .table-row:hover .term-box, body.bg-dark .table-row:hover .bubble { 
+            box-shadow: 0 6px 20px rgba(255,255,255,0.05); 
+        }
+
+        /* 主题气泡注入 */
+        .theme-1 .term-en { color: var(--t1-main); } .theme-1 .bubble { background: var(--t1-bg-light); color: #1E293B; } .theme-1 .bubble-plain { border-left-color: var(--t1-main); }
+        .theme-2 .term-en { color: var(--t2-main); } .theme-2 .bubble { background: var(--t2-bg-light); color: #1E293B; } .theme-2 .bubble-plain { border-left-color: var(--t2-main); }
+        .theme-3 .term-en { color: var(--t3-main); } .theme-3 .bubble { background: var(--t3-bg-light); color: #1E293B; } .theme-3 .bubble-plain { border-left-color: var(--t3-main); }
+        .theme-4 .term-en { color: var(--t4-main); } .theme-4 .bubble { background: var(--t4-bg-light); color: #1E293B; } .theme-4 .bubble-plain { border-left-color: var(--t4-main); }
+        .theme-5 .term-en { color: var(--t5-main); } .theme-5 .bubble { background: var(--t5-bg-light); color: #1E293B; } .theme-5 .bubble-plain { border-left-color: var(--t5-main); }
+
+        /* ====================================
+           TAB 2：挖空练习 (顶部大类胶囊导航 + 3端响应式网格)
+           ==================================== */
+        .quiz-header-bar { background: var(--quiz-blue); color: white; padding: 20px 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(10,165,242,0.2); margin-bottom: 20px; }
+        .quiz-header-bar h2 { margin: 0 0 10px 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+        .header-stats { display: flex; flex-wrap: wrap; gap: 15px 25px; font-size: 0.95rem; }
+        .header-stats span { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        
+        .mode-switch { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .mode-btn { background: white; border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; color: var(--text-main); font-size: 0.9rem; transition: 0.3s ease; }
+        .mode-btn.active { background: var(--quiz-blue); border-color: var(--quiz-blue); color: white; }
+
+        /* 👑 顶部胶囊导航栏 */
+        .quiz-pill-nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px; }
+        .quiz-pill { padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; background: white; border: 1px solid var(--border-color); color: var(--text-sub); transition: 0.3s; font-size: 0.95rem; font-family: var(--font-main); }
+        .quiz-pill:hover { background: #F1F5F9; }
+        .quiz-pill.active { background: var(--quiz-blue); color: white; border-color: var(--quiz-blue); box-shadow: 0 4px 10px rgba(10,165,242,0.2); }
+
+        .quiz-subcat-title { font-size: 1.1rem; color: var(--text-main); margin: 20px 0 10px; font-weight: 600; padding-left: 10px; border-left: 4px solid var(--quiz-blue); transition: color 0.4s ease; }
+        
+        /* PC 端：双列网格布局 */
+        .cards-container { padding: 10px 0 25px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+        .card-item { background: #F8FAFC; border-radius: 8px; padding: 20px; border-left: 5px solid #B8D4E8; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); transition: 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-item.correct { border-left-color: #10B981; background: #ECFDF5; }
+        .card-item.wrong { border-left-color: #EF4444; background: #FEF2F2; }
+        .card-item .hint { font-size: 0.95rem; color: #334155; margin-bottom: 15px; line-height: 1.6; transition: 0.4s ease; }
+        .card-item .hint strong { color: var(--quiz-blue); font-weight: 600; }
+        .card-item .hint .def-text-quiz { color: #64748B; font-size: 0.85rem; display: block; margin-top: 8px; border-top: 1px dashed #CBD5E1; padding-top: 8px; }
+        
+        .card-item .row { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+        .card-item input { flex: 1; padding: 10px 14px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.95rem; outline: none; transition: 0.2s; background: white; font-family: var(--font-main); }
+        .card-item input:focus { border-color: var(--quiz-blue); }
+        .card-item .btn-group { display: flex; gap: 8px; }
+        .card-item .btn-check { background: var(--quiz-blue); border: none; color: white; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; font-family: var(--font-main); }
+        .card-item .btn-show { background: #E2E8F0; border: none; color: var(--text-main); padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: 0.3s ease; font-family: var(--font-main); }
+        
+        .card-item .feedback { margin-top: 15px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+        .card-item .feedback .correct-answer { font-weight: 400; color: #475569; }
+        .card-item .feedback code { background: #E2E8F0; padding: 2px 6px; border-radius: 4px; color: #EF4444; font-family: monospace; }
+        
+        .reset-btn { background: white; border: 1px solid var(--border-color); padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; color: var(--text-main); transition: 0.3s ease; }
+        .reset-btn:hover { background: #F1F5F9; }
+
+        /* ====================================
+           响应式：iPad 10 (1024px) & iPhone 14 Pro Max (430px)
+           ==================================== */
+        @media (max-width: 1024px) {
+            /* iPad 10：单栏居中，高留白 */
+            .cards-container { display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.01); border-radius: 12px; padding: 20px; }
+            .card-item { width: 100%; max-width: 700px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+            /* 平板端侧边栏转横向 */
+            .split-layout { flex-direction: column; }
+            .sidebar { width: 100%; flex-direction: row; flex-wrap: nowrap; overflow-x: auto; position: static; padding: 10px; -webkit-overflow-scrolling: touch; }
+            .menu-item { flex: 0 0 auto; white-space: nowrap; padding: 10px 15px; }
+            .quiz-pill-nav { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+            .quiz-pill { flex: 0 0 auto; white-space: nowrap; }
+        }
+
+        @media (max-width: 430px) {
+            body { padding: 10px; }
+            .header-section h1 { font-size: 1.4rem; }
+            .main-tabs { flex-direction: column; }
+            
+            /* Tab 1 手机端排版 */
+            .dopamine-table thead { display: none; }
+            .dopamine-table, .dopamine-table tbody, .table-row, .table-row td { display: block; width: 100%; }
+            .table-row { border: 1px solid var(--border-color); margin-bottom: 15px; border-radius: 12px; }
+            .table-row td { padding: 12px 15px; border: none !important; }
+            .table-row td:first-child { border-bottom: 1px dashed var(--border-color) !important; border-radius: 12px 12px 0 0; }
+            .table-row:hover .term-box, .table-row:hover .bubble { transform: none; box-shadow: none; } /* 手机端关闭上浮特效 */
+            .term-box { margin-left: 0; padding: 5px 0; }
+            
+            /* Tab 2 练习卡片解体：全垂直堆叠 */
+            .cards-container { padding: 10px 0; }
+            .card-item { max-width: 100%; padding: 15px; }
+            .card-item .row { flex-direction: column; align-items: stretch; }
+            .card-item input { width: 100%; box-sizing: border-box; text-align: center; padding: 12px; }
+            .card-item .btn-group { display: flex; width: 100%; }
+            .card-item .btn-group button { flex: 1; padding: 12px; }
+            
+            /* 浮动菜单微调 */
+            .theme-switcher-btn { bottom: 20px; right: 20px; font-size: 0.85rem; padding: 8px 15px; }
+            .theme-menu { bottom: 65px; right: 20px; }
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- 🎨 悬浮的背景切换器面板 -->
+    <div class="theme-menu" id="themeMenu">
+        <div class="theme-option active" onclick="changeBg('bg-white', this)">⚪ 原生纯白</div>
+        <div class="theme-option" onclick="changeBg('bg-green', this)">🌱 初芽薄荷绿</div>
+        <div class="theme-option" onclick="changeBg('bg-yellow', this)">☀️ 晨光奶酪黄</div>
+        <div class="theme-option" onclick="changeBg('bg-purple', this)">🔮 心动紫罗兰</div>
+        <div class="theme-option" onclick="changeBg('bg-dark', this)">🌌 极夜深邃黑</div>
+    </div>
+    <button class="theme-switcher-btn" onclick="toggleThemeMenu()">
+        🎨 切换背景
+    </button>
+
+    <div class="container">
+        <div class="header-section">
+            <h1>🌐 全域流量与电商运营词典</h1>
+            <div class="main-tabs">
+                <button class="active" onclick="switchMainTab('tab-dict', this)">📖 词典工作台</button>
+                <button onclick="switchMainTab('tab-quiz', this)">🧠 挖空记忆练习</button>
+            </div>
+        </div>
+
+        <!-- ================= TAB 1: 知识库 ================= -->
+        <div id="tab-dict" class="tab-content active">
+            <div class="split-layout">
+                <div class="sidebar" id="sidebarMenu"></div>
+                <div class="content-area" id="dictContentArea"></div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: 挖空练习 ================= -->
+        <div id="tab-quiz" class="tab-content">
+            <div class="quiz-header-bar">
+                <h2>📖 名词解释 · 挖空记忆</h2>
+                <div class="header-stats">
+                    <span>📊 已答 <span id="answeredCount">0</span> / <span id="totalCount">0</span></span>
+                    <span>✅ 正确 <span id="correctCount">0</span></span>
+                    <span>❌ 错误 <span id="wrongCount">0</span></span>
+                </div>
+            </div>
+
+            <div class="mode-switch">
+                <button class="mode-btn active" onclick="setQuizMode('plain', this)">💬 看大白话 → 填术语</button>
+                <button class="mode-btn" onclick="setQuizMode('def', this)">📘 看专业解释 → 填术语</button>
+            </div>
+
+            <!-- 👑 顶部大类胶囊导航 -->
+            <div class="quiz-pill-nav" id="quizPillNav"></div>
+
+            <div id="quizContainer"></div>
+            
+            <button class="reset-btn" id="resetBtn">🔄 重置所有进度</button>
+        </div>
+    </div>
+
+<script>
+// =====================================
+// 全量 100+ 终极数据库
+// =====================================
+const db = [
+    // --- 1. Google 免费生态圈 ---
+    { t: "SEO", a: ["搜索引擎优化"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "通过优化网站内容、结构和技术表现，提高在搜索引擎自然结果中的排名和可见性。", p: "让 Google 觉得你的网站值得推荐，把你的页面排在自然流量的前面。" },
+    { t: "Search Engine", a: ["搜索引擎"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "通过爬虫抓取网页、建立索引、提供搜索服务的系统。", p: "互联网的“图书馆管理员”，帮你找到想要的信息。" },
+    { t: "Crawler / Spider", a: ["爬虫", "蜘蛛"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "搜索引擎派出的程序（如 Googlebot），沿着链接在互联网上“爬行”抓取网页。", p: "Google 派来的“信息采集员”，一家一家网站去敲门看内容。" },
+    { t: "Crawling", a: ["抓取"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "搜索引擎发现并爬取网页的过程。", p: "采集员到你家门口，把门牌号和屋内情况记录下来。" },
+    { t: "Indexing", a: ["索引"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "搜索引擎理解页面内容并将其纳入数据库以供检索。", p: "采集员把记录下来的信息登记进 Google 的“大本营”数据库。" },
+    { t: "Ranking", a: ["排名"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "根据内容质量、外链、相关性等因素决定的页面排序。", p: "Google 决定谁排第一、谁排第二的过程。" },
+    { t: "PageRank", a: ["网页排名"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "Google 衡量网页重要性的算法，基于链接的信任与推荐机制。", p: "网页在互联网上的“江湖地位”评分，被大站推荐得越多地位越高。" },
+    { t: "Crawl Budget", a: ["抓取预算"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "搜索引擎每天分配给一个网站的抓取资源上限。", p: "Google 每天愿意花在你网站上的“采集员工时”。层级太深会浪费预算。" },
+    { t: "Sandbox", a: ["沙盒期"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "Google 对新站的观察期，通常 3-6 个月，排名波动较大。", p: "新网站的“试用期”，期间 Google 会压制排名测试你是否靠谱。" },
+    { t: "Algorithm", a: ["算法"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "搜索引擎用来评估和排序网页的一系列规则和计算公式。", p: "Google 内部给网页打分、决定生死排名的“黑盒考卷”。" },
+    { t: "Core Update", a: ["核心更新"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "Google 每年对整体排名算法进行几次重大的全盘调整。", p: "Google 给排名规则“大修”一次，每次大修都会引起全网排名剧烈波动。" },
+    { t: "Spam Update", a: ["垃圾内容更新"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "针对低质量、作弊和欺骗性内容的专项打击。", p: "Google 清理“网络垃圾”的严打行动。" },
+    { t: "Helpful Content System", a: ["实用性内容系统"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "Google 自动化系统，优先排序“有用、可靠、为人而写”的内容。", p: "Google 判断“这篇文章对用户有没有用”的过滤器。" },
+    { t: "BERT", a: ["自然语言处理"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "Google 的 NLP 算法，理解搜索词中词语的上下文和双向语义关系。", p: "让 Google 能读懂“苹果”是指水果还是手机。" },
+    { t: "RankBrain", a: ["机器学习排序"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "Google 的机器学习排序系统，理解从未见过的搜索语义。", p: "Google 的“猜你想找什么”引擎。" },
+    { t: "Google Discover", a: ["谷歌发现"], th: 1, c: "Google 免费生态圈", s: "算法与机制", d: "Google 移动端基于用户兴趣的主动内容推荐流。", p: "Google 版本的“猜你喜欢”信息流，不用搜就会自动推。" },
+    { t: "DA / Domain Authority", a: ["域名权重"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "Moz 提出的复合指标（0-100），基于外链数量和质量预测网站的排名能力。", p: "给整个网站打的“权威分”——外链越多越好，分越高。" },
+    { t: "PA / Page Authority", a: ["页面权重"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "Moz 针对单一具体网页评估的排名能力得分。", p: "给单个页面打的“权威分”——这个页面被多少好网站推荐过。" },
+    { t: "Spam Score", a: ["垃圾分数"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "Moz 衡量网站被 Google 惩罚概率的指标，建议控制在 1 以下。", p: "衡量网站“黑历史”的指标，分太高说明有作弊嫌疑。" },
+    { t: "Priority Score", a: ["优先级评分"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "结合关键词搜索量、难度和自然点击率的综合评分。", p: "一眼看出哪个词“性价比最高”，排上去最容易吸到流量。" },
+    { t: "DR / Domain Rating", a: ["域名评级"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "Ahrefs 专属指标（0-100），衡量网站反向链接配置文件的强度。", p: "Ahrefs 版的“网站靠谱分”，重点看谁给你投了推荐票。" },
+    { t: "UR / URL Rating", a: ["页面评级"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "Ahrefs 评估单一目标网页的外链强度指标。", p: "给单个页面打的“权威分”。" },
+    { t: "KD / Keyword Difficulty", a: ["关键词难度"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "衡量一个关键词排进 Google 首页需要多少条来自不同域名的反向链接。", p: "这个词好不好卷上首页——分数越高代表同行越强。" },
+    { t: "TP / Traffic Potential", a: ["流量潜力"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "排在第一名的页面，其所有相关长尾词能带来的总预估流量。", p: "看排第一的文章能顺带吃掉多少相关词的总流量。" },
+    { t: "TV / Traffic Value", a: ["流量价值"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "若通过 PPC 购买该网站当前的自然流量，预估需要花费的成本。", p: "看你的网站白嫖了多少钱的广告费。" },
+    { t: "AS / Authority Score", a: ["权威评分"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "Semrush 的综合评估指标，结合反链、自然流量及垃圾信号。", p: "Semrush 版的“靠谱分”。" },
+    { t: "Visibility %", a: ["可见度"], th: 1, c: "Google 免费生态圈", s: "权威指标", d: "衡量你的域名在目标关键词跟踪池中占据的总体展现份额。", p: "在你这行的搜索鱼池里，你的品牌占据了多大的地盘。" },
+    { t: "Search Intent", a: ["搜索意图"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "用户搜索某个关键词背后的真实目的（I/N/C/T）。", p: "猜想用户搜这个词到底是想学知识、找官网，还是准备买单。" },
+    { t: "Seed Keyword", a: ["种子词"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "核心关键词，通常代表核心产品或服务。", p: "行业里最根基的词，比如“Teeth Whitening”。" },
+    { t: "Long-tail Keyword", a: ["长尾关键词"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "3 个词以上的更具体的短语，搜索量较小但转化率极高。", p: "搜的人少但意图极精准的词组，一搜就是要买。" },
+    { t: "Search Volume", a: ["搜索量"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "一个关键词在特定时间段（通常是每月）被搜索的次数。", p: "每个月到底有多少活人在 Google 敲这个词。" },
+    { t: "Keyword Cannibalization", a: ["内耗", "关键词蚕食"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "网站内多个页面针对相同关键词竞争，导致互相分散权重。", p: "自己人打自己人，搞得 Google 全降权。" },
+    { t: "Title Tag", a: ["标题标签"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "HTML title 元素内容，显示在搜索结果中。", p: "搜索结果页里展示的网页“大标题门面”。" },
+    { t: "Meta Description", a: ["元描述"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "为搜索结果提供页面摘要描述。", p: "标题下方的那两行“内容简介”。" },
+    { t: "Heading", a: ["标题层级"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "H1-H6 划定网页内容的逻辑框架的标签。", p: "文章的大纲结构，H1 是主标题，H2 是小节标题。" },
+    { t: "Alt Text", a: ["图片替代文本"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "描述图片的属性文字，帮助搜索引擎理解图片。", p: "给爬虫看的图片说明，图片加载失败时显示的文字。" },
+    { t: "Anchor Text", a: ["锚文本"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "超链接中可见且可点击的文本部分。", p: "网页里带有下划线、点进去能跳转的那个词。" },
+    { t: "Featured Snippet", a: ["精选摘要"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "出现在搜索结果位置 0 的答案框。", p: "不用花钱就能霸占的最顶部特权展示位。" },
+    { t: "Knowledge Graph", a: ["知识图谱"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "Google 将实体关系结构化的信息卡片。", p: "搜索品牌时，右侧弹出的百科全书卡片。" },
+    { t: "Evergreen Content", a: ["常青内容"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "长期保持搜索价值和流量的内容。", p: "写完放个三年五年依然能带来流量的基础干货。" },
+    { t: "EEAT", a: ["E-E-A-T"], th: 1, c: "Google 免费生态圈", s: "内容与词库", d: "经验、专业性、权威性、可信度。", p: "Google 判断内容靠不靠谱的四个标准，现极度强化真实“经验”。" },
+    { t: "Backlink", a: ["反向链接", "外链"], th: 1, c: "Google 免费生态圈", s: "链接建设", d: "来自其他域名的超链接，是公认的外部排名因素。", p: "别的网站给你投的“推荐票”，有票就能排首页。" },
+    { t: "Internal Link", a: ["内部链接"], th: 1, c: "Google 免费生态圈", s: "链接建设", d: "同一域名下不同页面之间的互相链接。", p: "自己网站里，从这篇文章跳转到另外一个产品的链接。" },
+    { t: "Dofollow", a: ["Dofollow"], th: 1, c: "Google 免费生态圈", s: "链接建设", d: "允许搜索引擎爬虫追踪并传递 PageRank 权重的默认状态。", p: "真推荐票：“我愿意把我的网站信用分让渡给你”。" },
+    { t: "Nofollow", a: ["Nofollow"], th: 1, c: "Google 免费生态圈", s: "链接建设", d: "指示爬虫不追踪且不传递权重的链接属性。", p: "假推荐票：“我放了你的链接，但我跟不熟，不传信用分”。" },
+    { t: "Broken Link Building", a: ["损坏链接建设"], th: 1, c: "Google 免费生态圈", s: "链接建设", d: "寻找并替换目标网站死链的链接获取策略。", p: "找茬换链法：“你网站那个死链换成我的吧”。" },
+    { t: "Disavow Tool", a: ["拒绝外链工具"], th: 1, c: "Google 免费生态圈", s: "链接建设", d: "GSC 中的高级功能，强制声明不承认特定的劣质入站链接。", p: "向 Google 举报：“这些垃圾站给我发的链接不是我自己刷的，请撇清关系”。" },
+
+    // --- 2. Google 付费生态圈 ---
+    { t: "SEM", a: ["搜索引擎营销"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "包含 SEO 与 PPC，现常被狭义理解为付费搜索广告。", p: "花钱在搜索引擎上买广告位。" },
+    { t: "PPC", a: ["按点击付费"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "数字营销核心计费模式，仅在用户实际点击广告时才产生费用。", p: "曝光不收钱，只要用户手贱点了一下就扣钱。" },
+    { t: "CPC", a: ["每次点击费用"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "广告总消耗除以总点击量。", p: "你买来一个有效访客需要花多少真金白银。" },
+    { t: "CPM", a: ["每千次展示费用"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "广告每展示一千次的固定计费标准。", p: "不管有没有人点，只要展示一千次就要扣的过路费。" },
+    { t: "CTR", a: ["点击率"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "点击量 ÷ 展现量。", p: "100 个人看到了广告，有几个点进来。" },
+    { t: "Quality Score", a: ["质量得分"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "Google 评估关键字、广告文案与着陆页相关性的 1-10 分。", p: "Google 给你的广告打的分，分越高点击费越便宜。" },
+    { t: "Target Audience", a: ["目标受众"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "广告希望触达的用户群体。", p: "你希望把广告精准砸向哪一拨人。" },
+    { t: "Broad Match", a: ["广泛匹配"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "搜索词包含关键词任意顺序或相关变体时触发广告。", p: "跑得最野的匹配，沾边就扣钱。" },
+    { t: "Exact Match", a: ["完全匹配"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "搜索词与关键词意图完全一致时触发广告。", p: "必须一字不差，流量池最小但最精准。" },
+    { t: "Negative Keyword", a: ["否定关键词"], th: 2, c: "Google 付费生态圈", s: "出价与机制", d: "在账户内设置的排除词表，防止广告在无关查询中触发。", p: "把你不想接待的垃圾流量彻底屏蔽掉。" },
+    { t: "Search Campaign", a: ["搜索广告"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "在搜索引擎结果页上投放的文字广告。", p: "最基础的文字广告。" },
+    { t: "Shopping Campaign", a: ["购物广告"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "在 Google 搜索中展示产品图片、价格等信息的广告。", p: "带商品图和价格的橱窗广告，转化极高。" },
+    { t: "Demand Gen", a: ["需求开发"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "用于在 YouTube、Discover 等视觉化界面激发购买欲望的广告。", p: "主动出击去抓那些正在刷手机娱乐的人群。" },
+    { t: "PMax", a: ["效果最大化广告"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "基于目标 ROAS/CPA，全自动跨平台投放的机器学习广告。", p: "只需准备好素材，系统自己全网抓客户的最强黑盒。" },
+    { t: "Asset Group", a: ["素材组"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "PMax 中标题、描述、图片、Logo 和视频的集合包。", p: "喂给 PMax 系统的弹药库。" },
+    { t: "Audience Signal", a: ["受众信号"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "第一方数据或客户名单，用于指导 PMax 的 AI 投放。", p: "给 AI 的线索：“照着这类客户的长相去帮我找人”。" },
+    { t: "Smart Bidding", a: ["智能出价"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "利用机器学习自动设置竞价的策略（如 tCPA, tROAS）。", p: "让 Google AI 评估这个人会不会买，会自动出高价拿下。" },
+    { t: "RSA", a: ["响应式搜索广告"], th: 2, c: "Google 付费生态圈", s: "广告产品矩阵", d: "提供多条标题和描述，由 Google 动态组合出最佳效果。", p: "你写 15 个标题，系统跑 A/B 测试自动组合出最猛的文案。" },
+    { t: "PV", a: ["页面浏览量"], th: 2, c: "Google 付费生态圈", s: "数据追踪与分析", d: "页面被浏览或点击的次数。", p: "你的网页总共被打开了多少次。" },
+    { t: "UV", a: ["独立访客数"], th: 2, c: "Google 付费生态圈", s: "数据追踪与分析", d: "访问网站的独立用户数量。", p: "抛开同一个人刷新，到底有几个真人来了。" },
+    { t: "Session", a: ["会话"], th: 2, c: "Google 付费生态圈", s: "数据追踪与分析", d: "用户在一段时间内与网站的一系列互动。", p: "用户从打开网站到离开的这“完整一轮”操作记录。" },
+    { t: "GA4", a: ["Google Analytics 4"], th: 2, c: "Google 付费生态圈", s: "数据追踪与分析", d: "基于“事件”驱动模型的新一代分析工具。", p: "Google 给网站装的最强“监控摄像头”——看谁来了、点了哪。" },
+    { t: "GTM", a: ["Google Tag Manager"], th: 2, c: "Google 付费生态圈", s: "数据追踪与分析", d: "统一管理所有追踪代码的工具。", p: "追踪代码的“中央控制台”，自己就能挂载埋点。" },
+    { t: "Conversion API", a: ["转化 API"], th: 2, c: "Google 付费生态圈", s: "数据追踪与分析", d: "服务器端数据回传接口，绕过浏览器拦截器。", p: "直接从后台服务器把真实数据强行喂给广告平台，不会被拦截。" },
+    { t: "Attribution", a: ["归因模型"], th: 2, c: "Google 付费生态圈", s: "数据追踪与分析", d: "决定转化功劳分配给哪些渠道的规则。", p: "用户看了 3 个广告才购买，这个订单算谁的功劳？" },
+
+    // --- 3. Amazon 闭环生态圈 ---
+    { t: "ASIN", a: ["亚马逊标准识别码"], th: 3, c: "Amazon 闭环生态圈", s: "平台与运营", d: "平台内部自动生成的 10 位字母数字，标识绝对唯一商品。", p: "亚马逊给商品的全球唯一身份证号。" },
+    { t: "SKU", a: ["库存单位"], th: 3, c: "Amazon 闭环生态圈", s: "平台与运营", d: "库存进出计量的基本颗粒度。", p: "你自己内部管理用的编号，区分颜色尺寸。" },
+    { t: "Buy Box", a: ["黄金购物车"], th: 3, c: "Amazon 闭环生态圈", s: "平台与运营", d: "Listing 页面右侧的高亮转化模块，直接触发加入购物车事件。", p: "因为允许多人跟卖，抢到这个框就等于截获了该页面 80% 以上单量。" },
+    { t: "BSR", a: ["畅销排行榜"], th: 3, c: "Amazon 闭环生态圈", s: "平台与运营", d: "基于商品近期和历史销量在特定细分类目下实时计算的排名。", p: "类目销量排行榜。排在 #1 证明最火，是摸底竞品的核心风向标。" },
+    { t: "A+ Content", a: ["图文版品牌描述"], th: 3, c: "Amazon 闭环生态圈", s: "平台与运营", d: "针对完成品牌备案卖家开放的高级详情页，支持图文布局。", p: "你的精装版商品详情页。" },
+    { t: "FBA", a: ["亚马逊物流"], th: 3, c: "Amazon 闭环生态圈", s: "平台与运营", d: "卖家将货存在官方仓，由官方处理拣货和配送。", p: "货全权交给亚马逊托管，换取流量倾斜和 Prime 标。" },
+    { t: "Vine Voice", a: ["绿标评论"], th: 3, c: "Amazon 闭环生态圈", s: "平台与运营", d: "官方高权重测评计划，邀请信赖买家体验并留评。", p: "官方正规合法的“送测刷好评”通道。" },
+    { t: "GMV", a: ["商品交易总额"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "一定时期内所有已下单商品的总交易金额。", p: "店铺这段时间的纸面“总流水”。" },
+    { t: "AOV", a: ["客单价"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "指定周期内的总销售额除以总订单数。", p: "平均每个下单的客户，一笔订单给你付了多少钱。" },
+    { t: "CVR", a: ["转化率"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "完成目标动作的访客占比。", p: "进你网页的 100 个人里，有几个人最终掏钱了。" },
+    { t: "SP", a: ["商品推广广告"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "亚马逊站内 PPC 广告，将单品推至搜索结果页或竞品 Listing 中。", p: "最基础的坑位战。花钱让产品混在搜索结果第一页。" },
+    { t: "SB", a: ["品牌推广广告"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "以横幅形式展示在搜索结果顶端，展示品牌 Logo 和主力产品。", p: "花钱买下搜索页最顶端最吸睛的“大广告牌”。" },
+    { t: "ACoS", a: ["广告销售成本比"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "总广告支出 ÷ 广告带来的直接销售额。", p: "衡量广告亏不亏的红线。花 10 块广告买到 100 块订单，ACoS 就是 10%。" },
+    { t: "TACoS", a: ["总销售成本比"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "总广告支出 ÷ 包含自然流量在内的店铺总销售额。", p: "看大账。TACoS 下降，说明砸广告拉动了全店自然流出单。" },
+    { t: "Meta-Amazon Integration", a: ["Meta-亚马逊联盟"], th: 3, c: "Amazon 闭环生态圈", s: "广告与算账", d: "允许买家在 Facebook 等应用内免跳转直接唤起 Amazon 结账流程。", p: "站外引流核武器。刷 FB 时看到广告，直接点两下用亚马逊账号一键付钱。" },
+
+    // --- 4. 独立站技术生态圈 ---
+    { t: "Canonical Tag", a: ["规范标签"], th: 4, c: "独立站技术生态圈", s: "技术基础", d: "声明页面的唯一标准版本，以防止带参数的 URL 造成重复内容问题。", p: "告诉 Google“这十几个带乱码参数的网址，请只认这一个主网址算分”。" },
+    { t: "301 Redirect", a: ["301 重定向"], th: 4, c: "独立站技术生态圈", s: "技术基础", d: "永久转移状态码，将大部分排名权重点对点传递至新 URL。", p: "永久搬家了，请把我旧网址积累的信用分全转过去。" },
+    { t: "robots.txt", a: ["爬虫协议"], th: 4, c: "独立站技术生态圈", s: "技术基础", d: "存放在根目录的文本文件，指示爬虫哪些路径可抓取，哪些禁止。", p: "贴在门外的“准入名单”——告诉采集员哪些房间是禁区。" },
+    { t: "XML Sitemap", a: ["站点地图"], th: 4, c: "独立站技术生态圈", s: "技术基础", d: "列出网站所有供爬虫访问的 URL 及更新频率的文件。", p: "主动递给 Google 的“网站全景地图”——我家所有重要页面全在这。" },
+    { t: "DNS", a: ["域名解析系统"], th: 4, c: "独立站技术生态圈", s: "服务器与安全", d: "将字母域名映射为服务器 IP 地址的数据库。", p: "域名是门牌号，DNS 就是查询系统。" },
+    { t: "SSL", a: ["安全证书"], th: 4, c: "独立站技术生态圈", s: "服务器与安全", d: "建立加密链接的安全协议。", p: "给网站装上加密锁（网址开头的 https 小绿锁）。" },
+    { t: "VPS", a: ["虚拟专用服务器"], th: 4, c: "独立站技术生态圈", s: "服务器与安全", d: "将物理服务器分割成具备独立系统、独立资源的隔离环境。", p: "租网络空间里的“独立一居室”，速度快不受烂邻居拖累。" },
+    { t: "CDN", a: ["内容分发网络"], th: 4, c: "独立站技术生态圈", s: "服务器与安全", d: "部署在各地边缘节点的高速缓存服务器，就近传输静态资源。", p: "在全球各地建仓备货，实现全球秒开。" },
+    { t: "Cloudflare", a: ["全球边缘防护"], th: 4, c: "独立站技术生态圈", s: "服务器与安全", d: "接管域名的顶级网络安全及 CDN 提供商，强制防御 DDoS 攻击。", p: "全球网络大管家，提供网站加速和防攻击服务。" },
+    { t: "WordPress", a: ["WP", "开源建站系统"], th: 4, c: "独立站技术生态圈", s: "WP 核心与架构", d: "全球市场份额最大的基于 PHP+MySQL 的开源内容管理系统。", p: "全球最多人用的建站框架，不用写代码也能建站。" },
+    { t: "Theme", a: ["主题"], th: 4, c: "独立站技术生态圈", s: "WP 核心与架构", d: "控制网站全局外观和底层逻辑的代码包。", p: "网站的全局皮肤和大框架。" },
+    { t: "Plugin", a: ["插件"], th: 4, c: "独立站技术生态圈", s: "WP 核心与架构", d: "扩展特定功能的独立程序包。", p: "给网站安装的各种 APP 工具。" },
+    { t: "Slug", a: ["缩略名"], th: 4, c: "独立站技术生态圈", s: "WP 核心与架构", d: "URL 中标识特定页面的最后一段字符。", p: "网址最后面的那段专属英文名。" },
+    { t: "Permalink", a: ["固定链接"], th: 4, c: "独立站技术生态圈", s: "WP 核心与架构", d: "后台统一定义的全局 URL 结构路径。", p: "决定全站网址格式的总规则。" },
+    { t: "Custom Post Type", a: ["自定义文章类型"], th: 4, c: "独立站技术生态圈", s: "WP 核心与架构", d: "在系统基础上利用代码新建的独立数据结构。", p: "单独开发一个“产品库”专属功能版块。" },
+    { t: "Container", a: ["容器"], th: 4, c: "独立站技术生态圈", s: "UI 与排版", d: "基于 Flexbox 的底层布局元素，用于包裹和分配内部模块空间。", p: "用来装东西的“大盒子”，要把图文放在一起得先建个盒子。" },
+    { t: "Row / Column", a: ["行", "列"], th: 4, c: "独立站技术生态圈", s: "UI 与排版", d: "基础容器层级架构中，划定横向主断点与垂直分割的模块。", p: "排版里的楼层，一行就是一层平房，列是平房里的单间。" },
+    { t: "Grid", a: ["网格布局"], th: 4, c: "独立站技术生态圈", s: "UI 与排版", d: "按照严格对齐的行与列分配等宽容器的阵列排版及基本区块。", p: "把产品像九宫格一样排满屏幕。" },
+    { t: "Padding / Margin", a: ["内边距", "外边距"], th: 4, c: "独立站技术生态圈", s: "UI 与排版", d: "控制元素内部空间与外部相邻元素空间的 CSS 参数。", p: "Padding 是盒子内部防磕碰的留白，Margin 是盒子间的物理距离。" },
+    { t: "Mega Menu", a: ["超级菜单"], th: 4, c: "独立站技术生态圈", s: "UI 与排版", d: "高级下拉导航框架，允许采用多列布局嵌入图像、表单等。", p: "鼠标悬停弹出的巨大下拉面板，带精美产品大图。" },
+    { t: "Button / CTA", a: ["按钮", "行动号召"], th: 4, c: "独立站技术生态圈", s: "UI 与排版", d: "触发跳转的交互组件及引导转化的视觉焦点。", p: "写着 Buy Now 的高亮方块，让客户掏钱的关键。" },
+    { t: "Accordion", a: ["折叠手风琴"], th: 4, c: "独立站技术生态圈", s: "UI 与排版", d: "纵向点击展开/收起隐藏文本的交互组件。", p: "做 FAQ 最好用，点一下问题才弹出答案。" },
+
+    // --- 5. AI 大模型生态圈 ---
+    { t: "GEO", a: ["生成式引擎优化"], th: 5, c: "AI 大模型生态圈", s: "AI 优化策略", d: "针对大语言模型的搜索结果进行语料防守与品牌引用优化的策略。", p: "讨好 ChatGPT，让 AI 回答时直接把你作为权威来源引用。" },
+    { t: "AEO", a: ["答案引擎优化"], th: 5, c: "AI 大模型生态圈", s: "AI 优化策略", d: "专注于为语音搜索、聊天机器人提供简明的结构化答案。", p: "不用长篇大论，直接用最干练的话给答案，方便机器人张口念。" },
+    { t: "Entity SEO", a: ["实体 SEO"], th: 5, c: "AI 大模型生态圈", s: "AI 优化策略", d: "要求搜索引擎将品牌识别为一个知识图谱节点，而非简单的字词组合。", p: "让 Google 像人一样去理解你的品牌在行业里的整体地位。" },
+    { t: "RAG", a: ["检索增强生成"], th: 5, c: "AI 大模型生态圈", s: "AI 优化策略", d: "AI 模型在生成回答时，实时连接搜索引擎抓取外部最新资料的技术。", p: "防止 AI 胡说八道，让它回答前先去网上临时查一下资料。" },
+    { t: "AIVO", a: ["AI 可见度"], th: 5, c: "AI 大模型生态圈", s: "AI 优化策略", d: "量化品牌在特定提示词下，于大模型回答中的出现概率的分数。", p: "衡量各大 AI 到底有多大概率会推你的健康分。" },
+    { t: "PSOS", a: ["提示词空间占有率"], th: 5, c: "AI 大模型生态圈", s: "AI 优化策略", d: "评估品牌在 LLM 大模型回答中所占据的内容篇幅与展示顺位。", p: "在 ChatGPT 生成的长回答里，你的品牌名字出现了多少次。" },
+    { t: "AI Overview", a: ["AI 概览"], th: 5, c: "AI 大模型生态圈", s: "AI 优化策略", d: "Google 搜索结果顶部的 AI 生成摘要模块，整合全网信息。", p: "搜完问题，Google 懒得让你翻网页，直接在最上面给你总结好的长答案。" }
+];
+
+// =====================================
+// 初始化渲染 TAB 1 (字典工作台)
+// =====================================
+const mainCategories = [...new Set(db.map(item => item.c))];
+
+const groupedDb = {};
+db.forEach(item => {
+    if (!groupedDb[item.c]) groupedDb[item.c] = {};
+    if (!groupedDb[item.c][item.s]) groupedDb[item.c][item.s] = [];
+    groupedDb[item.c][item.s].push(item);
+});
+
+function initDictionary() {
+    const sidebar = document.getElementById('sidebarMenu');
+    let sidebarHTML = '';
+    mainCategories.forEach((cat, index) => {
+        const themeNum = db.find(d => d.c === cat).th;
+        sidebarHTML += `<div class="menu-item theme-${themeNum} ${index === 0 ? 'active' : ''}" onclick="renderTable('${cat}', this)">${cat}</div>`;
+    });
+    sidebar.innerHTML = sidebarHTML;
+    renderTable(mainCategories[0], sidebar.firstElementChild);
+}
+
+function renderTable(catName, menuElement) {
+    if (menuElement) {
+        document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+        menuElement.classList.add('active');
+    }
+
+    const subCats = groupedDb[catName];
+    const themeNum = Object.values(subCats)[0][0].th; 
+
+    let html = '';
+    for (let subCat in subCats) {
+        html += `
+            <details class="sub-cat-details" open>
+                <summary class="sub-cat-summary" style="color: var(--t${themeNum}-main);">
+                    <span>📌 ${subCat}</span>
+                    <span class="arrow-icon">▼</span>
+                </summary>
+                <table class="dopamine-table">
+                    <thead>
+                        <tr>
+                            <th width="25%">术语 / Term</th>
+                            <th width="37%">📖 专业解释</th>
+                            <th width="38%">💬 大白话</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        subCats[subCat].forEach(item => {
+            html += `
+                <tr class="table-row theme-${item.th}">
+                    <td>
+                        <div class="term-box">
+                            <span class="term-en">${item.t}</span>
+                            <span class="term-cn">（${item.a[0] || '术语'}）</span>
+                        </div>
+                    </td>
+                    <td><div class="bubble">${item.d}</div></td>
+                    <td><div class="bubble bubble-plain">${item.p}</div></td>
+                </tr>
+            `;
+        });
+        
+        html += `</tbody></table></details>`;
+    }
+    document.getElementById('dictContentArea').innerHTML = html;
+}
+
+// =====================================
+// TAB 切换逻辑
+// =====================================
+function switchMainTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.main-tabs button').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+    
+    if (tabId === 'tab-quiz' && !isQuizRendered) {
+        renderQuizNav();
+        renderQuizCards();
+        isQuizRendered = true;
+    }
+}
+
+// =====================================
+// TAB 2: 顶部大类胶囊导航与挖空逻辑
+// =====================================
+let isQuizRendered = false;
+let quizProgress = {};
+let currentQuizCat = mainCategories[0]; // 默认选中第一个大类
+let currentMode = 'plain';
+
+db.forEach((_, idx) => {
+    quizProgress[idx] = { answered: false, correct: false, userInput: '' };
+});
+
+function updateStats() {
+    let answered = 0, correct = 0, wrong = 0;
+    for (let key in quizProgress) {
+        if (quizProgress[key].answered) {
+            answered++;
+            if (quizProgress[key].correct) correct++;
+            else wrong++;
+        }
+    }
+    document.getElementById('answeredCount').textContent = answered;
+    document.getElementById('totalCount').textContent = db.length;
+    document.getElementById('correctCount').textContent = correct;
+    document.getElementById('wrongCount').textContent = wrong;
+}
+
+function setQuizMode(mode, btn) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyQuizMode();
+}
+
+function applyQuizMode() {
+    document.querySelectorAll('.plain-text-hint').forEach(el => el.style.display = (currentMode === 'plain' ? 'inline' : 'none'));
+    document.querySelectorAll('.def-text-quiz').forEach(el => el.style.display = (currentMode === 'def' ? 'block' : 'none'));
+}
+
+function renderQuizNav() {
+    let navHtml = '';
+    mainCategories.forEach((cat, idx) => {
+        navHtml += `<button class="quiz-pill ${idx === 0 ? 'active' : ''}" onclick="switchQuizCat('${cat}', this)">${cat}</button>`;
+    });
+    document.getElementById('quizPillNav').innerHTML = navHtml;
+}
+
+function switchQuizCat(cat, btn) {
+    currentQuizCat = cat;
+    document.querySelectorAll('.quiz-pill').forEach(el => el.classList.remove('active'));
+    btn.classList.add('active');
+    renderQuizCards();
+}
+
+function renderQuizCards() {
+    let html = '';
+    const subCats = groupedDb[currentQuizCat];
+    
+    for (let subCat in subCats) {
+        // 取消了折叠面板，直接以小分类标题分割网格
+        html += `<h3 class="quiz-subcat-title">📂 ${subCat}</h3>`;
+        html += `<div class="cards-container">`;
+        
+        subCats[subCat].forEach(item => {
+            const idx = db.indexOf(item);
+            const prog = quizProgress[idx];
+            const isAns = prog.answered;
+            const isCor = prog.correct;
+            
+            let feedbackHtml = '';
+            if (isAns) {
+                if (isCor) {
+                    feedbackHtml = `<div class="feedback"><span>✅</span> <span class="correct-answer">回答正确</span></div>`;
+                } else {
+                    feedbackHtml = `<div class="feedback"><span>❌</span> <span class="correct-answer">正确答案应包含：<code>${item.t}</code> 或 <code>${item.a.join(' / ')}</code></span></div>`;
+                }
+            }
+
+            html += `
+                <div class="card-item ${isAns ? (isCor ? 'correct' : 'wrong') : ''}" id="quiz-card-${idx}">
+                    <div class="hint">
+                        <strong>💬 大白话：</strong>
+                        <span class="plain-text-hint">${item.p}</span>
+                        <span class="def-text-quiz" style="display:none;">📖 专业解释：${item.d}</span>
+                    </div>
+                    <div class="row">
+                        <input type="text" id="q-input-${idx}" placeholder="输入术语缩写或中文..." value="${prog.userInput}" ${isAns ? 'disabled' : ''} onkeydown="handleEnter(event, ${idx})" />
+                        <div class="btn-group">
+                            ${!isAns ? `<button class="btn-check" onclick="checkQuiz(${idx})">检查答案</button>` : ''}
+                            <button class="btn-show" onclick="toggleAnswer(${idx})">${isAns ? '重新作答' : '显示答案'}</button>
+                        </div>
+                    </div>
+                    ${feedbackHtml}
+                </div>
+            `;
+        });
+        html += `</div>`;
+    }
+    
+    document.getElementById('quizContainer').innerHTML = html;
+    updateStats();
+    applyQuizMode(); // 重新应用当前的读题模式
+}
+
+function handleEnter(e, idx) {
+    if (e.key === 'Enter') checkQuiz(idx);
+}
+
+function checkQuiz(idx) {
+    const inputEl = document.getElementById(`q-input-${idx}`);
+    const userVal = inputEl.value.trim().toLowerCase();
+    if (!userVal) {
+        alert('请先输入答案！');
+        return;
+    }
+    
+    const q = db[idx];
+    const validAnswers = [q.t.toLowerCase(), ...q.a.map(a => a.toLowerCase())];
+    const isMatched = validAnswers.some(ans => userVal.includes(ans) || ans.includes(userVal));
+    
+    quizProgress[idx].answered = true;
+    quizProgress[idx].correct = isMatched;
+    quizProgress[idx].userInput = inputEl.value;
+    
+    renderQuizCards();
+}
+
+function toggleAnswer(idx) {
+    if (quizProgress[idx].answered) {
+        quizProgress[idx].answered = false;
+        quizProgress[idx].correct = false;
+        quizProgress[idx].userInput = '';
+        renderQuizCards();
+    } else {
+        const q = db[idx];
+        document.getElementById(`q-input-${idx}`).value = q.t;
+        checkQuiz(idx);
+    }
+}
+
+document.getElementById('resetBtn').addEventListener('click', function() {
+    if (confirm('确定要重置所有进度吗？')) {
+        Object.keys(quizProgress).forEach(key => {
+            quizProgress[key] = { answered: false, correct: false, userInput: '' };
+        });
+        renderQuizCards();
+    }
+});
+
+// =====================================
+// 背景色切换逻辑
+// =====================================
+// 默认给 body 加上原生的纯白背景
+document.body.classList.add('bg-white');
+
+function toggleThemeMenu() {
+    const menu = document.getElementById('themeMenu');
+    menu.classList.toggle('show');
+}
+
+function changeBg(bgClass, element) {
+    // 1. 移除 body 上的所有旧背景类
+    document.body.classList.remove('bg-white', 'bg-green', 'bg-yellow', 'bg-purple', 'bg-dark');
+    // 2. 添加用户点击的新背景类
+    document.body.classList.add(bgClass);
+    
+    // 3. 更新菜单按钮的高亮状态
+    document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+    
+    // 4. 收起菜单
+    document.getElementById('themeMenu').classList.remove('show');
+}
+
+// 启动程序
+initDictionary();
+
+</script>
+</body>
+</html>
