@@ -2,44 +2,39 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>全域流量与电商运营词典</title>
     
     <style>
         /* =========================================
-           全局变量：多巴胺色系与系统级抗疲劳字体
+           全局重置与变量
            ========================================= */
+        * { box-sizing: border-box; }
+        
         :root {
-            /* 回归常规专业系统字体，干净清爽 */
             --font-main: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Microsoft YaHei', sans-serif;
-            
             --text-main: #334155; 
             --text-sub: #64748B;
             --border-color: #E2E8F0;
             --container-width: 1280px;
             
-            /* 主题1：薄荷海盐绿 (SEO) */
             --t1-main: #059669; --t1-border: #A7F3D0; --t1-bg-light: #ECFDF5;
-            /* 主题2：蜜桃元气橙 (Ads) */
             --t2-main: #EA580C; --t2-border: #FDBA74; --t2-bg-light: #FFF7ED;
-            /* 主题3：梦幻香芋紫 (Amazon) */
             --t3-main: #7C3AED; --t3-border: #DDD6FE; --t3-bg-light: #FAF5FF;
-            /* 主题4：晴空宝宝蓝 (WP) */
             --t4-main: #2563EB; --t4-border: #BFDBFE; --t4-bg-light: #EFF6FF;
-            /* 主题5：甜心樱花粉 (AI) */
             --t5-main: #E11D48; --t5-border: #FECDD3; --t5-bg-light: #FFF1F2;
             
             --quiz-blue: #0AA5F2;
         }
 
-        body { font-family: var(--font-main); color: var(--text-main); margin: 0; padding: 20px; line-height: 1.6; transition: background 0.4s ease, color 0.4s ease; }
+        body { font-family: var(--font-main); color: var(--text-main); margin: 0; padding: 20px; padding-bottom: env(safe-area-inset-bottom, 20px); line-height: 1.6; transition: background 0.4s ease, color 0.4s ease; overflow-x: hidden; }
         .container { max-width: var(--container-width); margin: 0 auto; }
         
         /* =========================================
            五色背景切换器
            ========================================= */
         .theme-switcher-btn {
-            position: fixed; bottom: 30px; right: 30px; z-index: 999;
+            position: fixed; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); right: 30px; z-index: 999;
             background: white; border: 1px solid var(--border-color); border-radius: 50px;
             padding: 10px 20px; font-size: 0.95rem; font-weight: 600; color: var(--text-main);
             cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
@@ -47,7 +42,7 @@
         .theme-switcher-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: var(--quiz-blue); color: var(--quiz-blue); }
         
         .theme-menu {
-            position: fixed; bottom: 80px; right: 30px; z-index: 998;
+            position: fixed; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); right: 30px; z-index: 998;
             background: white; padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 8px;
             opacity: 0; pointer-events: none; transform: translateY(10px); transition: 0.3s;
@@ -60,30 +55,24 @@
         .theme-option:hover { background: #F1F5F9; }
         .theme-option.active { border-color: var(--quiz-blue); background: #F0F8FF; color: var(--quiz-blue); }
 
-        /* --- 5 款背景风格 --- */
-        body.bg-white  { background: #FFFFFF; } /* 1. 原生纯白 */
-        body.bg-green  { background: #E8F5E9; } /* 2. 初芽薄荷绿 */
-        body.bg-yellow { background: #FFFBE6; } /* 3. 晨光奶酪黄 */
-        body.bg-purple { background: #F3E8FF; } /* 4. 心动紫罗兰 */
-        
-        /* 5. 极夜深邃黑 (赛博模式特化) */
+        body.bg-white  { background: #FFFFFF; } 
+        body.bg-green  { background: #E8F5E9; } 
+        body.bg-yellow { background: #FFFBE6; } 
+        body.bg-purple { background: #F3E8FF; } 
         body.bg-dark { background: #0A0F1D; color: #F8FAFC; }
         body.bg-dark .header-section h1 { color: #F8FAFC; }
-        body.bg-dark .sidebar, body.bg-dark .sub-cat-details, body.bg-dark .card-item { background: #1E293B; border-color: #334155; }
+        body.bg-dark .sidebar, body.bg-dark .sub-cat-details, body.bg-dark .card-item, body.bg-dark .exam-card { background: #1E293B; border-color: #334155; }
         body.bg-dark .sub-cat-summary, body.bg-dark .dopamine-table th { background: #0A0F1D; color: #CBD5E1; border-color: #334155; }
         body.bg-dark .menu-item { color: #CBD5E1; }
         body.bg-dark .menu-item:hover:not(.active) { background: #0A0F1D; }
         body.bg-dark .table-row td { border-bottom-color: #334155; }
-        body.bg-dark .term-cn, body.bg-dark .def-text, body.bg-dark .plain-text, body.bg-dark .card-item .hint { color: #E2E8F0; }
-        body.bg-dark .mode-btn, body.bg-dark .reset-btn, body.bg-dark .card-item .btn-show { background: #1E293B; color: #E2E8F0; border-color: #334155; }
-        body.bg-dark .mode-btn:hover, body.bg-dark .reset-btn:hover, body.bg-dark .card-item .btn-show:hover { background: #0A0F1D; }
-        body.bg-dark .card-item input { background: #0A0F1D; color: #F8FAFC; border-color: #334155; }
-        body.bg-dark .quiz-subcat-title { color: #F8FAFC; }
+        body.bg-dark .term-cn, body.bg-dark .def-text, body.bg-dark .plain-text, body.bg-dark .card-item .hint, body.bg-dark .exam-card .hint { color: #E2E8F0; }
+        body.bg-dark .mode-btn, body.bg-dark .reset-btn, body.bg-dark .card-item .btn-show, body.bg-dark .btn-exam-nav { background: #1E293B; color: #E2E8F0; border-color: #334155; }
+        body.bg-dark .card-item input, body.bg-dark .exam-card input { background: #0A0F1D; color: #F8FAFC; border-color: #334155; }
         body.bg-dark .quiz-pill { background: #1E293B; border-color: #334155; color: #CBD5E1; }
         body.bg-dark .quiz-pill:hover { background: #0A0F1D; }
         body.bg-dark .quiz-pill.active { background: var(--quiz-blue); color: white; border-color: var(--quiz-blue); }
 
-        /* 气泡在暗黑模式下的赛博霓虹描边 */
         body.bg-dark .theme-1 .bubble { background: #1E293B; border-color: var(--t1-main); color: #F8FAFC; }
         body.bg-dark .theme-2 .bubble { background: #1E293B; border-color: var(--t2-main); color: #F8FAFC; }
         body.bg-dark .theme-3 .bubble { background: #1E293B; border-color: var(--t3-main); color: #F8FAFC; }
@@ -107,7 +96,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ====================================
-           TAB 1：分屏工作台 (侧栏 + 气泡折叠表格)
+           TAB 1：分屏工作台
            ==================================== */
         .split-layout { display: flex; gap: 20px; align-items: flex-start; }
         
@@ -121,7 +110,7 @@
         .menu-item.active.theme-4 { background: var(--t4-bg-light); color: var(--t4-main); border-color: var(--t4-border); }
         .menu-item.active.theme-5 { background: var(--t5-bg-light); color: var(--t5-main); border-color: var(--t5-border); }
         
-        .content-area { flex: 1; }
+        .content-area { flex: 1; width: 100%; min-width: 0; } 
         .sub-cat-details { background: white; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.03); overflow: hidden; transition: 0.4s ease; }
         .sub-cat-summary { padding: 16px 24px; font-weight: 700; font-size: 1.1rem; cursor: pointer; background: #F8FAFC; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; list-style: none; user-select: none; transition: 0.4s ease; }
         .sub-cat-summary::-webkit-details-marker { display: none; }
@@ -129,29 +118,28 @@
         .arrow-icon { font-size: 0.9rem; color: #94A3B8; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .sub-cat-details[open] .arrow-icon { transform: rotate(180deg); color: inherit; }
 
-        /* 表格与气泡区块隔离设计 */
-        .dopamine-table { width: 100%; border-collapse: collapse; }
+        .dopamine-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         .dopamine-table th { text-align: left; padding: 16px 24px; color: var(--text-sub); font-weight: 600; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); background: transparent; transition: 0.4s ease; }
-        .table-row td { padding: 20px 24px; vertical-align: top; border-bottom: 1px solid var(--border-color); }
+        .table-row td { padding: 20px 24px; vertical-align: top; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
         .table-row:last-child td { border-bottom: none; }
 
         .term-box { display: inline-block; padding: 10px 15px; border-radius: 10px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; margin-left: -15px; }
-        .term-en { font-size: 1.05rem; font-weight: 700; display: block; margin-bottom: 4px; }
+        .term-en { font-size: 1.05rem; font-weight: 700; display: block; margin-bottom: 4px; overflow-wrap: break-word; word-break: break-word; } 
         .term-cn { font-size: 0.85rem; color: var(--text-sub); }
 
         .bubble { padding: 16px; border-radius: 12px; font-size: 0.95rem; line-height: 1.7; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; border: 1px solid transparent; }
         .bubble-plain { border-left-width: 4px; border-left-style: solid; font-weight: 500; }
 
-        /* 👑 核心交互重构：行级联动悬浮 (整行Hover时，内部模块同步悬浮且不变色) */
-        .table-row:hover .term-box, .table-row:hover .bubble { 
-            transform: translateY(-4px); 
-            box-shadow: 0 6px 16px rgba(0,0,0,0.06); 
-        }
-        body.bg-dark .table-row:hover .term-box, body.bg-dark .table-row:hover .bubble { 
-            box-shadow: 0 6px 20px rgba(255,255,255,0.05); 
+        @media (hover: hover) {
+            .table-row:hover .term-box, .table-row:hover .bubble { 
+                transform: translateY(-4px); 
+                box-shadow: 0 6px 16px rgba(0,0,0,0.06); 
+            }
+            body.bg-dark .table-row:hover .term-box, body.bg-dark .table-row:hover .bubble { 
+                box-shadow: 0 6px 20px rgba(255,255,255,0.05); 
+            }
         }
 
-        /* 主题气泡注入 */
         .theme-1 .term-en { color: var(--t1-main); } .theme-1 .bubble { background: var(--t1-bg-light); color: #1E293B; } .theme-1 .bubble-plain { border-left-color: var(--t1-main); }
         .theme-2 .term-en { color: var(--t2-main); } .theme-2 .bubble { background: var(--t2-bg-light); color: #1E293B; } .theme-2 .bubble-plain { border-left-color: var(--t2-main); }
         .theme-3 .term-en { color: var(--t3-main); } .theme-3 .bubble { background: var(--t3-bg-light); color: #1E293B; } .theme-3 .bubble-plain { border-left-color: var(--t3-main); }
@@ -159,7 +147,7 @@
         .theme-5 .term-en { color: var(--t5-main); } .theme-5 .bubble { background: var(--t5-bg-light); color: #1E293B; } .theme-5 .bubble-plain { border-left-color: var(--t5-main); }
 
         /* ====================================
-           TAB 2：挖空练习 (顶部大类胶囊导航 + 3端响应式网格)
+           TAB 2：挖空练习 (胶囊重构版)
            ==================================== */
         .quiz-header-bar { background: var(--quiz-blue); color: white; padding: 20px 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(10,165,242,0.2); margin-bottom: 20px; }
         .quiz-header-bar h2 { margin: 0 0 10px 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
@@ -167,49 +155,65 @@
         .header-stats span { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-weight: 600; }
         
         .mode-switch { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .mode-btn { background: white; border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; color: var(--text-main); font-size: 0.9rem; transition: 0.3s ease; }
-        .mode-btn.active { background: var(--quiz-blue); border-color: var(--quiz-blue); color: white; }
+        .mode-btn { background: white; border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 30px; font-weight: 600; cursor: pointer; color: var(--text-main); font-size: 1rem; transition: 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .mode-btn:hover { border-color: var(--quiz-blue); }
+        .mode-btn.active { background: var(--quiz-blue); border-color: var(--quiz-blue); color: white; box-shadow: 0 4px 12px rgba(10,165,242,0.25); }
 
-        /* 👑 顶部胶囊导航栏 */
         .quiz-pill-nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px; }
         .quiz-pill { padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; background: white; border: 1px solid var(--border-color); color: var(--text-sub); transition: 0.3s; font-size: 0.95rem; font-family: var(--font-main); }
         .quiz-pill:hover { background: #F1F5F9; }
-        .quiz-pill.active { background: var(--quiz-blue); color: white; border-color: var(--quiz-blue); box-shadow: 0 4px 10px rgba(10,165,242,0.2); }
+        .quiz-pill.active { background: #10B981; color: white; border-color: #10B981; box-shadow: 0 4px 10px rgba(16,185,129,0.2); }
 
-        .quiz-subcat-title { font-size: 1.1rem; color: var(--text-main); margin: 20px 0 10px; font-weight: 600; padding-left: 10px; border-left: 4px solid var(--quiz-blue); transition: color 0.4s ease; }
+        .quiz-subcat-title { font-size: 1.1rem; color: var(--text-main); margin: 20px 0 10px; font-weight: 600; padding-left: 10px; border-left: 4px solid var(--quiz-blue); }
         
-        /* PC 端：双列网格布局 */
         .cards-container { padding: 10px 0 25px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 
-        .card-item { background: #F8FAFC; border-radius: 8px; padding: 20px; border-left: 5px solid #B8D4E8; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); transition: 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-item { background: #F8FAFC; border-radius: 12px; padding: 24px; border-left: 6px solid #B8D4E8; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); transition: 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; }
         .card-item.correct { border-left-color: #10B981; background: #ECFDF5; }
         .card-item.wrong { border-left-color: #EF4444; background: #FEF2F2; }
-        .card-item .hint { font-size: 0.95rem; color: #334155; margin-bottom: 15px; line-height: 1.6; transition: 0.4s ease; }
-        .card-item .hint strong { color: var(--quiz-blue); font-weight: 600; }
-        .card-item .hint .def-text-quiz { color: #64748B; font-size: 0.85rem; display: block; margin-top: 8px; border-top: 1px dashed #CBD5E1; padding-top: 8px; }
         
-        .card-item .row { display: flex; align-items: center; gap: 12px; margin-top: auto; }
-        .card-item input { flex: 1; padding: 10px 14px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.95rem; outline: none; transition: 0.2s; background: white; font-family: var(--font-main); }
-        .card-item input:focus { border-color: var(--quiz-blue); }
+        .card-item .hint { font-size: 0.95rem; color: #334155; margin-bottom: 20px; line-height: 1.6; }
+        .card-item .hint strong { color: var(--text-main); font-weight: 700; }
+        .card-item .hint .def-text-quiz { color: #475569; font-size: 0.9rem; margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.03); border-radius: 8px; border-left: 3px solid var(--quiz-blue); }
+        .card-item .hint .def-text-quiz b { color: var(--quiz-blue); }
+
+        .card-item .row { display: flex; align-items: center; gap: 12px; margin-top: auto; flex-wrap: wrap; }
+        .card-item input { flex: 1; min-width: 150px; padding: 12px 16px; border: 2px solid #CBD5E1; border-radius: 8px; font-size: 1rem; outline: none; transition: 0.2s; background: white; font-family: var(--font-main); font-weight: 600; }
+        .card-item input:focus { border-color: var(--quiz-blue); box-shadow: 0 0 0 3px rgba(10,165,242,0.1); }
         .card-item .btn-group { display: flex; gap: 8px; }
-        .card-item .btn-check { background: var(--quiz-blue); border: none; color: white; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; font-family: var(--font-main); }
-        .card-item .btn-show { background: #E2E8F0; border: none; color: var(--text-main); padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: 0.3s ease; font-family: var(--font-main); }
+        .card-item .btn-check { background: var(--quiz-blue); border: none; color: white; padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; font-family: var(--font-main); transition: 0.2s; }
+        .card-item .btn-check:hover { background: #0284C7; }
+        .card-item .btn-show { background: #E2E8F0; border: none; color: var(--text-main); padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: 0.3s ease; font-family: var(--font-main); }
         
-        .card-item .feedback { margin-top: 15px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
-        .card-item .feedback .correct-answer { font-weight: 400; color: #475569; }
-        .card-item .feedback code { background: #E2E8F0; padding: 2px 6px; border-radius: 4px; color: #EF4444; font-family: monospace; }
+        .card-item .feedback { margin-top: 15px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; padding: 10px; border-radius: 8px; }
+        .card-item.correct .feedback { background: #D1FAE5; color: #065F46; }
+        .card-item.wrong .feedback { background: #FEE2E2; color: #991B1B; }
+        .card-item .feedback code { background: rgba(255,255,255,0.7); padding: 3px 8px; border-radius: 6px; font-family: monospace; font-weight: 700; }
         
-        .reset-btn { background: white; border: 1px solid var(--border-color); padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; color: var(--text-main); transition: 0.3s ease; }
-        .reset-btn:hover { background: #F1F5F9; }
+        .reset-btn { background: white; border: 1px solid #EF4444; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; color: #EF4444; transition: 0.3s ease; }
+        .reset-btn:hover { background: #FEF2F2; }
 
         /* ====================================
-           响应式：iPad 10 (1024px) & iPhone 14 Pro Max (430px)
+           刷题模式专属 UI (金考典App风格)
+           ==================================== */
+        .exam-controls { display: flex; gap: 12px; margin-bottom: 25px; background: #F8FAFC; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .exam-controls button { flex: 1; padding: 12px; border-radius: 8px; font-weight: 600; border: none; cursor: pointer; color: white; font-size: 1rem; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .btn-exam-seq { background: #10B981; } .btn-exam-seq:hover { background: #059669; }
+        .btn-exam-rand { background: #8B5CF6; } .btn-exam-rand:hover { background: #7C3AED; }
+
+        .exam-board { background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color); padding: 30px; margin-bottom: 20px; }
+        .exam-progress { display: flex; justify-content: space-between; color: var(--text-sub); font-weight: 600; margin-bottom: 20px; font-size: 0.95rem; padding-bottom: 15px; border-bottom: 2px dashed var(--border-color); }
+        .exam-nav { display: flex; justify-content: space-between; margin-top: 25px; gap: 15px; }
+        .btn-exam-nav { padding: 12px 25px; border-radius: 30px; font-weight: 600; background: #F1F5F9; border: 1px solid #CBD5E1; cursor: pointer; color: var(--text-main); font-size: 1rem; transition: 0.2s; }
+        .btn-exam-nav:hover:not(:disabled) { background: #E2E8F0; }
+        .btn-exam-nav:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* ====================================
+           响应式：iPad 10 (1024px)
            ==================================== */
         @media (max-width: 1024px) {
-            /* iPad 10：单栏居中，高留白 */
             .cards-container { display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.01); border-radius: 12px; padding: 20px; }
             .card-item { width: 100%; max-width: 700px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-            /* 平板端侧边栏转横向 */
             .split-layout { flex-direction: column; }
             .sidebar { width: 100%; flex-direction: row; flex-wrap: nowrap; overflow-x: auto; position: static; padding: 10px; -webkit-overflow-scrolling: touch; }
             .menu-item { flex: 0 0 auto; white-space: nowrap; padding: 10px 15px; }
@@ -217,37 +221,51 @@
             .quiz-pill { flex: 0 0 auto; white-space: nowrap; }
         }
 
+        /* ====================================
+           响应式：iPhone 14 Pro Max 深度优化 (430px)
+           ==================================== */
         @media (max-width: 430px) {
-            body { padding: 10px; }
+            body { padding: 12px; padding-bottom: env(safe-area-inset-bottom, 20px); }
             .header-section h1 { font-size: 1.4rem; }
             .main-tabs { flex-direction: column; }
             
-            /* Tab 1 手机端排版 */
+            /* Tab 1 手机端排版重构：消除视觉疲劳，增强边界感 */
             .dopamine-table thead { display: none; }
             .dopamine-table, .dopamine-table tbody, .table-row, .table-row td { display: block; width: 100%; }
-            .table-row { border: 1px solid var(--border-color); margin-bottom: 15px; border-radius: 12px; }
-            .table-row td { padding: 12px 15px; border: none !important; }
-            .table-row td:first-child { border-bottom: 1px dashed var(--border-color) !important; border-radius: 12px 12px 0 0; }
-            .table-row:hover .term-box, .table-row:hover .bubble { transform: none; box-shadow: none; } /* 手机端关闭上浮特效 */
-            .term-box { margin-left: 0; padding: 5px 0; }
+            .table-row { 
+                border: 2px solid #94A3B8;
+                box-shadow: 0 4px 0 #94A3B8;
+                margin-bottom: 25px; 
+                border-radius: 14px; 
+                background: #ffffff;
+                overflow: hidden;
+            }
+            body.bg-dark .table-row { border-color: #475569; box-shadow: 0 4px 0 #475569; }
             
-            /* Tab 2 练习卡片解体：全垂直堆叠 */
+            .table-row td { padding: 16px; border: none !important; }
+            .table-row td:first-child { background: #F8FAFC; border-bottom: 2px dashed #CBD5E1 !important; }
+            body.bg-dark .table-row td:first-child { background: #0F172A; border-bottom-color: #334155 !important; }
+            
+            .term-box { margin-left: 0; padding: 0; }
+            .bubble { padding: 0; border: none; margin-bottom: 10px; }
+            .bubble-plain { padding-top: 10px; border-top: 1px dashed var(--border-color); border-left: none; }
+            
+            /* Tab 2 手机端控件重排 */
+            .mode-switch { flex-direction: column; }
             .cards-container { padding: 10px 0; }
-            .card-item { max-width: 100%; padding: 15px; }
-            .card-item .row { flex-direction: column; align-items: stretch; }
-            .card-item input { width: 100%; box-sizing: border-box; text-align: center; padding: 12px; }
+            .card-item { max-width: 100%; padding: 16px; border-width: 2px; }
+            .card-item .row { flex-direction: column; align-items: stretch; gap: 12px; }
+            .card-item input { width: 100%; text-align: center; font-size: 1.1rem; }
             .card-item .btn-group { display: flex; width: 100%; }
-            .card-item .btn-group button { flex: 1; padding: 12px; }
+            .card-item .btn-group button { flex: 1; padding: 14px; }
             
-            /* 浮动菜单微调 */
-            .theme-switcher-btn { bottom: 20px; right: 20px; font-size: 0.85rem; padding: 8px 15px; }
-            .theme-menu { bottom: 65px; right: 20px; }
+            .exam-board { padding: 20px 15px; }
+            .exam-controls { flex-direction: column; }
         }
     </style>
 </head>
 <body class="bg-white">
 
-    <!-- 🎨 悬浮的背景切换器面板 -->
     <div class="theme-menu" id="themeMenu">
         <div class="theme-option active" onclick="changeBg('bg-white', this)">⚪ 原生纯白</div>
         <div class="theme-option" onclick="changeBg('bg-green', this)">🌱 初芽薄荷绿</div>
@@ -264,7 +282,7 @@
             <h1>🌐 全域流量与电商运营词典</h1>
             <div class="main-tabs">
                 <button class="active" onclick="switchMainTab('tab-dict', this)">📖 词典工作台</button>
-                <button onclick="switchMainTab('tab-quiz', this)">🧠 挖空记忆练习</button>
+                <button onclick="switchMainTab('tab-quiz', this)">🧠 记忆练习中心</button>
             </div>
         </div>
 
@@ -279,25 +297,51 @@
         <!-- ================= TAB 2: 挖空练习 ================= -->
         <div id="tab-quiz" class="tab-content">
             <div class="quiz-header-bar">
-                <h2>📖 名词解释 · 挖空记忆</h2>
+                <h2>📊 学习数据看板</h2>
                 <div class="header-stats">
-                    <span>📊 已答 <span id="answeredCount">0</span> / <span id="totalCount">0</span></span>
-                    <span>✅ 正确 <span id="correctCount">0</span></span>
-                    <span>❌ 错误 <span id="wrongCount">0</span></span>
+                    <span>📚 总词条 <span id="totalCount">0</span></span>
+                    <span>✅ 掌握 <span id="correctCount">0</span></span>
+                    <span>❌ 待加强 <span id="wrongCount">0</span></span>
+                    <span>🎯 正确率 <span id="accuracyRate">0%</span></span>
                 </div>
             </div>
 
             <div class="mode-switch">
-                <button class="mode-btn active" onclick="setQuizMode('plain', this)">💬 看大白话 → 填术语</button>
-                <button class="mode-btn" onclick="setQuizMode('def', this)">📘 看专业解释 → 填术语</button>
+                <button class="mode-btn active" onclick="setMainMode('learn', this)">
+                    💊 胶囊 1：看释义填术语 (学习模式)
+                </button>
+                <button class="mode-btn" onclick="setMainMode('exam', this)">
+                    💊 胶囊 2：金考典刷题模式 (测验模式)
+                </button>
             </div>
 
-            <!-- 👑 顶部大类胶囊导航 -->
-            <div class="quiz-pill-nav" id="quizPillNav"></div>
+            <div id="learnModeUI">
+                <div class="quiz-pill-nav" id="quizPillNav"></div>
+                <div id="quizContainer"></div>
+                <button class="reset-btn" id="resetBtn">🔄 清除所有学习记录</button>
+            </div>
 
-            <div id="quizContainer"></div>
-            
-            <button class="reset-btn" id="resetBtn">🔄 重置所有进度</button>
+            <div id="examModeUI" style="display: none;">
+                <div class="exam-controls">
+                    <button class="btn-exam-seq" onclick="startExam('seq')">▶️ 有序刷题 (按分类顺序)</button>
+                    <button class="btn-exam-rand" onclick="startExam('rand')">🔀 无序刷题 (打乱全部词库)</button>
+                </div>
+                
+                <div class="exam-board" id="examBoard" style="display: none;">
+                    <div class="exam-progress">
+                        <span id="examTitle">有序刷题中...</span>
+                        <span>进度: <span id="examCurrent">1</span> / <span id="examTotal">100</span></span>
+                    </div>
+                    
+                    <div id="examCardContainer"></div>
+                    
+                    <div class="exam-nav">
+                        <button class="btn-exam-nav" id="btnExamPrev" onclick="navigateExam(-1)">← 上一题</button>
+                        <button class="btn-exam-nav" id="btnExamNext" onclick="navigateExam(1)">下一题 →</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -434,10 +478,9 @@ const db = [
 ];
 
 // =====================================
-// 初始化渲染 TAB 1 (字典工作台)
+// 初始化与状态管理
 // =====================================
 const mainCategories = [...new Set(db.map(item => item.c))];
-
 const groupedDb = {};
 db.forEach(item => {
     if (!groupedDb[item.c]) groupedDb[item.c] = {};
@@ -445,6 +488,38 @@ db.forEach(item => {
     groupedDb[item.c][item.s].push(item);
 });
 
+let quizProgress = JSON.parse(localStorage.getItem('myVocabProgress')) || {};
+if (Object.keys(quizProgress).length !== db.length) {
+    db.forEach((_, idx) => {
+        if (!quizProgress[idx]) quizProgress[idx] = { answered: false, correct: false, userInput: '' };
+    });
+}
+
+function saveProgress() {
+    localStorage.setItem('myVocabProgress', JSON.stringify(quizProgress));
+    updateStats();
+}
+
+function updateStats() {
+    let answered = 0, correct = 0, wrong = 0;
+    for (let key in quizProgress) {
+        if (quizProgress[key].answered) {
+            answered++;
+            if (quizProgress[key].correct) correct++;
+            else wrong++;
+        }
+    }
+    document.getElementById('totalCount').textContent = db.length;
+    document.getElementById('correctCount').textContent = correct;
+    document.getElementById('wrongCount').textContent = wrong;
+    
+    let rate = answered === 0 ? 0 : Math.round((correct / answered) * 100);
+    document.getElementById('accuracyRate').textContent = rate + '%';
+}
+
+// =====================================
+// TAB 1：字典工作台渲染 (修改为默认只展开首个分类)
+// =====================================
 function initDictionary() {
     const sidebar = document.getElementById('sidebarMenu');
     let sidebarHTML = '';
@@ -466,9 +541,13 @@ function renderTable(catName, menuElement) {
     const themeNum = Object.values(subCats)[0][0].th; 
 
     let html = '';
+    let catIndex = 0; 
+    
     for (let subCat in subCats) {
+        const isOpen = catIndex === 0 ? 'open' : ''; 
+        
         html += `
-            <details class="sub-cat-details" open>
+            <details class="sub-cat-details" ${isOpen}>
                 <summary class="sub-cat-summary" style="color: var(--t${themeNum}-main);">
                     <span>📌 ${subCat}</span>
                     <span class="arrow-icon">▼</span>
@@ -498,8 +577,8 @@ function renderTable(catName, menuElement) {
                 </tr>
             `;
         });
-        
         html += `</tbody></table></details>`;
+        catIndex++;
     }
     document.getElementById('dictContentArea').innerHTML = html;
 }
@@ -507,6 +586,7 @@ function renderTable(catName, menuElement) {
 // =====================================
 // TAB 切换逻辑
 // =====================================
+let isQuizRendered = false;
 function switchMainTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.main-tabs button').forEach(el => el.classList.remove('active'));
@@ -516,47 +596,28 @@ function switchMainTab(tabId, btn) {
     if (tabId === 'tab-quiz' && !isQuizRendered) {
         renderQuizNav();
         renderQuizCards();
+        updateStats();
         isQuizRendered = true;
     }
 }
 
 // =====================================
-// TAB 2: 顶部大类胶囊导航与挖空逻辑
+// TAB 2：学习模式 (胶囊 1) 逻辑
 // =====================================
-let isQuizRendered = false;
-let quizProgress = {};
-let currentQuizCat = mainCategories[0]; // 默认选中第一个大类
-let currentMode = 'plain';
+let currentQuizCat = mainCategories[0];
 
-db.forEach((_, idx) => {
-    quizProgress[idx] = { answered: false, correct: false, userInput: '' };
-});
-
-function updateStats() {
-    let answered = 0, correct = 0, wrong = 0;
-    for (let key in quizProgress) {
-        if (quizProgress[key].answered) {
-            answered++;
-            if (quizProgress[key].correct) correct++;
-            else wrong++;
-        }
-    }
-    document.getElementById('answeredCount').textContent = answered;
-    document.getElementById('totalCount').textContent = db.length;
-    document.getElementById('correctCount').textContent = correct;
-    document.getElementById('wrongCount').textContent = wrong;
-}
-
-function setQuizMode(mode, btn) {
-    currentMode = mode;
+function setMainMode(mode, btn) {
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    applyQuizMode();
-}
-
-function applyQuizMode() {
-    document.querySelectorAll('.plain-text-hint').forEach(el => el.style.display = (currentMode === 'plain' ? 'inline' : 'none'));
-    document.querySelectorAll('.def-text-quiz').forEach(el => el.style.display = (currentMode === 'def' ? 'block' : 'none'));
+    
+    if (mode === 'learn') {
+        document.getElementById('learnModeUI').style.display = 'block';
+        document.getElementById('examModeUI').style.display = 'none';
+        renderQuizCards(); 
+    } else {
+        document.getElementById('learnModeUI').style.display = 'none';
+        document.getElementById('examModeUI').style.display = 'block';
+    }
 }
 
 function renderQuizNav() {
@@ -579,122 +640,176 @@ function renderQuizCards() {
     const subCats = groupedDb[currentQuizCat];
     
     for (let subCat in subCats) {
-        // 取消了折叠面板，直接以小分类标题分割网格
         html += `<h3 class="quiz-subcat-title">📂 ${subCat}</h3>`;
         html += `<div class="cards-container">`;
         
         subCats[subCat].forEach(item => {
             const idx = db.indexOf(item);
-            const prog = quizProgress[idx];
-            const isAns = prog.answered;
-            const isCor = prog.correct;
-            
-            let feedbackHtml = '';
-            if (isAns) {
-                if (isCor) {
-                    feedbackHtml = `<div class="feedback"><span>✅</span> <span class="correct-answer">回答正确</span></div>`;
-                } else {
-                    feedbackHtml = `<div class="feedback"><span>❌</span> <span class="correct-answer">正确答案应包含：<code>${item.t}</code> 或 <code>${item.a.join(' / ')}</code></span></div>`;
-                }
-            }
-
-            html += `
-                <div class="card-item ${isAns ? (isCor ? 'correct' : 'wrong') : ''}" id="quiz-card-${idx}">
-                    <div class="hint">
-                        <strong>💬 大白话：</strong>
-                        <span class="plain-text-hint">${item.p}</span>
-                        <span class="def-text-quiz" style="display:none;">📖 专业解释：${item.d}</span>
-                    </div>
-                    <div class="row">
-                        <input type="text" id="q-input-${idx}" placeholder="输入术语缩写或中文..." value="${prog.userInput}" ${isAns ? 'disabled' : ''} onkeydown="handleEnter(event, ${idx})" />
-                        <div class="btn-group">
-                            ${!isAns ? `<button class="btn-check" onclick="checkQuiz(${idx})">检查答案</button>` : ''}
-                            <button class="btn-show" onclick="toggleAnswer(${idx})">${isAns ? '重新作答' : '显示答案'}</button>
-                        </div>
-                    </div>
-                    ${feedbackHtml}
-                </div>
-            `;
+            html += generateCardHTML(idx, 'learn');
         });
         html += `</div>`;
     }
-    
     document.getElementById('quizContainer').innerHTML = html;
-    updateStats();
-    applyQuizMode(); // 重新应用当前的读题模式
 }
 
-function handleEnter(e, idx) {
-    if (e.key === 'Enter') checkQuiz(idx);
+// 通用卡片生成器：主次反转逻辑核心位置
+function generateCardHTML(idx, viewMode) {
+    const item = db[idx];
+    const prog = quizProgress[idx];
+    const isAns = prog.answered;
+    const isCor = prog.correct;
+    
+    let feedbackHtml = '';
+    if (isAns) {
+        if (isCor) {
+            feedbackHtml = `<div class="feedback"><span>✅</span> <span>回答正确！</span></div>`;
+        } else {
+            feedbackHtml = `<div class="feedback"><span>❌</span> <span>正解应包含：<code>${item.t}</code> 或 <code>${item.a.join('/')}</code></span></div>`;
+        }
+    }
+
+    const inputId = viewMode === 'exam' ? `exam-input-${idx}` : `q-input-${idx}`;
+    const checkFunc = viewMode === 'exam' ? `checkExam(${idx})` : `checkQuiz(${idx})`;
+    const toggleFunc = viewMode === 'exam' ? `toggleExamAnswer(${idx})` : `toggleAnswer(${idx})`;
+
+    return `
+        <div class="card-item ${isAns ? (isCor ? 'correct' : 'wrong') : ''}">
+            <div class="hint">
+                <strong>📖 专业释义：</strong>
+                <span>${item.d}</span>
+                <div class="def-text-quiz">💬 <b>核心白话：</b>${item.p}</div>
+            </div>
+            <div class="row">
+                <input type="text" id="${inputId}" placeholder="输入术语缩写或中文..." value="${prog.userInput}" ${isAns ? 'disabled' : ''} onkeydown="if(event.key==='Enter') ${checkFunc}" />
+                <div class="btn-group">
+                    ${!isAns ? `<button class="btn-check" onclick="${checkFunc}">提交答案</button>` : ''}
+                    <button class="btn-show" onclick="${toggleFunc}">${isAns ? '重新作答' : '显示答案'}</button>
+                </div>
+            </div>
+            ${feedbackHtml}
+        </div>
+    `;
 }
 
 function checkQuiz(idx) {
     const inputEl = document.getElementById(`q-input-${idx}`);
-    const userVal = inputEl.value.trim().toLowerCase();
-    if (!userVal) {
-        alert('请先输入答案！');
-        return;
-    }
-    
-    const q = db[idx];
-    const validAnswers = [q.t.toLowerCase(), ...q.a.map(a => a.toLowerCase())];
-    const isMatched = validAnswers.some(ans => userVal.includes(ans) || ans.includes(userVal));
-    
-    quizProgress[idx].answered = true;
-    quizProgress[idx].correct = isMatched;
-    quizProgress[idx].userInput = inputEl.value;
-    
+    processAnswer(idx, inputEl.value);
     renderQuizCards();
 }
 
 function toggleAnswer(idx) {
     if (quizProgress[idx].answered) {
-        quizProgress[idx].answered = false;
-        quizProgress[idx].correct = false;
-        quizProgress[idx].userInput = '';
+        quizProgress[idx] = { answered: false, correct: false, userInput: '' };
+        saveProgress();
         renderQuizCards();
     } else {
-        const q = db[idx];
-        document.getElementById(`q-input-${idx}`).value = q.t;
+        document.getElementById(`q-input-${idx}`).value = db[idx].t;
         checkQuiz(idx);
     }
 }
 
+function processAnswer(idx, rawValue) {
+    const userVal = rawValue.trim().toLowerCase();
+    if (!userVal) { alert('请先输入答案！'); return; }
+    
+    const q = db[idx];
+    const validAnswers = [q.t.toLowerCase(), ...q.a.map(a => a.toLowerCase())];
+    const isMatched = validAnswers.some(ans => userVal.includes(ans) || ans.includes(userVal));
+    
+    quizProgress[idx] = { answered: true, correct: isMatched, userInput: rawValue };
+    saveProgress();
+}
+
+// =====================================
+// TAB 2：刷题模式 (胶囊 2) 金考典机制
+// =====================================
+let examQueue = [];
+let currentExamIndex = 0;
+
+function startExam(mode) {
+    document.getElementById('examBoard').style.display = 'block';
+    document.getElementById('examTitle').textContent = mode === 'seq' ? '▶️ 有序刷题模式' : '🔀 随机测试模式';
+    
+    examQueue = db.map((_, idx) => idx);
+    if (mode === 'rand') {
+        for (let i = examQueue.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [examQueue[i], examQueue[j]] = [examQueue[j], examQueue[i]];
+        }
+    }
+    
+    currentExamIndex = 0;
+    document.getElementById('examTotal').textContent = examQueue.length;
+    renderExamCard();
+}
+
+function renderExamCard() {
+    const dbIdx = examQueue[currentExamIndex];
+    document.getElementById('examCurrent').textContent = currentExamIndex + 1;
+    document.getElementById('examCardContainer').innerHTML = generateCardHTML(dbIdx, 'exam');
+    
+    document.getElementById('btnExamPrev').disabled = currentExamIndex === 0;
+    document.getElementById('btnExamNext').disabled = currentExamIndex === examQueue.length - 1;
+    
+    if (window.innerWidth > 1024) {
+        const input = document.getElementById(`exam-input-${dbIdx}`);
+        if(input && !input.disabled) input.focus();
+    }
+}
+
+function navigateExam(step) {
+    currentExamIndex += step;
+    if (currentExamIndex < 0) currentExamIndex = 0;
+    if (currentExamIndex >= examQueue.length) currentExamIndex = examQueue.length - 1;
+    renderExamCard();
+}
+
+function checkExam(dbIdx) {
+    const inputEl = document.getElementById(`exam-input-${dbIdx}`);
+    processAnswer(dbIdx, inputEl.value);
+    renderExamCard(); 
+}
+
+function toggleExamAnswer(dbIdx) {
+    if (quizProgress[dbIdx].answered) {
+        quizProgress[dbIdx] = { answered: false, correct: false, userInput: '' };
+        saveProgress();
+        renderExamCard();
+    } else {
+        document.getElementById(`exam-input-${dbIdx}`).value = db[dbIdx].t;
+        checkExam(dbIdx);
+    }
+}
+
 document.getElementById('resetBtn').addEventListener('click', function() {
-    if (confirm('确定要重置所有进度吗？')) {
+    if (confirm('确定要清除所有学习记录和进度吗？这无法撤销。')) {
         Object.keys(quizProgress).forEach(key => {
             quizProgress[key] = { answered: false, correct: false, userInput: '' };
         });
+        saveProgress();
         renderQuizCards();
+        alert('进度已重置。');
     }
 });
 
 // =====================================
-// 背景色切换逻辑
+// 背景切换及初始化
 // =====================================
-// 默认给 body 加上原生的纯白背景
 document.body.classList.add('bg-white');
 
 function toggleThemeMenu() {
-    const menu = document.getElementById('themeMenu');
-    menu.classList.toggle('show');
+    document.getElementById('themeMenu').classList.toggle('show');
 }
 
 function changeBg(bgClass, element) {
-    // 1. 移除 body 上的所有旧背景类
     document.body.classList.remove('bg-white', 'bg-green', 'bg-yellow', 'bg-purple', 'bg-dark');
-    // 2. 添加用户点击的新背景类
     document.body.classList.add(bgClass);
     
-    // 3. 更新菜单按钮的高亮状态
     document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
     element.classList.add('active');
-    
-    // 4. 收起菜单
     document.getElementById('themeMenu').classList.remove('show');
 }
 
-// 启动程序
 initDictionary();
 
 </script>
