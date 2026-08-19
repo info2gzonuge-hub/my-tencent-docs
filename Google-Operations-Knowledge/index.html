@@ -34,65 +34,27 @@
         body { font-family: var(--font); background-color: var(--bg-body); min-height: 100vh; padding: 30px 20px; color: var(--text-dark); }
         .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
         
-        /* ============================================================ */
-        /* 视频 Banner 样式 (移动端极限优化版)                          */
-        /* ============================================================ */
         .video-banner-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 24px auto;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-            background-color: #E2E8F0; /* 加深一点的背景色，作为骨架屏 */
-            border: 1px solid var(--border-light);
-            aspect-ratio: 16 / 9; 
-            line-height: 0;
-            position: relative;
-            transition: all 0.3s ease;
+            width: 100%; max-width: 1200px; margin: 0 auto 24px auto; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-soft); background-color: #E2E8F0; border: 1px solid var(--border-light); aspect-ratio: 16 / 9; line-height: 0; position: relative; transition: all 0.3s ease;
         }
-        
-        /* 增加 CSS 伪元素：在视频还没缓冲出来前，显示“正在加载”提示文字 */
-        .video-banner-container::before {
-            content: "🎥 动态画面正在缓冲，请稍候...";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #64748B;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 0;
-            text-align: center;
-            width: 100%;
-        }
+        .video-banner-container::before { content: "🎥 动态画面正在缓冲，请稍候..."; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #64748B; font-size: 14px; font-weight: 500; z-index: 0; text-align: center; width: 100%; }
+        .video-banner-container:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); }
+        .video-banner-container video { width: 100%; height: 100%; display: block; object-fit: cover; position: relative; z-index: 1; background-color: transparent; }
 
-        .video-banner-container:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-light);
-        }
-        
-        .video-banner-container video {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            position: relative;
-            z-index: 1; /* 视频加载出来后，会自动盖住底层的“正在加载”文字 */
-            background-color: transparent;
-        }
+        /* 解决头部拥挤：强制左右两端对齐，左侧标题和徽章自动折行但不挤压 */
+        .app-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
+        .header-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .app-header h1 { font-size: 24px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; margin: 0; }
+        .app-header h1 span { font-weight: 400; font-size: 15px; color: var(--text-muted); }
+        .badge-header { background: var(--primary); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25); white-space: nowrap; }
 
-        .app-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
-        .app-header h1 { font-size: 26px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
-        .app-header h1 span { font-weight: 400; font-size: 16px; color: var(--text-muted); }
-        .badge-header { background: var(--primary); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 18px; border-radius: 40px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25); }
         .tab-nav { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding-bottom: 16px; margin-bottom: 24px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; border-bottom: 2px solid var(--border-light); }
         .tab-nav::-webkit-scrollbar { height: 4px; }
         .tab-nav::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
         .tab-btn { flex-shrink: 0; padding: 10px 20px; border: none; background: transparent; border-radius: 40px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: all 0.2s; }
         .tab-btn.active { background: var(--bg-tab-active); color: #fff; box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35); border-color: var(--bg-tab-active); }
         .tab-btn:not(.active):hover { background: var(--bg-card-alt); color: var(--primary); }
+        
         .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
         .panel-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; padding: 12px 16px; background: var(--bg-card-alt); border-radius: 12px; border-left: 4px solid var(--primary-light); line-height: 1.6; }
         .pill { display: inline-block; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; background: var(--bg-body); color: var(--text-muted); border: 1px solid var(--border-light); }
@@ -102,17 +64,20 @@
         .pill.pink { background: var(--pink); color: #fff; border: none; }
         .pill.green { background: var(--success); color: #fff; border: none; }
         .pill.purple { background: var(--purple); color: #fff; border: none; }
+        
         .highlight-box { background: var(--bg-highlight); padding: 16px 20px; border-radius: 12px; border-left: 4px solid var(--primary); margin: 12px 0; line-height: 1.7; }
         .highlight-box strong { color: var(--primary); }
         .internal-link { color: var(--primary); font-weight: 600; text-decoration: underline 2px dotted var(--primary-light); text-underline-offset: 4px; cursor: pointer; transition: all 0.2s; }
         .internal-link:hover { color: var(--secondary); text-decoration-color: var(--secondary); background: rgba(59, 130, 246, 0.05); border-radius: 4px; padding: 0 4px; }
         .internal-link::after { content: " ↗"; font-size: 12px; opacity: 0.7; }
+        
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0 28px 0; }
         .stat-card { background: var(--bg-card-alt); border-radius: 12px; padding: 16px 20px; text-align: center; border: 1px solid var(--border-light); transition: all 0.2s; }
         .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--primary-light); }
         .stat-card .number { font-size: 28px; font-weight: 700; color: var(--primary); }
         .stat-card .label { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
         .stat-card .icon { font-size: 24px; display: block; margin-bottom: 4px; }
+        
         .tree-root { display: flex; flex-direction: column; gap: 16px; margin-bottom: 30px; }
         .tree-item { border: 1px solid var(--border-light); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; transition: all 0.3s ease; box-shadow: var(--shadow-soft); }
         .tree-item:hover { border-color: var(--primary-light); box-shadow: var(--shadow-hover); transform: translateY(-1px); }
@@ -129,6 +94,7 @@
         .tree-item .tree-body .child.sub .marker { color: var(--accent); }
         .tree-item .tree-body .child.sub-sub { padding-left: 56px; border-left-color: var(--border-light); }
         .tree-item .tree-body .child.sub-sub .marker { color: var(--warning); }
+        
         .styled-table { width: 100%; border-collapse: collapse; font-size: 14px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-soft); margin-top: 12px; border: 1px solid var(--border-light); }
         .styled-table thead { background: var(--bg-card-alt); color: var(--text-dark); font-weight: 600; }
         .styled-table th, .styled-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border-light); }
@@ -139,76 +105,61 @@
 
         @media (max-width: 768px) {
             .app-container { padding: 16px 12px !important; }
-            .app-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .app-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .header-left { gap: 8px; }
             .app-header h1 { font-size: 18px !important; flex-wrap: wrap; }
             .app-header h1 span { font-size: 13px !important; display: block; margin-top: 2px; }
             .badge-header { font-size: 11px !important; padding: 4px 14px !important; }
             .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
             .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
-            
             .video-banner-container { margin-bottom: 16px; border-radius: 12px; }
-            .video-banner-container::before { font-size: 12px; } /* 手机端字体缩小 */
-
+            .video-banner-container::before { font-size: 12px; }
             .panel-title { font-size: 18px !important; }
             .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
             .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; margin: 12px 0 20px 0 !important; }
             .stat-card { padding: 12px 14px !important; }
             .stat-card .number { font-size: 22px !important; }
             .stat-card .label { font-size: 12px !important; }
-            .stat-card .icon { font-size: 20px !important; }
             .tree-item summary { padding: 12px 16px !important; font-size: 14px !important; }
-            .tree-item summary .summary-left { gap: 8px !important; flex-wrap: wrap !important; }
-            .tree-item summary::after { width: 20px !important; height: 20px !important; font-size: 10px !important; flex-shrink: 0 !important; }
             .tree-item .tree-body { padding: 10px 12px 16px 12px !important; }
-            .tree-item .tree-body .child { font-size: 13px !important; padding: 4px 0 4px 10px !important; line-height: 1.5 !important; word-break: break-word !important; }
-            .tree-item .tree-body .child .marker { font-size: 12px !important; min-width: 12px !important; flex-shrink: 0 !important; }
-            .tree-item .tree-body .child.sub { padding-left: 20px !important; }
-            .tree-item .tree-body .child.sub-sub { padding-left: 30px !important; }
-            .tree-item summary .pill { font-size: 10px !important; padding: 1px 10px !important; }
-            .highlight-box { padding: 12px 14px !important; font-size: 13px !important; }
-            .styled-table { font-size: 11px !important; min-width: 550px !important; display: table !important; margin-top: 8px !important; }
-            .styled-table th, .styled-table td { padding: 8px 10px !important; font-size: 11px !important; }
-            .footer-links { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; font-size: 13px !important; }
+            .tree-item .tree-body .child { font-size: 13px !important; padding: 4px 0 4px 10px !important; }
+            .styled-table { font-size: 11px !important; min-width: 550px !important; }
         }
-
         @media (max-width: 480px) {
-            .app-container { padding: 10px 8px !important; }
             .app-header h1 { font-size: 16px !important; }
             .tab-btn { font-size: 11px !important; padding: 4px 10px !important; }
             .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
-            .stat-card { padding: 10px 12px !important; }
-            .stat-card .number { font-size: 18px !important; }
-            .stat-card .label { font-size: 11px !important; }
-            .tree-item summary { padding: 10px 12px !important; font-size: 13px !important; }
-            .tree-item .tree-body { padding: 8px 10px 12px 10px !important; }
-            .tree-item .tree-body .child { font-size: 12px !important; padding: 3px 0 3px 8px !important; }
-            .tree-item .tree-body .child .marker { font-size: 11px !important; min-width: 10px !important; }
-            .tree-item .tree-body .child.sub { padding-left: 16px !important; }
-            .tree-item .tree-body .child.sub-sub { padding-left: 24px !important; }
-            .tree-item summary .pill { font-size: 9px !important; padding: 1px 8px !important; }
             .styled-table { font-size: 9px !important; min-width: 420px !important; }
-            .styled-table th, .styled-table td { padding: 5px 6px !important; font-size: 9px !important; }
-            .highlight-box { padding: 10px 12px !important; font-size: 12px !important; }
         }
+        
+        /* 搜索弹窗样式 */
+        #globalSearchModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 80px; backdrop-filter: blur(4px); }
+        .modal-content { background: #FFFFFF; width: 90%; max-width: 600px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #E2E8F0; }
+        .modal-header { padding: 16px 20px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: center; gap: 12px; }
+        .modal-header input { width: 100%; border: none; outline: none; font-size: 16px; color: #0F172A; background: transparent; }
+        #globalSearchResults { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+        #globalSearchResults li { padding: 14px 20px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
+        #globalSearchResults li:hover { background: #F0FDF4; }
+        #globalSearchResults .res-title { font-weight: 600; color: #0F172A; font-size: 15px; display: block; }
+        #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
     </style>
 </head>
 <body>
     <div class="app-container">
-  <!-- 头部：优化间距，杜绝拥挤 -->
-    <header class="app-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 16px; margin-bottom: 24px; border-bottom: 2px solid var(--border-light);">
-        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <h1 style="font-size: 24px; font-weight: 700; color: var(--text-dark); margin: 0;">📊 谷歌推广知识体系 <span style="font-weight: 400; font-size: 15px; color: var(--text-muted);">· 全局导航</span></h1>
-            <span class="badge-header" style="background: var(--primary); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; white-space: nowrap;">🌳 终版树形图</span>
-        </div>
-        <!-- 右侧搜索按钮 -->
-        <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0;">
-            <span>🔍</span> 搜索文档 (⌘K)
-        </button>
-    </header>
+        <!-- 头部：彻底解决拥挤，加入 Flexbox 自适应换行和左右对齐 -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1>📊 谷歌推广知识体系 <span>· Tab 0 · 全局完整目录</span></h1>
+                <span class="badge-header">🌳 精确至终版树形图</span>
+            </div>
+            <!-- 右侧搜索按钮 -->
+            <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
+                <span>🔍</span> 搜索全站 (⌘K)
+            </button>
+        </header>
 
         <!-- 视频 Banner 区 -->
         <div class="video-banner-container">
-            <!-- 增加了 preload="auto" 和所有移动端内联播放属性 -->
             <video id="hero-video" autoplay="autoplay" loop="loop" muted="muted" playsinline="true" webkit-playsinline="true" x5-playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="false" preload="auto">
                 <source src="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/assets/banner.mp4" type="video/mp4">
             </video>
@@ -244,9 +195,8 @@
             <div class="stat-card"><span class="icon">🛠️</span><div class="number">6</div><div class="label">含实操层</div></div>
         </div>
 
-        <!-- 树形图（现代折叠卡片化，内容100%保留） -->
+        <!-- 树形图 -->
         <div class="tree-root">
-            <!-- 第零层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">📅 第零层 · 算法更新认知（2025-2026）</div> <span class="pill orange">🔴 先看</span></summary>
                 <div class="tree-body">
@@ -263,7 +213,6 @@
                 </div>
             </details>
 
-            <!-- 第一层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">🧠 第一层 · 谷歌搜索引擎的工作原理与算法思维</div> <span class="pill orange">🔴 先看</span></summary>
                 <div class="tree-body">
@@ -298,7 +247,6 @@
                 </div>
             </details>
 
-            <!-- 第二层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">🔧 第二层 · 独立站基建（技术底座）</div> <span class="pill blue">🟡 基础必备</span></summary>
                 <div class="tree-body">
@@ -320,7 +268,6 @@
                 </div>
             </details>
 
-            <!-- 第三层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">📝 第三层 · 站内SEO与内容工业化（2026方法论）</div> <span class="pill orange">🔴 核心必修</span></summary>
                 <div class="tree-body">
@@ -364,7 +311,6 @@
                 </div>
             </details>
 
-            <!-- 第四层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">📤 第四层 · 技术性SEO（确保被抓取与索引）</div> <span class="pill blue">🟡 基础必备</span></summary>
                 <div class="tree-body">
@@ -388,7 +334,6 @@
                 </div>
             </details>
 
-            <!-- 第五层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">🔗 第五层 · 站外影响力（外链权重下降，品牌提及上升）</div> <span class="pill cyan">🟢 后续发力</span></summary>
                 <div class="tree-body">
@@ -430,7 +375,6 @@
                 </div>
             </details>
 
-            <!-- 第六层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">💰 第六层 · 谷歌广告（Google Ads / SEM）</div> <span class="pill cyan">🟢 补充流量</span></summary>
                 <div class="tree-body">
@@ -465,7 +409,6 @@
                 </div>
             </details>
 
-            <!-- 第七层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">📊 第七层 · 数据分析与追踪（GA4 + GTM）</div> <span class="pill blue">🟡 基础必备</span></summary>
                 <div class="tree-body">
@@ -495,7 +438,6 @@
                 </div>
             </details>
 
-            <!-- 第八层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">🎯 第八层 · 转化率优化（CRO）</div> <span class="pill cyan">🟢 进阶优化</span></summary>
                 <div class="tree-body">
@@ -522,7 +464,6 @@
                 </div>
             </details>
 
-            <!-- 第九层 -->
             <details class="tree-item">
                 <summary><div class="summary-left">🚀 第九层 · ⭐ AI Overviews优化（2026生存必修课）</div> <span class="pill pink">🔴 最优先</span></summary>
                 <div class="tree-body">
@@ -578,15 +519,10 @@
             </details>
         </div>
 
-        <!-- 学习路径速查表 -->
         <h3 style="margin: 30px 0 12px 0; display:flex; align-items:center; gap:8px;"><span>📚</span> 学习路径速查表</h3>
         <div class="table-wrap">
             <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>阶段</th><th>层级</th><th>优先级</th><th>建议周期</th><th>关键产出</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>阶段</th><th>层级</th><th>优先级</th><th>建议周期</th><th>关键产出</th></tr></thead>
                 <tbody>
                     <tr><td>🧱 打地基</td><td>第零层 · 算法更新认知</td><td><span class="pill orange">🔴 先看</span></td><td>第1周</td><td>建立算法时间线认知</td></tr>
                     <tr><td></td><td>第一层 · 底层算法思维</td><td><span class="pill orange">🔴 先看</span></td><td>第1-2周</td><td>E-E-A-T审计 + 搜索意图表</td></tr>
@@ -612,102 +548,47 @@
         </div>
     </div>
 
-    <!-- 针对微信和移动端浏览器的强制唤醒脚本 -->
+    <!-- 微信视频唤醒脚本 -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var video = document.getElementById('hero-video');
-            
-            // 微信特有 API 唤醒视频
-            document.addEventListener("WeixinJSBridgeReady", function() {
-                if (video && video.paused) { video.play(); }
-            }, false);
-
-            // 保底机制：用户第一次触摸屏幕时，强行触发播放
-            document.body.addEventListener('touchstart', function() {
-                if (video && video.paused) { video.play(); }
-            }, { once: true });
+            document.addEventListener("WeixinJSBridgeReady", function() { if (video && video.paused) { video.play(); } }, false);
+            document.body.addEventListener('touchstart', function() { if (video && video.paused) { video.play(); } }, { once: true });
         });
     </script>
-  <!-- ⌘K 全局搜索弹窗结构 -->
-    <div id="globalSearchModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 80px;">
-        <div style="background: #FFFFFF; width: 100%; max-width: 600px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #E2E8F0;">
-            <div style="padding: 16px 20px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: center; gap: 12px;">
+
+    <!-- 🔍 ⌘K 全局搜索弹窗与高亮引擎 -->
+    <div id="globalSearchModal">
+        <div class="modal-content">
+            <div class="modal-header">
                 <span style="font-size: 18px;">🔍</span>
-                <input type="text" id="globalSearchInput" placeholder="输入关键词搜索全库（如：E-E-A-T、内容集群、外链...）" style="width: 100%; border: none; outline: none; font-size: 16px; color: #0F172A; background: transparent;">
+                <input type="text" id="globalSearchInput" placeholder="输入关键词搜索全库（如：E-E-A-T、CRO、内容集群...）">
                 <button id="closeGlobalSearchBtn" style="background: #F1F5F9; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; color: #64748B; font-size: 12px;">ESC</button>
             </div>
-            <ul id="globalSearchResults" style="list-style: none; padding: 0; margin: 0; max-height: 380px; overflow-y: auto;">
+            <ul id="globalSearchResults">
                 <li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>
             </ul>
         </div>
     </div>
 
-    <style>
-        #globalSearchResults li { padding: 14px 20px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
-        #globalSearchResults li:hover { background: #F0FDF4; }
-        #globalSearchResults .res-title { font-weight: 600; color: #0F172A; font-size: 15px; display: block; }
-        #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
-    </style>
-
-    <!-- 终极搜索脚本：融合了海量关键词 + 浏览器原生文本高亮滚动 -->
     <script>
+        // 核心数据库：target 字段为跳转后需要强制高亮寻找的词汇
         const googleDB = [
-            { 
-                title: "Tab 1 · 算法更新认知（2025-2026）", 
-                category: "Tab 1 - 算法更新", 
-                url: "tab1.html",
-                keywords: "算法更新 inpr fid 核心更新 寄生虫seo 界面革命",
-                fragment: "#:~:text=算法更新" 
-            },
-            { 
-                title: "Tab 2 · E-E-A-T 质量框架与权重解析", 
-                category: "Tab 2 - 底层思维", 
-                url: "tab2.html",
-                keywords: "工作原理 抓取 索引 排名 e-e-a-t eeat pagerank 外链",
-                fragment: "#:~:text=E-E-A-T" 
-            },
-            { 
-                title: "Tab 2 · 核心信号：信息增益 (Information Gain)", 
-                category: "Tab 2 - 底层思维", 
-                url: "tab2.html",
-                keywords: "信息增益 首选来源 preferred sources",
-                fragment: "#:~:text=信息增益" 
-            },
-            { 
-                title: "Tab 4 · 站内SEO与内容工业化", 
-                category: "Tab 4 - 站内SEO", 
-                url: "tab4.html",
-                keywords: "站内seo 内容工业化 atomic answer 原子答案",
-                fragment: "#:~:text=Atomic" 
-            },
-            { 
-                title: "Tab 4 · 结构化数据与Schema标记", 
-                category: "Tab 4 - 站内SEO", 
-                url: "tab4.html",
-                keywords: "结构化数据 schema tkd 实体化内容",
-                fragment: "#:~:text=结构化数据" 
-            },
-            { 
-                title: "Tab 6 · 站外影响力与品牌提及 (Brand Mentions)", 
-                category: "Tab 6 - 站外影响力", 
-                url: "tab6.html",
-                keywords: "站外影响力 外链 客座文章 品牌提及 brand mentions youtube",
-                fragment: "#:~:text=品牌提及" 
-            },
-            { 
-                title: "Tab 9 · 转化率优化 (CRO) 与内容集群", 
-                category: "Tab 9 - 转化率优化", 
-                url: "tab9.html",
-                keywords: "转化率优化 cro 着陆页 landing page 弹窗 内容集群 edm",
-                fragment: "#:~:text=转化率优化" 
-            },
-            { 
-                title: "Tab 10 · AI Overviews优化 (GEO指南)", 
-                category: "Tab 10 - AI Overviews", 
-                url: "tab10.html",
-                keywords: "ai overviews geo 生成式引擎 引用率",
-                fragment: "#:~:text=AI" 
-            }
+            { title: "Tab 1 · 算法更新认知（2025-2026）", category: "Tab 1 - 算法更新", url: "tab1.html", keywords: "算法更新 inpr fid 核心更新 寄生虫seo 界面革命", target: "算法更新" },
+            { title: "Tab 2 · E-E-A-T 质量框架与权重解析", category: "Tab 2 - 底层思维", url: "tab2.html", keywords: "工作原理 抓取 索引 排名 e-e-a-t eeat pagerank 外链", target: "E-E-A-T" },
+            { title: "Tab 2 · 核心信号：信息增益", category: "Tab 2 - 底层思维", url: "tab2.html", keywords: "信息增益 首选来源 preferred sources", target: "信息增益" },
+            { title: "Tab 3 · 独立站基建与配置", category: "Tab 3 - 独立站基建", url: "tab3.html", keywords: "独立站 域名 服务器 wordpress", target: "独立站" },
+            { title: "Tab 4 · 站内SEO与内容工业化", category: "Tab 4 - 站内SEO", url: "tab4.html", keywords: "站内seo 内容工业化 atomic answer 原子答案", target: "Atomic" },
+            { title: "Tab 4 · 结构化数据与Schema标记", category: "Tab 4 - 站内SEO", url: "tab4.html", keywords: "结构化数据 schema tkd 实体化内容", target: "结构化数据" },
+            { title: "Tab 5 · 技术性SEO与站点索引管理", category: "Tab 5 - 技术SEO", url: "tab5.html", keywords: "技术seo 索引 sitemap robots canonical 重定向", target: "索引" },
+            { title: "Tab 6 · 站外影响力与品牌提及", category: "Tab 6 - 站外影响力", url: "tab6.html", keywords: "站外影响力 外链 客座文章 品牌提及 brand mentions youtube", target: "品牌提及" },
+            { title: "Tab 7 · 谷歌广告投放 (Google Ads)", category: "Tab 7 - 谷歌广告", url: "tab7.html", keywords: "谷歌广告 google ads sem 搜索广告 pmax", target: "谷歌广告" },
+            { title: "Tab 8 · 数据分析与追踪 (GA4 + GTM)", category: "Tab 8 - 数据分析", url: "tab8.html", keywords: "数据分析 ga4 gtm 转化追踪", target: "GA4" },
+            { title: "Tab 9 · 转化率优化 (CRO)", category: "Tab 9 - 转化率优化", url: "tab9.html", keywords: "转化率优化 cro 着陆页 landing page 弹窗 内容集群 edm", target: "转化率优化" },
+            { title: "Tab 10 · AI Overviews优化 (GEO指南)", category: "Tab 10 - AI Overviews", url: "tab10.html", keywords: "ai overviews geo 生成式引擎 引用率", target: "AI Overviews" },
+            // 为了让在 index 页面也能搜到本页的知识点，把 index.html 自身的核心词也加进去
+            { title: "Tab 0 · 全局目录：E-E-A-T 节点", category: "Tab 0 - 全局目录", url: "index.html", keywords: "e-e-a-t eeat", target: "E-E-A-T" },
+            { title: "Tab 0 · 全局目录：内容集群与CRO", category: "Tab 0 - 全局目录", url: "index.html", keywords: "转化率优化 cro 内容集群", target: "转化率优化" }
         ];
 
         const globalModal = document.getElementById('globalSearchModal');
@@ -717,20 +598,13 @@
         const globalResultsList = document.getElementById('globalSearchResults');
 
         const openGlobalSearch = () => {
-            if(globalModal) {
-                globalModal.style.display = 'flex';
-                globalInput.value = '';
-                globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>';
-                setTimeout(() => globalInput.focus(), 100);
-            }
+            if(globalModal) { globalModal.style.display = 'flex'; globalInput.value = ''; globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>'; setTimeout(() => globalInput.focus(), 100); }
         };
-
         const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
 
         if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
         if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
         if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
-
         document.addEventListener('keydown', (e) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
             if (e.key === 'Escape') closeGlobalSearch();
@@ -740,12 +614,8 @@
             globalInput.addEventListener('input', function() {
                 const query = this.value.toLowerCase().trim();
                 globalResultsList.innerHTML = ''; 
-                if (query === '') {
-                    globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>';
-                    return;
-                }
+                if (query === '') { globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>'; return; }
 
-                // 清除连字符影响，深度匹配 title, category 和 keywords
                 const cleanQuery = query.replace(/-/g, '');
                 const results = googleDB.filter(item => {
                     const targetText = (item.title + " " + item.category + " " + item.keywords).toLowerCase();
@@ -758,8 +628,8 @@
                         const li = document.createElement('li');
                         li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
                         li.addEventListener('click', () => {
-                            // 💡 关键修复点：这里拼接了 item.fragment，触发浏览器原生定位高亮！
-                            const targetUrl = item.url + (item.fragment || '');
+                            // URL 传参，抛弃失效的 #hash
+                            const targetUrl = item.url + '?highlight=' + encodeURIComponent(item.target);
                             window.open(targetUrl, '_self');
                             closeGlobalSearch();
                         });
@@ -770,6 +640,51 @@
                 }
             });
         }
+
+        // ==========================================
+        // 核心突破：加载完毕后，强制撑开折叠面板并进行 JS DOM 高亮和滚动！
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const keyword = params.get('highlight');
+            if(keyword) {
+                // 1. 强制展开所有 <details> 折叠面板，暴露出原本隐藏的文字
+                document.querySelectorAll('details').forEach(el => el.setAttribute('open', 'true'));
+                
+                // 2. 延迟 300 毫秒等待页面重绘，然后用 DOM 树遍历查找文字
+                setTimeout(() => {
+                    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // 找到匹配的文本（忽略大小写）
+                        if (node.nodeValue.toLowerCase().includes(keyword.toLowerCase())) {
+                            const parent = node.parentElement;
+                            // 过滤掉输入框、脚本等无用标签
+                            if (parent.tagName !== 'SCRIPT' && parent.tagName !== 'STYLE' && parent.tagName !== 'TITLE' && parent.id !== 'globalSearchInput') {
+                                // 滚动到屏幕中央
+                                parent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                
+                                // 给该元素添加醒目的黄色高亮背景和红框，持续 3.5 秒
+                                const originalBg = parent.style.backgroundColor;
+                                parent.style.transition = 'all 0.3s ease';
+                                parent.style.backgroundColor = '#FEF08A'; // 醒目黄色
+                                parent.style.borderRadius = '4px';
+                                parent.style.padding = '2px 4px';
+                                parent.style.border = '2px solid #EF4444'; // 红色边框
+                                
+                                setTimeout(() => {
+                                    parent.style.backgroundColor = originalBg;
+                                    parent.style.border = 'none';
+                                    parent.style.padding = '0';
+                                }, 3500); // 3.5秒后自动恢复原样
+                                
+                                break; // 找到第一个就停止，避免页面乱跳
+                            }
+                        }
+                    }
+                }, 300);
+            }
+        });
     </script>
 </body>
 </html>
