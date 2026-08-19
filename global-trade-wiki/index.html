@@ -193,126 +193,151 @@
         </div>
     </div>
 
-    <!-- 双引擎搜索逻辑 -->
+    <!-- 双引擎搜索核心逻辑 (搭载 Pagefind) -->
     <script>
-        // ------------------ 1. 局部数据库 (仅限本知识库) ------------------
+        // ================= 引擎 A：局部直搜 (服务于正文中央输入框) =================
         const localDB = [
-            { title: "ISO 9001 质量管理体系", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-1-1" },
-            { title: "FDA 备案与医疗器械红线", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-2-1-2" },
-            { title: "欧盟 CSDDD 尽职调查指令", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-4-1" },
+            { title: "企业体系与工厂资质", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-1-1" },
+            { title: "强制物理安全认证", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-2-1-2" },
+            { title: "区域清关壁垒与质检", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-3-1-1" },
+            { title: "零售包装与环保标识", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-4-1-1" },
             
-            { title: "FOB 装运港船上交货", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-1-1-1" },
-            { title: "HS Code 归类与避税红线", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-2-1-1" },
-            { title: "纯电池 PI965 航空指令", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-4-1-1" },
+            { title: "国际贸易术语", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-1-1-1" },
+            { title: "海关申报与关税", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-2-1-1" },
+            { title: "退税报关与单证", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-3-1-1" },
+            { title: "敏感货与海外仓", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-4-1-1" },
 
-            { title: "信保订单线上结算全链路", category: "03 资金财税", url: "data/finance/finance_all.html#node-1-1-1" },
-            { title: "T/T 电汇收款与黑客防范", category: "03 资金财税", url: "data/finance/finance_all.html#node-2-1-1" },
-            { title: "金税四期公私户稽查", category: "03 资金财税", url: "data/finance/finance_all.html#node-4-4-1" },
+            { title: "国际站收款矩阵", category: "03 资金财税", url: "data/finance/finance_all.html#node-1-1-1" },
+            { title: "大宗贸易及独立站通道", category: "03 资金财税", url: "data/finance/finance_all.html#node-2-1-1" },
+            { title: "资金防冻、反洗钱风控", category: "03 资金财税", url: "data/finance/finance_all.html#node-3-1-1" },
+            { title: "流转税与企业税务筹划", category: "03 资金财税", url: "data/finance/finance_all.html#node-4-1-1" },
 
-            { title: "亚马逊 Brand Registry 品牌备案", category: "04 知产维权", url: "data/ip/ip_all.html#node-1-1-1" },
-            { title: "美国联邦法院 TRO 资金救援", category: "04 知产维权", url: "data/ip/ip_all.html#node-3-1-1" },
+            { title: "亚马逊域内防卫生态", category: "04 知产维权", url: "data/ip/ip_all.html#node-1-1-1" },
+            { title: "恶意投诉与平台内部仲裁", category: "04 知产维权", url: "data/ip/ip_all.html#node-2-1-1" },
+            { title: "联邦法院 TRO 与资金冻结", category: "04 知产维权", url: "data/ip/ip_all.html#node-3-1-1" },
+            { title: "宏观跨国确权与前端合规", category: "04 知产维权", url: "data/ip/ip_all.html#node-4-1-1" },
 
-            { title: "信保订单履约举证与仲裁", category: "05 平台契约", url: "data/platform/governance_all.html#node-1-1-1" },
-            { title: "账号防关联与 IP 隔离", category: "05 平台契约", url: "data/platform/governance_all.html#node-2-1-1" },
-            { title: "美国 OFAC SDN 黑名单排查", category: "05 平台契约", url: "data/platform/governance_all.html#node-4-1-1" }
+            { title: "B2B 平台规则与大宗契约", category: "05 平台契约", url: "data/platform/governance_all.html#node-1-1-1" },
+            { title: "B2C 零售平台风控与治理", category: "05 平台契约", url: "data/platform/governance_all.html#node-2-1-1" },
+            { title: "全球广告营销合规与审查", category: "05 平台契约", url: "data/platform/governance_all.html#node-3-1-1" },
+            { title: "地缘政治与出口管制壁垒", category: "05 平台契约", url: "data/platform/governance_all.html#node-4-1-1" }
         ];
 
-        // ------------------ 2. 全局数据库 (融合外部架构挂载) ------------------
-        // 利用展开运算符 `...localDB` 继承本站所有内容，同时添加外部跨站链接
-        const globalDB = [
-            ...localDB,
-            { title: "转化率优化 (CRO) 与 10-tab 着陆页架构", category: "🔗 谷歌知识体系", url: "../my-tencent-docs/Google-Operations-Knowledge/index.html" },
-            { title: "B2B 结构化表单设计与 Python 自动化跟单", category: "🔗 谷歌知识体系", url: "../my-tencent-docs/Google-Operations-Knowledge/index.html" },
-            { title: "动态视频 Banner 嵌入 (GitHub Pages)", category: "🔗 谷歌知识体系", url: "../my-tencent-docs/Google-Operations-Knowledge/index.html" },
-            
-            { title: "SEO 关键词布局与内容集群 (Content Clusters)", category: "🔗 全域流量词典", url: "../全域流量与电商运营词典.html" },
-            { title: "CSV 导入与 WP All Import 程序化生成", category: "🔗 全域流量词典", url: "../全域流量与电商运营词典.html" }
-        ];
-
-        // ================= 引擎 A：居中局部直搜 =================
         const localInput = document.getElementById('localSearchInput');
         const localDropdown = document.getElementById('localSearchDropdown');
 
-        localInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            localDropdown.innerHTML = ''; 
-            if (query === '') { localDropdown.style.display = 'none'; return; }
+        if(localInput) {
+            localInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                localDropdown.innerHTML = ''; 
+                if (query === '') { localDropdown.style.display = 'none'; return; }
 
-            const results = localDB.filter(item => 
-                item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
-            );
+                const results = localDB.filter(item => 
+                    item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
+                );
 
-            if (results.length > 0) {
-                localDropdown.style.display = 'block';
-                results.forEach(item => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
-                    li.addEventListener('click', () => window.open(item.url, '_blank'));
-                    localDropdown.appendChild(li);
-                });
-            } else {
-                localDropdown.style.display = 'block';
-                localDropdown.innerHTML = `<li class="res-empty">未在当前知识库找到 "${query}" ...</li>`;
-            }
-        });
+                if (results.length > 0) {
+                    localDropdown.style.display = 'block';
+                    results.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
+                        li.addEventListener('click', () => window.open(item.url, '_blank'));
+                        localDropdown.appendChild(li);
+                    });
+                } else {
+                    localDropdown.style.display = 'block';
+                    localDropdown.innerHTML = `<li class="res-empty">未在当前大纲找到 "${query}" ...</li>`;
+                }
+            });
+            document.addEventListener('click', (e) => {
+                if (e.target !== localInput && e.target !== localDropdown) localDropdown.style.display = 'none';
+            });
+        }
 
-        document.addEventListener('click', (e) => {
-            if (e.target !== localInput && e.target !== localDropdown) localDropdown.style.display = 'none';
-        });
-
-        // ================= 引擎 B：右上角全局悬浮弹窗 =================
+        // ================= 引擎 B：Pagefind 全网检索 (服务于 ⌘K) =================
         const globalModal = document.getElementById('globalSearchModal');
         const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
         const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
         const globalInput = document.getElementById('globalSearchInput');
         const globalResultsList = document.getElementById('globalSearchResults');
+        
+        let pagefindInstance = null;
 
-        const openGlobalSearch = () => {
-            globalModal.style.display = 'flex';
-            globalInput.value = '';
-            globalResultsList.innerHTML = '';
-            setTimeout(() => globalInput.focus(), 100);
+        // 初始化加载 Pagefind (路径向上跳一层，指向大根目录)
+        async function initPagefind() {
+            if (!pagefindInstance) {
+                try {
+                    // 使用绝对路径模式增强 GitHub Pages 的兼容性
+                    pagefindInstance = await import('../_pagefind/pagefind.js');
+                    await pagefindInstance.init();
+                    console.log("Pagefind 引擎加载成功！");
+                } catch (error) {
+                    console.error("Pagefind 加载失败，请检查 .nojekyll 文件是否配置正确:", error);
+                    globalResultsList.innerHTML = '<li class="res-empty" style="color:red;">索引库加载失败，请联系管理员。</li>';
+                }
+            }
+        }
+
+        const openGlobalSearch = async () => {
+            if(globalModal) {
+                globalModal.style.display = 'flex';
+                globalInput.value = '';
+                globalResultsList.innerHTML = '<li class="res-empty">加载全站数据库中，请输入关键词...</li>';
+                setTimeout(() => globalInput.focus(), 100);
+                await initPagefind();
+            }
         };
 
-        const closeGlobalSearch = () => { globalModal.style.display = 'none'; };
+        const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
 
-        openGlobalBtn.addEventListener('click', openGlobalSearch);
-        closeGlobalBtn.addEventListener('click', closeGlobalSearch);
-        globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
+        if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
+        if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
+        if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
 
-        // 绑定快捷键 ⌘K / Ctrl+K
         document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                e.preventDefault();
-                openGlobalSearch();
-            }
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
             if (e.key === 'Escape') closeGlobalSearch();
         });
 
-        // 全局搜索过滤逻辑
-        globalInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            globalResultsList.innerHTML = ''; 
-            if (query === '') return;
+        if(globalInput) {
+            globalInput.addEventListener('input', async function() {
+                const query = this.value.trim();
+                if (query === '') {
+                    globalResultsList.innerHTML = '<li class="res-empty">请输入关键词...</li>';
+                    return;
+                }
 
-            const results = globalDB.filter(item => 
-                item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
-            );
+                if (!pagefindInstance) return;
 
-            if (results.length > 0) {
-                results.forEach(item => {
+                globalResultsList.innerHTML = '<li class="res-empty" style="color:#2563EB;">全站检索中...</li>';
+
+                const search = await pagefindInstance.search(query);
+                
+                if (search.results.length === 0) {
+                    globalResultsList.innerHTML = `<li class="res-empty">全站未找到与 "${query}" 相关的正文。</li>`;
+                    return;
+                }
+
+                globalResultsList.innerHTML = ''; 
+                const topResults = search.results.slice(0, 10);
+                
+                for (const result of topResults) {
+                    const data = await result.data();
                     const li = document.createElement('li');
-                    li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
+                    
+                    li.innerHTML = `
+                        <span class="res-title" style="color: #111;">${data.meta.title || '关联页面'}</span>
+                        <span class="res-category" style="margin-top:8px; line-height: 1.5; color: #555;">${data.excerpt}</span>
+                    `;
                     li.addEventListener('click', () => {
-                        window.open(item.url, '_blank');
+                        window.open(data.url, '_blank');
                         closeGlobalSearch();
                     });
                     globalResultsList.appendChild(li);
-                });
-            } else {
-                globalResultsList.innerHTML = `<li class="res-empty">全站未找到与 "${query}" 相关的结果...</li>`;
-            }
-        });
+                }
+            });
+        }
     </script>
+  
 </body>
 </html>
