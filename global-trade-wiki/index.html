@@ -4,179 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GLOBAL TRADE WIKI | 全球贸易合规与履约知识库</title>
-    <!-- 引入外部 CSS，保留高级 UI 与主题色映射 -->
     <link rel="stylesheet" href="assets/css/style.css">
-   <style>
-        /* 针对线框图设计的专属高级样式覆盖 */
-        .wiki-container { padding: 40px 80px; max-width: 960px; margin: 0 auto; background-color: var(--bg-main); min-height: 100vh; box-shadow: 0 0 1px rgba(0,0,0,0.1); }
-        
-        /* 顶导栏 */
-        .top-nav { border-bottom: 1px solid #333; padding-bottom: 16px; margin-bottom: 40px; }
-        
-        /* Hero 标题区 */
-        .hero-section { text-align: left; margin-bottom: 40px; }
-        .hero-section h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; color: #111; letter-spacing: 1px; }
-        .hero-section p { font-size: 15px; color: #555; font-family: monospace; margin: 0; }
-        
-        /* 搜索框 1:1 还原线框图，极简边框 */
-        .search-wrapper { position: relative; margin-bottom: 60px; max-width: 100%; }
-        .search-input { width: 100%; padding: 16px 20px 16px 44px; font-size: 15px; border: 1px solid #333; border-radius: 4px; outline: none; transition: all 0.2s; box-sizing: border-box; background: transparent; color: #333; font-family: inherit; }
-        .search-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .search-icon-inside { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #666; pointer-events: none; }
-        
-        /* 悬浮下拉搜索结果面板 */
-        .search-dropdown { position: absolute; top: 60px; left: 0; width: 100%; background: #fff; border: 1px solid #333; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-height: 350px; overflow-y: auto; display: none; z-index: 100; list-style: none; padding: 0; margin: 0; }
-        .search-dropdown li { padding: 12px 20px; border-bottom: 1px dashed #ccc; cursor: pointer; display: flex; flex-direction: column; text-align: left; }
-        .search-dropdown li:last-child { border-bottom: none; }
-        .search-dropdown li:hover { background: #F8F9FA; }
-        .result-title { font-size: 14px; font-weight: 600; color: #2563EB; }
-        .result-category { font-size: 12px; color: #888; margin-top: 4px; }
+    <style>
+        :root {
+            --accent-compliance: #00A080;
+            --accent-logistics: #2563EB;
+            --accent-finance: #D97706;
+            --accent-ip: #6D28D9;
+            --accent-platform: #E11D48;
+        }
 
-        /* 五大维度网格：上3下2 */
-        .dimensions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 30px; margin-bottom: 60px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fff; margin: 0; padding: 0; color: #333; }
         
-        /* 卡片整体作为链接，全域无死角可点击 */
-        .dimension-card { text-decoration: none; display: flex; flex-direction: column; cursor: pointer; }
+        .wiki-container { max-width: 1024px; margin: 0 auto; min-height: 100vh; padding: 40px 60px; }
         
-        /* 卡片悬浮动效：虚线变实线，标题变色 */
-        .dimension-card:hover .dim-box { border: 1px solid #2563EB; background: #F8F9FA; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.05); }
-        .dimension-card:hover .dim-title { color: #2563EB; }
+        /* 顶导栏与右上角全局搜索按钮 (完美还原截图三) */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E9ECEF; padding-bottom: 16px; margin-bottom: 40px; }
+        .logo-area { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; color: #111; text-decoration: none; }
         
-        /* 标题区：Icon + Title */
-        .dim-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-        .dim-icon { font-size: 20px; }
-        .dim-title { font-weight: 600; font-size: 16px; color: #111; transition: color 0.2s; }
+        .global-search-trigger { background: #F8FAFC; border: none; padding: 8px 12px; border-radius: 6px; color: #64748B; font-size: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; outline: none; gap: 40px; }
+        .global-search-trigger:hover { background: #F1F5F9; }
+        .global-search-trigger kbd { background: #fff; border: 1px solid #E2E8F0; border-radius: 4px; padding: 2px 6px; font-family: -apple-system, sans-serif; font-size: 12px; color: #94A3B8; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+        /* Hero 标题区 */
+        .hero-section { margin-bottom: 50px; }
+        .hero-section h1 { font-size: 28px; margin-bottom: 12px; color: #222; font-weight: bold; }
+        .hero-section p { color: #666; font-size: 15px; font-family: monospace; margin: 0; }
+
+        /* 居中局部搜索框 (无弹窗，直接下拉出结果) */
+        .local-search-wrapper { position: relative; margin-bottom: 50px; max-width: 100%; z-index: 50;}
+        .local-search-input { width: 100%; padding: 16px 20px 16px 48px; font-size: 15px; border: 1px solid #E9ECEF; border-radius: 8px; outline: none; transition: all 0.2s; box-sizing: border-box; background: #fff; color: #333; box-shadow: 0 2px 8px rgba(0,0,0,0.02); font-family: inherit; }
+        .local-search-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .search-icon-inside { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
         
-        /* 虚线内容透视窗 */
-        .dim-box { border: 1px dashed #888; border-radius: 8px; padding: 18px 16px; transition: all 0.2s ease; background: transparent; display: flex; flex-direction: column; gap: 10px; height: 100%; box-sizing: border-box; }
+        .local-search-dropdown { position: absolute; top: calc(100% + 8px); left: 0; width: 100%; background: #fff; border: 1px solid #E9ECEF; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-height: 350px; overflow-y: auto; display: none; list-style: none; padding: 0; margin: 0; }
+        .local-search-dropdown li { padding: 12px 20px; border-bottom: 1px solid #F1F3F5; cursor: pointer; display: flex; flex-direction: column; text-align: left; transition: background 0.2s; }
+        .local-search-dropdown li:hover { background: #F8F9FA; }
+        .res-title { font-size: 14px; font-weight: 600; color: #2563EB; margin-bottom: 4px; }
+        .res-category { font-size: 12px; color: #888; }
+        .res-empty { padding: 20px; text-align: center; color: #888; font-size: 14px; cursor: default !important; }
+
+        /* 五大维度网格 */
+        .dimensions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
         
-        /* 内部核心大节点列表样式 */
-        .node-item { font-size: 13px; color: #555; display: flex; align-items: flex-start; gap: 8px; transition: color 0.2s; line-height: 1.5; }
+        .dimension-card { text-decoration: none; display: flex; flex-direction: column; padding: 32px 24px; border-radius: 12px; background: #fff; cursor: pointer; transition: all 0.2s ease; border: 1px dashed #ccc; }
+        .dimension-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); border-style: solid; }
         
-        /* 极客风：原生 CSS 生成的圆点 */
-        .node-item::before { content: "•"; color: #888; font-weight: bold; font-size: 16px; line-height: 1; transition: color 0.2s; }
+        .dim-icon { font-size: 24px; margin-bottom: 16px; }
+        .dim-title { font-weight: bold; font-size: 16px; color: #111; margin-bottom: 16px; }
         
-        /* 悬浮时的交互反馈：文字变黑，圆点点亮 */
-        .dimension-card:hover .node-item { color: #222; }
-        .dimension-card:hover .node-item::before { color: #2563EB; }
+        /* 核心要求：圆点无序列表排版 */
+        .dim-list { list-style: none; padding: 0; margin: 0; }
+        .dim-list li { position: relative; padding-left: 18px; font-size: 14px; color: #555; line-height: 1.8; margin-bottom: 8px; transition: color 0.2s; }
+        .dim-list li::before { content: "•"; position: absolute; left: 0; top: -1px; color: #888; font-weight: bold; font-size: 18px; transition: color 0.2s; }
+        
+        .dimension-card:hover .dim-list li { color: #222; }
+        .dimension-card:hover .dim-list li::before { color: #2563EB; }
 
         /* 底部快捷入口 */
-        .quick-links { border-top: 1px solid #333; padding-top: 24px; display: flex; justify-content: flex-start; gap: 50px; }
-        .quick-link-item { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: #333; transition: color 0.2s; text-decoration: none; }
-        .quick-link-item:hover { color: #2563EB; }
+        .quick-links { border-top: 1px solid #E9ECEF; padding-top: 24px; display: flex; flex-wrap: wrap; gap: 32px; }
+        .quick-link-item { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #666; transition: color 0.2s; text-decoration: none; }
+        .quick-link-item:hover { color: #111; }
 
-        /* 移动端与平板的优雅降级 */
-        @media (max-width: 900px) {
-            .dimensions-grid { grid-template-columns: repeat(2, 1fr); }
-            .wiki-container { padding: 30px 40px; }
-        }
+        /* ================= 全局搜索浮层 (Search Modal) ================= */
+        .global-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: flex-start; padding-top: 12vh; z-index: 999; }
+        .global-modal-content { width: 100%; max-width: 640px; background: #fff; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; animation: modalFadeIn 0.2s ease; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        .global-modal-header { display: flex; align-items: center; padding: 16px 24px; border-bottom: 1px solid #E9ECEF; }
+        .global-modal-header input { flex: 1; border: none; outline: none; font-size: 18px; color: #222; margin-left: 12px; }
+        .global-modal-header input::placeholder { color: #BBB; }
+        .close-btn { background: #F1F3F5; border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; color: #666; cursor: pointer; }
+        
+        .global-results { max-height: 400px; overflow-y: auto; list-style: none; margin: 0; padding: 0; }
+        .global-results li { padding: 16px 24px; border-bottom: 1px solid #F1F3F5; cursor: pointer; display: flex; flex-direction: column; transition: background 0.2s; }
+        .global-results li:hover { background: #F8F9FA; }
+        .global-results .res-category { color: #E11D48; } /* 区分全局搜索的分类高亮 */
+
         @media (max-width: 600px) {
             .dimensions-grid { grid-template-columns: 1fr; }
-            .wiki-container { padding: 20px; }
-            .quick-links { flex-direction: column; gap: 20px; }
+            .global-search-trigger { width: auto; }
+            .global-search-trigger kbd { display: none; }
         }
     </style>
 </head>
 <body>
     <div class="wiki-container">
-        <!-- 顶导 -->
+        <!-- 顶导与右上角【全局搜索】触发器 -->
         <header class="top-nav">
-            <div class="logo-area"><span>🌍</span> GLOBAL TRADE WIKI</div>
-            <div class="search-bar"><span>🔍 Search</span><span>⌘K</span></div>
+            <a href="index.html" class="logo-area">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                GLOBAL TRADE WIKI
+            </a>
+            <button class="global-search-trigger" id="openGlobalSearchBtn">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    Search
+                </div>
+                <kbd>⌘K</kbd>
+            </button>
         </header>
 
-        <!-- 头部信息区与搜索框 -->
         <section class="hero-section">
             <h1>全球贸易合规与履约知识库</h1>
             <p>Personal Encyclopedia of Global Trade</p>
-            <div class="global-search-box">
-                <span>🔍</span><span>搜索知识 / 术语 / 国家 / 平台 / 单证...</span>
-            </div>
         </section>
 
-        <!-- 五大维度导航网格 (链接已全部重定向至 _all.html 的锚点) -->
+        <!-- 居中【局部搜索】框 -->
+        <div class="local-search-wrapper">
+            <span class="search-icon-inside">🔍</span>
+            <input type="text" id="localSearchInput" class="local-search-input" placeholder="搜索本库知识 / 术语 / 国家 / 平台 / 单证..." autocomplete="off">
+            <ul id="localSearchDropdown" class="local-search-dropdown"></ul>
+        </div>
+
+        <!-- 五大维度网格 -->
         <section class="dimensions-grid">
-            <!-- 01 市场准入与合规 -->
-            <div class="dimension-card" style="border-color: var(--accent-compliance);">
+            <a href="data/compliance/compliance_all.html" class="dimension-card" style="border-color: var(--accent-compliance);">
                 <div class="dim-icon">🛡️</div>
                 <div class="dim-title">01 市场准入与合规</div>
-                <div class="dim-desc">企业资质、产品认证、安全背书、ESG与包装</div>
-                <div class="dim-links">
-                    <a href="data/compliance/compliance_all.html#node-1-1-1">ISO 9001 质量体系</a>
-                    <a href="data/compliance/compliance_all.html#node-1-1-2">ISO 14001 & 22716</a>
-                    <a href="data/compliance/compliance_all.html#node-1-2-1">BSCI 验厂 / Sedex 审计</a>
-                    <a href="data/compliance/compliance_all.html#node-1-4-1">CSDDD & CBAM 绿色指令</a>
-                    <a href="data/compliance/compliance_all.html#node-2-1-2">FDA 备案 / REACH 法规</a>
-                    <a href="data/compliance/compliance_all.html#node-2-2-1">CE / RoHS / GS 欧洲认证</a>
-                    <a href="data/compliance/compliance_all.html#node-2-2-5">FCC / UL 北美电子准入</a>
-                    <a href="data/compliance/compliance_all.html#node-2-3-1">CCC / SAA / INMETRO</a>
-                    <a href="data/compliance/compliance_all.html#node-2-3-2">PSE / KC / CB 全球互认</a>
-                    <a href="data/compliance/compliance_all.html#node-3-1-1">SASO / GOST 区域清关</a>
-                    <a href="data/compliance/compliance_all.html#node-3-2-1">SGS / TÜV 第三方检测</a>
-                    <a href="data/compliance/compliance_all.html#node-4-1-1">PPWR & EPR 包装合规</a>
-                    <a href="data/compliance/compliance_all.html#node-4-2-1">Triman / CE / Prop 65 标识</a>
-                </div>
-            </div>
-            
-            <!-- 02 物流清关与履约 -->
-            <div class="dimension-card" style="border-color: var(--accent-logistics);">
+                <ul class="dim-list">
+                    <li>企业体系与工厂资质</li>
+                    <li>强制物理安全认证</li>
+                    <li>区域清关壁垒与质检</li>
+                    <li>零售包装与环保标识</li>
+                </ul>
+            </a>
+            <a href="data/logistics/logistics_all.html" class="dimension-card" style="border-color: var(--accent-logistics);">
                 <div class="dim-icon">🚢</div>
                 <div class="dim-title">02 物流清关与履约</div>
-                <div class="dim-desc">Incoterms、HS Code、单证实务、危险品运输</div>
-                <div class="dim-links">
-                    <a href="data/logistics/logistics_all.html#node-1-1-1">FOB & CIF 贸易术语</a>
-                    <a href="data/logistics/logistics_all.html#node-1-2-1">EXW / FCA / DDP 贸易术语</a>
-                    <a href="data/logistics/logistics_all.html#node-2-1-1">HS Code 归类与反倾销防范</a>
-                    <a href="data/logistics/logistics_all.html#node-2-2-1">单证相符原则与提单物权</a>
-                    <a href="data/logistics/logistics_all.html#node-2-3-1">美国 800 美金免税与 IOSS</a>
-                    <a href="data/logistics/logistics_all.html#node-3-3-1">出口退税与四单合一核销</a>
-                    <a href="data/logistics/logistics_all.html#node-4-1-1">敏感货空运与海外仓税务合规</a>
-                </div>
-            </div>
-
-            <!-- 03 资金结算与财税 -->
-            <div class="dimension-card" style="border-color: var(--accent-finance);">
+                <ul class="dim-list">
+                    <li>国际贸易术语</li>
+                    <li>海关申报与关税</li>
+                    <li>退税报关与单证</li>
+                    <li>敏感货与海外仓</li>
+                </ul>
+            </a>
+            <a href="data/finance/finance_all.html" class="dimension-card" style="border-color: var(--accent-finance);">
                 <div class="dim-icon">💰</div>
                 <div class="dim-title">03 资金结算与财税</div>
-                <div class="dim-desc">平台结算、信保结汇、离岸账户防冻、税务筹划</div>
-                <div class="dim-links">
-                    <a href="data/finance/finance_all.html#node-1-1-1">阿里国际站收款矩阵与融资</a>
-                    <a href="data/finance/finance_all.html#node-2-1-1">B2B 大宗结算 (T/T, L/C, 虚拟卡)</a>
-                    <a href="data/finance/finance_all.html#node-3-1-1">资金防冻、ODI 与 1039 无票结汇</a>
-                    <a href="data/finance/finance_all.html#node-3-2-1">独立站防拒付风控与 BNPL</a>
-                    <a href="data/finance/finance_all.html#node-4-1-1">属地流转税与金税四期稽查</a>
-                </div>
-            </div>
-
-            <!-- 04 知识产权与维权 -->
-            <div class="dimension-card" style="border-color: var(--accent-ip);">
+                <ul class="dim-list">
+                    <li>国际站收款矩阵</li>
+                    <li>大宗贸易及独立站通道</li>
+                    <li>资金防冻、反洗钱风控</li>
+                    <li>流转税与企业税务筹划</li>
+                </ul>
+            </a>
+            <a href="data/ip/ip_all.html" class="dimension-card" style="border-color: var(--accent-ip);">
                 <div class="dim-icon">⚖️</div>
                 <div class="dim-title">04 知识产权与维权</div>
-                <div class="dim-desc">Brand Registry、TRO 应对、专利中立评估</div>
-                <div class="dim-links">
-                    <a href="data/ip/ip_all.html#node-1-1-1">亚马逊防跟卖生态与 Listing 保护</a>
-                    <a href="data/ip/ip_all.html#node-2-1-1">专利中立评估与版权恶意投诉反制</a>
-                    <a href="data/ip/ip_all.html#node-3-1-1">联邦法院 TRO 禁令与资金池救援</a>
-                    <a href="data/ip/ip_all.html#node-3-4-1">独立站社媒跑量素材防恶搞封禁</a>
-                    <a href="data/ip/ip_all.html#node-4-1-1">跨国配方专利、NNN 与数据隐私</a>
-                    <a href="data/ip/ip_all.html#node-4-3-1">独立站前端合规 (ADA法案/PCI-DSS)</a>
-                </div>
-            </div>
-
-            <!-- 05 平台治理与商业契约 -->
-            <div class="dimension-card" style="border-color: var(--accent-platform);">
+                <ul class="dim-list">
+                    <li>亚马逊域内防卫生态</li>
+                    <li>恶意投诉与平台内部仲裁</li>
+                    <li>联邦法院 TRO 与资金冻结</li>
+                    <li>宏观跨国确权与前端合规</li>
+                </ul>
+            </a>
+            <a href="data/platform/governance_all.html" class="dimension-card" style="border-color: var(--accent-platform);">
                 <div class="dim-icon">🤝</div>
                 <div class="dim-title">05 平台治理与商业契约</div>
-                <div class="dim-desc">信保仲裁、防关联、FTC广告红线、地缘风控</div>
-                <div class="dim-links">
-                    <a href="data/platform/governance_all.html#node-1-1-1">B2B 履约仲裁、反欺诈与跨国法务</a>
-                    <a href="data/platform/governance_all.html#node-2-1-1">B2C 账号防关联与刷单封店申诉</a>
-                    <a href="data/platform/governance_all.html#node-2-1-3">销量激增审查与欧盟退换货保护</a>
-                    <a href="data/platform/governance_all.html#node-3-1-1">Google/Meta 敏感词与封户红线</a>
-                    <a href="data/platform/governance_all.html#node-3-2-1">FTC 营销重罚与日化/医疗越界打击</a>
-                    <a href="data/platform/governance_all.html#node-4-1-1">OFAC 黑名单与 EAR 实体清单规避</a>
-                </div>
-            </div>
+                <ul class="dim-list">
+                    <li>B2B 平台规则与大宗契约</li>
+                    <li>B2C 零售平台风控与治理</li>
+                    <li>全球广告营销合规与审查</li>
+                    <li>地缘政治与出口管制壁垒</li>
+                </ul>
+            </a>
         </section>
 
         <!-- 底部快捷入口 -->
@@ -184,7 +176,143 @@
             <a href="data/countries/index.html" class="quick-link-item"><span>🌍</span> 国家与市场地图</a>
             <a href="data/glossary/index.html" class="quick-link-item"><span>🏷️</span> 热门术语字典</a>
             <a href="data/checklists/index.html" class="quick-link-item"><span>🧰</span> 实操 Checklist</a>
+            <a href="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/" target="_blank" class="quick-link-item"><span>🔍</span> 谷歌知识体系</a>
+            <a href="../全域流量与电商运营词典.html" target="_blank" class="quick-link-item"><span>✍️</span> 全域流量与电商运营词典</a>
         </footer>
     </div>
+
+    <!-- ================= 全局搜索浮层 ================= -->
+    <div class="global-modal-overlay" id="globalSearchModal">
+        <div class="global-modal-content">
+            <div class="global-modal-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="globalSearchInput" placeholder="全站检索 (知识库 / 谷歌运营 / 全域流量词典)..." autocomplete="off">
+                <button class="close-btn" id="closeGlobalSearchBtn">ESC</button>
+            </div>
+            <ul class="global-results" id="globalSearchResults"></ul>
+        </div>
+    </div>
+
+    <!-- 双引擎搜索逻辑 -->
+    <script>
+        // ------------------ 1. 局部数据库 (仅限本知识库) ------------------
+        const localDB = [
+            { title: "ISO 9001 质量管理体系", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-1-1" },
+            { title: "FDA 备案与医疗器械红线", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-2-1-2" },
+            { title: "欧盟 CSDDD 尽职调查指令", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-4-1" },
+            
+            { title: "FOB 装运港船上交货", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-1-1-1" },
+            { title: "HS Code 归类与避税红线", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-2-1-1" },
+            { title: "纯电池 PI965 航空指令", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-4-1-1" },
+
+            { title: "信保订单线上结算全链路", category: "03 资金财税", url: "data/finance/finance_all.html#node-1-1-1" },
+            { title: "T/T 电汇收款与黑客防范", category: "03 资金财税", url: "data/finance/finance_all.html#node-2-1-1" },
+            { title: "金税四期公私户稽查", category: "03 资金财税", url: "data/finance/finance_all.html#node-4-4-1" },
+
+            { title: "亚马逊 Brand Registry 品牌备案", category: "04 知产维权", url: "data/ip/ip_all.html#node-1-1-1" },
+            { title: "美国联邦法院 TRO 资金救援", category: "04 知产维权", url: "data/ip/ip_all.html#node-3-1-1" },
+
+            { title: "信保订单履约举证与仲裁", category: "05 平台契约", url: "data/platform/governance_all.html#node-1-1-1" },
+            { title: "账号防关联与 IP 隔离", category: "05 平台契约", url: "data/platform/governance_all.html#node-2-1-1" },
+            { title: "美国 OFAC SDN 黑名单排查", category: "05 平台契约", url: "data/platform/governance_all.html#node-4-1-1" }
+        ];
+
+        // ------------------ 2. 全局数据库 (融合外部架构挂载) ------------------
+        // 利用展开运算符 `...localDB` 继承本站所有内容，同时添加外部跨站链接
+        const globalDB = [
+            ...localDB,
+            { title: "转化率优化 (CRO) 与 10-tab 着陆页架构", category: "🔗 谷歌知识体系", url: "../my-tencent-docs/Google-Operations-Knowledge/index.html" },
+            { title: "B2B 结构化表单设计与 Python 自动化跟单", category: "🔗 谷歌知识体系", url: "../my-tencent-docs/Google-Operations-Knowledge/index.html" },
+            { title: "动态视频 Banner 嵌入 (GitHub Pages)", category: "🔗 谷歌知识体系", url: "../my-tencent-docs/Google-Operations-Knowledge/index.html" },
+            
+            { title: "SEO 关键词布局与内容集群 (Content Clusters)", category: "🔗 全域流量词典", url: "../全域流量与电商运营词典.html" },
+            { title: "CSV 导入与 WP All Import 程序化生成", category: "🔗 全域流量词典", url: "../全域流量与电商运营词典.html" }
+        ];
+
+        // ================= 引擎 A：居中局部直搜 =================
+        const localInput = document.getElementById('localSearchInput');
+        const localDropdown = document.getElementById('localSearchDropdown');
+
+        localInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            localDropdown.innerHTML = ''; 
+            if (query === '') { localDropdown.style.display = 'none'; return; }
+
+            const results = localDB.filter(item => 
+                item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
+            );
+
+            if (results.length > 0) {
+                localDropdown.style.display = 'block';
+                results.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
+                    li.addEventListener('click', () => window.open(item.url, '_blank'));
+                    localDropdown.appendChild(li);
+                });
+            } else {
+                localDropdown.style.display = 'block';
+                localDropdown.innerHTML = `<li class="res-empty">未在当前知识库找到 "${query}" ...</li>`;
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target !== localInput && e.target !== localDropdown) localDropdown.style.display = 'none';
+        });
+
+        // ================= 引擎 B：右上角全局悬浮弹窗 =================
+        const globalModal = document.getElementById('globalSearchModal');
+        const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
+        const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
+        const globalInput = document.getElementById('globalSearchInput');
+        const globalResultsList = document.getElementById('globalSearchResults');
+
+        const openGlobalSearch = () => {
+            globalModal.style.display = 'flex';
+            globalInput.value = '';
+            globalResultsList.innerHTML = '';
+            setTimeout(() => globalInput.focus(), 100);
+        };
+
+        const closeGlobalSearch = () => { globalModal.style.display = 'none'; };
+
+        openGlobalBtn.addEventListener('click', openGlobalSearch);
+        closeGlobalBtn.addEventListener('click', closeGlobalSearch);
+        globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
+
+        // 绑定快捷键 ⌘K / Ctrl+K
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                openGlobalSearch();
+            }
+            if (e.key === 'Escape') closeGlobalSearch();
+        });
+
+        // 全局搜索过滤逻辑
+        globalInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            globalResultsList.innerHTML = ''; 
+            if (query === '') return;
+
+            const results = globalDB.filter(item => 
+                item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
+            );
+
+            if (results.length > 0) {
+                results.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
+                    li.addEventListener('click', () => {
+                        window.open(item.url, '_blank');
+                        closeGlobalSearch();
+                    });
+                    globalResultsList.appendChild(li);
+                });
+            } else {
+                globalResultsList.innerHTML = `<li class="res-empty">全站未找到与 "${query}" 相关的结果...</li>`;
+            }
+        });
+    </script>
 </body>
 </html>
