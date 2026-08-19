@@ -6,11 +6,75 @@
     <title>GLOBAL TRADE WIKI | 全球贸易合规与履约知识库</title>
     <!-- 引入外部 CSS，保留高级 UI 与主题色映射 -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        /* 针对首页网格链接的具体列表优化 */
-        .dim-links { margin-top: 16px; border-top: 1px dashed var(--border-color); padding-top: 12px; }
-        .dim-links a { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
-        .dim-links a:hover { color: var(--text-primary); text-decoration: underline; }
+   <style>
+        /* 针对线框图设计的专属高级样式覆盖 */
+        .wiki-container { padding: 40px 80px; max-width: 960px; margin: 0 auto; background-color: var(--bg-main); min-height: 100vh; box-shadow: 0 0 1px rgba(0,0,0,0.1); }
+        
+        /* 顶导栏 */
+        .top-nav { border-bottom: 1px solid #333; padding-bottom: 16px; margin-bottom: 40px; }
+        
+        /* Hero 标题区 */
+        .hero-section { text-align: left; margin-bottom: 40px; }
+        .hero-section h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; color: #111; letter-spacing: 1px; }
+        .hero-section p { font-size: 15px; color: #555; font-family: monospace; margin: 0; }
+        
+        /* 搜索框 1:1 还原线框图，极简边框 */
+        .search-wrapper { position: relative; margin-bottom: 60px; max-width: 100%; }
+        .search-input { width: 100%; padding: 16px 20px 16px 44px; font-size: 15px; border: 1px solid #333; border-radius: 4px; outline: none; transition: all 0.2s; box-sizing: border-box; background: transparent; color: #333; font-family: inherit; }
+        .search-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .search-icon-inside { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #666; pointer-events: none; }
+        
+        /* 悬浮下拉搜索结果面板 */
+        .search-dropdown { position: absolute; top: 60px; left: 0; width: 100%; background: #fff; border: 1px solid #333; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-height: 350px; overflow-y: auto; display: none; z-index: 100; list-style: none; padding: 0; margin: 0; }
+        .search-dropdown li { padding: 12px 20px; border-bottom: 1px dashed #ccc; cursor: pointer; display: flex; flex-direction: column; text-align: left; }
+        .search-dropdown li:last-child { border-bottom: none; }
+        .search-dropdown li:hover { background: #F8F9FA; }
+        .result-title { font-size: 14px; font-weight: 600; color: #2563EB; }
+        .result-category { font-size: 12px; color: #888; margin-top: 4px; }
+
+        /* 五大维度网格：上3下2 */
+        .dimensions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 30px; margin-bottom: 60px; }
+        
+        /* 卡片整体作为链接，全域无死角可点击 */
+        .dimension-card { text-decoration: none; display: flex; flex-direction: column; cursor: pointer; }
+        
+        /* 卡片悬浮动效：虚线变实线，标题变色 */
+        .dimension-card:hover .dim-box { border: 1px solid #2563EB; background: #F8F9FA; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.05); }
+        .dimension-card:hover .dim-title { color: #2563EB; }
+        
+        /* 标题区：Icon + Title */
+        .dim-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .dim-icon { font-size: 20px; }
+        .dim-title { font-weight: 600; font-size: 16px; color: #111; transition: color 0.2s; }
+        
+        /* 虚线内容透视窗 */
+        .dim-box { border: 1px dashed #888; border-radius: 8px; padding: 18px 16px; transition: all 0.2s ease; background: transparent; display: flex; flex-direction: column; gap: 10px; height: 100%; box-sizing: border-box; }
+        
+        /* 内部核心大节点列表样式 */
+        .node-item { font-size: 13px; color: #555; display: flex; align-items: flex-start; gap: 8px; transition: color 0.2s; line-height: 1.5; }
+        
+        /* 极客风：原生 CSS 生成的圆点 */
+        .node-item::before { content: "•"; color: #888; font-weight: bold; font-size: 16px; line-height: 1; transition: color 0.2s; }
+        
+        /* 悬浮时的交互反馈：文字变黑，圆点点亮 */
+        .dimension-card:hover .node-item { color: #222; }
+        .dimension-card:hover .node-item::before { color: #2563EB; }
+
+        /* 底部快捷入口 */
+        .quick-links { border-top: 1px solid #333; padding-top: 24px; display: flex; justify-content: flex-start; gap: 50px; }
+        .quick-link-item { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: #333; transition: color 0.2s; text-decoration: none; }
+        .quick-link-item:hover { color: #2563EB; }
+
+        /* 移动端与平板的优雅降级 */
+        @media (max-width: 900px) {
+            .dimensions-grid { grid-template-columns: repeat(2, 1fr); }
+            .wiki-container { padding: 30px 40px; }
+        }
+        @media (max-width: 600px) {
+            .dimensions-grid { grid-template-columns: 1fr; }
+            .wiki-container { padding: 20px; }
+            .quick-links { flex-direction: column; gap: 20px; }
+        }
     </style>
 </head>
 <body>
