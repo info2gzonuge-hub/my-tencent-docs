@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实操 Checklist 聚合详情 - GLOBAL TRADE WIKI</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #F8FAFC; margin: 0; padding: 0; color: #333; line-height: 1.8; }
+        .wiki-container { max-width: 1024px; margin: 0 auto; min-height: 100vh; padding: 40px 30px; }
+        
+        .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 20px; margin-bottom: 40px; font-size: 14px; background: #fff; padding: 16px 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .top-nav a { color: #64748B; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .top-nav a:hover { color: #0F172A; }
+
+        .page-title { font-size: 24px; font-weight: 700; color: #0F172A; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+
+        /* 核心：改造成两列平铺的网格布局 (Grid Layout) */
+        .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+        /* 详情卡片样式：与主页风格完美统一 */
+        .detail-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; transition: all 0.25s ease; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        .detail-card:hover { transform: translateY(-4px); background-color: #F0FDF4; border-color: #2563EB; box-shadow: 0 12px 24px rgba(37, 99, 235, 0.08); }
+
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .card-icon { font-size: 28px; }
+        .detail-card h2 { font-size: 18px; color: #0F172A; margin: 0; font-weight: 700; }
+        
+        .card-desc { color: #64748B; font-size: 14px; margin-bottom: 16px; }
+
+        /* 实操 Checklist 步骤列表 */
+        .checklist-steps { list-style: none; padding: 0; margin: 0; border-top: 1px solid #F1F5F9; padding-top: 14px; }
+        .checklist-steps li { position: relative; padding-left: 20px; font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 8px; }
+        .checklist-steps li::before { content: "☑"; position: absolute; left: 0; top: 0px; color: #2563EB; font-weight: bold; font-size: 14px; }
+        .checklist-steps li strong { color: #1E293B; font-weight: 600; }
+
+        /* 锚点定位闪烁高亮动效 */
+        :target { animation: highlightPulse 1.5s ease; }
+        @keyframes highlightPulse {
+            0% { border-color: #2563EB; background-color: #EFF6FF; transform: scale(1.02); }
+            100% { border-color: #E2E8F0; background-color: #FFFFFF; transform: scale(1); }
+        }
+
+        /* 手机端自适应单列 */
+        @media (max-width: 768px) {
+            .detail-grid { grid-template-columns: 1fr; }
+            .wiki-container { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wiki-container">
+        <header class="top-nav">
+            <a href="index.html">← 返回 Checklist 目录</a>
+            <a href="../../index.html">返回主页 🏠</a>
+        </header>
+
+        <div class="page-title">
+            <span>📋</span> 业务场景实操 Checklist 聚合详情
+        </div>
+
+        <!-- 两列网格容器 -->
+        <div class="detail-grid">
+            <!-- 1. 代工厂准入审查清单 -->
+            <div id="factory" class="detail-card">
+                <div class="card-header">
+                    <span class="card-icon">🏭</span>
+                    <h2>代工厂准入审查清单 (SOP)</h2>
+                </div>
+                <p class="card-desc">防范小作坊与二道贩子，确保供应链源头合法合规、产能真实可靠。</p>
+                <ul class="checklist-steps">
+                    <li><strong>资质三证核验：</strong>核查营业执照、实际生产许可证及环评批复。</li>
+                    <li><strong>验厂标准匹配：</strong>确认 ISO9001 质量管理体系或 BSCI 验厂报告。</li>
+                    <li><strong>知识产权隔离：</strong>下单前签署严格的 NNN（保密、不使用）协议。</li>
+                    <li><strong>产能与品控抽检：</strong>评估产线工人数、机器设备及出货前 AQL 抽检。</li>
+                </ul>
+            </div>
+
+            <!-- 2. 大宗出货防冻卡清单 -->
+            <div id="freeze" class="detail-card">
+                <div class="card-header">
+                    <span class="card-icon">📦</span>
+                    <h2>大宗出货防冻卡与资金风控</h2>
+                </div>
+                <p class="card-desc">从 PI 报价到结汇水单，四单合一防洗钱风控与离岸账户冻结应对。</p>
+                <ul class="checklist-steps">
+                    <li><strong>四单合一核对：</strong>确保形式发票 (PI)、装箱单、提单信息一致。</li>
+                    <li><strong>离岸账户合规：</strong>排查高风险款项，防范地下钱庄导致账户被冻。</li>
+                    <li><strong>结汇水单留存：</strong>妥善保存报关单与银行结汇凭证以备查验。</li>
+                </ul>
+            </div>
+
+            <!-- 3. TRO 资金救援 21 天倒计时 -->
+            <div id="tro" class="detail-card">
+                <div class="card-header">
+                    <span class="card-icon">🚨</span>
+                    <h2>TRO 资金救援 21 天倒计时</h2>
+                </div>
+                <p class="card-desc">遭遇流氓律所起诉后的应急止损、下架隔离与和解谈判步调指南。</p>
+                <ul class="checklist-steps">
+                    <li><strong>第 1-3 天（应急止损）：</strong>确认冻结通知、排查侵权链接并下架。</li>
+                    <li><strong>第 4-10 天（应诉评估）：</strong>选择直接和解、放弃店铺或聘请律师出庭。</li>
+                    <li><strong>第 11-21 天（谈判执行）：</strong>提交划扣比例谈判并申请解除冻结。</li>
+                </ul>
+            </div>
+
+            <!-- 4. 独立站合规上线排雷表 -->
+            <div id="indep" class="detail-card">
+                <div class="card-header">
+                    <span class="card-icon">💻</span>
+                    <h2>独立站合规上线排雷表</h2>
+                </div>
+                <p class="card-desc">涵盖 FTC 欺诈自查、GDPR 弹窗、ADA 无障碍代码及支付接口验证。</p>
+                <ul class="checklist-steps">
+                    <li><strong>FTC 自动扣费合规：</strong>检查结账页是否存在隐形订阅陷阱。</li>
+                    <li><strong>GDPR 隐私合规：</strong>部署欧盟 Cookie 同意弹窗及隐私数据通道。</li>
+                    <li><strong>ADA 无障碍合规：</strong>确保网站支持屏幕阅读器与键盘导航。</li>
+                    <li><strong>支付通道风控：</strong>配置 Stripe 欺诈过滤器与 3DS 验证。</li>
+                </ul>
+            </div>
+
+            <!-- 5. 特货清关与单证检查单 -->
+            <div id="dangerous" class="detail-card">
+                <div class="card-header">
+                    <span class="card-icon">✈️</span>
+                    <h2>特货清关与单证检查单</h2>
+                </div>
+                <p class="card-desc">带电、带粉末、带膏体产品的 MSDS 审核与海关 HS Code 预归类防坑。</p>
+                <ul class="checklist-steps">
+                    <li><strong>MSDS 安全数据表：</strong>核查电池或膏体成分符合国际运输标准。</li>
+                    <li><strong>HS Code 归类确认：</strong>向报关行确认税号，避免海关查扣。</li>
+                    <li><strong>目的港准入单证：</strong>提前确认特种进口许可与药监局合规。</li>
+                </ul>
+            </div>
+
+            <!-- 6. 侵权申诉与反制清单 -->
+            <div id="ipr" class="detail-card">
+                <div class="card-header">
+                    <span class="card-icon">⚖️</span>
+                    <h2>侵权申诉与反制清单</h2>
+                </div>
+                <p class="card-desc">遭遇恶意搞后的 UPNEP 专利中立评估举证及 DMCA 反通知提交流程。</p>
+                <ul class="checklist-steps">
+                    <li><strong>专利非侵权比对：</strong>逐一比对权利要求，制作技术差异表。</li>
+                    <li><strong>UPNEP 中立评估：</strong>在亚马逊专利评估期内提交有力证据。</li>
+                    <li><strong>DMCA 反通知：</strong>针对版权恶意投诉按规定提交不侵权声明。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
