@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>知识产权与维权全景库 - GLOBAL TRADE WIKI</title>
+    <!-- 引入 Quicksand 字体用于英文字段 -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 👇 一键换肤中枢 👇 */
+            /* 当前为【维度四：知产紫 (Intellectual Purple)】 */
+            --theme-bg: #F5F3FF; 
+            --theme-text: #6D28D9; 
+        }
+
+        /* 基础排版：中英文字体搭配 */
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #fff; }
+
+        /* 容器控制：1280px 宽屏适配 */
+        .mega-container { display: flex; max-width: 1280px; margin: 0 auto; padding-top: 40px; }
+
+        /* 左侧电梯导航 */
+        .sidebar-toc { width: 320px; position: sticky; top: 40px; height: calc(100vh - 80px); overflow-y: auto; padding-right: 20px; border-right: 1px solid #eaeaea; }
+        .sidebar-toc h3 { font-size: 16px; color: #888; margin-bottom: 16px; }
+        .sidebar-toc ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-toc li { margin-bottom: 8px; }
+        .sidebar-toc a { text-decoration: none; color: #555; font-size: 14px; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.2s; }
+        .sidebar-toc a:hover { background-color: var(--theme-bg); color: var(--theme-text); font-weight: 600; }
+        
+        /* 📌 导航栏批注专属样式 */
+        .arch-desc { display: inline-block; font-size: 14px; color: #E53E3E; background: #FFF5F5; padding: 2px 6px; border-radius: 4px; font-weight: normal; margin-top: 4px; }
+
+        /* 右侧正文区域 */
+        .content-area { flex: 1; padding-left: 60px; padding-right: 20px; }
+
+        /* 标题与标签 */
+        .node-section { margin-bottom: 60px; scroll-margin-top: 40px; }
+        .tags-container { margin-bottom: 8px; }
+        .wiki-tag { display: inline-block; padding: 4px 12px; background-color: var(--theme-bg); color: var(--theme-text); border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 8px; }
+        .node-title { font-size: 28px; font-weight: bold; color: #222; margin: 0 0 4px 0; }
+        .node-eng { font-family: 'Quicksand', sans-serif; font-size: 15px; color: #888; margin-bottom: 24px; }
+
+        /* 彻底隐去横线并统一基础间距 */
+        .wiki-divider { display: none !important; }
+        .wiki-section { margin-bottom: 24px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .wiki-section h3 { font-size: 18px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: #222; }
+        .wiki-text { font-size: 15px; line-height: 1.7; color: #444; margin: 0; }
+
+        /* 💡 一句话理解 */
+        .notion-quote { background-color: #F7F9FC; border-left: 4px solid var(--theme-text); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 15px; color: #333; font-weight: 500; }
+
+        /* ⚠️ 风险提示 */
+        .alert-box { background-color: #FFF5F5; border-left: 4px solid #E53E3E; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-top: 12px; }
+        .alert-box p { margin: 0; font-size: 15px; line-height: 1.7; }
+        .alert-box strong { color: #E53E3E; display: block; margin-bottom: 6px; font-size: 15px; }
+
+        /* 🌟 专属卡片 1：专业释义 (浅蓝灰) */
+        .def-card { background-color: #F4F8FB; border: 1px solid #C9DCEB; padding: 20px 24px; border-radius: 12px; }
+        .def-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(162, 185, 205, 0.25); background-color: #EDF4FA; }
+
+        /* 🌟 专属卡片 2：大白话 (浅暖橙) */
+        .plain-card { background-color: #FFF8F0; border: 1px solid #EEDAC5; padding: 20px 24px; border-radius: 12px; }
+        .plain-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(230, 200, 160, 0.25); background-color: #FFF3E0; }
+
+        /* 🌟 专属卡片 3：实操 SOP (浅灰) */
+        .sop-card { background-color: #F8F9FA; border: 1px solid #DDE2E5; padding: 20px 24px; border-radius: 12px; }
+        .sop-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(200, 205, 210, 0.25); background-color: #F1F3F5; }
+        .sop-card .sop-list { margin: 0; padding-left: 20px; }
+        .sop-card .sop-list li { font-size: 15px; line-height: 1.7; color: #333; margin-bottom: 8px; }
+        .sop-card .sop-list li::marker { color: var(--theme-text); }
+
+        /* 移动端设备精准适配 */
+        @media (max-width: 820px) {
+            .mega-container { flex-direction: column; padding-top: 20px; }
+            .sidebar-toc { display: none; }
+            .content-area { padding-left: 20px; padding-right: 20px; width: 100%; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mega-container">
+        <!-- 左侧导航 (维度四) -->
+        <aside class="sidebar-toc">
+            <h3 style="font-size: 18px; font-weight: bold; color: #111; margin-bottom: 24px;">📑 目录导航 (21个节点)</h3>
+
+            <!-- 1 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 12px; margin-bottom: 4px;">1. 亚马逊域内防卫生态</div>
+            <div class="arch-desc">【筑牢店铺防线：品牌备案与防跟卖矩阵】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">1.1 基础护城河：Brand Registry</div>
+            <ul>
+                <li><a href="#node-1-1-1">1.1.1 R标与TM标备案差异</a></li>
+                <li><a href="#node-1-1-2">1.1.2 举报违规(RAV)正确举证</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">1.2 高阶防跟卖与溯源机制</div>
+            <ul>
+                <li><a href="#node-1-2-1">1.2.1 Transparency(透明计划)</a></li>
+                <li><a href="#node-1-2-2">1.2.2 Project Zero(零容忍计划)</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">1.3 Listing 篡改防御</div>
+            <ul>
+                <li><a href="#node-1-3-1">1.3.1 应对 VC 抢夺与篡改</a></li>
+            </ul>
+
+            <!-- 2 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">2. 恶意投诉与平台内部仲裁</div>
+            <div class="arch-desc">【反制同行黑手：中立评估与侵权申诉】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">2.1 专利中立评估程序</div>
+            <ul>
+                <li><a href="#node-2-1-1">2.1.1 UPNEP (实用专利评估)</a></li>
+                <li><a href="#node-2-1-2">2.1.2 APNEP (外观专利应对)</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">2.2 版权恶意投诉反制</div>
+            <ul>
+                <li><a href="#node-2-2-1">2.2.1 DMCA Counter-Notice 反通知</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">2.3 商标滥用陷阱</div>
+            <ul>
+                <li><a href="#node-2-3-1">2.3.1 规避底层 Search Terms 埋词</a></li>
+            </ul>
+
+            <!-- 3 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">3. 联邦法院 TRO 与资金冻结</div>
+            <div class="arch-desc">【应对外部司法：流氓律所与资金救援】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">3.1 流氓律所 "无差别网捕"</div>
+            <ul>
+                <li><a href="#node-3-1-1">3.1.1 通用图形与俚语陷阱</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">3.2 亚马逊资金池冻结实操</div>
+            <ul>
+                <li><a href="#node-3-2-1">3.2.1 连带冻结全店铺资金</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">3.3 21天黄金救援生死线</div>
+            <ul>
+                <li><a href="#node-3-3-1">3.3.1 缺席判决(Default Judgment)</a></li>
+                <li><a href="#node-3-3-2">3.3.2 积极应诉与和解谈判</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">3.4 站外引流漏斗与社媒风控</div>
+            <ul>
+                <li><a href="#node-3-4-1">3.4.1 社媒广告素材反恶搞下架</a></li>
+            </ul>
+
+            <!-- 4 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">4. 宏观跨国确权与数字前端合规</div>
+            <div class="arch-desc">【全域资产保护：国际体系与独立站避雷】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">4.1 实体确权与供应链管控</div>
+            <ul>
+                <li><a href="#node-4-1-1">4.1.1 WIPO 商标体系与 FTO 排查</a></li>
+                <li><a href="#node-4-1-2">4.1.2 防代工厂抢注的 NNN 协议</a></li>
+            </ul>
+<li><a href="#node-4-1-3">4.1.3 核心配方与包材专利壁垒</a></li>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">4.2 独立站数据合规与隐私</div>
+            <ul>
+                <li><a href="#node-4-2-1">4.2.1 欧盟 GDPR 与美国 CCPA</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">4.3 前端代码与底层安全</div>
+            <ul>
+                <li><a href="#node-4-3-1">4.3.1 美国 ADA 无障碍诉讼规避</a></li>
+                <li><a href="#node-4-3-2">4.3.2 PCI-DSS 信用卡数据防截获</a></li>
+            </ul>
+<div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">4.4 独立站域名与品牌资产</div>
+            <ul>
+                <li><a href="#node-4-4-1">4.4.1 域名防抢注与 UDRP 仲裁</a></li>
+            </ul>
+            
+            <div style="height: 60px;"></div>
+        </aside>
+
+        <!-- 右侧内容 -->
+        <main class="content-area">
+            <h1 style="font-size: 36px; margin-bottom: 60px; color: #111;">维度四：知识产权与亚马逊专属维权百科全书</h1>
+
+            <!-- ================== 1.1.1 ================== -->
+            <section id="node-1-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">亚马逊域内防卫</span>
+                    <span class="wiki-tag">Brand Registry</span>
+                </div>
+                <h2 class="node-title">1.1.1 R标与TM标备案差异及旗舰店权限</h2>
+                <div class="node-eng">Differences Between R & TM Marks for Brand Registry</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">TM标是“受理中”，R标是“已注册”。亚马逊允许提前拿TM标占坑享流量，但赶同行跟卖必须靠R标实权。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">品牌备案 (Brand Registry) 是亚马逊核心的保护与营销计划。提交商标申请获得的受理回执（TM标，Pending状态）和正式下发的注册证（R标，Registered状态）均可用于备案，两者均可解锁 A+ 页面、品牌旗舰店和视频上传权限。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前你要等一两年拿到R标才能把产品页面做得很精美。现在只要商标局收了你的钱发了收据（TM标），你就能去亚马逊证明“这牌子是我的”，立刻开通视频主图。但要是遇到无赖同行跟卖你，因为你的TM标还没走完法律流程，平台大概率不会帮你强踢同行。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>TM标被驳回致品牌资产蒸发：</strong> TM标不具备绝对排他权。如果TM标在公示期被异议或最终被商标局驳回，你的亚马逊品牌备案将被无情撤销，前期积累的所有 A+ 权重和店铺视频可能瞬间丢失。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>尽早抢先占位：</strong> 产品立项阶段就应向 USPTO 提交商标申请，一周内拿到打标回执 (Serial Number) 后光速前往亚马逊进行备案。</li>
+                        <li><input type="checkbox" disabled> <strong>持续扫描滥用：</strong> 使用品牌备案后台的后台控制面板，定期扫描是否有其他杂牌滥用了你的品牌标识词。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.1.2 ================== -->
+            <section id="node-1-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">亚马逊域内防卫</span>
+                    <span class="wiki-tag">Brand Registry</span>
+                </div>
+                <h2 class="node-title">1.1.2 Report a Violation (RAV) 工具正确举证</h2>
+                <div class="node-eng">Report a Violation Tool: Proper Evidence & Misuse Avoidance</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">亚马逊赋予品牌方的“官方巡警系统”，但如果你拿着假证据乱抓人，会被反向拉黑封店。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">RAV (举报违规) 工具允许已备案的品牌所有者主动搜索并精准举报侵犯其商标、专利或版权的商品或卖家。亚马逊高度依赖此工具来进行平台内部的打假与知产净化。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">看到别人偷你辛辛苦苦拍的产品图，或者假冒你的牌子发货，直接在后台用 RAV 把他举报了，亚马逊大概率会秒删他的链接。但如果你为了搞死合法竞争的对手，拿着自己不相干的商标去乱投诉别人合规的产品，你就是在平台底线边缘疯狂试探。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>滥用投诉连坐封禁：</strong> 如果品牌方多次发起无效的、恶意的投诉打压同行，亚马逊不仅会直接没收你的 RAV 投诉权限，甚至会判定为“卖家行为准则违规”，连带封停该品牌关联的所有销售店铺。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>Test Buy 核心取证：</strong> 举报假冒前，必须先匿名买一件对方的货，拍下带有假冒包装和物流面单的高清照片作为铁证提交，成功率极高。</li>
+                        <li><input type="checkbox" disabled> <strong>专利投诉要慎重：</strong> 专利侵权判定极其复杂，平台客服往往不敢受理，优先使用更直接的“商标”或“盗图版权”进行打击。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.2.1 ================== -->
+            <section id="node-1-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">亚马逊域内防卫</span>
+                    <span class="wiki-tag">高阶防跟卖</span>
+                </div>
+                <h2 class="node-title">1.2.1 Transparency (透明计划) 物理阻断假货</h2>
+                <div class="node-eng">Transparency Program: Physical Counterfeit Blocking</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">从物理层面彻底干掉假货跟卖的终极武器，让跟卖者连 FBA 仓库的门都进不去。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">亚马逊推出的防伪溯源服务。品牌方为每一件商品生成唯一的加密二维码。商品入库 FBA 或跟卖者自发货时，亚马逊强制扫码验证。无码或伪码直接拒收并做假货销毁处理。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前你卖爆了，一堆无良同行半夜悄悄跟卖抢你购物车。开通透明计划后，你在国内工厂给每个包装盒贴个独一无二的防伪码。同行如果想跟卖你的 ASIN，亚马逊会向他索要这批货的溯源码，他拿不出，连商品链接都上不去，直接物理绝杀。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>贴码遗漏导致自家断货：</strong> 工厂产线工人漏贴了透明二维码，大批真货发到美国 FBA 后，亚马逊一扫没有码，会把你自己的原装正品当成假货全数拦在仓外，不仅无法上架，甚至会被系统要求强制销毁。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>包装流程强管控：</strong> 必须将“透明二维码贴标”作为出厂全检的最后一道必经工序，绝不可漏贴或贴错变体。</li>
+                        <li><input type="checkbox" disabled> <strong>OBB 关联扫码：</strong> 整箱发货时在外箱做好 OBB (打包条码) 关联，避免 FBA 入仓时拆箱逐一扫码，极大提升上架速度。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.2.2 ================== -->
+            <section id="node-1-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">亚马逊域内防卫</span>
+                    <span class="wiki-tag">高阶防跟卖</span>
+                </div>
+                <h2 class="node-title">1.2.2 Project Zero (零容忍计划) 秒删权限</h2>
+                <div class="node-eng">Project Zero: Self-Service Counterfeit Removal</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">官方赋予的“生杀大权”，不用经过平台漫长的审核，你自己就能删掉假货链接。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">亚马逊的高级品牌保护计划。符合条件的高信用品牌，将获得自助移除假冒商品（Automated protections & Self-service counterfeit removal）的权力，无需亚马逊内部客服二次审核干预。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前举报假货跟卖，要苦苦等待亚马逊客服慢吞吞地去审核证据。有了零容忍计划，只要你看到有人明目张胆地卖你的假货，后台点个按钮，对方的跟卖链接瞬间蒸发。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>维持 99% 的绝对准确率红线：</strong> 亚马逊极其珍视这项权力，要求品牌方必须维持 99% 以上的举报准确率。一旦你用来打压合法销售的经销商，导致误杀且对方申诉成功，该“生杀大权”将被永久收回。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>激活邀请机制：</strong> 保持过去 6 个月内 100% 的 RAV (举报违规) 投诉成功率，是触发系统邀请开通 Project Zero 的唯一路径。</li>
+                        <li><input type="checkbox" disabled> <strong>建立经销商白名单：</strong> 提前在系统内建立合法分销商的白名单，防止其被系统的自动化防假冒模型误杀。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.3.1 ================== -->
+            <section id="node-1-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">亚马逊域内防卫</span>
+                    <span class="wiki-tag">Listing 防御</span>
+                </div>
+                <h2 class="node-title">1.3.1 应对 VC 账号恶意抢夺与篡改</h2>
+                <div class="node-eng">Defending Against VC Account Hijacking & Tampering</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">防范平台内部最高权限账号的“黑客夺舍”，保住自己辛辛苦苦做起来的链接底盘。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">VC (Vendor Central) 账号是亚马逊直营的高级供应商账号，拥有极高的 Listing 编辑权限。黑产常利用被盗的 VC 高权重账号，对第三方卖家进行 ASIN 跨站点融合（合并 Review 盗取权重）或恶意篡改商品分类节点与图片。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你一条卖了两年积累了上千好评的裙子，一夜之间图片和标题全被别人改成了“宠物狗粮”。这帮人利用高级特权，把你链接里值钱的好评全部“吸血”吸走，嫁接到他的产品上，这就叫作极其恶劣的 VC 夺舍。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>节点被篡改为限制级导致下架：</strong> 链接一旦被恶意修改为“成人用品”或“医疗器械”等受限节点，会导致产品瞬间失去搜索流量，甚至被亚马逊系统自动屏蔽下架，申诉恢复过程漫长且痛苦。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>独立站镜像防御：</strong> 在自己的官方独立站上同步上架该产品并附带标准的 UPC 码，这是向亚马逊申诉“我是该产品真正缔造者”的最强实证。</li>
+                        <li><input type="checkbox" disabled> <strong>直连 Brand Registry 维权：</strong> 发现篡改立刻开立 Case 锁定编辑权，不要找普通客服，必须直接向 Brand Registry 专属维权团队提交带有时间戳的篡改记录。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.1.1 ================== -->
+            <section id="node-2-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">恶意投诉与仲裁</span>
+                    <span class="wiki-tag">专利中立评估</span>
+                </div>
+                <h2 class="node-title">2.1.1 UPNEP: 实用专利评估对决</h2>
+                <div class="node-eng">Utility Patent Neutral Evaluation Procedure (UPNEP)</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">亚马逊内部的“知识产权法庭”，双方各砸 4000 刀押金请外脑律师查明谁是真侵权。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">UPNEP 是亚马逊官方的一项内部仲裁程序。允许专利持有者支付 4000 美元押金，指定一名独立的中立专利律师评估侵权。被诉方若不认同，也需缴纳 4000 美元强硬应诉。由律师进行裁决，胜诉方的押金将全额退还，败诉方押金没收。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">无良同行随便拿个垃圾专利投诉你，你向亚马逊客服解释，他们根本看不懂这些技术图纸。有了这个程序，你们各交 4000 块钱押金请外面的专业律师来断案。如果同行是心虚碰瓷，他大概率不敢交这个钱，你的链接立刻恢复；如果你赢了，他的 4000 块归律师，你的钱退给你。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>放弃应诉等于直接判死刑：</strong> 一旦你收到了 UPNEP 的评估通知邮件，如果你在规定的 3 周内既不缴纳押金应诉，也不提交“不侵权证据”，系统将默认你认输，链接被永久移除。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>在先销售证据绝杀：</strong> 证明你的产品在对方专利申请日（Priority Date）之前就已经公开在网上销售或留存网页快照，这是最致命的反击。</li>
+                        <li><input type="checkbox" disabled> <strong>提交不侵权报告 (Non-Infringement Opinion)：</strong> 聘请美国本土专利律师出具详细的特征比对分析报告随函提交，极大提高中立律师的好感度。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.1.2 ================== -->
+            <section id="node-2-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">恶意投诉与仲裁</span>
+                    <span class="wiki-tag">专利中立评估</span>
+                </div>
+                <h2 class="node-title">2.1.2 APNEP: 外观设计专利评估应对</h2>
+                <div class="node-eng">Amazon Patent Neutral Evaluation Procedure for Designs</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">专治拿深圳工厂大路货“公模”去海外注册外观专利，反过来敲诈勒索同行的流氓。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">这是针对外观设计专利（Design Patent）推出的内部中立评估程序。主要用于解决跨境电商平台上极其泛滥的外观微调、或将通用公模恶意抢注为私有专利引发的不正当竞争投诉。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">东莞工厂开的一套公模加湿器，市场里谁都能拿货去卖。结果有个黑心同行悄悄去美国递交了它的外观专利，反过头来把你们全网投诉下架。这时候通过 APNEP 硬刚，就是撕破他虚假护城河伪装的最佳途径。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>陷入内部结构狡辩：</strong> 外观专利的侵权比拼，在法律上仅仅基于“普通观察者（Ordinary Observer）”的整体视觉感受。不要在答辩中沉溺于解释你的内部主板线路或齿轮结构和他不一样，这毫无意义。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>红圈特征点对比法：</strong> 制作清晰的高清对比图，用红圈显眼地标出你的实物照片与对方专利线框图中不一致的显著视觉特征（如按键位置不同、倒角弧度不同）。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.2.1 ================== -->
+            <section id="node-2-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">恶意投诉与仲裁</span>
+                    <span class="wiki-tag">版权恶意反制</span>
+                </div>
+                <h2 class="node-title">2.2.1 DMCA Counter-Notice 反通知恢复</h2>
+                <div class="node-eng">DMCA Counter-Notice for Copyright Disputes</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">用具备法律效力的宣誓书逼退版权假李鬼，恢复被恶意投诉下架的 Listing。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">DMCA (美国数字千年版权法)。当卖家遭遇恶意的盗图或版权投诉导致下架时，通过向平台提交 Counter-Notice (反通知) 并声明愿接受美国联邦法院管辖。若投诉方在 10 到 14 个工作日内未出示真实法庭诉讼证明，平台依法必须无条件恢复链接。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">竞争对手拿你的产品图建个独立站，反咬一口向亚马逊投诉你盗他图。亚马逊为了免责，不问青红皂白先下架你的链接。你直接拍出一份“DMCA 反通知”声明：“我不服，老子原图在手，有种去法院告我”。对方大概率是个怂货不敢去立案，等 14 天一过，你的链接自动活过来。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>伪造版权与伪证罪 (Perjury)：</strong> 千万不要在明明是你自己盗用他人图片或文案确凿的情况下，盲目头铁去提交 Counter-Notice。在反诉信上签字即等同于法律宣誓，构成伪证罪一旦被查实，不仅链接保不住，亚马逊账号将被永久拉黑死亡。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>留存绝对底牌：</strong> 摄影团队拍摄的原片、带有图层保留的 PSD 源文件，以及文件属性中的原始生成日期时间戳，是你反诉版权的绝对必杀技。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.3.1 ================== -->
+            <section id="node-2-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">恶意投诉与仲裁</span>
+                    <span class="wiki-tag">商标滥用陷阱</span>
+                </div>
+                <h2 class="node-title">2.3.1 规避底层 Search Terms 埋词侵权封店</h2>
+                <div class="node-eng">Avoiding Trademark Misuse in Search Terms</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">为了强蹭爆款流量，在后台偷偷埋进别人的大牌商标，轻则下架，重则全店被封。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">商标侵权 (Trademark Misuse) 绝对不仅限于产品实物上印了别人的 Logo。将他人已注册的商标名作为引流关键词，填入你产品的五点描述 (Bullet Points) 或是后台隐藏的搜索词 (Search Terms)，在法律和平台规则中同样构成严重侵权。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你卖个毫无名气的杂牌手机壳，为了让买家能搜到你，在后台代码里偷偷填了 "iPhone Case" 甚至防摔品牌 "OtterBox"。虽然买家在前台看不见，但亚马逊的智能爬虫一抓一个准，直接判定你滥用他人商标欺骗流量。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>兼容性描述定性违规：</strong> 即使你是卖第三方适配配件，如果不按规定使用修饰介词（你应该写 "Case for iPhone"，而绝不能写 "iPhone Case" 这种暗示你是官方产品的词），也会被苹果等大厂代理律所无情秒杀。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>严格规范从属介词：</strong> 标题描述他人大牌时，必须使用 "compatible with", "fits for", "suitable for" 等明确修饰语进行硬隔离。</li>
+                        <li><input type="checkbox" disabled> <strong>全库商标排雷筛查：</strong> 上架运营填写 Keyword 前，必须通过 USPTO 查词工具对后台流量词进行地毯式盲点排查。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.1.1 ================== -->
+            <section id="node-3-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">联邦法院 TRO</span>
+                    <span class="wiki-tag">流氓律所网捕</span>
+                </div>
+                <h2 class="node-title">3.1.1 通用图形与俚语陷阱及 TRO 速批机制</h2>
+                <div class="node-eng">Common Patterns, Slang Traps & Fast-Track TROs</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">不要以为没卖假包就不会侵权，哪怕你衣服上印了个笑脸或日常俚语，也能被流氓律所瞬间冻结全店资金。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">TRO (Temporary Restraining Order，临时禁令)。美国某些极具攻击性的律所（如 GBC、EPS 等），利用联邦民事诉讼规则第 65 条，在不提前通知中国被告的情况下，单方面向法官申请速批 TRO。他们常以早已注册商标的“通用图形（如特定弧度的线条）”或“爆款俚语”进行大规模的“无差别钓鱼执法”。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你卖个保温杯，详情页里顺口写了一句 "100% Love" 表达热爱。结果这句话早已被某个美国律所悄悄注册成了商品商标。他们截好图后，直接跑到美国法院告你，法院一纸禁令发给亚马逊，你账户里卖其他合规产品赚的 50 万美金瞬间全被死死冻结。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>私下回复钓鱼邮件引火烧身：</strong> 律所取证时，常伪装成买家发邮件问“你能否把这个发往美国伊利诺伊州”。如果你热情地回复“可以”，这就构成了该州法院对你具有长臂管辖权的铁证，直接落入司法陷阱。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>敏感州拦截规避：</strong> 在独立站后台或亚马逊物流模板中，审慎对待发往伊利诺伊州 (GBC大本营) 等诉讼高发州的诡异小额测试订单。</li>
+                        <li><input type="checkbox" disabled> <strong>定期排雷词库：</strong> 选品与上架前，必须交叉对比近期爆发的 TRO 维权案件，避开特定表情包、笑脸、雪花图案及外网病毒俚语。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.2.1 ================== -->
+            <section id="node-3-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">联邦法院 TRO</span>
+                    <span class="wiki-tag">资金池冻结实操</span>
+                </div>
+                <h2 class="node-title">3.2.1 平台连带冻结全店铺资金池机制</h2>
+                <div class="node-eng">Platform Liability Shield: Total Account Freeze</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">因为一个赚了 10 块钱的违规边缘小物件，导致你账户里 100 万的合法货款被全额封死。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">当美国联邦法院的 TRO 下发至支付网关或电商平台（如 Amazon, PayPal）时，为遵守法院司法指令并绝对避免平台自身承担连带赔偿责任，平台会立刻采取最保守的风控措施：对被告的整个账户资金池进行彻底冻结，而绝非仅仅冻结那个涉嫌侵权 ASIN 产生的收入。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">流氓律所只要抓到你店里有一双袜子印了受保护的卡通图案，法官的文书一下来，哪怕你这个大店里卖其他正规桌子椅子赚了几百万，也一分钱都提不出来，这笔钱将成为对方逼迫你天价和解的终极筹码。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>拖延不管导致死水微澜滚雪球：</strong> 冻结期间你的店铺链接可能暂时并未被下架，依然可以销售，但新增的货款也会继续流向这个被死死冻结的“资金池”，导致被冻结金额越来越大，变相给流氓律所增加了和解索赔的基数。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>立刻下架物理隔离：</strong> 一旦收到有关 TRO 冻结的系统邮件，第一时间清空该涉事产品的全网库存并下架，切断侵权状态延续。</li>
+                        <li><input type="checkbox" disabled> <strong>紧急叫停发货柜：</strong> 在资金解冻前景不明，不知账号能否保住时，立即联络货代叫停发往 FBA 的海上货柜或入仓动作止损。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.3.1 ================== -->
+            <section id="node-3-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">联邦法院 TRO</span>
+                    <span class="wiki-tag">黄金生死线</span>
+                </div>
+                <h2 class="node-title">3.3.1 缺席判决 (Default Judgment) 后果</h2>
+                <div class="node-eng">Consequences of Default Judgment & Total Fund Sweeps</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">收到法院传票装死不管，你账户里的钱就会合法地变成流氓律所的年终奖。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">若中国被告在收到 TRO 传票及立案通知后，未能在法定黄金期（通常为 21 天内）向法庭做出正式的法律回应（未聘请律师提交答辩状），法院将直接应原告要求下达缺席判决。原告将获得胜诉，并合法向平台申请将卖家冻结账户内的所有资金强行划扣作为天价侵权赔偿金。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">很多国内卖家收到全英文邮件，觉得“法院在美国，我人在中国他拿我没辙”，干脆当垃圾邮件不回。结果 21 天一过，账户里的 5 万美金直接被亚马逊平台强制转走划给原告律所，账号也面临彻底废弃。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>永久债务追索与跨店连坐：</strong> 缺席判决的判决书金额通常极其高昂（十几万美金起）。即使你当前账户里只有几千块钱不够赔，但判决债务依然有效。未来你名下的其他资产，或用同一套资料新开的关联账号，依然面临被继续追讨和扣款的惨烈风险。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>把握黄金 21 天响应期：</strong> 收到 TRO 通知后切勿存有侥幸心理装死，立即联系具备美国联邦法院执业资格的跨境电商知产律师评估案情与账号价值。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.3.2 ================== -->
+            <section id="node-3-3-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">联邦法院 TRO</span>
+                    <span class="wiki-tag">黄金生死线</span>
+                </div>
+                <h2 class="node-title">3.3.2 积极应诉与和解谈判策略</h2>
+                <div class="node-eng">Active Litigation & Settlement Negotiation Tactics</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">花钱消灾是一门极其专业的心理博弈技术活，利用法律杠杆用最少的和解金把钱和账号救回来。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">如果卖家评估确实存在客观侵权事实，最经济的止损方式是委托代理律师与原告律所达成庭外和解 (Settlement)。和解金谈判的筹码，通常基于被冻结账户资金总额的比例，以及实际侵权 ASIN 产生的真实历史销量进行拉锯博弈，行规最终落地通常在被冻资金的 20% 到 40% 之间。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你全店账户被冻了 10 万美金，但那个惹祸的假货你其实只卖了 5 单，赚了 50 块。你的维权律师可以拿着你后台这个真实的微小销量数据，去硬刚流氓律所疯狂压价，最后可能只要拿 2 万美金交“保护费”，剩下的 8 万解冻后又能全额提现回国。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>非专业人员私下联系原告露底：</strong> 不懂美国法律程序的外贸业务员或老板，由于心急私自发邮件给原告律所求情哭穷，反而会被对方敏锐地抓住你话语里的把柄，甚至被法庭当做你不打自招、承认故意侵权的核心口供。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>冻结金额残值评估法：</strong> 如果被冻结资金只有 200 美金，连律师起步咨询费都不够，果断放弃账号、将亏损作账面核销是更理智的商业选择。</li>
+                        <li><input type="checkbox" disabled> <strong>必拿撤诉信放款：</strong> 和解金支付给对方后，代理律师必须监督确保对方律所向法官及平台正式提交了撤诉状 (Notice of Dismissal)，账户方可彻底解除风控。</li>
+                    </ul>
+                </section>
+<!-- ================== 3.4.1 ================== -->
+            <section id="node-3-4-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">联邦法院 TRO</span>
+                    <span class="wiki-tag">社媒风控</span>
+                </div>
+                <h2 class="node-title">3.4.1 社媒广告素材的版权保护与反恶搞下架</h2>
+                <div class="node-eng">Social Media Ad Creative Copyright & Anti-Takedown</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">独立站的命脉是广告投放，同行通过恶意投诉让你的高转化广告账户瘫痪，比封你店铺还致命。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">竞争对手利用虚假的版权证明（如 DMCA Takedown），向 Facebook、TikTok 等买量渠道的广告后台疯狂投诉你的高转化视频或图像素材。这会触发社媒平台的自动化风控，导致跑量广告被强制暂停，甚至整个 Business Manager (BM) 账户被连带封禁。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你花大价钱精心制作了一支极具吸引力的 3D 动画跑量素材（比如让一只 3D 打工猫在视频里讲解产品），ROI 跑得飞起。同行眼红，直接去 Facebook 后台举报说这个动画形象是他原创的。Facebook 为了规避责任会先封你的广告账号，直接切断你独立站的输血大动脉。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>申诉期流量断层：</strong> 即使你是真正的原创者，向 Meta 或 TikTok 提交反诉并恢复账号通常需要 3-7 个工作日。在这段黄金销售期内，你前期砸钱养出来的像素数据 (Pixel) 和机器学习模型可能已经跑飞，流量彻底断层。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>素材确权与水印暗桩：</strong> 所有外包或自制的 3D 建模源文件及视频，剪辑师必须在特定帧埋入极难察觉的品牌暗水印，并保留工程文件时间戳，作为随时反击的铁证。</li>
+                        <li><input type="checkbox" disabled> <strong>备份账户矩阵：</strong> 跑量期间绝对不能单 BM 裸奔，必须准备好隔离的备用广告账户。一旦主账户遭遇恶意下架，迅速切换备用账户顶上流量缺口。</li>
+                    </ul>
+                </section>
+            </section>
+            </section>
+
+            <!-- ================== 4.1.1 ================== -->
+            <section id="node-4-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国资产确权</span>
+                    <span class="wiki-tag">实体确权与管控</span>
+                </div>
+                <h2 class="node-title">4.1.1 WIPO 马德里商标与 FTO 排查</h2>
+                <div class="node-eng">WIPO Madrid System & Freedom to Operate (FTO) Searches</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">出海前核心的“防雷”与“插旗”动作，不花这几千块钱体检，分分钟在国外被没收几百万。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>马德里体系：</strong> 允许通过向 WIPO (世界知识产权组织) 提交一份集中申请，以极低成本在全球数十个缔约国同步进行商标确权。<br><strong>FTO (自由实施调查)：</strong> 在核心产品研发制造上架前，由知产律师进行检索，判定该产品技术或外观在目标销售国是否存在冲突在先专利的防御性法律分析。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你开发一款充电宝花了半年，开模费砸了十万，结果大货发到美国海关当场被扣押销毁，因为某大牌早就申请了一模一样的外观专利。如果立项上架前花钱做个专业的 FTO 侵权排查，就能完美避开人家的设计雷区，不至于血本无归。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>商标严厉的地域性限制：</strong> 你在中国花钱注册的合法商标，拿到美国法庭和海关面前形同废纸。不出海注册，不提前确权，产品一旦做爆，必定被海外地头蛇商标流氓恶意抢注敲诈。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>上架前强制 FTO 检索：</strong> 将核心爆款的 3D 图纸发给海外知产代理做防侵权检索，确认无撞车后再下厂开模。</li>
+                        <li><input type="checkbox" disabled> <strong>防御性抢先多国插旗：</strong> 在产品规划阶段，就提前在欧美日韩等核心目标利润市场铺设多类目商标保护网。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.1.2 ================== -->
+            <section id="node-4-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国资产确权</span>
+                    <span class="wiki-tag">实体确权与管控</span>
+                </div>
+                <h2 class="node-title">4.1.2 防代工厂抢注的 NNN 协议</h2>
+                <div class="node-eng">NNN Agreement: Defending Against Factory Hijacking</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">压制无良代工厂的法律紧箍咒，防止你辛辛苦苦开发掏钱开模的产品被代工厂原样偷走自己卖。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">NNN 协议全称 Non-Disclosure, Non-Use, Non-Circumvention (保密、不使用、不规避协议)。它比普通的西方 NDA (单向保密协议) 更具防御性，全面封死了代工厂“不仅对外保密，但也绝不能自己私下生产牟利，更不能绕过你去接你客户订单”的后路。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你呕心沥血设计了一款爆品马克杯找工厂代工。工厂老板一看市场好卖，连模具都不用新开，马上换个 logo 自己在亚马逊上跟卖你，价格还比你低一半直接把你卷死。如果你提前按规矩签了严密的 NNN 协议，他只要敢这么干，你一告一个倾家荡产。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>错误适用外国法律与管辖权等于废纸：</strong> 针对国内代工厂的 NNN 协议，千万不要生搬硬套用英文模版约定“在美国法院诉讼适用美国法律”，这种合同在中国境内极难执行。必须明确约定“受中国法律管辖并在中国境内特定法院诉讼”，才能对工厂产生致命的真实威慑力。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>在核心数据交付前签批：</strong> 在交出核心 3D 图纸、BOM 表或垫付高昂开模费前，必须让代工厂法定代表人亲笔签字并加盖红章。</li>
+                        <li><input type="checkbox" disabled> <strong>约定惩罚性高额违约金：</strong> 必须在条款中明确写出让工厂肉疼的具体违约金数额（如一次性赔付 100 万人民币），极大降低日后去法院维权要求评估商业损失的举证难度。</li>
+                    </ul>
+                </section>
+<!-- ================== 4.1.3 ================== -->
+            <section id="node-4-1-3" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国资产确权</span>
+                    <span class="wiki-tag">实体确权与管控</span>
+                </div>
+                <h2 class="node-title">4.1.3 核心配方与包材专利壁垒</h2>
+                <div class="node-eng">Formulation & Utility Patents Defensive Barrier</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">别人不仅能告你长得像，还能告你产品里的化学成分配比和物理出液结构侵权，一抓一个死。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">在日化、美妆及高敏垂直赛道，外观设计专利极易被规避，而真正坚固的壁垒是实用新型（Utility Patent）和发明专利。它保护的是产品内部的运作机制、特定配方比例以及创新的包装结构。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">例如市面上爆款的牙齿美白产品，很多大厂早就对过氧化氢或 PAP 凝胶基质的核心稳定比例、以及美白笔尾部的特定旋转出胶机械结构在全球布下了密密麻麻的专利网。你如果直接拿工厂现成的公模配方去卖，一旦撞上对方的专利配方，普通的外观专利根本防不住降维打击。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>成分靶向鉴定定罪：</strong> 欧美头部品牌维权极其狠辣，他们会直接买下你的产品送去实验室做化学成分靶向扫描。如果配方落入对方的发明专利保护范围，在联邦法院属于极其恶劣的“实质性侵权”，赔偿金额往往是外观侵权的十倍以上。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>工厂专利背书穿透：</strong> 拿货前必须要求源头代工厂出具核心配方或特殊包材（如真空按压泵）的专利授权书，确保其未侵犯国际大厂的在先专利。</li>
+                        <li><input type="checkbox" disabled> <strong>独家改良申请：</strong> 一旦跑出爆款，立即联合研发团队对成分配比或包材结构进行微调改良，并在目标销售国申请独立的实用新型专利，反向建立护城河。</li>
+                    </ul>
+                </section>
+            </section>
+            </section>
+
+            <!-- ================== 4.2.1 ================== -->
+            <section id="node-4-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国资产确权</span>
+                    <span class="wiki-tag">数据合规隐私</span>
+                </div>
+                <h2 class="node-title">4.2.1 欧盟 GDPR 与美国 CCPA 数据合规条款</h2>
+                <div class="node-eng">EU GDPR & US CCPA Data Privacy Compliance</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">做独立站收集买家邮箱地址做私域营销时，最容易引爆的天价跨国罚单地雷区。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">欧盟《通用数据保护条例》(GDPR) 和加州《消费者隐私法》(CCPA) 对跨境独立站收集、存储、倒卖买家 Cookie、邮箱、物理住址与支付信息设定了极其严苛的合规红线。一旦在信息搜集阶段违规越界，将面临全球营业额 4% 左右的毁灭性天价重罚。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你在独立站弹出一个大转盘：“输入邮箱即可抽打折券”。如果你没在下面醒目的地方放一行“我同意接收隐私条款邮件”的空勾选框，一旦被欧洲数据保护局抓到你强行收集用户数据，那个天价的罚款账单绝对能让你当场破产。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>预设默认勾选即定性违法：</strong> GDPR 的核心精神在于，获取一切用户数据必须是用户基于主观意愿的“明示同意 (Opt-in)”。如果你的代码预先将同意接收邮件的 Checkbox 默认打好了勾让用户一键跳过，这在欧洲法系是严重违法的套路设计。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>前置部署 Cookie 弹窗横幅：</strong> 系统识别到欧洲区 IP 访问独立站时，必须第一时间在底端弹出包含明确“全部接受”和“全部拒绝”按钮的 Cookie 授权横幅。</li>
+                        <li><input type="checkbox" disabled> <strong>撰写高水准独立隐私政策：</strong> 切勿随意在网上抄袭同行。必须聘请专业海外法务撰写适配本站数据业务逻辑的 Privacy Policy 协议页面置于站底。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.3.1 ================== -->
+            <section id="node-4-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国资产确权</span>
+                    <span class="wiki-tag">前端与底层合规</span>
+                </div>
+                <h2 class="node-title">4.3.1 美国 ADA (残疾人法案) Web 诉讼规避</h2>
+                <div class="node-eng">Avoiding ADA Web Accessibility Lawsuits</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">你网站上一张图片代码里少写了一个说明文字，就能被美国流氓律师盯上敲诈你几万美金。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">ADA (美国残疾人法案) 强制要求一切面向公众的商业网站必须实现“无障碍访问”，支持盲人或视障人士使用屏幕阅读器顺畅购物。近年来，大批职业诉讼律师专门编写爬虫软件，盯着中国出海卖家的独立站，寻找不符合 WCAG 代码规范（如图片缺失 alt 标签）的网站疯狂发起诉讼敲诈赚取和解费。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">盲人上网买东西是看不见图的，他们靠机器读网页的隐藏代码。如果你的独立站爆款主图的代码里，没有专门写一行隐藏描述说明这是一张什么图（也就是缺少 alt 属性），盲人就“看”不到。这帮吸血律师就会代表盲人去美国法院告你歧视残疾人，让你赔钱。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>Shopify 盗版原生模板缺陷大坑：</strong> 很多国内出海团队为了省钱，去买便宜的盗版或非官方主题模板。这些模板的前端代码粗制滥造，根本没有适配屏幕焦点（Focus 指示器）和键盘纯导航购物逻辑，一扫全网都是底层合规漏洞，极易中招被诉。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>自动工具排查：</strong> 网站部署上线前，要求前端团队使用 Google Lighthouse 或 WAVE 评估工具，对独立站全栈代码进行自动化无障碍标准扫描评分。</li>
+                        <li><input type="checkbox" disabled> <strong>完善全局 Alt 标签机制：</strong> 给所有核心商品主图、详情海报图后台补充精准详尽的、适合视障系统朗读的文本特征描述。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.3.2 ================== -->
+            <section id="node-4-3-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国资产确权</span>
+                    <span class="wiki-tag">前端与底层合规</span>
+                </div>
+                <h2 class="node-title">4.3.2 PCI-DSS: 信用卡数据防截获与安全</h2>
+                <div class="node-eng">PCI-DSS Compliance: Securing Credit Card Data on Checkout</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">如果买家带 CVV 码的信用卡数据在你这个破网站上被黑客拦截盗刷，你这辈子都别想在跨境圈混了。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">PCI-DSS (支付卡行业数据安全标准) 是保障持卡人底层敏感支付数据的国际强制铁律。任何接入外币信用卡底层支付接口的独立商城系统都必须硬性遵循。若由于服务器漏洞发生信用卡号码明文大批量泄露，独立站商家将面临巨额跨国追偿和所有支付网关的永久封禁。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">如果是你自己从零开发搭建的商城，千万别傻乎乎地在自己服务器数据库里，用明文格式保存老外填的信用卡卡号和背面的 3 位安全码！一旦俄罗斯黑客攻破了你的网站把数据库拖走盗刷，国际卡组织（如 Visa / Mastercard）会顺藤摸瓜，把你公司和法人永久定死在金融黑名单的耻辱柱上。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>使用未知木马底层的劣质开源商城：</strong> 某些黑灰产服务商故意向卖家提供嵌入了支付劫持木马后门的免费开源建站包。当外国客户在前台顺利结账时，他们的信用卡核心磁条信息在底层已经全部被加密传回给了境外的黑客团伙引发大规模盗刷爆发。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>绝不触碰底线数据架构：</strong> 建站时强制使用 Stripe 或 PayPal 等官方提供的 Hosted 结账跳转页面或极度安全的加密 Token API，确保 16 位卡号敏感明文数据绝对不经过自己的国内小作坊服务器。</li>
+                        <li><input type="checkbox" disabled> <strong>强制全局加密与证书换代：</strong> 确保整个网站从首页到加购页始终处于最高等级 TLS 协议的 HTTPS 加密传输状态下，严防网络中间人嗅探拦截。</li>
+                    </ul>
+                </section>
+            </section>
+<!-- ================== 4.4.1 ================== -->
+            <section id="node-4-4-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国资产确权</span>
+                    <span class="wiki-tag">域名与品牌资产</span>
+                </div>
+                <h2 class="node-title">4.4.1 域名防抢注与 UDRP 仲裁夺回</h2>
+                <div class="node-eng">Domain Typosquatting Defense & UDRP Arbitration</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">你的独立站流量正旺，同行悄悄买下你名字的欧洲域名，把你辛辛苦苦跑出来的精准客户全截胡了。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">UDRP (统一域名争议解决政策) 是由 ICANN 制定的用于解决域名抢注的国际仲裁机制。竞争对手常利用 Typosquatting（错别字域名抢注，如将 ".com" 抢注为 ".net" 或加上 "-shop" 后缀），搭建高仿的着陆页，恶意劫持品牌方通过 pSEO（程序化 SEO）和广告沉淀下来的高质量自然流量。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">好不容易把一个高转化着陆页的流量跑起来了，结果无良同行直接注册了一个和你网址就差一个字母的域名，甚至把你的页面设计、前端排版全盘抓取过去。不明真相的买家搜名字点进他的网站买了单，你的广告费等于全给他做了嫁衣。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>错过仲裁黄金期导致流氓要挟：</strong> 一旦高仿域名被收录且权重爬升，如果未能及时发起 UDRP 夺回，抢注者通常会狮子大开口，要求你支付数万美金的“天价赎金”才肯将域名转让给你。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>全后缀防御性保护：</strong> 在品牌起盘阶段，必须将核心品牌词的 <code>.com</code>、<code>.net</code> 以及目标主力市场（如英国的 <code>.co.uk</code>）的关联后缀域名以极低成本全部买断捏在自己手里。</li>
+                        <li><input type="checkbox" disabled> <strong>提交 UDRP 仲裁强制转移：</strong> 发现恶意抢注后，立刻向 WIPO 提交 UDRP 投诉。只要你能出示在先的 R 标证书，并证明对方缺乏合法利益且恶意使用，便能强制要求注册商将该域名转移到你的名下。</li>
+                    </ul>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <!-- 自动涂色与悬浮卡片化脚本 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll('.wiki-section');
+            sections.forEach(section => {
+                const titleElement = section.querySelector('h3');
+                if (titleElement) {
+                    const titleText = titleElement.textContent;
+                    if (titleText.includes('专业释义') || titleText.includes('定义')) {
+                        section.classList.add('def-card');
+                    } else if (titleText.includes('辅助理解') || titleText.includes('大白话')) {
+                        section.classList.add('plain-card');
+                    } else if (titleText.includes('实操 SOP')) {
+                        section.classList.add('sop-card');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

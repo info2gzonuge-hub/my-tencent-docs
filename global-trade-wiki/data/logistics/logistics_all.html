@@ -1,0 +1,967 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>物流清关与履约模式合规矩阵 - GLOBAL TRADE WIKI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+            /* 👇 一键换肤中枢 👇 */
+            /* 当前为【维度二：科技蓝】。若用于【维度一】，请改为：--theme-bg: #E6F8F3; --theme-text: #00A080; */
+            --theme-bg: #EFF6FF; 
+            --theme-text: #2563EB; 
+        }
+
+        /* 基础排版：中英文字体搭配 */
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #fff; }
+
+        /* 容器控制：1280px 宽屏适配 */
+        .mega-container { display: flex; max-width: 1280px; margin: 0 auto; padding-top: 40px; }
+
+        /* 左侧电梯导航 (加宽至 320px 以容纳批注文字) */
+        .sidebar-toc { width: 320px; position: sticky; top: 40px; height: calc(100vh - 80px); overflow-y: auto; padding-right: 20px; border-right: 1px solid #eaeaea; }
+        .sidebar-toc h3 { font-size: 16px; color: #888; margin-bottom: 16px; }
+        .sidebar-toc ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-toc li { margin-bottom: 8px; }
+        .sidebar-toc a { text-decoration: none; color: #555; font-size: 14px; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.2s; }
+        .sidebar-toc a:hover { background-color: var(--theme-bg); color: var(--theme-text); font-weight: 600; }
+        
+        /* 📌 导航栏批注专属样式 */
+        .arch-desc { display: inline-block; font-size: 14px; color: #E53E3E; background: #FFF5F5; padding: 2px 6px; border-radius: 4px; font-weight: normal; margin-top: 4px; }
+
+        /* 右侧正文区域 */
+        .content-area { flex: 1; padding-left: 60px; padding-right: 20px; }
+
+        /* 标题与标签 */
+        .node-section { margin-bottom: 60px; scroll-margin-top: 40px; }
+        .tags-container { margin-bottom: 8px; }
+        .wiki-tag { display: inline-block; padding: 4px 12px; background-color: var(--theme-bg); color: var(--theme-text); border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 8px; }
+        .node-title { font-size: 28px; font-weight: bold; color: #222; margin: 0 0 4px 0; }
+        .node-eng { font-family: 'Quicksand', sans-serif; font-size: 15px; color: #888; margin-bottom: 24px; }
+
+        /* 彻底隐去横线并统一基础间距 */
+        .wiki-divider { display: none !important; }
+        .wiki-section { margin-bottom: 24px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .wiki-section h3 { font-size: 18px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: #222; }
+        .wiki-text { font-size: 15px; line-height: 1.7; color: #444; margin: 0; }
+
+        /* 💡 一句话理解 */
+        .notion-quote { background-color: #F7F9FC; border-left: 4px solid var(--theme-text); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 15px; color: #333; font-weight: 500; }
+
+        /* ⚠️ 风险提示 */
+        .alert-box { background-color: #FFF5F5; border-left: 4px solid #E53E3E; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-top: 12px; }
+        .alert-box p { margin: 0; font-size: 15px; line-height: 1.7; }
+        .alert-box strong { color: #E53E3E; display: block; margin-bottom: 6px; font-size: 15px; }
+
+        /* 🌟 专属卡片 1：专业释义 (浅蓝灰) */
+        .def-card { background-color: #F4F8FB; border: 1px solid #C9DCEB; padding: 20px 24px; border-radius: 12px; }
+        .def-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(162, 185, 205, 0.25); background-color: #EDF4FA; }
+
+        /* 🌟 专属卡片 2：大白话 (浅暖橙) */
+        .plain-card { background-color: #FFF8F0; border: 1px solid #EEDAC5; padding: 20px 24px; border-radius: 12px; }
+        .plain-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(230, 200, 160, 0.25); background-color: #FFF3E0; }
+
+        /* 🌟 专属卡片 3：实操 SOP (浅灰) */
+        .sop-card { background-color: #F8F9FA; border: 1px solid #DDE2E5; padding: 20px 24px; border-radius: 12px; }
+        .sop-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(200, 205, 210, 0.25); background-color: #F1F3F5; }
+        .sop-card .sop-list { margin: 0; padding-left: 20px; }
+        .sop-card .sop-list li { font-size: 15px; line-height: 1.7; color: #333; margin-bottom: 8px; }
+        .sop-card .sop-list li::marker { color: var(--theme-text); }
+
+        /* 移动端设备精准适配 */
+        @media (max-width: 820px) {
+            .mega-container { flex-direction: column; padding-top: 20px; }
+            .sidebar-toc { display: none; }
+            .content-area { padding-left: 20px; padding-right: 20px; width: 100%; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mega-container">
+       <aside class="sidebar-toc">
+            <h3 style="font-size: 18px; font-weight: bold; color: #111; margin-bottom: 24px;">📑 目录导航 (23个节点)</h3>
+
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 12px; margin-bottom: 4px;">1. 国际贸易术语</div>
+            <div class="arch-desc">【界定买卖双方运费、保险与风险边界】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">1.1 核心水运术语</div>
+            <ul>
+                <li><a href="#node-1-1-1">1.1.1 FOB 装运港船上交货</a></li>
+                <li><a href="#node-1-1-2">1.1.2 CIF 成本加保险加运费</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">1.2 全域/综合运输术语</div>
+            <ul>
+                <li><a href="#node-1-2-1">1.2.1 EXW 工厂交货</a></li>
+                <li><a href="#node-1-2-2">1.2.2 FCA 交至承运人</a></li>
+                <li><a href="#node-1-2-3">1.2.3 DDP 完税后交货</a></li>
+            </ul>
+
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">2. 海关申报与关税</div>
+            <div class="arch-desc">【搞定报关查验与跨境电商避税红线】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">2.1 归类与产地合规</div>
+            <ul>
+                <li><a href="#node-2-1-1">2.1.1 HS Code 归类与避税</a></li>
+                <li><a href="#node-2-1-2">2.1.2 反倾销与转口洗产地</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">2.2 单证流与物权控制</div>
+            <ul>
+                <li><a href="#node-2-2-1">2.2.1 单证相符原则</a></li>
+                <li><a href="#node-2-2-2">2.2.2 提单 (B/L) 物权控制</a></li>
+                <li><a href="#node-2-2-3">2.2.3 EORI 与 PVA 递延</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">2.3 跨境电商专属清关</div>
+            <ul>
+                <li><a href="#node-2-3-1">2.3.1 美国 800 美元审查</a></li>
+                <li><a href="#node-2-3-2">2.3.2 欧盟 IOSS 秒清关</a></li>
+            </ul>
+
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">3. 退税报关与单证</div>
+            <div class="arch-desc">【掌控物权单据与退税、结汇的凭证链】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">3.1 商业发票类单据</div>
+            <ul>
+                <li><a href="#node-3-1-1">3.1.1 PI (形式发票)</a></li>
+                <li><a href="#node-3-1-2">3.1.2 CI & PL (发票装箱单)</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">3.2 运输与货权单据</div>
+            <ul>
+                <li><a href="#node-3-2-1">3.2.1 运输单证 (B/L, AWB)</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">3.3 官方与政务单据</div>
+            <ul>
+                <li><a href="#node-3-3-1">3.3.1 报关单据</a></li>
+                <li><a href="#node-3-3-2">3.3.2 原产地证 (CO)</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">3.4 资金与核销单据</div>
+            <ul>
+                <li><a href="#node-3-4-1">3.4.1 结汇水单</a></li>
+                <li><a href="#node-3-4-2">3.4.2 POD 零税率核查</a></li>
+            </ul>
+
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">4. 敏感货与海外仓</div>
+            <div class="arch-desc">【搞定电池粉末特货与海外仓税务合规】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">4.1 特殊/敏感货物要求</div>
+            <ul>
+                <li><a href="#node-4-1-1">4.1.1 纯电池 PI965 指令</a></li>
+                <li><a href="#node-4-1-2">4.1.2 敏感货 MSDS 审核</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">4.2 海外仓与头尾程合规</div>
+            <ul>
+                <li><a href="#node-4-2-1">4.2.1 头程 POA 授权设置</a></li>
+                <li><a href="#node-4-2-2">4.2.2 属地税务与尾程限制</a></li>
+            </ul>
+            
+            <div style="height: 60px;"></div>
+        </aside>
+
+        <main class="content-area">
+            <h1 style="font-size: 36px; margin-bottom: 60px; color: #111;">维度二：物流清关与履约模式合规矩阵</h1>
+
+            <section id="node-1-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">国际贸易术语</span>
+                    <span class="wiki-tag">核心水运</span>
+                </div>
+                <h2 class="node-title">1.1.1 FOB 装运港船上交货</h2>
+                <div class="node-eng">Free on Board</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">货上船前我负责，上船后你买单。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">卖方在指定的装运港，将货物交至买方指定的船只上，即完成交货。风险自货物越过船舷（或装上船）时转移。出口清关手续及本地杂费（THC、报关费等）由卖方承担，海运费及保险费由买方承担。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">假设你接了一批 5 万盒牙齿美白贴的 B2B 订单，外商指定了货代。FOB 意味着你只需要把美白贴完好无损地运到国内港口，并办妥出口报关。只要货柜安全吊装到了船上，你的责任就结束了。如果船在太平洋遇到风浪导致美白贴受潮，损失由外商自己找保险公司理赔。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>费用划定确认：</strong> 提前向指定货代要一份本地费用（Local Charge）明细，谨防外商货代在国内乱收费。</li>
+                        <li><input type="checkbox" disabled> <strong>内陆险补充：</strong> 考虑到工厂到港口的拖车路途，建议卖方单独购买一份极便宜的“国内陆运险”防范翻车。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-1-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">国际贸易术语</span>
+                    <span class="wiki-tag">核心水运</span>
+                </div>
+                <h2 class="node-title">1.1.2 CIF 成本加保险加运费</h2>
+                <div class="node-eng">Cost, Insurance and Freight</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">运费和保险我全包，但风险一样在船上转移。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">卖方不仅要承担 FOB 下的所有责任，还必须负责租船订舱、支付运至目的港的海运费，并强制要求为货物购买最低险别的海运保险。但请注意，物权与风险转移点与 FOB 完全一致，依然是在装运港船上转移。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">外商嫌找货代麻烦，让你一站式搞定。你不仅要把美白贴粉装上船，还要自己垫付到长滩港的海运费，并花钱买一份平安险。虽然运费是你出的，但如果在海上发生了货损，仍然是由外商拿着你买的保单去向目的港的保险公司索赔。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>保险加成投保：</strong> 行规一般按发票金额的 110% 投保，投保单上的被保险人（受益人）应背书转让给买方。</li>
+                        <li><input type="checkbox" disabled> <strong>运费波动预警：</strong> 报价时必须注明“运费按出货时实际市价多退少补”，防止海运费暴涨吞噬利润。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-1-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">国际贸易术语</span>
+                    <span class="wiki-tag">综合运输</span>
+                </div>
+                <h2 class="node-title">1.2.1 EXW 工厂交货</h2>
+                <div class="node-eng">Ex Works</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">你在工厂自己提货，后面的烂摊子全归你。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">卖方责任最小的术语。只需在自己的工厂或仓库将货物准备好通知买方提货。买方负责安排车辆装货、国内运输、出口报关及后续所有流程。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>报关倒置导致退税失败：</strong> 由于出口报关由买方的货代主导，如果对方使用买单报关或以他人抬头报关，卖方将无法获取正规海关核销单。这会导致国内工厂无法向税务局申请出口退税，甚至被税务稽查认定为内销未开票。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>坚持索要报关单：</strong> 即便是 EXW 交易，必须在合同里强制规定买方货代必须使用卖方抬头进行出口报关，并退回报关单底联。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-1-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">国际贸易术语</span>
+                    <span class="wiki-tag">综合运输</span>
+                </div>
+                <h2 class="node-title">1.2.2 FCA 交至承运人</h2>
+                <div class="node-eng">Free Carrier</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">发海外仓和空运快递小包的最佳拍档。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">卖方在指定地点将货物交给买方指定的承运人（如国际快递集货仓），并办妥出口报关，随后风险转移。该术语适用于包括空运、快递在内的任何运输方式。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">在亚马逊 FBA 头程集运中经常使用。外商在国内找了专线物流，你只需要把货发顺丰寄到该物流在深圳的集货仓，一旦货物交接给该仓库并扫描入库，你的货损风险就彻底转移了。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>获取入库证明：</strong> 将货物交给集货仓后，务必让仓库开具并盖章一张 FCR (货代收据) 或入库单，作为风险转移的法律铁证。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-1-2-3" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">国际贸易术语</span>
+                    <span class="wiki-tag">综合运输</span>
+                </div>
+                <h2 class="node-title">1.2.3 DDP 完税后交货</h2>
+                <div class="node-eng">Delivered Duty Paid</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">我一路送到老外家门口，连海关的关税我都全包。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">卖方责任最大的术语。要求卖方承担将货物运送至进口国目的地的一切风险与费用，包括办理出口清关、进口清关，以及缴纳目的国的关税及进口增值税。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>清关逆向阻滞与灰产扣货：</strong> 许多国内卖家没有欧洲或美国的合法进口商主体资格（如 EORI 或真实 VAT）。采用 DDP 模式发往海外仓时，往往依赖货代使用“双清包税”的灰产渠道，一旦海关严查抬头匹配度，整批货物将面临没收及巨额滞港费。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>慎接中东拉美 DDP：</strong> 这些地区的关税结构极其复杂且清关极度腐败。除非有绝对可靠的当地清关行，否则坚决只做 FOB 或 CIF。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-2-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">海关申报与关税</span>
+                    <span class="wiki-tag">归类与合规</span>
+                </div>
+                <h2 class="node-title">2.1.1 HS Code 归类与避税红线</h2>
+                <div class="node-eng">Harmonized System Code Classification</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">报高了多交冤枉税；报低了直接按走私、偷逃税款查办。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">HS Code (海关编码) 是全球统一的商品名称及编码协调制度。归类需遵循严格的层级原则。海关严厉打击“就低不就高”的擦边行为——即将高税率/需出口法检的商品，故意错报为低税率/免检的相似代码。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>蓄意错报致扣货降级：</strong> 将含有核心漂白成分的高敏牙齿美白仪故意填报为普通塑料手电筒。一旦被海关机检识破，不仅货物扣押罚款，企业信用等级将直接降为 C 级，面临逢单必查的绝境。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>海关预归类：</strong> 针对新型产品或难以界定的品类（如带紫外光的美牙仪），出货前强烈建议向海关申请出具书面的《预归类决定书》，这是最合法的免死金牌。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-2-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">海关申报与关税</span>
+                    <span class="wiki-tag">归类与合规</span>
+                </div>
+                <h2 class="node-title">2.1.2 反倾销预警与转口洗产地风险</h2>
+                <div class="node-eng">Anti-Dumping & Transshipment Risk</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">遭遇欧美反倾销制裁时，千万别动“假借第三国洗产地”的歪脑筋。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">反倾销是指当欧美等国认定中国某类产品以低于正常价值倾销时，加征极高惩罚性关税的贸易制裁手段。为了避税，黑产货代会诱导卖家将货物先发至东南亚，在当地换包装并伪造第三国的原产地证（CO），再转运欧美。这种“转口贸易洗产地”行为极其危险。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>跨国联合打击：</strong> 欧美海关目前对东南亚转口货物的溯源审查极其严苛。一旦查实属于“洗产地”逃避反倾销税，发货人不仅面临货物直接充公没收，还将被提起跨国税务欺诈的刑事诉讼。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>查阅制裁清单：</strong> 拓展新市场前，使用商务部官网的贸易摩擦预警系统，查询你卖的品类是否正在被目的国实施反倾销调查。</li>
+                        <li><input type="checkbox" disabled> <strong>坚守原产地红线：</strong> 遭遇高额反倾销税时，要么放弃该市场，要么提高售价，坚决拒绝任何货代提出的“东南亚包税转口”方案。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-2-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">海关申报与关税</span>
+                    <span class="wiki-tag">单证流与物权控制</span>
+                </div>
+                <h2 class="node-title">2.2.1 单证相符原则 (数据一致性)</h2>
+                <div class="node-eng">Principle of Strict Compliance in Documentation</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">提单、发票、箱单上的件数毛重，错一个数字都可能导致清关失败或信用证拒付。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">“单单相符、单证相符”是国际贸易制单的核心红线。无论是海关查验核对，还是 L/C (信用证) 结算，商业发票 (CI)、装箱单 (PL) 与提单 (B/L) 上的品名、毛重、净重、体积、唛头等关键数据必须保持绝对一致。任何包装描述或数值的差异，都会触发系统或人工拦截。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">如果出货前你把包装从普通纸箱换成了木箱，毛重多了 200 公斤。你改了发给货代的提单，却忘了改发给老外的发票和箱单。老外拿旧发票去目的港清关，海关一过磅发现重量完全不对，直接按“伪报、涉嫌走私”扣查，导致产生天价堆存费。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>信用证严重不符点拒付：</strong> 如果做信用证结算，哪怕单据上拼错了一个字母（如把 Co., Ltd 漏打了一个逗号），国外开证行都有权直接判定为不符点并拒付货款，导致企业面临钱货两空的绝境。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>三单交叉核对：</strong> 出货前建立硬性复核机制，确保发给客户的 CI、PL 数据与货代出具的最终 B/L 数据 100% 吻合。</li>
+                        <li><input type="checkbox" disabled> <strong>提单补料确认：</strong> 在提单补料（SI）截单前，务必由业务、跟单、单证三方签字确认 PDF 草件无误后，再最终提交给船公司。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-2-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">海关申报与关税</span>
+                    <span class="wiki-tag">单证流与物权控制</span>
+                </div>
+                <h2 class="node-title">2.2.2 提单 (B/L) 物权控制与无单放货</h2>
+                <div class="node-eng">Bill of Lading (B/L) & Cargo Control</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">没收到全款前，绝不能把正本提单寄给老外，更不能轻易发“电放”指令。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>正本提单 (Original B/L)：</strong> 国际海运中唯一具备物权凭证属性的单据，买方必须凭纸质原件提货。<br><strong>电放提单 (Telex Release)：</strong> 卖方向船公司下达指令放弃正本，买家凭复印件甚至身份证明即可提货。极其便捷但卖方会瞬间丧失对货物的物理控制权。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">提单就是这批货的“房产证”。老外虽然交了 30% 定金，货也发上了船，但在他没付清 70% 尾款之前，这张房产证必须死死捏在你手里。一旦你心软给他做了电放，他就能凭一张 A4 纸复印件把柜子提走，然后直接拉黑你。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>FOB 指定货代无单放货：</strong> FOB 条款下货代是老外指定的，部分不良海外货代会为了讨好国外买家，在卖方未授权电放且未收尾款的情况下，私自把货放走。老外拿到货后失联，导致外贸公司面临巨额跨国追账成本。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>坚守放货底线：</strong> 尾款未结清前，坚决要求船公司出具“正本提单”并锁在保险柜里，款到账再寄出。</li>
+                        <li><input type="checkbox" disabled> <strong>索要提单保函：</strong> 走客户指定的 FOB 货代时，必须让该货代国内分公司出具盖章的“保函”，承诺没有发货人的书面电放指令，绝对不向收货人放货。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-2-2-3" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">海关申报与关税</span>
+                    <span class="wiki-tag">单证流与物权控制</span>
+                </div>
+                <h2 class="node-title">2.2.3 借用 EORI 与 PVA 递延实操</h2>
+                <div class="node-eng">EORI Registration & Postponed VAT Accounting</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">抛弃灰产包税渠道，用递延政策合法省下巨额进口增值税的现金流。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>EORI 号码：</strong> 欧盟境内凡是有进出口商业活动的企业必备的法定登记号，是清关的唯一身份标识。<br><strong>PVA (增值税递延)：</strong> 允许合规企业在进口货物时，无需在海关现场立刻缴纳高昂的进口增值税 (VAT)，而是将其递延至后期的季度 VAT 税务申报中进行账面抵扣，极大释放资金压力。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前跨境卖家发货到欧洲，喜欢找货代搞“双清包税”，借用别人名字偷偷清关。现在海关严打，查到直接没收整柜。老老实实注册自己的 EORI 号，再向海关申请 PVA 递延，你一分钱进口税都不用垫付就能合法把大货拉进海外仓，完全没必要走灰产。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>滥用递延导致税务稽查：</strong> 如果你使用了 PVA 递延清关，但后续在当季度的 VAT 税务申报表上故意漏报或错报了这笔递延金额，将被欧盟税务局查税系统自动捕捉，视为严重偷税漏税，面临高额罚金及封号查封资产。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>合规注册主体：</strong> 欧美跨境大卖必须用自有国内公司或离岸主体合法注册 EORI 号与真实 VAT 税号。</li>
+                        <li><input type="checkbox" disabled> <strong>单据对账闭环：</strong> 委托清关行使用 PVA 后，必须要求清关行返回带有递延标记的真实进口清关单据（如英国 C88 文件），并移交给税务代理做账抵扣。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-2-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">海关申报与关税</span>
+                    <span class="wiki-tag">跨境电商专属清关</span>
+                </div>
+                <h2 class="node-title">2.3.1 美国 800 美元免税额度滥用审查</h2>
+                <div class="node-eng">Section 321 De Minimis Exemption Scrutiny</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">靠“虚假拆单”逃避美国关税的好日子正在终结，海关全面围剿商业走私。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>De Minimis (321 条款)：</strong> 美国法律规定，单日单人进口价值低于 800 美元的货物免征关税。但美国海关及边境保护局 (CBP) 正严厉打击滥用该条款的商业行为，尤其是将大宗 B2B 订单人为拆分成无数小包裹以规避关税的“虚假拆单 (Section 321 Abuse)”。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前发一个高关税集装箱去美国，为了避税，故意把里面的货贴上几千个虚构收件人的名字，当成私人免税小包发。现在美国海关系统全网大数据比对，一旦发现这些“私人小包”全发往同一个商业海外仓，直接判定为走私，整柜扣押查没。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>连带查封海外仓与黑名单：</strong> 若发现发货主体涉嫌系统性拆单逃税，海关不仅扣留货物，还会将协助清关的报关行和接收货物的海外仓列入黑名单，发货人的备案主体将面临后续柜子 100% 的极严厉查验率。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>坚守一般贸易底线：</strong> 跨境 B2B 大货及 FBA 头程备货，坚决走一般贸易正式报关 (Formal Entry) 渠道，依法依规缴纳关税。</li>
+                        <li><input type="checkbox" disabled> <strong>数据真实性核查：</strong> 真实 B2C 直发小包业务，必须确保物流面单上的收件人姓名、派送地址真实有效，绝不可使用虚假库房地址挂靠。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-2-3-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">海关申报与关税</span>
+                    <span class="wiki-tag">跨境电商专属清关</span>
+                </div>
+                <h2 class="node-title">2.3.2 欧盟 IOSS 电子秒清关</h2>
+                <div class="node-eng">Import One-Stop Shop (IOSS)</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">150 欧元以下独立站小包裹发往欧洲的“绿色免检通道”。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">IOSS 是欧盟针对内在价值不超过 150 欧元的 B2C 进口商品设立的税务一站式清关系统。卖家在独立站结账时预先向买家收取 VAT 增值税，并将生成的 IOSS 码交给物流商预先向海关报送。包裹抵达欧盟口岸时无需再次缴税，直接“秒速”放行。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你在独立站卖个 50 欧的手机壳给法国人。如果不注册 IOSS，包裹到了巴黎海关会被卡住，要求买家跑去排队交几欧元的税和十几欧的手续费，买家一生气大概率直接拒收退款。用了 IOSS，包裹到了海关一路绿灯，像寄国内快递一样直接送到他家门口。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>IOSS 码遭盗用与额度爆雷：</strong> IOSS 码具有极高的商业价值。如果你的无良货代偷偷把你的 IOSS 码拿去给其他不合规大卖家的货物清关，会导致你的税务账户产生巨额欠税，甚至面临欧盟欺诈调查封号。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>合规注册主体：</strong> 独立建站卖家必须通过欧盟境内的税务中介（Intermediary）合法注册 IOSS 识别码。</li>
+                        <li><input type="checkbox" disabled> <strong>严禁明文印刷：</strong> 严格保密 IOSS 码，仅通过 API 系统数据对接给受信任的主流物流服务商，严禁在纸质面单或外包装上明文打印。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-3-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">退税报关与单证</span>
+                    <span class="wiki-tag">商业发票类单据</span>
+                </div>
+                <h2 class="node-title">3.1.1 形式发票 (PI)</h2>
+                <div class="node-eng">Proforma Invoice (PI)</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">卖家开给买家的“报价单 + 初步合同 + 收款凭证”。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">PI 是一种非正式的商业发票，本质是卖方向买方发出的确约意向书。它详细列明了产品规格、数量、单价、总额、交货期以及卖方的美金等外汇收款账户信息。买方通常凭借 PI 向当地银行申请购汇付款，或用作申请进口许可证的文件。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">老外说觉得你产品不错准备下个样品单，让你给他个文件去银行申请打款。这时候不用搞复杂的法务合同，直接用 Excel 拉个表格，写清楚买什么、收多少钱、汇到你哪个银行账号，盖个公章发给他，这就是 PI。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>账户被黑客拦截篡改：</strong> 外贸“食利黑客”常年潜伏在业务员邮箱中。在发送 PI 催讨定金的关键时刻，他们会将 PI 上的收款账号篡改成骗子的离岸账户。老外一付款，资金瞬间被洗走，造成灾难性损失。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>格式锁定：</strong> PI 发送给客户前，必须转换为不可编辑的 PDF 格式，并加盖清晰的公司中英文章或带有法人签字。</li>
+                        <li><input type="checkbox" disabled> <strong>二次核实打款路径：</strong> 在发送重要 PI 时，务必通过 WhatsApp、微信或直接致电买家，进行“语音/视频”二次口头核对银行账号后四位。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-3-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">退税报关与单证</span>
+                    <span class="wiki-tag">商业发票类单据</span>
+                </div>
+                <h2 class="node-title">3.1.2 商业发票与装箱单 (CI & PL)</h2>
+                <div class="node-eng">Commercial Invoice & Packing List</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">贯穿出口报关、目的国清关及银行结汇的终极核心随附单据，海关认定的“呈堂证供”。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>商业发票 (CI)：</strong> 卖方向买方开具的正式索款发票，是海关核定进出口关税、买卖双方记账的法定基础文件。<br><strong>装箱单 (PL)：</strong> CI 的实物补充文件，详细记录了包装件数、毛重、净重、体积及包装材质，是海关查验实物时进行过磅和开箱比对的重要依据。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">货到目的港，海关计算老外该交多少税，全看你的 CI 上写的总货值金额；海关机检查验有没有夹带多余商品，全靠比对你的 PL 上填的数量和毛重。这两张纸是清关的命脉。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>CI 故意低报货值涉嫌洗钱逃税：</strong> 为了帮老外省关税，卖方在清关 CI 上将 10 万美金货值强行改成 2 万美金。一旦被海关价格稽查系统拦截，不仅货物重罚没收，卖方收汇也会出现 8 万美金的无法核销缺口，引发外管局反洗钱调查。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>坚守价值红线：</strong> 拒绝买家要求大幅度低报 CI 货值的无理要求，如需微调，必须控制在海关认可的合理市场浮动区间内。</li>
+                        <li><input type="checkbox" disabled> <strong>唛头完全一致：</strong> PL 上填写的唛头（Shipping Mark）图案与文字，必须与货物外箱上的真实丝印完全一致，严禁盲目复制上一单的模板。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-3-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">退税报关与单证</span>
+                    <span class="wiki-tag">运输与货权单据</span>
+                </div>
+                <h2 class="node-title">3.2.1 运输单证 (B/L, AWB, FCR)</h2>
+                <div class="node-eng">Transport Documents (B/L, AWB, FCR)</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">证明货物交接及控制跨境货权的核心凭证，海运和空运有着致命的区别。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>B/L (海运提单)：</strong> 具备物权凭证、运输契约证明及货物收据三大法定功能。<br><strong>AWB (空运单)：</strong> 仅为航空运输合同和交接收据，<strong>绝对不具备</strong>物权凭证属性。<br><strong>FCR (货代收据)：</strong> 仅证明货代已收到发货人的货物，交出 FCR 即代表卖方完全失去对货物的实际控制权。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">同样是发货，走海运（拿 B/L）你可以把提单捏在手里，老外不结清尾款就不给他单子提货。但如果走空运（拿 AWB），飞机一落地，航空公司会直接把货交给收件人，你手里的空运单根本拦不住老外把货拉走。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>FCR 欺诈套货风险：</strong> 在某些买家指定货代的交易中，货代只给卖方开具一张 FCR 证明入仓。如果买家信誉不佳，拿走货却拒付尾款，由于 FCR 没有物权控制力，卖方根本无法通过控货来索要货款。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>空运款到发货原则：</strong> 空运或快递业务必须坚持“先 100% 收齐货款，再安排发货空运”的绝对风控红线。</li>
+                        <li><input type="checkbox" disabled> <strong>中信保背书：</strong> 对信誉不明的海外买家，若对方坚持要求使用 FCA 条款并仅提供 FCR 交接，必须通过中信保（Sinosure）进行买方资信调查并足额投保。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-3-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">退税报关与单证</span>
+                    <span class="wiki-tag">官方与政务单据</span>
+                </div>
+                <h2 class="node-title">3.3.1 报关单据 (Customs Declaration)</h2>
+                <div class="node-eng">Customs Declaration Documents</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">证明货物合法出境的国家级凭证，国内工厂拿到真金白银退税的命根子。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">指在进出口环节向海关提交的用于申报货物详细信息的法定单据（如出口报关单、报关委托书）。货物经海关放行结关后，中国海关系统生成的“出口退税专用联”联网数据，是企业向国家税务局申请退还产品增值税的核心基石。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">很多国内贸易商辛辛苦苦做一单外贸，毛利润全靠那 13% 的出口退税撑着。这笔钱想要安稳落进口袋，就必须保证货代拿去报关的那张“报关单”上，每一个字都和你开给上游工厂的增值税发票严丝合缝，错一个标点税务局都会拒退。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>买单报关断送退税之路：</strong> 部分缺乏进出口权的小微企业，为了图省事花钱购买别家公司的抬头进行出口报关（即买单出口）。这不仅属于违反海关法规的操作，还会导致自身彻底丧失获取数万甚至数十万出口退税的资格。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>合规代办通道：</strong> 如果无进出口经营权，务必通过正规合规的“外贸综合服务企业”进行代理报关，确保资金流合规。</li>
+                        <li><input type="checkbox" disabled> <strong>开票品名溯源一致：</strong> 报关单上申报的中文品名、申报要素，必须与你向税务局系统内备案的进项发票开票品名一字不差。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-3-3-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">退税报关与单证</span>
+                    <span class="wiki-tag">官方与政务单据</span>
+                </div>
+                <h2 class="node-title">3.3.2 原产地证 (CO & FTA)</h2>
+                <div class="node-eng">Certificate of Origin (CO)</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">证明货物“国籍”的官方证书，利用得当能帮老外省下巨额关税的逼单利器。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">由本国海关或贸促会签发的原产地证明。分为两类：<br><strong>一般原产地证 (CO)：</strong> 仅证明货物原产于中国，不享受特殊关税待遇。<br><strong>优惠原产地证 (FTA)：</strong> 如 Form E、RCEP 证书，协定国之间凭此证书清关，可享受大幅度关税减免甚至零关税，是高阶外贸谈判的重要筹码。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">如果你把注塑机卖到印尼，印尼正常进口关税可能是 10%。但如果你去海关办了一张中国-东盟的优惠原产地证（Form E）随货寄给他，他去清关时可能一分钱关税都不用交。这就是你碾压其他不用心同行的销售杀手锏。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>虚报原产地标准遭退证核查：</strong> 在申请优惠原产地证时，产品必须满足“完全获得”或“实质性改变”标准。如果把国外的半成品拉进来随便贴个标就申请中国产地证，一旦目的国海关发起退证核查并发现造假，买家将被追缴巨额逃漏关税及滞纳金。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>关税政策前置营销：</strong> 熟背 RCEP 及双边自贸协定清单，主动向特定国家买家提出“我们可以提供优惠产地证减免关税”作为促单卖点。</li>
+                        <li><input type="checkbox" disabled> <strong>核心数据一致：</strong> 确保申请证书时填写的发票号、开船日期等数据与实际提单、CI 绝对吻合，避免目的港海关质疑拒收。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-3-4-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">退税报关与单证</span>
+                    <span class="wiki-tag">资金与核销单据</span>
+                </div>
+                <h2 class="node-title">3.4.1 结汇水单 (Bank Slip)</h2>
+                <div class="node-eng">Bank Slip / Remittance Advice</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">银行出具的外汇入账证明，防范跨国金融诈骗及地下黑钱的第一道防线。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">结汇水单是银行在收到境外汇款并成功入账后出具的业务回单。在外汇管理局进行收汇核销以及向税务局申报出口退税时，水单上的收汇金额必须与出口报关单、发票上的金额逻辑保持严密吻合。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">老外在 WhatsApp 上发给你一张他在银行汇款的截图底单，说钱已经打过来了，催你赶紧装柜。千万别信！很多跨国骗子会用 PS 伪造国外银行的水单骗货。只有当你自己登录公司网银，看到那笔美金真真切切躺在余额里了，才能安排放货。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>地下钱庄代付致公户冻结：</strong> 部分信誉不佳的买家为逃避本国外汇管制，找地下钱庄用国内的人民币账户直接转账给你。这种资金往往牵涉跨境网赌或电信诈骗的“黑钱”，一旦流入你的公户，极易被公安部启动“断卡行动”实施跨省无期限冻结。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>款到账发货底线：</strong> 坚决执行“以网银实际到账为准”的发货风控，绝不凭买家单方面提供的电子凭证放货。</li>
+                        <li><input type="checkbox" disabled> <strong>公对公合规收汇：</strong> 强硬要求 B2B 买家必须使用与其营业执照或合同同名的海外对公账户进行美金汇款，严拒第三方来历不明的国内代付。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-3-4-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">退税报关与单证</span>
+                    <span class="wiki-tag">资金与核销单据</span>
+                </div>
+                <h2 class="node-title">3.4.2 POD 交货证明与零税率核查</h2>
+                <div class="node-eng">Proof of Delivery (POD)</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">应对税务局“假出口骗税稽查”以及亚马逊无理索赔的终极硬核护身符。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">POD (Proof of Delivery) 是买家或末端派送商实际接收货物后签署的签收回执单。它不仅是证明货代完成履约义务的法律证据，更是国家税务部门在进行“增值税零税率”实地深度稽查时，证明货物确实发生了跨境物理转移并被签收的必备归档文件。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">货到了海外仓，卡车司机把几十个托盘卸下，仓库主管必须在那张送货单（POD）上签名画押。日后如果亚马逊耍赖说根本没收到你的货，你就能拿着这张纸要求索赔；如果税务局怀疑你是左手倒右手的假出口骗税，这张纸也是你发去国外的铁证。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>萝卜章与伪造签名致索赔失败：</strong> 旺季时部分不负责任的尾程卡车司机为了赶时间，将货物扔在海外仓外便自行替收货人草率签字，甚至盖上伪造的收发章。一旦货物遭遇遗失或盗窃，这种粗劣、无效的 POD 完全无法支撑索赔诉讼。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>要求正规签收扫描件：</strong> 选择头程物流商时，必须在合同中明确要求提供清晰带有海外仓收货方真实签名、日期及戳章的正本 POD 扫描件档案。</li>
+                        <li><input type="checkbox" disabled> <strong>四单合一防查账：</strong> 跨境电商企业必须建立严密的“报关单-发票-提单-POD”四单合一财务存档机制，随时准备应对税务抽查。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-4-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">敏感货与海外仓</span>
+                    <span class="wiki-tag">特殊/敏感货物要求</span>
+                </div>
+                <h2 class="node-title">4.1.1 纯电池产品 (UN3480/3481) 与 PI965 指令</h2>
+                <div class="node-eng">Pure Battery UN3480 & PI965 Directive</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">锂电池上飞机的死硬法则，包装不合规或电量过高直接被航司拉黑开罚单。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">大功率锂电池在国际航空运输中被严厉归为第九类危险品（UN3480）。空运必须严格遵守 IATA（国际航空运输协会）的 PI965 包装指令。核心合规指标包括：电池出厂荷电状态 (SOC) 必须严格控制在 30% 以下，且外包装箱必须张贴合规的防爆火警及第九类危险品专属标识图案。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前总有货机因为货仓里的劣质充电宝过热起火而坠机。所以现在全球航空公司定下铁律：不管是充电宝还是储能电源想上天，出厂电量绝对不能超过 30% 保持低活性，并且必须装在极其坚固、防爆抗跌落的专用瓦楞纸箱里，四面贴满危险警示。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>谎报普货面临跨国刑责：</strong> 部分跨境卖家为了节省危险品渠道高昂的附加运费，将大功率充电宝与普通衣物混装，作为普货瞒报送机。一旦在万米高空发生热失控引发货舱火灾，发货主体及企业法人将面临危害公共安全的跨国最高级别刑事追责。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>前置检测报告：</strong> 出货前三个月，向电芯及成品厂索要对应最新年份的 UN38.3 测试报告及民航局认可的空海运鉴定书。</li>
+                        <li><input type="checkbox" disabled> <strong>车间强制电量封锁：</strong> 包装车间大货下线前，必须安排品控员逐一进行仪器抽测，确保每台出厂电量严格锁死在 30% 红线以下。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-4-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">敏感货与海外仓</span>
+                    <span class="wiki-tag">特殊/敏感货物要求</span>
+                </div>
+                <h2 class="node-title">4.1.2 液体/粉末/磁性物品鉴定与 MSDS 审核</h2>
+                <div class="node-eng">MSDS Review for Sensitive & Magnetic Goods</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">一切非常规形态货物（粉状、液态、膏体）的防海关安检拦截“护身符”。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">航空与海港机检系统对所有不明粉末、液体及强磁场物品执行高危自动拦截预警。跨境出货登机上船前，必须向物流承运方提供由 SGS 等权威检测机构出具的 MSDS (化学品安全技术说明书) 及《航空/海运运输条件鉴别报告书》，自证清白，证明其非易燃易爆、无毒无腐蚀。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你卖出去的牙齿美白粉、精油提取液或者是带强磁铁的大功率音响，在安检的 X 光机看来都极其像毒品、爆炸物或航空干扰源。如果不提前把中英双语的化验单甩在货代桌面上，这批货连机场的安检大门都进不去。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>磁性超标致航空仪器紊乱：</strong> 很多卖家忽略了蓝牙音箱的磁检。未做防磁隔离的超大音响装上飞机后，泄露出的强大磁场会严重干扰飞机的导航电子罗盘。因此，任何带磁性配件的货物必须进行隔离消磁处理，否则面临巨额罚金及永久禁飞。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>前置预审机制：</strong> 发送化妆品等日化膏体前，必须让货代提前一周将 MSDS 发给航司安保部进行后台“前置审批”，获批后再把货拉进仓。</li>
+                        <li><input type="checkbox" disabled> <strong>物理防磁加固：</strong> 带磁性大产品包装时，工厂必须在外纸箱内壁垫入专业的隔离防磁铁皮并送交磁检，取得合格证。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-4-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">敏感货与海外仓</span>
+                    <span class="wiki-tag">头尾程合规</span>
+                </div>
+                <h2 class="node-title">4.2.1 头程 POA 授权与清关行对接</h2>
+                <div class="node-eng">Power of Attorney (POA) for Import Clearance</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">确保货物能以“你”作为合法进口商通关的跨国法律授权文书。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">POA (授权委托书) 是发货人依法授权给目的国本地正规报关行，代为处理进口海关文件并代缴关税的法律契约。在发往海外仓（如亚马逊 FBA）的头程海空运中，合规签署 POA 是确保货物以发货方合法的 Importer of Record (IOR，登记进口商) 身份顺畅通关的绝对先决条件。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">亚马逊 FBA 仓库只是提供给你放东西的架子，他们绝对不会替你承担进口商身份去向海关交税。货物到了洛杉矶港，美国海关要找个活人来负责。这时候你必须签一份 POA 文件，正式雇佣洛杉矶当地的一家清关行当你的全权代表，海关才会放行。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>无良货代冒用 Annual Bond 连坐封柜：</strong> 正常清关需要购买 Bond (保证金)。很多灰产双清货代为了吃利润，让几十个不同卖家的货柜共用同一个报关行的 Annual Bond 账号。一旦这几十个卖家中有一个卖的是侵权仿牌被查扣，所有共用该 Bond 的无辜卖家货物将被一并株连、全数扣留。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>坚决独立清关购买 Bond：</strong> 跨境卖家大货出海，务必花钱购买专属自己的 Single Bond 或独立包年的 Annual Bond，绝不与他人混用额度。</li>
+                        <li><input type="checkbox" disabled> <strong>核准清关行牌照：</strong> 签署电子 POA 文件时，必须在官方网站反向核实被授权清关行的资质，确保其拥有所在国海关合法颁发的经纪人牌照。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="node-4-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">敏感货与海外仓</span>
+                    <span class="wiki-tag">头尾程合规</span>
+                </div>
+                <h2 class="node-title">4.2.2 属地税务合规及尾程限制</h2>
+                <div class="node-eng">Local Tax Compliance & Last-Mile Delivery Restrictions</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">只要你的物理库存放进了国外的海外仓，你就彻底逃不掉当地严苛的增值税审查与物流重量限制。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">跨境大货一旦批量发运囤积至目的国本地海外仓，即触发税务法理上的“库存属地化”。这意味着卖方主体必须在仓储所在国合法注册 VAT (增值税号) 或 Sales Tax，并按季度定期申报税务。此外，针对超大件家具或高危危险品，尾程派送巨头（如 UPS / FedEx）会对发件仓账号实施严苛的打单准入与尺寸溢价限制。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">很多国内卖家以为把货发到德国自己的三方海外仓，就可以神不知鬼不觉地倒卖避税了。德国税务局的追踪逻辑是：只要我查到你的集装箱卸在了德国土地上囤积，后续你卖出产品的每一欧元，都必须乖乖按照 19% 给我交增值税。敢隐瞒不报？直接带警察查封仓库所有库存。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>无良海外仓尾程“跑单”致库存冻结株连：</strong> 部分灰产海外仓为了赚取巨额差价，大量使用盗刷信用卡的黑客“跑单账号”在 UPS 后台疯狂低价打单发货。一旦 UPS 防欺诈系统察觉并报警，不仅全面拦截在途包裹，还会配合警方彻底查封该发货海外仓，导致将货物托管于此的正规卖家库存被彻底锁死株连。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>核验尾程直营资质：</strong> 选择第三方海外仓合作时，必须要求其出示与 UPS / DPD 等尾程巨头签署的直营大客户正规协议与对账单，坚决拒绝使用“超低折扣账号”发件的劣质仓。</li>
+                        <li><input type="checkbox" disabled> <strong>泛欧计划前置下号：</strong> 在开启亚马逊 FBA 泛欧泛美分仓计划前，必须确保你的产品被调拨到达的每一个欧盟或美洲州属地，都已经提前落地了真实的独立税号，杜绝盲目囤货。</li>
+                    </ul>
+                </section>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 找到所有原生的 wiki-section 模块
+            const sections = document.querySelectorAll('.wiki-section');
+            
+            sections.forEach(section => {
+                const titleElement = section.querySelector('h3');
+                if (titleElement) {
+                    const titleText = titleElement.textContent;
+                    
+                    // 根据标题关键词为外层 section 分配悬浮卡片样式
+                    if (titleText.includes('专业释义') || titleText.includes('定义')) {
+                        section.classList.add('def-card');
+                    } 
+                    else if (titleText.includes('辅助理解') || titleText.includes('大白话')) {
+                        section.classList.add('plain-card');
+                    } 
+                    else if (titleText.includes('实操 SOP')) {
+                        section.classList.add('sop-card');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

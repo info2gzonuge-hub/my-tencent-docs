@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国家与市场地图 - GLOBAL TRADE WIKI</title>
+    <!-- 向上穿透两层，调用全局 CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        :root {
+            /* 专属配色：探索绿 */
+            --theme-bg: #ECFDF5; 
+            --theme-text: #059669; 
+            --bg-main: #FFFFFF;
+        }
+        .hero-section { text-align: center; margin: 40px 0; }
+        /* 针对子页面的卡片悬浮强化 */
+        .dimension-card { background: var(--bg-main); border: 2px solid #E9ECEF; padding: 32px 24px; text-align: center; border-radius: 16px; }
+        .dimension-card:hover { border-color: var(--theme-text); background-color: var(--theme-bg); transform: translateY(-6px); box-shadow: 0 12px 24px rgba(5, 150, 105, 0.15); }
+        .dim-icon { font-size: 40px; margin-bottom: 16px; }
+        .dim-title { color: #222; font-size: 18px; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="wiki-container">
+        <header class="top-nav">
+            <a href="../../index.html" class="logo-area"><span>🌍</span> GLOBAL TRADE WIKI</a>
+            <a href="../../index.html" style="color: var(--text-secondary); font-weight: 600;">← 返回主页</a>
+        </header>
+
+        <section class="hero-section">
+            <h1 style="font-size: 32px; color: #111;">国家与市场地图</h1>
+            <p style="color: #666; margin-top: 8px;">Regional Market Compliance & Entry Guides</p>
+        </section>
+
+        <!-- 卡片网格 -->
+        <section class="dimensions-grid">
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">🇺🇸</div>
+                <div class="dim-title">北美市场 (US & CA)</div>
+                <div class="dim-desc">FDA / FCC / 销售税联结 / TRO风控</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">🇪🇺</div>
+                <div class="dim-title">欧盟与英国 (EU & UK)</div>
+                <div class="dim-desc">CE / REACH / EPR包装法 / VAT递延</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">🇯🇵</div>
+                <div class="dim-title">日韩市场 (JP & KR)</div>
+                <div class="dim-desc">PSE / KC / 本地化清关代理</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">🇸🇦</div>
+                <div class="dim-title">中东市场 (Middle East)</div>
+                <div class="dim-desc">SASO SABER / Halal 清真认证</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">🇦🇺</div>
+                <div class="dim-title">澳新市场 (AU & NZ)</div>
+                <div class="dim-desc">SAA 认证 / RCM 注册 / 生物清关</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">🇧🇷</div>
+                <div class="dim-title">拉美市场 (LATAM)</div>
+                <div class="dim-desc">INMETRO 认证 / 巴西海关高额税率</div>
+            </a>
+        </section>
+    </div>
+</body>
+</html>

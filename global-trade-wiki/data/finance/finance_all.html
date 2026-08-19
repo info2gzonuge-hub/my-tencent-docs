@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>资金结算与财税风控全景库 - GLOBAL TRADE WIKI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 基础排版：中英文字体搭配 */
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #fff; }
+
+        /* 容器控制：1280px 宽屏适配 */
+        .mega-container { display: flex; max-width: 1280px; margin: 0 auto; padding-top: 40px; }
+
+        /* 左侧电梯导航 */
+        .sidebar-toc { width: 320px; position: sticky; top: 40px; height: calc(100vh - 80px); overflow-y: auto; padding-right: 20px; border-right: 1px solid #eaeaea; }
+        .sidebar-toc h3 { font-size: 16px; color: #888; margin-bottom: 16px; }
+        .sidebar-toc ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-toc li { margin-bottom: 8px; }
+        .sidebar-toc a { text-decoration: none; color: #555; font-size: 14px; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.2s; }
+        .sidebar-toc a:hover { background-color: #FFF4E5; color: #D97706; font-weight: 600; }
+
+        /* 右侧正文区域 */
+        .content-area { flex: 1; padding-left: 60px; padding-right: 20px; }
+
+        /* 标题与标签 */
+        .node-section { margin-bottom: 60px; scroll-margin-top: 40px; }
+        .tags-container { margin-bottom: 8px; }
+        .wiki-tag { display: inline-block; padding: 4px 12px; background-color: #FFF4E5; color: #D97706; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 8px; }
+        .node-title { font-size: 28px; font-weight: bold; color: #222; margin: 0 0 4px 0; }
+        .node-eng { font-family: 'Quicksand', sans-serif; font-size: 15px; color: #888; margin-bottom: 24px; }
+        .arch-desc { display: inline-block; font-size: 14px; color: #E53E3E; background: #FFF5F5; padding: 2px 6px; border-radius: 4px; font-weight: normal; margin-top: 4px; }
+
+        /* 彻底隐去横线并统一基础间距 */
+        .wiki-divider { display: none !important; }
+        .wiki-section { margin-bottom: 24px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .wiki-section h3 { font-size: 18px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: #222; }
+        .wiki-text { font-size: 15px; line-height: 1.7; color: #444; margin: 0; }
+
+        /* 💡 一句话理解 */
+        .notion-quote { background-color: #FDF8F5; border-left: 4px solid #D97706; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 15px; color: #333; font-weight: 500; }
+
+        /* ⚠️ 风险提示 */
+        .alert-box { background-color: #FFF5F5; border-left: 4px solid #E53E3E; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-top: 12px; }
+        .alert-box p { margin: 0; font-size: 15px; line-height: 1.7; }
+        .alert-box strong { color: #E53E3E; display: block; margin-bottom: 6px; font-size: 15px; }
+
+        /* 🌟 专属卡片 1：专业释义 (浅蓝灰 + 加深边框 + 悬浮动效) */
+        .def-card { background-color: #F4F8FB; border: 1px solid #C9DCEB; padding: 20px 24px; border-radius: 12px; }
+        .def-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(162, 185, 205, 0.25); background-color: #EDF4FA; }
+
+        /* 🌟 专属卡片 2：大白话专属 (浅暖橙 + 加深边框 + 悬浮动效) */
+        .plain-card { background-color: #FFF8F0; border: 1px solid #EEDAC5; padding: 20px 24px; border-radius: 12px; }
+        .plain-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(230, 200, 160, 0.25); background-color: #FFF3E0; }
+
+        /* 🌟 专属卡片 3：实操 SOP 专属 (质感浅灰 + 加深边框 + 悬浮动效) */
+        .sop-card { background-color: #F8F9FA; border: 1px solid #DDE2E5; padding: 20px 24px; border-radius: 12px; }
+        .sop-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(200, 205, 210, 0.25); background-color: #F1F3F5; }
+        .sop-card .sop-list { margin: 0; padding-left: 20px; }
+        .sop-card .sop-list li { font-size: 15px; line-height: 1.7; color: #333; margin-bottom: 8px; }
+        .sop-card .sop-list li::marker { color: #D97706; }
+
+        /* 移动端设备精准适配 */
+        @media (max-width: 820px) {
+            .mega-container { flex-direction: column; padding-top: 20px; }
+            .sidebar-toc { display: none; }
+            .content-area { padding-left: 20px; padding-right: 20px; width: 100%; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mega-container">
+        <!-- 左侧导航 -->
+        <aside class="sidebar-toc">
+            <h3 style="font-size: 18px; font-weight: bold; color: #111; margin-bottom: 24px;">📑 目录导航 (22个节点)</h3>
+
+            <!-- 大类 1 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 12px; margin-bottom: 4px;">1. 国际站收款矩阵</div>
+            <div class="arch-desc">【先讲阿里平台内怎么收钱】</div>
+            
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">1.1 信用保障订单专属收款</div>
+            <ul>
+                <li><a href="#node-1-1-1">1.1.1 信保线上结算全链路</a></li>
+                <li><a href="#node-1-1-2">1.1.2 信保订单权益与资金安全</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">1.2 平台内嵌外汇收结汇</div>
+            <ul>
+                <li><a href="#node-1-2-1">1.2.1 ACP 费率与时效</a></li>
+                <li><a href="#node-1-2-2">1.2.2 ACP 阳光结汇与提现</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">1.3 供应链金融与信贷</div>
+            <ul>
+                <li><a href="#node-1-3-1">1.3.1 电子提单与订单融资</a></li>
+            </ul>
+
+            <!-- 大类 2 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">2. 大宗贸易及独立站资金通道</div>
+            <div class="arch-desc">【再讲脱离平台做大宗B2B怎么收、用什么卡收、怕跑路怎么买保险】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">2.1 传统银行清算网络 (SWIFT)</div>
+            <ul>
+                <li><a href="#node-2-1-1">2.1.1 T/T 电汇收款</a></li>
+                <li><a href="#node-2-1-2">2.1.2 L/C 信用证结算</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">2.2 第三方跨境虚拟账户</div>
+            <ul>
+                <li><a href="#node-2-2-1">2.2.1 PingPong (乒乓智能)</a></li>
+                <li><a href="#node-2-2-2">2.2.2 WorldFirst (万里汇)</a></li>
+                <li><a href="#node-2-2-3">2.2.3 Payoneer (派安盈)</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">2.3 大宗风控与信用背书</div>
+            <ul>
+                <li><a href="#node-2-3-1">2.3.1 中信保 (Sinosure) 出口险</a></li>
+            </ul>
+
+            <!-- 大类 3 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">3. 资金防冻、反洗钱与风控</div>
+            <div class="arch-desc">【接着讲独立站B2C怎么对付白嫖党、促转化及外汇合法回国防冻】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">3.1 账户风控与阳光结汇</div>
+            <ul>
+                <li><a href="#node-3-1-1">3.1.1 审查机制：单证举证</a></li>
+                <li><a href="#node-3-1-2">3.1.2 阳光回境：ODI 备案</a></li>
+                <li><a href="#node-3-1-3">3.1.3 1039 市场采购无票结汇</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">3.2 独立站零售网关风控</div>
+            <ul>
+                <li><a href="#node-3-2-1">3.2.1 拒付 (Chargeback) 申诉</a></li>
+                <li><a href="#node-3-2-2">3.2.2 储备金 (Reserve) 冻结</a></li>
+                <li><a href="#node-3-2-3">3.2.3 信用卡欺诈与 3D Secure</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">3.3 独立站促转化支付工具</div>
+            <ul>
+                <li><a href="#node-3-3-1">3.3.1 本地聚合支付 (BNPL)</a></li>
+            </ul>
+
+            <!-- 大类 4 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">4. 流转税与企业税务筹划</div>
+            <div class="arch-desc">【最后讲无论在海外还是国内，怎么合法交税避坑】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">4.1 欧美区税务合规</div>
+            <ul>
+                <li><a href="#node-4-1-1">4.1.1 欧洲区 VAT 与 IOSS</a></li>
+                <li><a href="#node-4-2-1">4.2.1 北美区 Sales Tax 联结</a></li>
+            </ul>
+            <div style="font-size: 13px; font-weight: 600; color: #D97706; margin: 12px 0 6px 0;">4.2 逃税红线与国内穿透审查</div>
+            <ul>
+                <li><a href="#node-4-3-1">4.3.1 逃税红线：低申报与补税</a></li>
+                <li><a href="#node-4-4-1">4.4.1 金税四期：公私户稽查</a></li>
+            </ul>
+            
+            <div style="height: 60px;"></div>
+        </aside>
+
+        <!-- 右侧内容 -->
+        <main class="content-area">
+            <h1 style="font-size: 36px; margin-bottom: 60px; color: #111;">维度三：资金结算与财税风控全景库</h1>
+
+            <!-- ================== 1.1.1 ================== -->
+            <section id="node-1-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">官方收款矩阵</span>
+                    <span class="wiki-tag">信保订单</span>
+                </div>
+                <h2 class="node-title">1.1.1 信保线上结算全链路</h2>
+                <div class="node-eng">Trade Assurance Online Settlement Pipeline</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">既是收外汇的工具，又是沉淀店铺权重的加速器[cite: 7]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">信保订单 (Trade Assurance) 是阿里巴巴国际站提供的交易担保闭环，支持买家多币种支付，由平台代收并提供履约放款与纠纷仲裁机制[cite: 7]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前收美金要经过好几个中间行，一层层扒皮。通过平台信保收钱，买家付当地货币，你这边直接收款，顺便还能给店铺加信保数据权重，一举两得[cite: 7]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>脱离平台交易丧失保护：</strong> 如果买家通过 WhatsApp 跟你谈妥，却要求线下打入你的私人账户，一旦发生纠纷或老外恶意拒付，平台将无法为你提供任何交易担保和资金追回保护。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> 给客户发送 PI（形式发票）时，优先通过平台起草信保订单并生成付款链接[cite: 7]。</li>
+                        <li><input type="checkbox" disabled> 确保每一笔交易都能转化为店铺的自然流量权重[cite: 7]。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.1.2 ================== -->
+            <section id="node-1-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">官方收款矩阵</span>
+                    <span class="wiki-tag">信保订单</span>
+                </div>
+                <h2 class="node-title">1.1.2 信保订单权益与资金安全</h2>
+                <div class="node-eng">Trade Assurance Benefits & Fund Security</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">平台充当中间裁判，防老外白嫖，也防卖家跑路。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">平台为信保订单提供资金兜底保障。买家支付的款项首先进入平台监管账户，当卖家完成合同约定的发货并上传物流凭证后，平台按规则放款，有效隔离了直接交易中的信任风险[cite: 7]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">老外怕付了钱你不发货，你怕发了货老外不给尾款。信保订单就是支付宝担保交易的国际版。只要你按时把货发出去并且单据没问题，哪怕老外耍赖，平台也会按规则把钱判给你。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>交期违约引发强制退款：</strong> 信保订单对交货期 (Lead Time) 考核极其严格。如果由于工厂产能问题导致未能按系统约定的时间发货，买家有权无条件申请全额退款，平台会直接扣除你的资金并降低店铺信用分。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>合理设定交期：</strong> 起草信保合同时，务必在工厂承诺的交期基础上额外预留 5-7 天的缓冲期。</li>
+                        <li><input type="checkbox" disabled> <strong>留存沟通证据：</strong> 任何产品规格或交期的变更，必须在平台阿里卖家聊天窗口内让客户用文字明确确认，作为后期仲裁的证据。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.2.1 ================== -->
+            <section id="node-1-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">官方收款矩阵</span>
+                    <span class="wiki-tag">ACP 结汇</span>
+                </div>
+                <h2 class="node-title">1.2.1 ACP 费率与时效</h2>
+                <div class="node-eng">Alibaba.com Pay Rates & Efficiency</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">绕开传统 SWIFT 国际网络，手续费极低且到账极快的官方收款工具[cite: 7]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">ACP (Alibaba.com Pay) 是平台内嵌的本地化跨境收结汇通道。实现 0.12%-0.5% 的阶梯费率及 T+0 极速到账[cite: 7]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">用 ACP 就像给了你一张“海外虚拟银行卡”，买家通过本地清算网络打款，不仅能省去传统电汇大几十美金的中间行手续费，还能做到当天打款当天到账[cite: 7]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>大额订单汇率波动风险：</strong> 虽然到账快，但如果在人民币剧烈升值期间，外汇在系统内停留不结汇，将面临汇兑损失。企业需主动管理结汇时机。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> 根据买家所在国家，主动开通对应的本地币种收款账户，引导客户使用本地转账以降低双方手续费。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.2.2 ================== -->
+            <section id="node-1-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">官方收款矩阵</span>
+                    <span class="wiki-tag">ACP 结汇</span>
+                </div>
+                <h2 class="node-title">1.2.2 ACP 阳光结汇与提现</h2>
+                <div class="node-eng">Transparent Forex Settlement & Withdrawal</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">把美金干干净净、合法合规地变成人民币打进你的国内账户[cite: 7]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">ACP 支持合法结汇提现至境内公私账户[cite: 7]。资金通过平台数据与海关出口数据交叉比对，完成国家外汇管理局要求的阳光化外汇核销。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">国家外汇管制严格，外汇不能随便进出。ACP 帮你把外贸业务的单据打包好向外管局证明这是干净的货款，你就可以放心大胆地把人民币提现到公司账户里[cite: 7]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>绕开平台私下换汇被冻卡：</strong> 部分商家嫌弃平台结汇有手续费，私下引导客户把钱打给所谓的“地下钱庄”进行换汇。一旦该地下钱庄涉嫌洗钱或电信诈骗，商家的国内银行卡将立刻被公安异地冻结（俗称冻卡），甚至面临刑事调查[cite: 7]。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> 资金通过 ACP 到账后，必须将资金与对应的出口报关单、物流底单相关联[cite: 7]。</li>
+                        <li><input type="checkbox" disabled> 满足“外汇核销”的阳光化合规要求后再提现至国内公账[cite: 7]。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.3.1 ================== -->
+            <section id="node-1-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">官方收款矩阵</span>
+                    <span class="wiki-tag">融资与信贷</span>
+                </div>
+                <h2 class="node-title">1.3.1 电子提单与订单融资</h2>
+                <div class="node-eng">Electronic B/L & Trade Assurance Financing</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">用平台的数据做背书，把还在海上的货提前变现，解决接大单时的现金流危机[cite: 10]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>电子提单：</strong> 依托数字化物流系统出具的区块链提单凭证，具备同等物权效力[cite: 10]。</p>
+                    <p class="wiki-text"><strong>信保订单融资：</strong> 阿里等平台基于真实履约数据，向企业提供的无抵押纯信用信贷提前放款服务[cite: 10]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">接了 50 万美金大单要垫资，如果走信保订单且上线了电子提单，平台就知道交易是真的，直接把尾款提前借给你救急，不用拿房子抵押[cite: 10]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>虚假发货骗贷触发封号：</strong> 企图利用刷单和虚假物流单号骗取额度融资。一旦被风控系统识别，要求立即结清全额贷款，店铺将被永久清退，法人录入征信黑名单[cite: 10]。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>积累信保权重：</strong> 日常小单尽量引导走信保订单，积攒企业在平台的数据信用分，为融资提额做铺垫。</li>
+                        <li><input type="checkbox" disabled> <strong>确保一达通履约：</strong> 融资订单必须严格走官方物流（拍档），获取真实报关单，形成资金与物流闭环。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.1.1 ================== -->
+            <section id="node-2-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">大宗资金通道</span>
+                    <span class="wiki-tag">SWIFT 网络</span>
+                </div>
+                <h2 class="node-title">2.1.1 T/T 电汇收款</h2>
+                <div class="node-eng">Telegraphic Transfer (T/T)</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">脱离平台的独立大宗贸易最核心的收汇工具[cite: 9]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">依托 SWIFT 体系，通常采用“30%预付定金 + 70%尾款见提单复印件放行”的经典模式[cite: 9]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">就像银行转账，老外通过他们国家的银行把美金打到你国内对公账户的美元户头上。虽然要等几天且有手续费，但对于几百万的实体工厂大宗外贸来说，这是最正统的路线。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>黑客拦截篡改 (BEC 攻击)：</strong> T/T 汇款前，极易遭遇黑客拦截邮件篡改收款账号。客户把定金打到了骗子的离岸账户上，导致工厂损失惨重[cite: 9]。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>防范黑客篡改：</strong> 任何账户变更，必须与买方通过电话或视频双重核实！[cite: 9]</li>
+                        <li><input type="checkbox" disabled> <strong>见复印件付款控制：</strong> 必须在收到 70% T/T 尾款的水单并确认网银入账后，才能寄出正本提单。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.1.2 ================== -->
+            <section id="node-2-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">大宗资金通道</span>
+                    <span class="wiki-tag">SWIFT 网络</span>
+                </div>
+                <h2 class="node-title">2.1.2 L/C 信用证结算</h2>
+                <div class="node-eng">Letter of Credit (L/C) Settlement</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">用银行的信用做担保，只要你的单证做到完美，老外的银行就必须掏钱[cite: 9]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">基于 UCP600 规则，由银行信誉背书的“单证严格相符”付款承诺[cite: 9]。只要卖方提交的单据完全符合信用证规定，开证行承担绝对付款责任。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">做百万美金的大单，买卖双方互不信任，就会花钱请银行做担保开“信用证”，只要发票箱单错一个标点符号，银行就有权拒付[cite: 9]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>信用证“软条款”陷阱：</strong> 某些不良买家会在信用证里埋伏一条“必须由买方指定的机构出具证书才能付款”。如果买方故意不派人来检验，外贸公司根本拿不到这笔尾款，这是典型的“软条款”避雷点[cite: 9]。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>审单排雷：</strong> 收到 L/C 草稿后，单证员必须逐字核对交货期、受益人信息及附加条款，发现“软条款”立刻要求修改[cite: 9]。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.2.1 ================== -->
+            <section id="node-2-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">大宗资金通道</span>
+                    <span class="wiki-tag">虚拟账户</span>
+                </div>
+                <h2 class="node-title">2.2.1 PingPong (乒乓智能)</h2>
+                <div class="node-eng">PingPong Virtual Account</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">主打 B2B 外贸收款与退税代付的本土出海金融平台[cite: 9]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">PingPong 提供多币种本地清算服务，最高 1% 标准费率。其特色在于 B2B 福贸专线，不仅解决收汇问题，还能打通出口退税核销甚至融资代付功能[cite: 9, 13]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">传统银行结汇手续繁琐，用 PingPong 开设虚拟账户，相当于在美国开了个本土地下账户接外汇，还能帮你搞定报关单对应，让无票工厂的钱阳光回国。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>涉嫌欺诈的代收风险：</strong> 虚拟账户只允许接收基于真实贸易背景的电商或 B2B 货款。如果代收来历不明的线下私人转账，极易触发平台风控导致关停。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> 准备真实的出口物流底单和 PI 归档，应对平台不定期的 AML 随机抽查。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.2.2 ================== -->
+            <section id="node-2-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">大宗资金通道</span>
+                    <span class="wiki-tag">虚拟账户</span>
+                </div>
+                <h2 class="node-title">2.2.2 WorldFirst (万里汇)</h2>
+                <div class="node-eng">WorldFirst Cross-border Wallet</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">背靠支付宝底层的“价格屠夫”，费率极低且支持直达法人私卡[cite: 9]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">蚂蚁集团旗下的跨境支付平台。主打 0.3% 封顶的极低费率，支付宝底层打通。支持 B2B 与 B2C 双栖，可直接提现至法人私户或公户[cite: 9, 13]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">用万里汇，收外汇是免费的，提现回国内人民币最多只收 0.3% 手续费。最方便的是能直接绑定法人的个人支付宝，点击提现秒到账，适合轻量级的小型贸易团队[cite: 9, 13]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>个人提现的税务稽查风险：</strong> 允许将大额货款提现到法人私卡，这极易被金税四期大数据判定为“公款私存、隐瞒企业收入”。若长期操作且不申报个税，将面临稽查。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>多店铺防关联：</strong> 亚马逊多店运营时，必须在后台申请相互独立的虚拟子账号收汇。</li>
+                        <li><input type="checkbox" disabled> <strong>阳光退税对接：</strong> 有出口退税需求，必须提现至对公人民币账户并匹配报关单数据。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.2.3 ================== -->
+            <section id="node-2-2-3" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">大宗资金通道</span>
+                    <span class="wiki-tag">虚拟账户</span>
+                </div>
+                <h2 class="node-title">2.2.3 Payoneer (派安盈)</h2>
+                <div class="node-eng">Payoneer Virtual Account</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">欧美本土平台兼容度最高，可签发虚拟信用卡用于支付海外广告费[cite: 9, 13]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">欧美平台首选支付工具。标准费率约 1.2%，不仅解决收结汇，还提供签发虚拟万事达卡（VCC）服务，方便扣缴 Google/Facebook 广告费及物流费[cite: 9, 13]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你在 Shopify 卖货赚了钱，如果提现回国再汇出去交广告费汇损极高。派安盈直接给你开一张虚拟信用卡，拿账号里赚到的美金直接付美国的广告费，资金完美闭环。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>费率较高且有入账门槛：</strong> 相比本土竞品，1.2% 的标准费率偏高。如果流水不大，很难申请费率下调。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>充当支付媒介：</strong> 将 Payoneer 虚拟卡绑定为独立站网关扣费首选卡，避免用国内实体双币卡产生的额外换汇点差。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.3.1 ================== -->
+            <section id="node-2-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">大宗资金通道</span>
+                    <span class="wiki-tag">风控与信用背书</span>
+                </div>
+                <h2 class="node-title">2.3.1 中信保 (Sinosure) 出口信用保险</h2>
+                <div class="node-eng">Sinosure Export Credit Insurance</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">国家队兜底的“外贸催收保险”，老外破产或恶意赖账，保险公司赔给你。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">由国家出资设立的官方出口信用保险机构。承保买方商业信用风险（破产、拖欠货款）及所在国政治风险，是应对大宗赊销订单（O/A、D/P）的终极防御手段。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">遇到个大客户要下 10 万盒牙贴，但要求 O/A（收到货后 90 天付款），你不敢接。这时候去买个中信保，只要调查他没问题，万一他后期破产不给钱，中信保最多赔你货款的 90%。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>未批限额先发货拒赔：</strong> 必须先向中信保申请买方的“信用限额”，额度批下来之后才能发货。如果限额还没批你就把货装船了，发生坏账中信保一分不赔。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>前置资信调查：</strong> 谈判阶段直接索要买家注册号，花几十美金通过中信保调取其信用报告。</li>
+                        <li><input type="checkbox" disabled> <strong>按期准确申报：</strong> 货发走后，必须在规定期限内向中信保系统录入发票与提单信息完成确报，漏报导致保单失效。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.1.1 ================== -->
+            <section id="node-3-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">资金防冻风控</span>
+                    <span class="wiki-tag">账户风控</span>
+                </div>
+                <h2 class="node-title">3.1.1 审查机制：应对风控的单证举证</h2>
+                <div class="node-eng">AML Review & Documentary Evidence</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">银行怕你洗钱，保存好交易单据，才是防冻卡的唯一正道[cite: 8]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>防冻卡与举证机制：</strong> 应对银行及外管局的反洗钱 (AML) 风控抽查，必须提交海关单据、物流底单、形式发票 (PI) 以自证贸易真实性[cite: 8]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">离岸账户进账 10 万美金，拿不出聊天记录、发票和物流单号，银行就会怀疑你是搞电信诈骗的给你冻结[cite: 8]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>账户资金被无期限冻结：</strong> 一旦触发合规审查无法提供完整的真实贸易数据闭环，不仅资金被冻，离岸银行甚至会强制关闭账户并注销户头。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>闭环单证归档：</strong> 每完成一笔 B2B 交易，务必将 PI、报关单、提单、客户往来邮件打包存档，一旦风控，24小时内甩出证据链秒解冻[cite: 8]。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.1.2 ================== -->
+            <section id="node-3-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">资金防冻风控</span>
+                    <span class="wiki-tag">账户风控</span>
+                </div>
+                <h2 class="node-title">3.1.2 阳光回境：企业 ODI 备案结汇</h2>
+                <div class="node-eng">ODI Filing & Legal Repatriation</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">防范地下钱庄“冻卡”风险，境外利润合法流回母公司公账[cite: 8]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>ODI 备案阳光回境：</strong> 企业境外直接投资备案，是境外离岸账户利润合法合规流回国内母公司公账的正规通道[cite: 8]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">自己在香港开了个皮包公司账户赚了差价，想把钱汇回大陆。如果不做企业境外投资备案（ODI），国内银行不敢随便收你的外汇利润。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>非法倒流回国：</strong> 企图通过虚假贸易合同把香港公户的钱“做账”回大陆母公司，属于严重的外汇违规行为。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>合规备案申请：</strong> 向所在地发改委及商务部门提交 ODI 申请，拿到证书后即可让银行开设专用外汇结汇通道。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.1.3 ================== -->
+            <section id="node-3-1-3" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">资金防冻风控</span>
+                    <span class="wiki-tag">账户风控</span>
+                </div>
+                <h2 class="node-title">3.1.3 1039 市场采购无票合规结汇</h2>
+                <div class="node-eng">1039 Market Purchasing Trade Mode</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">没进出口权、拿不到增值税发票的小卖家的“合法收外汇通道”。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">1039 市场采购贸易方式，是国家为专业市场“多品种、小批量”无票货物量身定制的出口通关模式。实行“免征免退”政策，允许个体工商户合法开立外汇账户收结汇。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">很多老板拿货没正规发票，按一般贸易没法退税，收外汇弄不好被当洗钱。走 1039 模式，国家允许你就算没发票也能合法收外汇，免除增值税，不怕查水表。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>买单挂靠暴雷：</strong> 很多灰产代理用虚假的 1039 抬头帮你报关收汇，一旦该抬头下的其他商户涉嫌走私违禁品，你的资金会被连带冻结审查。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>注册属地个体户：</strong> 在义乌等国家批复的试点市场，注册合规的个体工商户主体作为收汇载体。</li>
+                        <li><input type="checkbox" disabled> <strong>额度红线管控：</strong> 单票报关金额严格控制在 15 万美元法定上限内。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.2.1 ================== -->
+            <section id="node-3-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">资金防冻风控</span>
+                    <span class="wiki-tag">网关风控</span>
+                </div>
+                <h2 class="node-title">3.2.1 PayPal / Stripe 拒付 (Chargeback)</h2>
+                <div class="node-eng">Chargeback Dispute Management</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">卖出货不算本事，防老外白嫖拒付才是必修课[cite: 12]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>Chargeback (买家拒付)：</strong> 买家跳过商家，直接向信用卡发卡行申请撤销交易的维权行为。申诉难度极高，且无论胜负网关都会收取手续费[cite: 12]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">做独立站最惨的是，货发了，老外收到货后找信用卡公司说“我没买过”，钱被强行退回，你人财两空[cite: 8]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>客诉率红线：</strong> 当客诉率（Dispute Rate）接近 1% 时，Stripe 或 PayPal 会瞬间判定账号高危，全额冻结账户，引发断贷倒闭[cite: 8, 12]。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>及时应诉处理：</strong> 一旦发生 Dispute，必须在系统规定的时间内上传物流妥投记录、客户沟通截图。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.2.2 ================== -->
+            <section id="node-3-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">资金防冻风控</span>
+                    <span class="wiki-tag">网关风控</span>
+                </div>
+                <h2 class="node-title">3.2.2 资金储备金 (Rolling Reserve) 冻结规则</h2>
+                <div class="node-eng">Rolling Reserve Frozen Mechanisms</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">网关怕你跑路，强行扣留每天赚的钱做押金[cite: 12]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>Rolling Reserve：</strong> 支付网关（如 PayPal）为防范卖家大面积退款，强行截留一定比例（通常10%-30%）的销售额长达数十天至 180 天的资金冻结机制[cite: 12]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你突然爆单，PayPal 觉得有诈骗嫌疑，扣下你几千美金不让提现，等老外安全收货半年后才还给你[cite: 8]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>测品期资金链断裂：</strong> 新手测品期盲目砸广告，忽视储备金扣留，拿不出钱采购发货，导致死循环直至封禁[cite: 12]。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>物流单号预授权：</strong> 发货后 24 小时内将跟踪单号填入 PayPal 系统，能极大降低触发储备金冻结概率[cite: 12]。</li>
+                        <li><input type="checkbox" disabled> <strong>拆分收款通道：</strong> 独立站结账页务必同时接入多个网关，分摊资金被冻结的风险。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.2.3 ================== -->
+            <section id="node-3-2-3" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">资金防冻风控</span>
+                    <span class="wiki-tag">网关风控</span>
+                </div>
+                <h2 class="node-title">3.2.3 信用卡欺诈拦截与 3D Secure 验证</h2>
+                <div class="node-eng">Credit Card Fraud & 3D Secure Verification</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">发卡行推送的动态密码，把 99% 的盗刷党拦在门外[cite: 6]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>3D Secure 协议：</strong> Visa 和 Mastercard 推出的安全协议，买家付款需通过短信或 App 确认。开启后发生盗刷，赔偿责任 (Liability Shift) 从独立站商家转移给发卡银行[cite: 6]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">黑客拿偷来的信用卡在独立站下单，没开 3D 验证钱被退给失主。开启后买东西手机必须弹框，阻拦了盗刷党[cite: 6]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>转化率暴跌双刃剑：</strong> 强制开启严格 3D 验证后，可能因支付步骤变繁琐导致正常订单转化率瞬间暴跌。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>前置 3D 转移责任：</strong> 强启 3D 验证以享受责任转移免责保护[cite: 8, 12]。</li>
+                        <li><input type="checkbox" disabled> <strong>动态规则设置：</strong> 建议在网关设置条件触发：“仅对高危订单强制要求 3D 验证”。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.3.1 ================== -->
+            <section id="node-3-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">资金防冻风控</span>
+                    <span class="wiki-tag">促转化工具</span>
+                </div>
+                <h2 class="node-title">3.3.1 本地化聚合支付 (BNPL 先买后付)</h2>
+                <div class="node-eng">Buy Now Pay Later (BNPL) Solutions</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">刺激独立站老外“超前消费”的伟哥，商家收全款，客户慢慢还。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">BNPL (如 Klarna、Afterpay) 允许消费者分期免息付款，而资金由支付机构一次性垫付给商家。能显著降低弃单率（Cart Abandonment Rate）并提升客单价。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">卖 150 美金高端套盒，老外嫌贵溜了。接入 Klarna 分 4 期显示“只需支付 37.5 刀带回家”，转化率飙升，而你是立刻全额收到货款的。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>高昂的网关手续费：</strong> 商家虽无坏账风险，但 BNPL 机构抽取的商家手续费极高（4%-6%），产品毛利率低盲目开通会吃掉利润。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>精准区域投放：</strong> 欧洲主攻 Klarna，北美主攻 Afterpay/Affirm。</li>
+                        <li><input type="checkbox" disabled> <strong>UI 视觉植入：</strong> 必须在商品详情页价格下方，显眼打出分期后的小额数字。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.1.1 ================== -->
+            <section id="node-4-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">流转税与合规</span>
+                    <span class="wiki-tag">欧美税务</span>
+                </div>
+                <h2 class="node-title">4.1.1 欧洲区税务合规：VAT 与 IOSS</h2>
+                <div class="node-eng">EU Tax Compliance: VAT & IOSS Registration</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">只要碰到了“免税阈值”，欧美税务局都会跨国找你收税[cite: 11]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>欧洲 VAT (增值税)：</strong> 欧盟针对境内远程销售设定的流转税。达到阈值或使用目的国本土仓储，触发强制注册红线[cite: 11]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你的独立站卖爆了，税务局就会来要税，死不交税就封号或没收海外仓存货[cite: 11]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>无视合规遭冻结罚金：</strong> 平台强推代扣代缴，但独立站卖家若被抽查出少交漏交增值税，需补交罚金，严重者列入黑名单。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>IOSS 免检注册：</strong> 独立站必须合规注册 IOSS 系统以完成快速清关。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.2.1 ================== -->
+            <section id="node-4-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">流转税与合规</span>
+                    <span class="wiki-tag">北美税务</span>
+                </div>
+                <h2 class="node-title">4.2.1 北美区税务合规：Sales Tax 经济联结</h2>
+                <div class="node-eng">US Sales Tax & Economic Nexus Thresholds</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">跨州税法不同，达到交易单数强制代收销售税[cite: 11]。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>北美 Sales Tax：</strong> 美国各州针对外资独立站设定的“经济联结” (Economic Nexus) 标准。在一州销售额或交易笔数达标（如 10万美金或 200单），就必须上缴销售税[cite: 11]。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">不是只有人在美国才交税，独立站在加州发货够多，加州州长一样跨国找你要 Sales Tax。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>秋后算账与高额滞纳金：</strong> 各州稽查机构对海外商户实行连坐，拒绝配合补缴将被直接切断美国网关支付接口。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>独立站税改插件：</strong> 务必在后台安装自动算税插件（如 Avalara），结账时自动叠加 Sales Tax 并代扣[cite: 11]。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.3.1 ================== -->
+            <section id="node-4-3-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">流转税与合规</span>
+                    <span class="wiki-tag">逃税红线</span>
+                </div>
+                <h2 class="node-title">4.3.1 合法税务筹划与逃税红线判定</h2>
+                <div class="node-eng">Tax Planning vs. Tax Evasion Penalties</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">不要把“骗税造假”当成精明的“税务筹划”。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">合法的税务筹划是在税法允许框架内利用豁免规则，但恶意低报货值或冒用他人税号直接触犯刑法。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">用中欧班列延缓交税时间叫筹划，用别人的空壳公司 EORI 号清关逃税叫诈骗。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>虚假 EORI 逃税定性刑事犯罪：</strong> 财税代办机构采用低申报或冒用虚假 EORI 码清关逃税，触碰了欧盟“刑事诈骗”红线，导致跨国通缉[cite: 11]。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>守住筹划边界：</strong> 绝对不能在货值上进行非理性的“低申报闯关”[cite: 11]。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.4.1 ================== -->
+            <section id="node-4-4-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">流转税与合规</span>
+                    <span class="wiki-tag">穿透审查</span>
+                </div>
+                <h2 class="node-title">4.4.1 金税四期下的公私户混同与税务稽查</h2>
+                <div class="node-eng">Golden Tax System Phase IV Audit</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">别再用老板娘的私人卡收大额货款了，大数据查税一抓一个准。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">金税四期实现了税务、银行、海关等跨部门的底层数据大联网。系统自动对公私户资金频繁流转、隐匿企业收入及虚开发票等行为进行全维度的穿透式预警。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">以前把赚的外汇提现到私卡买车买房，税务局看不见。现在私卡高频进出大额资金，且没有缴纳 20% 的个税，系统直接亮红灯查老账。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>补税滞纳金与入刑：</strong> 查实隐瞒收入后，需补缴 25% 的企业所得税和 20% 个税，每天加收万分之五的滞纳金，数额巨大移交经侦。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>物理隔离防火墙：</strong> 公司对公账户的钱，坚决不允许以“备用金”名义长期大额转入法人私卡。</li>
+                        <li><input type="checkbox" disabled> <strong>合规个独核定：</strong> 在税收洼地设立个人独资企业，通过业务分流合法降低税负提取利润。</li>
+                    </ul>
+                </section>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- 自动涂色与悬浮卡片化脚本 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll('.wiki-section');
+            sections.forEach(section => {
+                const titleElement = section.querySelector('h3');
+                if (titleElement) {
+                    const titleText = titleElement.textContent;
+                    if (titleText.includes('专业释义') || titleText.includes('定义')) {
+                        section.classList.add('def-card');
+                    } else if (titleText.includes('辅助理解') || titleText.includes('大白话')) {
+                        section.classList.add('plain-card');
+                    } else if (titleText.includes('实操 SOP')) {
+                        section.classList.add('sop-card');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

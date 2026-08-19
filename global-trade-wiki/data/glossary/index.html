@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>热门术语字典 - GLOBAL TRADE WIKI</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        :root {
+            /* 专属配色：极客靛 */
+            --theme-bg: #EEF2FF; 
+            --theme-text: #4F46E5; 
+            --bg-main: #FFFFFF;
+        }
+        .hero-section { text-align: center; margin: 40px 0; }
+        .dimension-card { background: var(--bg-main); border: 2px solid #E9ECEF; padding: 32px 24px; text-align: left; border-radius: 16px; }
+        .dimension-card:hover { border-color: var(--theme-text); background-color: var(--theme-bg); transform: translateY(-6px); box-shadow: 0 12px 24px rgba(79, 70, 229, 0.15); }
+        .dim-icon { font-size: 32px; margin-bottom: 16px; display: inline-block; padding: 12px; background: #F8F9FA; border-radius: 12px; }
+        .dimension-card:hover .dim-icon { background: #fff; }
+        .dim-title { color: #222; font-size: 18px; margin-bottom: 8px; font-family: monospace; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="wiki-container">
+        <header class="top-nav">
+            <a href="../../index.html" class="logo-area"><span>🌍</span> GLOBAL TRADE WIKI</a>
+            <a href="../../index.html" style="color: var(--text-secondary); font-weight: 600;">← 返回主页</a>
+        </header>
+
+        <section class="hero-section">
+            <h1 style="font-size: 32px; color: #111;">热门术语字典 A-Z</h1>
+            <p style="color: #666; margin-top: 8px;">Global Trade Glossary & Abbreviations</p>
+        </section>
+
+        <!-- 卡片网格 -->
+        <section class="dimensions-grid">
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">A-E</div>
+                <div class="dim-title">AWB / BEC / CI / DDP...</div>
+                <div class="dim-desc">涵盖空运单、钓鱼邮件、商业发票、完税交货等基础缩写。</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">F-J</div>
+                <div class="dim-title">FOB / FTC / FTO / HS...</div>
+                <div class="dim-desc">涵盖离岸价、联邦贸易委员会、专利防侵权排查、海关编码等。</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">K-O</div>
+                <div class="dim-title">L/C / MSDS / NNN / OFAC...</div>
+                <div class="dim-desc">涵盖信用证、安全说明书、保密不规避协议、美国制裁名单等。</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">P-T</div>
+                <div class="dim-title">PI / POD / REACH / TRO...</div>
+                <div class="dim-desc">涵盖形式发票、签收证明、欧盟化学指令、联邦临时禁令等。</div>
+            </a>
+            <a href="#" class="dimension-card">
+                <div class="dim-icon">U-Z</div>
+                <div class="dim-title">UDRP / UPNEP / VAT / WEEE...</div>
+                <div class="dim-desc">涵盖域名仲裁、专利中立评估、增值税、电子废弃物指令等。</div>
+            </a>
+        </section>
+    </div>
+</body>
+</html>

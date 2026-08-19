@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>平台治理与商业契约全景库 - GLOBAL TRADE WIKI</title>
+    <!-- 引入 Quicksand 字体用于英文字段 -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 👇 一键换肤中枢 👇 */
+            /* 当前为【维度五：风控绯红 (Risk Crimson)】 */
+            --theme-bg: #FFE4E6; 
+            --theme-text: #E11D48; 
+        }
+
+        /* 基础排版：中英文字体搭配 */
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #fff; }
+
+        /* 容器控制：1280px 宽屏适配 */
+        .mega-container { display: flex; max-width: 1280px; margin: 0 auto; padding-top: 40px; }
+
+        /* 左侧电梯导航 */
+        .sidebar-toc { width: 320px; position: sticky; top: 40px; height: calc(100vh - 80px); overflow-y: auto; padding-right: 20px; border-right: 1px solid #eaeaea; }
+        .sidebar-toc h3 { font-size: 16px; color: #888; margin-bottom: 16px; }
+        .sidebar-toc ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-toc li { margin-bottom: 8px; }
+        .sidebar-toc a { text-decoration: none; color: #555; font-size: 14px; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.2s; }
+        .sidebar-toc a:hover { background-color: var(--theme-bg); color: var(--theme-text); font-weight: 600; }
+        
+        /* 📌 导航栏批注专属样式 */
+        .arch-desc { display: inline-block; font-size: 14px; color: #E53E3E; background: #FFF5F5; padding: 2px 6px; border-radius: 4px; font-weight: normal; margin-top: 4px; }
+
+        /* 右侧正文区域 */
+        .content-area { flex: 1; padding-left: 60px; padding-right: 20px; }
+
+        /* 标题与标签 */
+        .node-section { margin-bottom: 60px; scroll-margin-top: 40px; }
+        .tags-container { margin-bottom: 8px; }
+        .wiki-tag { display: inline-block; padding: 4px 12px; background-color: var(--theme-bg); color: var(--theme-text); border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 8px; }
+        .node-title { font-size: 28px; font-weight: bold; color: #222; margin: 0 0 4px 0; }
+        .node-eng { font-family: 'Quicksand', sans-serif; font-size: 15px; color: #888; margin-bottom: 24px; }
+
+        /* 彻底隐去横线并统一基础间距 */
+        .wiki-divider { display: none !important; }
+        .wiki-section { margin-bottom: 24px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .wiki-section h3 { font-size: 18px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: #222; }
+        .wiki-text { font-size: 15px; line-height: 1.7; color: #444; margin: 0; }
+
+        /* 💡 一句话理解 */
+        .notion-quote { background-color: #F7F9FC; border-left: 4px solid var(--theme-text); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 15px; color: #333; font-weight: 500; }
+
+        /* ⚠️ 风险提示 */
+        .alert-box { background-color: #FFF5F5; border-left: 4px solid #E53E3E; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-top: 12px; }
+        .alert-box p { margin: 0; font-size: 15px; line-height: 1.7; }
+        .alert-box strong { color: #E53E3E; display: block; margin-bottom: 6px; font-size: 15px; }
+
+        /* 🌟 专属卡片 1：专业释义 (浅蓝灰) */
+        .def-card { background-color: #F4F8FB; border: 1px solid #C9DCEB; padding: 20px 24px; border-radius: 12px; }
+        .def-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(162, 185, 205, 0.25); background-color: #EDF4FA; }
+
+        /* 🌟 专属卡片 2：大白话 (浅暖橙) */
+        .plain-card { background-color: #FFF8F0; border: 1px solid #EEDAC5; padding: 20px 24px; border-radius: 12px; }
+        .plain-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(230, 200, 160, 0.25); background-color: #FFF3E0; }
+
+        /* 🌟 专属卡片 3：实操 SOP (浅灰) */
+        .sop-card { background-color: #F8F9FA; border: 1px solid #DDE2E5; padding: 20px 24px; border-radius: 12px; }
+        .sop-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(200, 205, 210, 0.25); background-color: #F1F3F5; }
+        .sop-card .sop-list { margin: 0; padding-left: 20px; }
+        .sop-card .sop-list li { font-size: 15px; line-height: 1.7; color: #333; margin-bottom: 8px; }
+        .sop-card .sop-list li::marker { color: var(--theme-text); }
+
+        /* 移动端设备精准适配 */
+        @media (max-width: 820px) {
+            .mega-container { flex-direction: column; padding-top: 20px; }
+            .sidebar-toc { display: none; }
+            .content-area { padding-left: 20px; padding-right: 20px; width: 100%; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mega-container">
+        <!-- 左侧导航 (维度五) -->
+        <aside class="sidebar-toc">
+            <h3 style="font-size: 18px; font-weight: bold; color: #111; margin-bottom: 24px;">📑 目录导航 (14个节点)</h3>
+
+            <!-- 1 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 12px; margin-bottom: 4px;">1. B2B 平台规则与大宗契约</div>
+            <div class="arch-desc">【锚定 B2B：国际站履约与合同法务】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">1.1 阿里国际站等平台治理</div>
+            <ul>
+                <li><a href="#node-1-1-1">1.1.1 信保订单履约与平台仲裁</a></li>
+                <li><a href="#node-1-1-2">1.1.2 B2B 询盘风控与采购欺诈</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">1.2 跨国实体商事合同法务</div>
+            <ul>
+                <li><a href="#node-1-2-1">1.2.1 CISG 适用与不可抗力免责</a></li>
+                <li><a href="#node-1-2-2">1.2.2 国际仲裁机构约定与执行</a></li>
+            </ul>
+
+            <!-- 2 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">2. B2C 零售平台风控与治理</div>
+            <div class="arch-desc">【守住 B2C：防关联封店与消费者红线】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">2.1 账号生命周期安全</div>
+            <ul>
+                <li><a href="#node-2-1-1">2.1.1 强关联规则审查与隔离</a></li>
+                <li><a href="#node-2-1-2">2.1.2 操纵评论封店与申诉</a></li>
+                <li><a href="#node-2-1-3">2.1.3 销量激增风控与二审应对</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">2.2 消费者保护红线</div>
+            <ul>
+                <li><a href="#node-2-2-1">2.2.1 欧盟消费者权益退保规则</a></li>
+            </ul>
+
+            <!-- 3 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">3. 全球广告合规与审查</div>
+            <div class="arch-desc">【规避流量端雷区：封户与 FTC 重罚】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">3.1 流量巨头政策红线</div>
+            <ul>
+                <li><a href="#node-3-1-1">3.1.1 规避系统与不实陈述封户</a></li>
+                <li><a href="#node-3-1-2">3.1.2 敏感词自动风控触发机制</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">3.2 政府机构营销审查监管</div>
+            <ul>
+                <li><a href="#node-3-2-1">3.2.1 FTC 夸大宣传与暗黑模式</a></li>
+                <li><a href="#node-3-2-2">3.2.2 高敏品类普通与医疗界定</a></li>
+            </ul>
+
+            <!-- 4 -->
+            <div style="font-size: 16px; font-weight: bold; color: #222; margin-top: 32px; margin-bottom: 4px;">4. 地缘政治与出口管制壁垒</div>
+            <div class="arch-desc">【防范核弹级制裁：OFAC 与 EAR 清单】</div>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 12px 0 6px 0;">4.1 贸易黑名单审查</div>
+            <ul>
+                <li><a href="#node-4-1-1">4.1.1 美国 OFAC SDN 名单排查</a></li>
+            </ul>
+
+            <div style="font-size: 13px; font-weight: 600; color: var(--theme-text); margin: 16px 0 6px 0;">4.2 高敏技术与物资管制</div>
+            <ul>
+                <li><a href="#node-4-2-1">4.2.1 BIS 实体清单与 EAR 合规</a></li>
+            </ul>
+            
+            <div style="height: 60px;"></div>
+        </aside>
+
+        <!-- 右侧内容 -->
+        <main class="content-area">
+            <h1 style="font-size: 36px; margin-bottom: 60px; color: #111;">维度五：平台治理与商业契约全景库</h1>
+
+            <!-- ================== 1.1.1 ================== -->
+            <section id="node-1-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">B2B 平台治理</span>
+                    <span class="wiki-tag">信保履约</span>
+                </div>
+                <h2 class="node-title">1.1.1 信保订单履约举证与平台介入仲裁</h2>
+                <div class="node-eng">Trade Assurance Fulfillment & Dispute Resolution</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">平台介入当裁判时，冷冰冰的聊天记录和质检视频证据链就是保住货款的命脉。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">阿里巴巴国际站信保订单支持买家发起纠纷退款（Dispute）。当买卖双方协商无果时，平台仲裁团队将介入。仲裁完全基于系统内留存的 PI（形式发票）、阿里旺旺聊天记录以及合规的物流妥投凭证进行“谁主张谁举证”的闭环判定。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">老外收到货后想白嫖，找平台投诉说你“货不对板”要求全额退款。如果你在发货前没有在阿里聊天框里把产品的细节照片发给他确认，也没有验货视频，平台为了保护买家体验，极大概率会直接把钱退给老外，你货款两空。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>轻信线下沟通导致证据无效：</strong> 很多业务员习惯用 WhatsApp 或微信跟客户确认订单更改细节（如更改颜色或延迟交期）。一旦产生纠纷，平台仲裁一律不承认脱离阿里系统的第三方软件聊天截图，卖家将瞬间处于举证劣势被判全责退款。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>强制阿里内流转：</strong> 任何在 WhatsApp 上谈妥的规格修改或妥协，必须回到阿里平台聊天框发一句 "As we discussed on WhatsApp..." 让对方回复 "Yes" 以固化证据。</li>
+                        <li><input type="checkbox" disabled> <strong>发货前出库留档：</strong> 大货封装前，必须录制清晰的质检视频并连同物流面单照片发在订单对话框内，作为封箱前的免责底牌。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.1.2 ================== -->
+            <section id="node-1-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">B2B 平台治理</span>
+                    <span class="wiki-tag">询盘风控</span>
+                </div>
+                <h2 class="node-title">1.1.2 B2B 询盘风控：钓鱼邮件与采购欺诈</h2>
+                <div class="node-eng">B2B Inquiry Risks: BEC Attacks & Procurement Fraud</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">天上不会掉免费的百万大单，发过来的文件链接一旦点开，你的邮箱就被骗子监听了。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">商务电子邮件妥协 (Business Email Compromise, BEC) 是一种极度泛滥的跨国网络诈骗。黑客通过发送带有木马的“大额采购清单”链接截获业务员邮箱密码，潜伏监听并在买家即将打款的节点，伪装成卖家发送要求“更改收款银行账户”的欺诈邮件。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你收到一个询盘，对方说“我们是迪拜大财团，采购清单在附件链接里请下载报价”。你一输入邮箱密码查看，黑客就控制了你。等你跟真实的老外谈好几十万定金准备收款时，黑客用你的口吻给老外发邮件说“老板账户被查，请把定金打到这个新账号”，老外一打钱，你们双方集体蒙圈。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>责任归属引发跨国官司：</strong> 因 BEC 导致的货款被黑客劫持，在国际法庭的判例中，通常判定“谁的邮箱被黑导致了虚假指令，谁就承担全责”。这意味着如果你的邮箱被黑，老外付错的钱等于没付，你必须承担全部损失并继续发货，否则面临违约索赔。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>二次验证硬隔离：</strong> 所有公司企业邮箱必须强制开启手机短信或 Authenticator 动态密码的双重身份验证 (2FA)。</li>
+                        <li><input type="checkbox" disabled> <strong>财务变更红线：</strong> 明确向所有客户声明：“我司收款账户绝不会变更，若收到任何要求更改收款账号的邮件，请务必直接致电或视频核实。”</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.2.1 ================== -->
+            <section id="node-1-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国商事合同</span>
+                    <span class="wiki-tag">法务条款</span>
+                </div>
+                <h2 class="node-title">1.2.1 CISG 适用与不可抗力阻却违约</h2>
+                <div class="node-eng">CISG Application & Force Majeure Clauses</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">跨国大单没写对适用法律和免责金牌，一旦遇到天灾人祸，光违约金就能赔到倾家荡产。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>CISG：</strong> 《联合国国际货物销售合同公约》，在全球多国默认适用。<br><strong>不可抗力 (Force Majeure)：</strong> 合同中的免责护身符。指不能预见、不能避免并不能克服的客观情况（如战争、港口大罢工、极端自然灾害），允许当事方迟延履行或解除合同而无需承担违约赔偿责任。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你答应了老外月底交货，结果港口突然大罢工或者爆发疫情封城，货发不出去了。如果你合同里写清楚了“不可抗力免责”，老外只能干等不能要你赔钱。如果你合同里没写，老外以你在旺季让他断货为由，起诉你索赔几百万的商业利润损失，法院是会支持他的。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>笼统描述被法庭击穿：</strong> 很多合同只草草写一句“如遇不可抗力互不担责”。但在欧美法系，法官对此判定极其苛刻。例如海运费突然暴涨十倍算不算不可抗力？如果不明确列举，法官通常判定为“正常商业风险”，判你继续履约。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>穷尽列举法：</strong> 合同中必须白纸黑字穷尽列出不可抗力的具体情形（如：港口封锁、原材料禁运、流行病爆发），并附加兜底条款。</li>
+                        <li><input type="checkbox" disabled> <strong>官方背书认证：</strong> 发生意外后 3 天内，必须向所在地的贸促会 (CCPIT) 申请开具官方的《不可抗力事实性证明书》并发送给买方，这是唯一被国际认可的免死金牌。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 1.2.2 ================== -->
+            <section id="node-1-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">跨国商事合同</span>
+                    <span class="wiki-tag">仲裁执行</span>
+                </div>
+                <h2 class="node-title">1.2.2 国际仲裁机构约定与《纽约公约》执行</h2>
+                <div class="node-eng">International Arbitration (ICC/HKIAC) & Enforcement</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">去美国法院打官司成本太高，把仲裁地定在香港，不仅省钱，还能在全球合法追缴对方的资产。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">跨国贸易纠纷若选择法院诉讼，常面临“地方保护主义”且跨国执行极难。因此标准做法是约定将纠纷提交给国际商会仲裁院 (ICC) 或香港国际仲裁中心 (HKIAC) 裁决。凭借《纽约公约》，该裁决可以在全球 170 多个缔约国（包括老外的本国）被强制执行没收财产。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">老外欠你钱不还。如果你合同写“在深圳法院起诉”，你赢了官司，但深圳法院没法去美国封他的房子。如果你合同写“在香港仲裁”，香港老法官判你赢了，你拿着判决书到美国法院，美国警察必须依法强制把老外的卡封了还钱给你。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>瑕疵仲裁条款致维权无门：</strong> 很多外贸业务员在网上随便抄个合同，上面写着“发生纠纷友好协商，协商不成去国际法院诉讼”。这种模糊不清的条款在法律上属于“无效约定”，一旦出事，不仅仲裁机构不受理，连起诉都找不到地方。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>嵌入标准仲裁条款：</strong> 采购 PI 或合同底部必须无脑复制 HKIAC 等机构官方提供的标准示范条款，明确仲裁地、适用法律（如适用香港法或英国法）及仲裁语言（英文）。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.1.1 ================== -->
+            <section id="node-2-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">B2C 账号安全</span>
+                    <span class="wiki-tag">防关联隔离</span>
+                </div>
+                <h2 class="node-title">2.1.1 强关联规则审查与防关联隔离部署</h2>
+                <div class="node-eng">Strict Account Association Rules & IP Isolation</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">死了一个店，全网跟着死。不要妄想用一台电脑和一根网线同时操作几个不同的店铺。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">亚马逊、独立站支付网关严禁卖家操作多个同类目账号。平台的“防关联系统”会通过浏览器指纹、IP 地址、MAC 物理地址、注册法人信息、信用卡、甚至登录时的打字习惯进行全维度交叉比对。一旦判定多账号同属一人，将实施“连坐封禁”。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你开了 A 和 B 两个店卖不同牌子的产品。有天你在星巴克连了同一个免费 WiFi，先后登录了这两个店的后台。完了，系统立刻判定这俩店是同一个老板。如果哪天 A 店因为卖侵权产品被封了，B 店就算合法经营，也会在半夜被平台顺藤摸瓜直接连坐砍死。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>云服务器（VPS）池污染：</strong> 很多卖家买便宜的 VPS 来隔离环境，殊不知这些 IP 已经被上一手做灰产的卖家彻底污染过了。新注册的干净账号一登上去，瞬间触发高危预警，直接被平台系统“秒杀”进入死循环。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>物理绝缘环境：</strong> 最稳妥的防关联是“一台干净的电脑 + 一根干净的独立宽带 + 一套完全无交集的法人资料”。</li>
+                        <li><input type="checkbox" disabled> <strong>指纹浏览器部署：</strong> 若多店运营，必须使用高质量的防关联指纹浏览器（如紫鸟、AdsPower），并高价购买原生干净的住宅静态 IP 进行严格隔离。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.1.2 ================== -->
+            <section id="node-2-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">B2C 账号安全</span>
+                    <span class="wiki-tag">操纵评论红线</span>
+                </div>
+                <h2 class="node-title">2.1.2 操纵评论 (Fake Review) 封店与申诉</h2>
+                <div class="node-eng">Fake Review Manipulation & Account Suspension Appeals</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">刷单找死，不刷等死，跨过平台容忍底线就是永久关店的万丈深渊。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">任何试图诱导、补偿或操控买家留评的行为（包括但不限于放好评返现卡、找测评服务商机刷、亲友购买留评）均严重违反亚马逊等平台的《买家评论政策》。平台会通过买家号购买行为模式、IP 聚集度等大数据进行严厉清洗与封号处罚。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你在包裹里塞了一张小卡片：“给五星好评就返你 10 美金”。有老外拿了钱转头就把这张卡片拍下来发给亚马逊客服举报你。平台雷霆震怒，直接把你苦心经营的几万条好评全部清空，店铺资金就地冻结，一点商量的余地都没有。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>申诉信写套话必死：</strong> 因刷单被封店后，如果你找外面的水军代写申诉信 (POA)，通篇只会写“我再也不敢了请原谅我”，审核团队看都不会看。你必须彻底坦白招供，供出所有合作的刷单中介名单和刷单买家账号，才有一丝解封的可能。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>启用官方合规催评：</strong> 彻底放弃黑科技，老老实实花钱使用亚马逊官方的 Vine 计划送测，或者在后台点击合法合规的 "Request a Review" 按钮进行催评。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.1.3 ================== -->
+            <section id="node-2-1-3" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">B2C 账号安全</span>
+                    <span class="wiki-tag">销量激增风控</span>
+                </div>
+                <h2 class="node-title">2.1.3 销量激增风控 (Velocity Review) 与二审应对</h2>
+                <div class="node-eng">Velocity Review & Secondary Account Audit Mitigation</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">新店铺突然一天爆卖几百单，平台第一反应不是夸你牛，而是直接冻结账号查你是不是在套现跑路。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">Velocity Review 是亚马逊等平台针对新账号或休眠期账号设置的系统级限速器。当短期销售额曲线异常陡峭地超出历史平均值或同类目基准时，机器会强制介入，暂停结算甚至下架 Listing，要求卖家提供供应链发票、库存证明及妥投追踪号进行严苛的二次审查。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你刚开个新店，花钱砸网红营销，一天卖了 10 万美金。平台系统一看，你个新来的连几个真实退货数据都没有，万一你发的全是空包裹假单号，卷款跑路了，平台还要倒贴买家钱。于是先下手为强，把你的钱扣死，让你拿进货发票和物流底单来证明你真有货发。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>无货源模式的供应链断链死局：</strong> 很多做无货源一件代发 (Dropshipping) 的独立站或店铺，在触发激增审查时，根本拿不出符合平台要求（抬头、品名、数量绝对对板）的正规增值税发票。由于无法自证有真实的库存履约能力，账号资金会被直接永久没收。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>人为控制爬坡速度：</strong> 新店起盘测品时，切忌第一天就砸巨额预算拉满流量，应人为干预放量节奏，呈阶梯式稳步增长。</li>
+                        <li><input type="checkbox" disabled> <strong>前置压仓与开票防御：</strong> 预判到要爆单前，务必让供应商提前开出对应数量的增值税发票备查，并在真实发货后秒填物流追踪号加速资金释放。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 2.2.1 ================== -->
+            <section id="node-2-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">消费者保护</span>
+                    <span class="wiki-tag">退保红线</span>
+                </div>
+                <h2 class="node-title">2.2.1 欧盟《消费者权益指令》强退换规则</h2>
+                <div class="node-eng">EU Consumer Rights Directive: Returns & Guarantees</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">欧洲卖家的“利润粉碎机”：老外买个耳机用了一年半坏了，法律也要求你必须给他免费修或者退钱。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">这是全球最偏袒买家的法律。欧盟强制规定：线上跨境购物享有 14 天无条件、无理由退货权（运费需明确划分）；更致命的是，强制要求包括电子产品在内的多数商品必须提供长达 2 年的法定最低免费保修期。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你在独立站把小家电卖到德国。买家签收后 10 天说“我不喜欢”，你不仅得退全款，由于没有提前声明，你连寄过去的国际运费都要自己掏。甚至他在第 20 个月时说机器坏了，只要他告到消协，你要么包国际运费让他寄回来修，要么只能含泪白送他一台全新的。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>拒绝保修遭到消协重罚：</strong> 很多中国卖家习惯了“离柜概不负责”，对欧洲买家的过保修期索赔邮件置之不理。如果买家向欧盟当地消保部门投诉，独立站网关将被查封，并在欧盟海关系统留下严重的黑名单记录。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>运费责任前置声明：</strong> 独立站退换货政策（Return Policy）里必须明确用加粗字体写明：“14天无理由退回的物流运费由买方自行承担”，否则法律默认卖方买单。</li>
+                        <li><input type="checkbox" disabled> <strong>核算 2 年质保折损率：</strong> 定价前必须将电子类产品的 2 年内潜在报废率和本土退仓销毁成本计入模型，通过提升前端售价来覆盖这部分硬性沉没成本。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.1.1 ================== -->
+            <section id="node-3-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">广告营销合规</span>
+                    <span class="wiki-tag">流量巨头政策</span>
+                </div>
+                <h2 class="node-title">3.1.1 规避系统与不实陈述封户解析</h2>
+                <div class="node-eng">Circumventing Systems & Misrepresentation Bans</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">Google 和 Facebook 封号的终极死刑判决，一旦被贴上这两个标签，你的广告账户基本无力回天。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text"><strong>规避系统 (Circumventing Systems)：</strong> 指广告主试图使用斗篷链接 (Cloaking) 或跳转代码欺骗审核机器人的恶意行为。<br><strong>不实陈述 (Misrepresentation)：</strong> 指独立站信息造假、隐藏退款政策或虚假宣称自己具有某些资质，欺骗消费者。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你卖假包，怕谷歌审核不给过，搞了个“阴阳网页”：谷歌机器爬虫来看时显示卖普通杯子，真实顾客点进来跳转去买假包。谷歌一旦抓到你这种小动作，直接判你“规避系统”，不仅永远封停账户，连绑定的信用卡也会被全网拉黑。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>虚假地址引发连环封杀：</strong> 许多国内卖家随便在网上搜个美国虚假地址填在独立站页脚装作海外大牌。谷歌的街景数据一比对发现那是个废弃仓库，立马判你“不实陈述”，整个广告网矩阵瞬间崩溃停摆。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>全站真实资质备案：</strong> 独立站底部的 Contact Us 必须留存真实的国内营业执照对应地址、真实有效的客服电话与工作时间，绝不弄虚作假。</li>
+                        <li><input type="checkbox" disabled> <strong>六大政策页满配：</strong> 必须在页脚配置完整的退换货、隐私、服务条款、物流政策等 6 大标准页，通过系统的第一次信任扫描。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.1.2 ================== -->
+            <section id="node-3-1-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">广告营销合规</span>
+                    <span class="wiki-tag">流量巨头政策</span>
+                </div>
+                <h2 class="node-title">3.1.2 敏感词自动风控触发机制</h2>
+                <div class="node-eng">Sensitive Keywords Automated Ban Mechanisms</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">哪怕你是正经做生意，文案里多写了一个“药”字，机器也会直接判你违规停播。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">流量巨头平台（Meta, Google, TikTok）对医疗、金融、成人及黑五类敏感词库设有极度灵敏的自动化触发机制。一旦广告文案、视频字幕甚至着陆页 (Landing Page) 文本中出现违禁词，机器不经人工判断即刻拒绝广告甚至封禁 Business Manager 账户。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你卖普通的祛痘洗面奶，文案写着“100%根除痤疮疾病”。“疾病”、“根除”这些字眼在系统看来就是受严格管制的处方药或虚假神药。机器秒封你的广告，你连申诉找人工客服解释的机会都没有，只能吃哑巴亏。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>Landing Page 连坐扫描：</strong> 很多卖家以为只要在 Facebook 广告语里不说敏感词就安全了，其实 Facebook 爬虫会深入爬取你点击跳过去的独立站着陆页。如果着陆页满屏敏感词，依然是秒封且申诉无门。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>建立过滤词库：</strong> 针对特定高危品类（美妆、大健康），团队内部必须整理出一份严禁使用的敏感词表，发文前用自动化工具全盘过滤替换。</li>
+                        <li><input type="checkbox" disabled> <strong>视觉暗示替代文字：</strong> 将容易触发审核的敏感痛点词，转换为合规的前后对比视觉画面（Before & After，但需注意尺度）或模糊化表达进行委婉传递。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.2.1 ================== -->
+            <section id="node-3-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">政府审查监管</span>
+                    <span class="wiki-tag">FTC 合规</span>
+                </div>
+                <h2 class="node-title">3.2.1 美国 FTC 夸大宣传与“暗黑模式”重罚</h2>
+                <div class="node-eng">FTC Regulations: False Claims & Dark Patterns Fines</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">别在独立站上搞虚假的“倒计时”和“假折扣”了，美国工商局抓到直接罚出天际。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">美国联邦贸易委员会 (FTC) 专门打击欺骗性商业行为。近年来重拳出击严打独立站的“暗黑模式 (Dark Patterns)”，即通过操控页面设计误导买家消费（如：永远停在最后 5 分钟的虚假倒计时、隐藏连续订阅扣费按钮、制造虚假的库存稀缺感）。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">国内电商玩烂的套路：网页挂个假弹窗说“纽约的 John 刚刚购买了此商品”，倒计时写着“特价仅剩 1 件最后 10 分钟”。老外一旦被骗买了，反手给 FTC 提交个截图。一旦被 FTC 抓了典型，开出的罚单动辄数百万美金起步，连你关联的支付网关通道都会被连根拔起强制没收。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>隐藏订阅制 (Subscription Trap) 的暴雷：</strong> 你用 1 美金试用吸引买家，然后把每月自动扣款 50 美金的条款用极小的灰色字体藏在角落里。这在 FTC 眼里属于最恶劣的欺诈行为，会被提起政府级集体诉讼，直接冻结海外资产。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>全面拆除虚假插件：</strong> 卸载独立站上所有制造假销量提示、永远不会到期的假倒计时器等制造恐慌焦虑的“转化率作弊插件”。</li>
+                        <li><input type="checkbox" disabled> <strong>订阅退订透明化：</strong> 任何周期扣款服务，必须在加购按钮旁用大字清晰标注周期总价，且必须提供与“一键订阅”同样简单的一键退订入口。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 3.2.2 ================== -->
+            <section id="node-3-2-2" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">政府审查监管</span>
+                    <span class="wiki-tag">高敏品类合规</span>
+                </div>
+                <h2 class="node-title">3.2.2 高敏品类功效宣称边界：普通日化与医疗的越界打击</h2>
+                <div class="node-eng">Efficacy Claims Boundaries: Cosmetic vs. Medical Devices</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">卖牙齿美白贴，你可以说“让笑容更闪亮”，但绝对不能写“治疗牙周炎”，否则直接按非法销售无证医疗器械定罪。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">美国 FDA 和 FTC 对产品定性执行严格的“宣称导向 (Intended Use)”原则。同样一支含有过氧化氢的凝胶，如果 Landing Page 宣传其用于“清洁、美化外观 (Cosmetic)”，合规门槛极低；若宣称能“预防或治疗疾病、改变人体结构”，则瞬间升级为医疗器械或非处方药 (OTC)，需经过极度严苛的临床验证与备案。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">为了让美牙贴卖得更好，运营在文案里写了一句“修复受损牙釉质，彻底治愈牙菌斑”。这在 FDA 眼里，你卖的就不再是化妆品，而是没有拿证就敢乱卖的非法违禁药品。这会引来执法部门的跨国雷霆绞杀。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>下发 Warning Letter 与集体诉讼：</strong> 一旦被 FDA 爬虫抓取越界文案，将被下发警告信 (Warning Letter)，不仅支付网关立刻查封，更会招致专门吃这碗饭的美国流氓律师发起天价的消费者欺诈集体诉讼。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>建立敏感词防火墙：</strong> 市场部产出文案后，必须对照当地药监局的 Cosmetic Claims 词库进行排雷，严格抹除任何带有病理暗示 (Treat, Cure, Restore) 的动词。</li>
+                        <li><input type="checkbox" disabled> <strong>使用免责声明垫底：</strong> 独立站底部必须用小字标明 "*These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.*" 进行最终托底。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.1.1 ================== -->
+            <section id="node-4-1-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">贸易黑名单</span>
+                    <span class="wiki-tag">OFAC 审查</span>
+                </div>
+                <h2 class="node-title">4.1.1 美国 OFAC SDN (特别指定国民) 名单排查</h2>
+                <div class="node-eng">OFAC SDN List Screening & Compliance</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">如果不小心把一箱货卖给了中东的恐怖分子或被制裁的军火商，你这辈子都别想再用美元结算了。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">美国财政部海外资产控制办公室 (OFAC) 发布并维护着 SDN (特别指定国民和被阻管人员) 名单。任何个人或实体被列入此名单，其在美国的资产将被冻结，且全球任何企业若违规与名单内人员进行商业交易，都会遭到致命的“次级制裁”。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">你收到一个中东神秘富豪的大额订单，你见钱眼开没去查他的底细直接收款发货。结果这笔美金的买家是上了美国政府反恐黑名单的头目。一旦被美国情报局发现，你公司的所有外汇银行卡、PayPal 账号将被永久冻结，再也没有金融机构敢跟你做生意。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>连带封禁美元结算系统：</strong> 违反 OFAC 制裁，即使你是一家不在美国本土的中国公司，依然会被切断对 SWIFT 美元清算体系的访问权限，导致外贸资金链彻底枯竭死亡。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>大额非主流国家订单前置筛查：</strong> 对来自中东、俄罗斯、拉美等地的大额 B2B 新客户，收款前必须通过商务部或海外公开免费的 OFAC 制裁搜索工具检索其公司名和法人姓名。</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ================== 4.2.1 ================== -->
+            <section id="node-4-2-1" class="node-section">
+                <div class="tags-container">
+                    <span class="wiki-tag">出口管制壁垒</span>
+                    <span class="wiki-tag">EAR 实体清单</span>
+                </div>
+                <h2 class="node-title">4.2.1 BIS 实体清单与 EAR (出口管制条例) 合规</h2>
+                <div class="node-eng">BIS Entity List & EAR Export Compliance</div>
+
+                <section class="wiki-section">
+                    <h3>💡 一句话理解</h3>
+                    <div class="notion-quote">高科技和军民两用产品的禁飞区，不小心把芯片或无人机配件卖给了禁运名单企业，面临的将是牢狱之灾。</div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📖 专业释义与定义</h3>
+                    <p class="wiki-text">美国商务部工业和安全局 (BIS) 主管 EAR。如果产品含有特定比例的美国技术或原产零部件，即使是中国卖家出口给第三国客户，也必须受 EAR 管辖。若未经许可将其销售给“实体清单 (Entity List)”中的受限企业，将遭到严厉的地缘政治刑事制裁。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>🗣️ 辅助理解 (大白话解读)</h3>
+                    <p class="wiki-text">如果你是卖普通牙刷和衣服的，这跟你没关系。但如果你是卖高端红外夜视仪、无人机主板芯片的，老外下大单找你买，你必须查清楚他是拿去打仗还是民用。如果糊里糊涂卖给了上了美国实体清单的军工企业，那就是重大国际违法事件。</p>
+                </section>
+                <section class="wiki-section">
+                    <h3>⚠️ 风险提示</h3>
+                    <div class="alert-box">
+                        <p class="wiki-text"><strong>最高级别刑事重罚：</strong> 违反 EAR 不仅仅是罚款了事，涉事企业法人及高管将被美国及与其有引渡条约的国家提起最高 20 年的监禁刑事指控，企业遭受千万美金级毁灭性罚款。</p>
+                    </div>
+                </section>
+                <section class="wiki-section">
+                    <h3>📝 极简实操 SOP</h3>
+                    <ul class="sop-list">
+                        <li><input type="checkbox" disabled> <strong>执行 EUC (最终用途承诺)：</strong> 销售具备军民两用潜质的高科技产品，必须要求买家签署具有法律约束力的《最终用途和最终用户承诺书》，声明绝不用于禁运用途或转售受限组织。</li>
+                    </ul>
+                </section>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- 自动涂色与悬浮卡片化脚本 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll('.wiki-section');
+            sections.forEach(section => {
+                const titleElement = section.querySelector('h3');
+                if (titleElement) {
+                    const titleText = titleElement.textContent;
+                    if (titleText.includes('专业释义') || titleText.includes('定义')) {
+                        section.classList.add('def-card');
+                    } else if (titleText.includes('辅助理解') || titleText.includes('大白话')) {
+                        section.classList.add('plain-card');
+                    } else if (titleText.includes('实操 SOP')) {
+                        section.classList.add('sop-card');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

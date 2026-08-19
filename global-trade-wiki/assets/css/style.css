@@ -1,0 +1,74 @@
+/* assets/css/style.css */
+:root {
+    /* 基础灰阶 - Notion 风格 */
+    --bg-main: #FFFFFF;
+    --bg-page: #F7F9FC;
+    --text-primary: #37352F;
+    --text-secondary: #787774;
+    --border-color: #E9ECEF;
+    
+    /* 五大维度主题色 (马卡龙点缀，非大面积铺色) */
+    --theme-compliance: #E8F8F5; --accent-compliance: #00B894; /* 准入合规 */
+    --theme-logistics: #EBF5FB;  --accent-logistics: #0984E3;  /* 物流通关 */
+    --theme-finance: #FEF9E7;    --accent-finance: #F1C40F;    /* 资金财税 */
+    --theme-ip: #F5EEF8;         --accent-ip: #8E44AD;         /* 知产维权 */
+    --theme-platform: #FDEDEC;   --accent-platform: #E74C3C;   /* 平台契约 */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+body { background-color: var(--bg-page); color: var(--text-primary); line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+
+/* 页面主容器 */
+.wiki-container { max-width: 1024px; margin: 0 auto; background-color: var(--bg-main); min-height: 100vh; padding: 40px 60px; box-shadow: 0 0 1px rgba(0,0,0,0.1); }
+
+/* 顶导栏 */
+.top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 16px; margin-bottom: 32px; }
+.logo-area { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; letter-spacing: 1px; }
+.search-bar { background: #F1F3F5; padding: 8px 16px; border-radius: 6px; color: var(--text-secondary); font-size: 14px; width: 200px; display: flex; justify-content: space-between; }
+
+/* 首页：大标题区域 */
+.hero-section { margin-bottom: 40px; }
+.hero-section h1 { font-size: 28px; margin-bottom: 8px; }
+.hero-section p { color: var(--text-secondary); font-size: 15px; }
+.global-search-box { margin-top: 24px; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px 24px; display: flex; align-items: center; gap: 12px; color: var(--text-secondary); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+
+/* 首页：五大维度网格 */
+.dimensions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+.dimension-card { border: 1px dashed var(--border-color); border-radius: 12px; padding: 24px; transition: all 0.2s ease; cursor: pointer; display: block; }
+.dimension-card:hover { border-style: solid; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transform: translateY(-2px); }
+.dim-icon { font-size: 24px; margin-bottom: 12px; }
+.dim-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+.dim-desc { font-size: 13px; color: var(--text-secondary); }
+
+/* 底部辅助入口 */
+.quick-links { border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; gap: 24px; }
+.quick-link-item { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--text-secondary); cursor: pointer; }
+.quick-link-item:hover { color: var(--text-primary); }
+
+/* ================= 百科详情页 (Wiki Node) 专用样式 ================= */
+.node-header { margin-bottom: 32px; }
+.node-title { font-size: 32px; font-weight: 800; margin-bottom: 4px; }
+.node-eng { font-size: 18px; color: var(--text-secondary); font-family: monospace; margin-bottom: 16px; }
+.one-sentence { font-size: 18px; font-weight: 500; padding-left: 16px; border-left: 4px solid var(--accent-compliance); margin-bottom: 32px; color: var(--text-primary); }
+
+.wiki-section { margin-bottom: 32px; }
+.wiki-section h2 { font-size: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+/* 特定区块样式 */
+.alert-box { background-color: #FFF5F5; border-left: 4px solid var(--accent-platform); padding: 16px; border-radius: 0 8px 8px 0; margin-bottom: 16px; font-size: 15px; }
+.alert-box strong { color: var(--accent-platform); }
+.sop-list { background-color: #F8F9FA; padding: 20px 24px; border-radius: 8px; font-size: 15px; }
+.sop-list li { margin-left: 20px; margin-bottom: 8px; }
+.wiki-tag { display: inline-block; background: var(--theme-compliance); color: var(--accent-compliance); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 8px; }
+
+/* 移动端保护 */
+@media (max-width: 768px) {
+    .wiki-container { padding: 20px; }
+    .dimensions-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+    .dimensions-grid { grid-template-columns: 1fr; }
+    .top-nav { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .search-bar { width: 100%; }
+}
