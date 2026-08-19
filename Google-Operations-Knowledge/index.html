@@ -649,76 +649,136 @@
         #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
     </style>
 
-    <!-- 搜索交互逻辑脚本 -->
-    <script>
-        const googleDB = [
-            { title: "Tab 0 · 全局完整目录与知识树", category: "Tab 0 - 全局目录", url: "index.html" },
-            { title: "Tab 1 · 算法更新认知（2025-2026）", category: "Tab 1 - 算法更新", url: "tab1.html" },
-            { title: "Tab 2 · 谷歌搜索引擎底层思维与工作原理", category: "Tab 2 - 底层思维", url: "tab2.html" },
-            { title: "Tab 3 · 独立站基建与服务器/WordPress配置", category: "Tab 3 - 独立站基建", url: "tab3.html" },
-            { title: "Tab 4 · 站内SEO与信息增益内容工业化", category: "Tab 4 - 站内SEO", url: "tab4.html" },
-            { title: "Tab 5 · 技术性SEO与站点索引管理", category: "Tab 5 - 技术SEO", url: "tab5.html" },
-            { title: "Tab 6 · 站外影响力与品牌提及（Brand Mentions）", category: "Tab 6 - 站外影响力", url: "tab6.html" },
-            { title: "Tab 7 · 谷歌广告投放（Google Ads / SEM）", category: "Tab 7 - 谷歌广告", url: "tab7.html" },
-            { title: "Tab 8 · 数据分析与追踪（GA4 + GTM）", category: "Tab 8 - 数据分析", url: "tab8.html" },
-            { title: "Tab 9 · 转化率优化（CRO）与着陆页设计", category: "Tab 9 - 转化率优化", url: "tab9.html" },
-            { title: "Tab 10 · AI Overviews优化（GEO生存指南）", category: "Tab 10 - AI Overviews", url: "tab10.html" }
-        ];
-
-        const globalModal = document.getElementById('globalSearchModal');
-        const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
-        const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
-        const globalInput = document.getElementById('globalSearchInput');
-        const globalResultsList = document.getElementById('globalSearchResults');
-
-        const openGlobalSearch = () => {
-            if(globalModal) {
-                globalModal.style.display = 'flex';
-                globalInput.value = '';
-                globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词（如：CRO、表单、SEO）...</li>';
-                setTimeout(() => globalInput.focus(), 100);
-            }
-        };
-
-        const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
-
-        if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
-        if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
-        if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
-
-        document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
-            if (e.key === 'Escape') closeGlobalSearch();
-        });
-
-        if(globalInput) {
-            globalInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                globalResultsList.innerHTML = ''; 
-                if (query === '') {
-                    globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>';
-                    return;
-                }
-
-                const results = googleDB.filter(item => 
-                    item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
-                );
-
-                if (results.length > 0) {
-                    results.forEach(item => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
-                        li.addEventListener('click', () => {
-                            window.open(item.url, '_self');
-                            closeGlobalSearch();
-                        });
-                        globalResultsList.appendChild(li);
-                    });
-                } else {
-                    globalResultsList.innerHTML = `<li class="res-empty" style="padding: 20px; text-align: center; color: #EF4444; font-size: 14px;">未找到与 "${query}" 相关的知识点...</li>`;
-                }
-            });
+  <script>
+    // 深度内容数据库：把各个 Tab 里的核心知识点、专有名词（如 e-e-a-t、内容集群等）全部作为标签纳入检索
+    const googleDB = [
+        { 
+            title: "Tab 0 · 全局完整目录与知识树", 
+            category: "Tab 0 - 全局目录", 
+            url: "index.html",
+            keywords: "目录 树形图 节点 统计 学习路径" 
+        },
+        { 
+            title: "Tab 1 · 算法更新认知（2025-2026）", 
+            category: "Tab 1 - 算法更新", 
+            url: "tab1.html",
+            keywords: "算法更新 inpr fid 核心更新 寄生虫seo 信息增益 preferred sources 界面革命" 
+        },
+        { 
+            title: "Tab 2 · 谷歌搜索引擎底层思维与工作原理", 
+            category: "Tab 2 - 底层思维", 
+            url: "tab2.html",
+            keywords: "工作原理 抓取 索引 排名 bert rankbrain 信息增益 核心框架 e-e-a-t pagerank pr值 外链 geo 引用率" 
+        },
+        { 
+            title: "Tab 3 · 独立站基建与服务器/WordPress配置", 
+            category: "Tab 3 - 独立站基建", 
+            url: "tab3.html",
+            keywords: "独立站 域名 namesilo 服务器 siteground wordpress ssl elementor 缓存 cdn" 
+        },
+        { 
+            title: "Tab 4 · 站内SEO与信息增益内容工业化", 
+            category: "Tab 4 - 站内SEO", 
+            url: "tab4.html",
+            keywords: "站内seo 内容工业化 关键词研究 atomic answer 信息增益 实体化内容 结构化数据 schema tkd" 
+        },
+        { 
+            title: "Tab 5 · 技术性SEO与站点索引管理", 
+            category: "Tab 5 - 技术SEO", 
+            url: "tab5.html",
+            keywords: "技术seo 索引 sitemap robots canonical 重定向 404 核心网页指标 inp lcp cls" 
+        },
+        { 
+            title: "Tab 6 · 站外影响力与品牌提及（Brand Mentions）", 
+            category: "Tab 6 - 站外影响力", 
+            url: "tab6.html",
+            keywords: "站外影响力 外链 客座文章 品牌提及 brand mentions reddit youtube 权重" 
+        },
+        { 
+            title: "Tab 7 · 谷歌广告投放（Google Ads / SEM）", 
+            category: "Tab 7 - 谷歌广告", 
+            url: "tab7.html",
+            keywords: "谷歌广告 google ads sem 搜索广告 pmax 匹配类型 质量得分 出价策略 b2b" 
+        },
+        { 
+            title: "Tab 8 · 数据分析与追踪（GA4 + GTM）", 
+            category: "Tab 8 - 数据分析", 
+            url: "tab8.html",
+            keywords: "数据分析 ga4 gtm 转化追踪 标签管理器 再营销 热力图 lucky orange" 
+        },
+        { 
+            title: "Tab 9 · 转化率优化（CRO）与着陆页设计", 
+            category: "Tab 9 - 转化率优化", 
+            url: "tab9.html",
+            keywords: "转化率优化 cro 着陆页 landing page aida 弹窗 邮件营销 edm 内容集群" 
+        },
+        { 
+            title: "Tab 10 · AI Overviews优化（GEO生存指南）", 
+            category: "Tab 10 - AI Overviews", 
+            url: "tab10.html",
+            keywords: "ai overviews geo 生成式引擎 引用率 查询扇出 实体密度 实操清单" 
         }
-    </script>
+    ];
+
+    const globalModal = document.getElementById('globalSearchModal');
+    const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
+    const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
+    const globalInput = document.getElementById('globalSearchInput');
+    const globalResultsList = document.getElementById('globalSearchResults');
+
+    const openGlobalSearch = () => {
+        if(globalModal) {
+            globalModal.style.display = 'flex';
+            globalInput.value = '';
+            globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词（如：e-e-a-t、内容集群、外链、CRO）...</li>';
+            setTimeout(() => globalInput.focus(), 100);
+        }
+    };
+
+    const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
+
+    if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
+    if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
+    if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
+
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
+        if (e.key === 'Escape') closeGlobalSearch();
+    });
+
+    if(globalInput) {
+        globalInput.addEventListener('input', function() {
+            // 将用户输入的搜索词转为小写，并把连字符替换为空格或直接匹配
+            const query = this.value.toLowerCase().trim();
+            globalResultsList.innerHTML = ''; 
+            if (query === '') {
+                globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>';
+                return;
+            }
+
+            // 同时比对 标题、分类 和 补充的 keywords 标签库（并且忽略连字符如 e-e-a-t 的影响）
+            const cleanQuery = query.replace(/-/g, '');
+            const results = googleDB.filter(item => {
+                const targetText = (item.title + " " + item.category + " " + item.keywords).toLowerCase();
+                const cleanTarget = targetText.replace(/-/g, '');
+                return targetText.includes(query) || cleanTarget.includes(cleanQuery);
+            });
+
+            if (results.length > 0) {
+                results.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
+                    li.addEventListener('click', () => {
+                        window.open(item.url, '_self');
+                        closeGlobalSearch();
+                    });
+                    globalResultsList.appendChild(li);
+                });
+            } else {
+                globalResultsList.innerHTML = `<li class="res-empty" style="padding: 20px; text-align: center; color: #EF4444; font-size: 14px;">未找到与 "${query}" 相关的知识点...</li>`;
+            }
+        });
+    }
+</script>
 </body>
 </html>
