@@ -194,19 +194,17 @@
 </head>
 <body>
     <div class="app-container">
-    <!-- 头部 -->
-        <header class="app-header" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h1>📊 谷歌推广知识体系 <span>· Tab 0 · 全局完整目录</span></h1>
-                
-                <span class="badge-header">🌳 精确至终版树形图</span>
-                
-            </div>
-            <!-- 新增的搜索按钮 -->
-            <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap;">
-                <span>🔍</span> 搜索文档 (⌘K)
-            </button>
-        </header>
+  <!-- 头部：优化间距，杜绝拥挤 -->
+    <header class="app-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 16px; margin-bottom: 24px; border-bottom: 2px solid var(--border-light);">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <h1 style="font-size: 24px; font-weight: 700; color: var(--text-dark); margin: 0;">📊 谷歌推广知识体系 <span style="font-weight: 400; font-size: 15px; color: var(--text-muted);">· 全局导航</span></h1>
+            <span class="badge-header" style="background: var(--primary); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; white-space: nowrap;">🌳 终版树形图</span>
+        </div>
+        <!-- 右侧搜索按钮 -->
+        <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0;">
+            <span>🔍</span> 搜索文档 (⌘K)
+        </button>
+    </header>
 
         <!-- 视频 Banner 区 -->
         <div class="video-banner-container">
@@ -788,5 +786,101 @@
         });
     }
 </script>
+    <!-- ⌘K 全局搜索弹窗结构 -->
+    <div id="globalSearchModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 80px;">
+        <div style="background: #FFFFFF; width: 100%; max-width: 600px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #E2E8F0;">
+            <div style="padding: 16px 20px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 18px;">🔍</span>
+                <input type="text" id="globalSearchInput" placeholder="输入关键词搜索全库（如：E-E-A-T、内容集群、外链...）" style="width: 100%; border: none; outline: none; font-size: 16px; color: #0F172A; background: transparent;">
+                <button id="closeGlobalSearchBtn" style="background: #F1F5F9; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; color: #64748B; font-size: 12px;">ESC</button>
+            </div>
+            <ul id="globalSearchResults" style="list-style: none; padding: 0; margin: 0; max-height: 380px; overflow-y: auto;">
+                <li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>
+            </ul>
+        </div>
+    </div>
+
+    <style>
+        #globalSearchResults li { padding: 14px 20px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
+        #globalSearchResults li:hover { background: #F0FDF4; }
+        #globalSearchResults .res-title { font-weight: 600; color: #0F172A; font-size: 15px; display: block; }
+        #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
+    </style>
+
+    <!-- 通用全局搜索与精准定位脚本 -->
+    <script>
+        const googleDB = [
+            { title: "Tab 0 · 全局完整目录与知识树", category: "Tab 0 - 全局目录", url: "index.html" },
+            { title: "Tab 1 · 算法更新认知（2025-2026）", category: "Tab 1 - 算法更新", url: "tab1.html" },
+            { title: "Tab 2 · E-E-A-T 质量框架与权重解析", category: "Tab 2 - 底层思维", url: "tab2.html" },
+            { title: "Tab 2 · 信息增益与首选来源（Preferred Sources）", category: "Tab 2 - 底层思维", url: "tab2.html" },
+            { title: "Tab 4 · 站内SEO与信息增益内容工业化", category: "Tab 4 - 站内SEO", url: "tab4.html" },
+            { title: "Tab 4 · 结构化数据与Schema标记", category: "Tab 4 - 站内SEO", url: "tab4.html" },
+            { title: "Tab 5 · 技术性SEO与站点索引管理", category: "Tab 5 - 技术SEO", url: "tab5.html" },
+            { title: "Tab 6 · 站外影响力与品牌提及（Brand Mentions）", category: "Tab 6 - 站外影响力", url: "tab6.html" },
+            { title: "Tab 7 · 谷歌广告投放（Google Ads / SEM）", category: "Tab 7 - 谷歌广告", url: "tab7.html" },
+            { title: "Tab 8 · 数据分析与追踪（GA4 + GTM）", category: "Tab 8 - 数据分析", url: "tab8.html" },
+            { title: "Tab 9 · 转化率优化（CRO）与内容集群", category: "Tab 9 - 转化率优化", url: "tab9.html" },
+            { title: "Tab 10 · AI Overviews优化（GEO生存指南）", category: "Tab 10 - AI Overviews", url: "tab10.html" }
+        ];
+
+        const globalModal = document.getElementById('globalSearchModal');
+        const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
+        const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
+        const globalInput = document.getElementById('globalSearchInput');
+        const globalResultsList = document.getElementById('globalSearchResults');
+
+        const openGlobalSearch = () => {
+            if(globalModal) {
+                globalModal.style.display = 'flex';
+                globalInput.value = '';
+                globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词（如：E-E-A-T、外链、CRO）...</li>';
+                setTimeout(() => globalInput.focus(), 100);
+            }
+        };
+
+        const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
+
+        if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
+        if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
+        if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
+            if (e.key === 'Escape') closeGlobalSearch();
+        });
+
+        if(globalInput) {
+            globalInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                globalResultsList.innerHTML = ''; 
+                if (query === '') {
+                    globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>';
+                    return;
+                }
+
+                const cleanQuery = query.replace(/-/g, '');
+                const results = googleDB.filter(item => {
+                    const targetText = (item.title + " " + item.category).toLowerCase();
+                    const cleanTarget = targetText.replace(/-/g, '');
+                    return targetText.includes(query) || cleanTarget.includes(cleanQuery);
+                });
+
+                if (results.length > 0) {
+                    results.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
+                        li.addEventListener('click', () => {
+                            window.open(item.url, '_self');
+                            closeGlobalSearch();
+                        });
+                        globalResultsList.appendChild(li);
+                    });
+                } else {
+                    globalResultsList.innerHTML = `<li class="res-empty" style="padding: 20px; text-align: center; color: #EF4444; font-size: 14px;">未找到与 "${query}" 相关的知识点...</li>`;
+                }
+            });
+        }
+    </script>
 </body>
 </html>
