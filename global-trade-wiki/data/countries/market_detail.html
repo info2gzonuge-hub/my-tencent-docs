@@ -9,44 +9,38 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #F8FAFC; margin: 0; padding: 0; color: #333; line-height: 1.8; }
         .wiki-container { max-width: 1024px; margin: 0 auto; min-height: 100vh; padding: 40px 30px; }
         
-        /* 顶部导航栏 */
         .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 20px; margin-bottom: 40px; font-size: 14px; background: #fff; padding: 16px 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
         .top-nav a { color: #64748B; text-decoration: none; font-weight: 500; transition: color 0.2s; }
         .top-nav a:hover { color: #0F172A; }
 
         .page-title { font-size: 24px; font-weight: 700; color: #0F172A; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
 
-        /* 核心：两列平铺卡片网格布局 */
-        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        
-        /* 单个卡片默认状态：精致白底 + 细腻边框 */
-        .market-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; transition: all 0.25s ease; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
-        
-        /* 鼠标划过悬浮态 (Hover)：上浮 + 变底色 + 绿色高亮边框 + 阴影 */
-        .market-card:hover { transform: translateY(-4px); background-color: #F0FDF4; border-color: #059669; box-shadow: 0 12px 24px rgba(5, 150, 105, 0.08); }
+        /* 核心：与 Checklist 详情页完全一致的两列平铺网格布局 */
+        .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+        .detail-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; transition: all 0.25s ease; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        .detail-card:hover { transform: translateY(-4px); background-color: #ECFDF5; border-color: #059669; box-shadow: 0 12px 24px rgba(5, 150, 105, 0.08); }
 
         .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .card-icon { font-size: 28px; }
-        .market-card h2 { font-size: 18px; color: #0F172A; margin: 0; font-weight: 700; }
+        .detail-card h2 { font-size: 18px; color: #0F172A; margin: 0; font-weight: 700; }
         
         .card-desc { color: #64748B; font-size: 14px; margin-bottom: 16px; }
-        
-        /* 列表排版 */
-        .card-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid #F1F5F9; padding-top: 14px; }
-        .card-list li { position: relative; padding-left: 16px; font-size: 135%; font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 8px; }
-        .card-list li::before { content: "•"; position: absolute; left: 0; top: -1px; color: #059669; font-weight: bold; font-size: 16px; }
-        .card-list li strong { color: #1E293B; font-weight: 600; }
 
-        /* 锚点定位闪烁高亮 */
-        :target { animation: cardPulse 1.5s ease; }
-        @keyframes cardPulse {
-            0% { border-color: #059669; background-color: #DCFCE7; transform: scale(1.02); }
+        .checklist-steps { list-style: none; padding: 0; margin: 0; border-top: 1px solid #F1F5F9; padding-top: 14px; }
+        .checklist-steps li { position: relative; padding-left: 20px; font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 8px; }
+        .checklist-steps li::before { content: "•"; position: absolute; left: 0; top: 0px; color: #059669; font-weight: bold; font-size: 16px; }
+        .checklist-steps li strong { color: #1E293B; font-weight: 600; }
+
+        /* 锚点定位闪烁高亮动效 */
+        :target { animation: highlightPulse 1.5s ease; }
+        @keyframes highlightPulse {
+            0% { border-color: #059669; background-color: #ECFDF5; transform: scale(1.02); }
             100% { border-color: #E2E8F0; background-color: #FFFFFF; transform: scale(1); }
         }
 
-        /* 响应式适配：手机端自动变成单列 */
         @media (max-width: 768px) {
-            .market-grid { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
             .wiki-container { padding: 20px 15px; }
         }
     </style>
@@ -59,19 +53,18 @@
         </header>
 
         <div class="page-title">
-            <span>🗺️</span> 各大海外核心市场合规导航
+            <span>🗺️</span> 各大海外核心市场合规导航聚合详情
         </div>
 
-        <!-- 两列网格卡片容器 -->
-        <div class="market-grid">
+        <div class="detail-grid">
             <!-- 北美市场 -->
-            <div id="us" class="market-card">
+            <div id="us" class="detail-card">
                 <div class="card-header">
                     <span class="card-icon">🇺🇸</span>
                     <h2>北美市场 (US & CA)</h2>
                 </div>
                 <p class="card-desc">覆盖美加海关、平台及联邦层面的核心准入要求</p>
-                <ul class="card-list">
+                <ul class="checklist-steps">
                     <li><strong>FDA 备案与合规：</strong>针对食品、美妆、医疗器械的强制工厂注册与列名。</li>
                     <li><strong>FCC 认证：</strong>无线电及电子产品的强制性合规认证。</li>
                     <li><strong>销售税联结：</strong>各州远程销售税征收合规与经济联结阈值。</li>
@@ -80,13 +73,13 @@
             </div>
 
             <!-- 欧盟市场 -->
-            <div id="eu" class="market-card">
+            <div id="eu" class="detail-card">
                 <div class="card-header">
                     <span class="card-icon">🇪🇺</span>
                     <h2>欧盟与英国 (EU & UK)</h2>
                 </div>
                 <p class="card-desc">覆盖欧洲统一大市场的高标准准入壁垒</p>
-                <ul class="card-list">
+                <ul class="checklist-steps">
                     <li><strong>CE 认证与欧代：</strong>欧盟授权代表体系与 MDR/LVD 指令。</li>
                     <li><strong>REACH 与 RoHS：</strong>化学品管控及有害物质限令。</li>
                     <li><strong>EPR 生产者责任：</strong>德国、法国等地的包装法、WEEE 注册。</li>
@@ -95,13 +88,13 @@
             </div>
 
             <!-- 日韩市场 -->
-            <div id="jp" class="market-card">
+            <div id="jp" class="detail-card">
                 <div class="card-header">
                     <span class="card-icon">🇯🇵</span>
                     <h2>日韩市场 (JP & KR)</h2>
                 </div>
                 <p class="card-desc">东亚成熟市场的特定法规与清关要点</p>
-                <ul class="card-list">
+                <ul class="checklist-steps">
                     <li><strong>PSE 认证：</strong>日本电气用品安全法（菱形与圆形 PSE 差异）。</li>
                     <li><strong>KC 认证：</strong>韩国国家标准局电子与消费品安全认证。</li>
                     <li><strong>本地清关代理：</strong>日韩跨境电商本地 ACP/代收人合规要求。</li>
@@ -109,39 +102,39 @@
             </div>
 
             <!-- 中东市场 -->
-            <div id="me" class="market-card">
+            <div id="me" class="detail-card">
                 <div class="card-header">
                     <span class="card-icon">🇸🇦</span>
                     <h2>中东市场 (Middle East)</h2>
                 </div>
                 <p class="card-desc">海湾阿拉伯国家合作委员会 (GCC) 准入标准</p>
-                <ul class="card-list">
+                <ul class="checklist-steps">
                     <li><strong>SASO / SABER：</strong>沙特产品合规符合性证书签发流程。</li>
                     <li><strong>Halal 认证：</strong>针对食品、美妆及特定消费品的宗教合规审查。</li>
                 </ul>
             </div>
 
             <!-- 澳新市场 -->
-            <div id="au" class="market-card">
+            <div id="au" class="detail-card">
                 <div class="card-header">
                     <span class="card-icon">🇦🇺</span>
                     <h2>澳新市场 (AU & NZ)</h2>
                 </div>
                 <p class="card-desc">大洋洲严格的电气安全与生物检疫标准</p>
-                <ul class="card-list">
+                <ul class="checklist-steps">
                     <li><strong>SAA 与 RCM：</strong>澳洲电气安全与电磁兼容性注册。</li>
                     <li><strong>生物安全清关：</strong>针对木质包装、纺织品的严格检疫合规。</li>
                 </ul>
             </div>
 
             <!-- 拉美市场 -->
-            <div id="latam" class="market-card">
+            <div id="latam" class="detail-card">
                 <div class="card-header">
                     <span class="card-icon">🇧🇷</span>
                     <h2>拉美市场 (LATAM)</h2>
                 </div>
                 <p class="card-desc">以巴西为核心的南美高壁垒市场</p>
-                <ul class="card-list">
+                <ul class="checklist-steps">
                     <li><strong>INMETRO 认证：</strong>巴西国家计量、质量和技术局强制认证。</li>
                     <li><strong>高额关税与税务：</strong>CPF/CNPJ 税号及本地清关财税筹划。</li>
                 </ul>
