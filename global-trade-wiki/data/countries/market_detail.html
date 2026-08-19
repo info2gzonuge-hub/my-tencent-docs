@@ -6,35 +6,48 @@
     <title>市场合规聚合详情 - GLOBAL TRADE WIKI</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fff; margin: 0; padding: 0; color: #333; line-height: 1.8; }
-        .wiki-container { max-width: 820px; margin: 0 auto; min-height: 100vh; padding: 40px 30px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #F8FAFC; margin: 0; padding: 0; color: #333; line-height: 1.8; }
+        .wiki-container { max-width: 1024px; margin: 0 auto; min-height: 100vh; padding: 40px 30px; }
         
-        /* 顶部导航栏优雅对齐 */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E9ECEF; padding-bottom: 20px; margin-bottom: 50px; font-size: 14px; }
+        /* 顶部导航栏 */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 20px; margin-bottom: 40px; font-size: 14px; background: #fff; padding: 16px 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
         .top-nav a { color: #64748B; text-decoration: none; font-weight: 500; transition: color 0.2s; }
         .top-nav a:hover { color: #0F172A; }
+
+        .page-title { font-size: 24px; font-weight: 700; color: #0F172A; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+
+        /* 核心：两列平铺卡片网格布局 */
+        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
         
-        /* 抛弃生硬的绿框卡片，采用 Notion 式的沉浸式极简板块 */
-        .market-section { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px dashed #E2E8F0; }
-        .market-section:last-child { border-bottom: none; }
+        /* 单个卡片默认状态：精致白底 + 细腻边框 */
+        .market-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; transition: all 0.25s ease; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
         
-        .market-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-        .market-icon { font-size: 28px; }
-        .market-section h2 { font-size: 22px; color: #0F172A; margin: 0; font-weight: 700; letter-spacing: -0.5px; }
+        /* 鼠标划过悬浮态 (Hover)：上浮 + 变底色 + 绿色高亮边框 + 阴影 */
+        .market-card:hover { transform: translateY(-4px); background-color: #F0FDF4; border-color: #059669; box-shadow: 0 12px 24px rgba(5, 150, 105, 0.08); }
+
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .card-icon { font-size: 28px; }
+        .market-card h2 { font-size: 18px; color: #0F172A; margin: 0; font-weight: 700; }
         
-        .market-desc { color: #475569; font-size: 15px; margin-bottom: 20px; }
+        .card-desc { color: #64748B; font-size: 14px; margin-bottom: 16px; }
         
-        /* 极简高级感的无序列表排版 */
-        .market-list { list-style: none; padding: 0; margin: 0; }
-        .market-list li { position: relative; padding-left: 20px; font-size: 14px; color: #334155; line-height: 1.8; margin-bottom: 12px; }
-        .market-list li::before { content: "•"; position: absolute; left: 0; top: -1px; color: #059669; font-weight: bold; font-size: 18px; }
-        .market-list li strong { color: #0F172A; font-weight: 600; }
-        
-        /* 锚点精准定位时的微弱高亮动效 */
-        :target { animation: highlightSection 1.5s ease; }
-        @keyframes highlightSection {
-            0% { background-color: #ECFDF5; padding: 20px; border-radius: 8px; }
-            100% { background-color: transparent; }
+        /* 列表排版 */
+        .card-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid #F1F5F9; padding-top: 14px; }
+        .card-list li { position: relative; padding-left: 16px; font-size: 135%; font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 8px; }
+        .card-list li::before { content: "•"; position: absolute; left: 0; top: -1px; color: #059669; font-weight: bold; font-size: 16px; }
+        .card-list li strong { color: #1E293B; font-weight: 600; }
+
+        /* 锚点定位闪烁高亮 */
+        :target { animation: cardPulse 1.5s ease; }
+        @keyframes cardPulse {
+            0% { border-color: #059669; background-color: #DCFCE7; transform: scale(1.02); }
+            100% { border-color: #E2E8F0; background-color: #FFFFFF; transform: scale(1); }
+        }
+
+        /* 响应式适配：手机端自动变成单列 */
+        @media (max-width: 768px) {
+            .market-grid { grid-template-columns: 1fr; }
+            .wiki-container { padding: 20px 15px; }
         }
     </style>
 </head>
@@ -45,88 +58,95 @@
             <a href="../../index.html">返回主页 🏠</a>
         </header>
 
-        <!-- 北美市场聚合板块 -->
-        <section id="us" class="market-section">
-            <div class="market-header">
-                <span class="market-icon">🇺🇸</span>
-                <h2>北美市场 (US & CA) 合规指南</h2>
-            </div>
-            <p class="market-desc">覆盖美国与加拿大海关、平台及联邦层面的核心准入要求：</p>
-            <ul class="market-list">
-                <li><strong>FDA 备案与合规：</strong>针对食品、化妆品、医疗器械的强制工厂注册与列名要求。</li>
-                <li><strong>FCC 认证：</strong>无线电及电子产品的强制性合规认证。</li>
-                <li><strong>销售税联结 (Economic Nexus)：</strong>各州远程销售税征收合规阈值。</li>
-                <li><strong>TRO 知识产权维权风控：</strong>联邦法院临时限制令应对与海外账号资金解冻。</li>
-            </ul>
-        </section>
+        <div class="page-title">
+            <span>🗺️</span> 各大海外核心市场合规导航
+        </div>
 
-        <!-- 欧盟市场聚合板块 -->
-        <section id="eu" class="market-section">
-            <div class="market-header">
-                <span class="market-icon">🇪🇺</span>
-                <h2>欧盟与英国 (EU & UK) 合规指南</h2>
+        <!-- 两列网格卡片容器 -->
+        <div class="market-grid">
+            <!-- 北美市场 -->
+            <div id="us" class="market-card">
+                <div class="card-header">
+                    <span class="card-icon">🇺🇸</span>
+                    <h2>北美市场 (US & CA)</h2>
+                </div>
+                <p class="card-desc">覆盖美加海关、平台及联邦层面的核心准入要求</p>
+                <ul class="card-list">
+                    <li><strong>FDA 备案与合规：</strong>针对食品、美妆、医疗器械的强制工厂注册与列名。</li>
+                    <li><strong>FCC 认证：</strong>无线电及电子产品的强制性合规认证。</li>
+                    <li><strong>销售税联结：</strong>各州远程销售税征收合规与经济联结阈值。</li>
+                    <li><strong>TRO 维权风控：</strong>联邦法院临时限制令应对与海外账号资金解冻。</li>
+                </ul>
             </div>
-            <p class="market-desc">覆盖欧洲统一大市场的高标准准入壁垒：</p>
-            <ul class="market-list">
-                <li><strong>CE 认证与合规代表：</strong>欧盟授权代表 (欧代) 与 MDR/LVD 指令。</li>
-                <li><strong>REACH 与 RoHS：</strong>化学品管控及有害物质限令。</li>
-                <li><strong>EPR 生产者责任延伸：</strong>德国、法国等地的包装法、WEEE 注册。</li>
-                <li><strong>VAT 增值税与进口递延：</strong>欧盟各成员国税号合规与清关申报。</li>
-            </ul>
-        </section>
 
-        <!-- 日韩市场聚合板块 -->
-        <section id="jp" class="market-section">
-            <div class="market-header">
-                <span class="market-icon">🇯🇵</span>
-                <h2>日韩市场 (JP & KR) 合规指南</h2>
+            <!-- 欧盟市场 -->
+            <div id="eu" class="market-card">
+                <div class="card-header">
+                    <span class="card-icon">🇪🇺</span>
+                    <h2>欧盟与英国 (EU & UK)</h2>
+                </div>
+                <p class="card-desc">覆盖欧洲统一大市场的高标准准入壁垒</p>
+                <ul class="card-list">
+                    <li><strong>CE 认证与欧代：</strong>欧盟授权代表体系与 MDR/LVD 指令。</li>
+                    <li><strong>REACH 与 RoHS：</strong>化学品管控及有害物质限令。</li>
+                    <li><strong>EPR 生产者责任：</strong>德国、法国等地的包装法、WEEE 注册。</li>
+                    <li><strong>VAT 增值税：</strong>欧盟各成员国税号合规与进口增值税递延。</li>
+                </ul>
             </div>
-            <p class="market-desc">东亚成熟市场的特定法规与清关要点：</p>
-            <ul class="market-list">
-                <li><strong>PSE 认证：</strong>日本电气用品安全法（菱形/圆形 PSE 差异）。</li>
-                <li><strong>KC 认证：</strong>韩国国家标准局电子与消费品安全认证。</li>
-                <li><strong>本地清关代理：</strong>日韩跨境电商本地 ACP/代收人合规要求。</li>
-            </ul>
-        </section>
 
-        <!-- 中东市场聚合板块 -->
-        <section id="me" class="market-section">
-            <div class="market-header">
-                <span class="market-icon">🇸🇦</span>
-                <h2>中东市场 (Middle East) 合规指南</h2>
+            <!-- 日韩市场 -->
+            <div id="jp" class="market-card">
+                <div class="card-header">
+                    <span class="card-icon">🇯🇵</span>
+                    <h2>日韩市场 (JP & KR)</h2>
+                </div>
+                <p class="card-desc">东亚成熟市场的特定法规与清关要点</p>
+                <ul class="card-list">
+                    <li><strong>PSE 认证：</strong>日本电气用品安全法（菱形与圆形 PSE 差异）。</li>
+                    <li><strong>KC 认证：</strong>韩国国家标准局电子与消费品安全认证。</li>
+                    <li><strong>本地清关代理：</strong>日韩跨境电商本地 ACP/代收人合规要求。</li>
+                </ul>
             </div>
-            <p class="market-desc">海湾阿拉伯国家合作委员会 (GCC) 准入标准：</p>
-            <ul class="market-list">
-                <li><strong>SASO / SABER 认证：</strong>沙特产品合规符合性证书签发流程。</li>
-                <li><strong>Halal 清真认证：</strong>针对食品、美妆及特定消费品的宗教合规审查。</li>
-            </ul>
-        </section>
 
-        <!-- 澳新市场聚合板块 -->
-        <section id="au" class="market-section">
-            <div class="market-header">
-                <span class="market-icon">🇦🇺</span>
-                <h2>澳新市场 (AU & NZ) 合规指南</h2>
+            <!-- 中东市场 -->
+            <div id="me" class="market-card">
+                <div class="card-header">
+                    <span class="card-icon">🇸🇦</span>
+                    <h2>中东市场 (Middle East)</h2>
+                </div>
+                <p class="card-desc">海湾阿拉伯国家合作委员会 (GCC) 准入标准</p>
+                <ul class="card-list">
+                    <li><strong>SASO / SABER：</strong>沙特产品合规符合性证书签发流程。</li>
+                    <li><strong>Halal 认证：</strong>针对食品、美妆及特定消费品的宗教合规审查。</li>
+                </ul>
             </div>
-            <p class="market-desc">大洋洲严格的电气安全与生物检疫标准：</p>
-            <ul class="market-list">
-                <li><strong>SAA 与 RCM 注册：</strong>澳洲电气安全与电磁兼容性注册。</li>
-                <li><strong>生物安全清关：</strong>针对木质包装、纺织品的严格检疫合规。</li>
-            </ul>
-        </section>
 
-        <!-- 拉美市场聚合板块 -->
-        <section id="latam" class="market-section">
-            <div class="market-header">
-                <span class="market-icon">🇧🇷</span>
-                <h2>拉美市场 (LATAM) 合规指南</h2>
+            <!-- 澳新市场 -->
+            <div id="au" class="market-card">
+                <div class="card-header">
+                    <span class="card-icon">🇦🇺</span>
+                    <h2>澳新市场 (AU & NZ)</h2>
+                </div>
+                <p class="card-desc">大洋洲严格的电气安全与生物检疫标准</p>
+                <ul class="card-list">
+                    <li><strong>SAA 与 RCM：</strong>澳洲电气安全与电磁兼容性注册。</li>
+                    <li><strong>生物安全清关：</strong>针对木质包装、纺织品的严格检疫合规。</li>
+                </ul>
             </div>
-            <p class="market-desc">以巴西为核心的南美高壁垒市场：</p>
-            <ul class="market-list">
-                <li><strong>INMETRO 认证：</strong>巴西国家计量、质量和技术局强制认证。</li>
-                <li><strong>高额关税与税务合规：</strong>CPF/CNPJ 税号及本地清关财税筹划。</li>
-            </ul>
-        </section>
+
+            <!-- 拉美市场 -->
+            <div id="latam" class="market-card">
+                <div class="card-header">
+                    <span class="card-icon">🇧🇷</span>
+                    <h2>拉美市场 (LATAM)</h2>
+                </div>
+                <p class="card-desc">以巴西为核心的南美高壁垒市场</p>
+                <ul class="card-list">
+                    <li><strong>INMETRO 认证：</strong>巴西国家计量、质量和技术局强制认证。</li>
+                    <li><strong>高额关税与税务：</strong>CPF/CNPJ 税号及本地清关财税筹划。</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
