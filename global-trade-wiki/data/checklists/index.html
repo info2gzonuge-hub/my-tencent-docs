@@ -13,10 +13,11 @@
             --bg-main: #FFFFFF;
         }
         .hero-section { text-align: center; margin: 40px 0; }
-        .dimension-card { background: var(--bg-main); border: 2px solid #E9ECEF; padding: 32px 24px; border-radius: 16px; position: relative; overflow: hidden; }
+        .dimension-card { background: var(--bg-main); border: 2px solid #E9ECEF; padding: 32px 24px; border-radius: 16px; position: relative; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: all 0.25s ease; }
         .dimension-card:hover { border-color: var(--theme-text); background-color: var(--theme-bg); transform: translateY(-6px); box-shadow: 0 12px 24px rgba(234, 88, 12, 0.15); }
         .dim-icon { font-size: 32px; margin-bottom: 12px; }
         .dim-title { color: #222; font-size: 18px; margin-bottom: 8px; font-weight: bold; }
+        .dim-desc { color: #666; font-size: 14px; line-height: 1.6; }
         /* Checklist 特有的进度条装饰 */
         .progress-bar { width: 40px; height: 4px; background: #E9ECEF; border-radius: 2px; margin-top: 16px; }
         .dimension-card:hover .progress-bar { background: var(--theme-text); width: 100%; transition: width 0.3s ease; }
@@ -26,7 +27,7 @@
     <div class="wiki-container">
         <header class="top-nav">
             <a href="../../index.html" class="logo-area"><span>🌍</span> GLOBAL TRADE WIKI</a>
-            <a href="../../index.html" style="color: var(--text-secondary); font-weight: 600;">← 返回主页</a>
+            <a href="../../index.html" style="color: var(--text-secondary); font-weight: 600; text-decoration: none;">← 返回主页</a>
         </header>
 
         <section class="hero-section">
@@ -34,39 +35,39 @@
             <p style="color: #666; margin-top: 8px;">Actionable Standard Operating Procedures</p>
         </section>
 
-        <!-- 卡片网格 -->
+        <!-- 卡片网格：已成功将 href 绑定到 checklist_detail.html 的对应模块 -->
         <section class="dimensions-grid">
-            <a href="#" class="dimension-card">
+            <a href="checklist_detail.html#factory" class="dimension-card">
                 <div class="dim-icon">🏭</div>
                 <div class="dim-title">代工厂准入审查清单</div>
                 <div class="dim-desc">防范小作坊与二道贩子，涵盖 ISO/BSCI 索证与 NNN 保密协议签批流程。</div>
                 <div class="progress-bar"></div>
             </a>
-            <a href="#" class="dimension-card">
+            <a href="checklist_detail.html#freeze" class="dimension-card">
                 <div class="dim-icon">📦</div>
                 <div class="dim-title">大宗出货防冻卡清单</div>
                 <div class="dim-desc">从 PI 报价到结汇水单，四单合一防范洗钱风控与离岸账户冻结。</div>
                 <div class="progress-bar"></div>
             </a>
-            <a href="#" class="dimension-card">
+            <a href="checklist_detail.html#tro" class="dimension-card">
                 <div class="dim-icon">🚨</div>
                 <div class="dim-title">TRO 资金救援 21天倒计时</div>
                 <div class="dim-desc">遭遇流氓律所起诉后的应急止损、下架隔离与和解谈判步调指南。</div>
                 <div class="progress-bar"></div>
             </a>
-            <a href="#" class="dimension-card">
+            <a href="checklist_detail.html#indep" class="dimension-card">
                 <div class="dim-icon">🖥️</div>
                 <div class="dim-title">独立站合规上线排雷表</div>
                 <div class="dim-desc">涵盖 FTC 欺诈自查、GDPR 弹窗、ADA 无障碍代码及支付接口验证。</div>
                 <div class="progress-bar"></div>
             </a>
-            <a href="#" class="dimension-card">
+            <a href="checklist_detail.html#dangerous" class="dimension-card">
                 <div class="dim-icon">✈️</div>
                 <div class="dim-title">特货清关与单证检查单</div>
                 <div class="dim-desc">带电、带粉末、带膏体产品的 MSDS 审核与海关 HS Code 预归类防坑。</div>
                 <div class="progress-bar"></div>
             </a>
-            <a href="#" class="dimension-card">
+            <a href="checklist_detail.html#ipr" class="dimension-card">
                 <div class="dim-icon">⚖️</div>
                 <div class="dim-title">侵权申诉与反制清单</div>
                 <div class="dim-desc">遭遇恶搞后的 UPNEP 专利中立评估举证及 DMCA 反通知提交流程。</div>
