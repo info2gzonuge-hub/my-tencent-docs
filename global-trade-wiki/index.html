@@ -213,10 +213,12 @@
         await initPagefind();
     }
 
+    const normalize = text =>
+        text.toLowerCase().replace(/[\s\-_.]+/g, '');
+
     const search = await pagefindInstance.search(query);
     const results = [];
 
-    // 将搜索词拆成多个关键词
     const keywords = query
         .trim()
         .split(/\s+/)
@@ -226,7 +228,7 @@
     for (const result of search.results) {
         const data = await result.data();
 
-        // ① 只允许维度 1～5
+        // 只保留维度 1～5
         const url = new URL(data.url, window.location.href);
 
         const isDimensionPage = dimensionPaths.some(path =>
@@ -235,17 +237,14 @@
 
         if (!isDimensionPage) continue;
 
-        // ② 严格检查标题 + 摘要
-        const normalize = text =>
-    text.toLowerCase().replace(/[\s\-_.]+/g, '');
-
-const searchableText = normalize(
+        // 标题 + 摘要进行精准匹配
+        const searchableText = normalize(
             (data.meta?.title || '') +
             ' ' +
             (data.excerpt || '')
         );
 
-        // ③ 所有关键词都必须出现
+        // 所有关键词都必须匹配
         const matched = keywords.every(keyword =>
             searchableText.includes(keyword)
         );
@@ -259,66 +258,6 @@ const searchableText = normalize(
 
     return results;
 }
-
-    if (localInput) {
-        localInput.addEventListener('input', async function() {
-            const query = this.value.trim();
-
-            localDropdown.innerHTML = '';
-
-            if (query === '') {
-                localDropdown.style.display = 'none';
-                return;
-            }
-
-            localDropdown.style.display = 'block';
-            localDropdown.innerHTML =
-                '<li class="res-empty" style="color:#2563EB;">维度 1～5 检索中...</li>';
-
-            try {
-                const results = await searchDimensions(query);
-
-                if (results.length === 0) {
-                    localDropdown.innerHTML =
-                        `<li class="res-empty">维度 1～5 未找到与 "${query}" 相关的内容。</li>`;
-                    return;
-                }
-
-                localDropdown.innerHTML = '';
-
-                results.forEach(data => {
-                    const li = document.createElement('li');
-
-                    li.innerHTML = `
-                        <span class="res-title">
-                            ${data.meta.title || '相关知识'}
-                        </span>
-                        <span class="res-category">
-                            ${data.excerpt || ''}
-                        </span>
-                    `;
-
-                    li.addEventListener('click', () => {
-                        window.open(data.url, '_blank');
-                    });
-
-                    localDropdown.appendChild(li);
-                });
-
-            } catch (error) {
-                console.error('维度搜索失败:', error);
-                localDropdown.innerHTML =
-                    '<li class="res-empty">搜索暂时不可用，请稍后再试。</li>';
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (e.target !== localInput &&
-                !localDropdown.contains(e.target)) {
-                localDropdown.style.display = 'none';
-            }
-        });
-    }
 
         // ================= 引擎 B：Pagefind 全网检索 (服务于 ⌘K) =================
         const globalModal = document.getElementById('globalSearchModal');
