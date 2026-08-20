@@ -208,33 +208,54 @@
     ];
 
     // 与顶部全局搜索共用同一个 Pagefind
-    async function searchDimensions(query) {
-        if (!pagefindInstance) {
-            await initPagefind();
-        }
-
-        const search = await pagefindInstance.search(query);
-        const results = [];
-
-        for (const result of search.results) {
-            const data = await result.data();
-
-            // 只保留维度 1～5
-            const url = new URL(data.url, window.location.href);
-            const isDimensionPage = dimensionPaths.some(path =>
-                url.pathname.includes(path)
-            );
-
-            if (isDimensionPage) {
-                results.push(data);
-            }
-
-            // 最多显示 10 条
-            if (results.length >= 10) break;
-        }
-
-        return results;
+ async function searchDimensions(query) {
+    if (!pagefindInstance) {
+        await initPagefind();
     }
+
+    const search = await pagefindInstance.search(query);
+    const results = [];
+
+    // 将搜索词拆成多个关键词
+    const keywords = query
+        .toLowerCase()
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    for (const result of search.results) {
+        const data = await result.data();
+
+        // ① 只允许维度 1～5
+        const url = new URL(data.url, window.location.href);
+
+        const isDimensionPage = dimensionPaths.some(path =>
+            url.pathname.includes(path)
+        );
+
+        if (!isDimensionPage) continue;
+
+        // ② 严格检查标题 + 摘要
+        const searchableText = (
+            (data.meta?.title || '') +
+            ' ' +
+            (data.excerpt || '')
+        ).toLowerCase();
+
+        // ③ 所有关键词都必须出现
+        const matched = keywords.every(keyword =>
+            searchableText.includes(keyword)
+        );
+
+        if (!matched) continue;
+
+        results.push(data);
+
+        if (results.length >= 10) break;
+    }
+
+    return results;
+}
 
     if (localInput) {
         localInput.addEventListener('input', async function() {
