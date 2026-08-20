@@ -237,18 +237,25 @@
 <body>
     <div class="app-container">
 
-    <!-- 头部：彻底解决拥挤，加入 Flexbox 自适应换行和右侧搜索按钮 -->
-        <header class="app-header">
-            <div class="header-left">
-                <!-- 注意：这里的标题文案根据不同 Tab 自行保留原样 -->
-                <h1>📊 谷歌推广知识体系 <span>· Tab 4 · 站内SEO与内容工业化</span></h1>
-                <span class="badge-header">⏳🔴 核心必修 · 2026方法论 </span>
-            </div>
-            <!-- 右侧搜索按钮 -->
-            <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
-                <span>🔍</span> 搜索全站 (⌘K)
-            </button>
-        </header>
+  <!-- 头部：彻底解决拥挤，加入 Flexbox 行内样式强制横向对齐 -->
+<header class="app-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light);">
+    
+    <!-- 左侧标题区：强制横向弹性布局居中 -->
+    <div class="header-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <!-- 注意：这里的标题文案根据不同 Tab 自行保留原样 -->
+        <h1 style="font-size: 24px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; margin: 0;">
+            📊 谷歌推广知识体系 <span style="font-weight: 400; font-size: 15px; color: var(--text-muted);">Tab 4 · 站内SEO与内容工业化</span>
+        </h1>
+        <span class="badge-header" style="background: var(--primary); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; white-space: nowrap;"> 🔴 
+核心必修 · 2026方法论</span>
+    </div>
+
+    <!-- 右侧搜索按钮 -->
+    <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
+        <span>🔍</span> 搜索全站 (⌘K)
+    </button>
+
+</header>
 
         <!-- ===== 导航 ===== -->
         <nav class="tab-nav">
@@ -532,8 +539,8 @@
         <div class="footer-links">
             <span>✨ Tab 4 · 站内SEO与内容工业化 — 工业化产线引导闭环</span>
             <span>
-                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">返回顶部</span>
-                <span class="internal-link" onclick="location.href='index.html'">← 返回全局目录</span>
+                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">←返回顶部←</span>
+                <span class="internal-link" onclick="location.href='index.html'">← 返回全局目录←</span>
             </span>
         </div>
 
