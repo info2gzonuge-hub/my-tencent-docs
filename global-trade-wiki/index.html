@@ -241,11 +241,22 @@
 
         async function searchDimensions(query) {
             const pagefind = await initPagefind();
+
+            // 用户输入统一标准化：忽略大小写、空格、连字符、下划线、点号
             const normalizedQuery = normalize(query);
 
             if (!normalizedQuery) return [];
 
-            const search = await pagefind.search(query);
+            // Pagefind 本身会按词分割索引。
+            // 因此 ISO9001 不能直接拿去搜索，否则 Pagefind 可能只认识 ISO。
+            // 先把字母和数字之间补一个空格，让 Pagefind 能找到“ISO + 9001”的候选结果。
+            const pagefindQuery = String(query || '')
+                .trim()
+                .replace(/[\s\-_.]+/g, ' ')
+                .replace(/([A-Za-z])([0-9])/g, '$1 $2')
+                .replace(/([0-9])([A-Za-z])/g, '$1 $2');
+
+            const search = await pagefind.search(pagefindQuery);
             const results = [];
 
             for (const result of search.results) {
@@ -259,12 +270,12 @@
 
                 if (!isDimensionPage) continue;
 
-                // ② 标题 + Pagefind 摘要进行二次精准过滤
+                // ② 标题 + Pagefind 摘要进行严格二次匹配
+                //    这里才真正判断“ISO9001”是否存在，而不是只匹配“ISO”。
                 const searchableText = normalize(
                     `${data.meta?.title || ''} ${data.excerpt || ''}`
                 );
 
-                // ③ 规范化后必须完整包含用户输入
                 if (!searchableText.includes(normalizedQuery)) continue;
 
                 results.push(data);
