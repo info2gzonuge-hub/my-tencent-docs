@@ -193,65 +193,108 @@
     </div>
 
     <!-- 双引擎搜索核心逻辑 (搭载 Pagefind) -->
-    <script>
-        // ================= 引擎 A：局部直搜 (服务于正文中央输入框) =================
-        const localDB = [
-            { title: "企业体系与工厂资质", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-1-1" },
-            { title: "强制物理安全认证", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-2-1-2" },
-            { title: "区域清关壁垒与质检", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-3-1-1" },
-            { title: "零售包装与环保标识", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-4-1-1" },
-            
-            { title: "国际贸易术语", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-1-1-1" },
-            { title: "海关申报与关税", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-2-1-1" },
-            { title: "退税报关与单证", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-3-1-1" },
-            { title: "敏感货与海外仓", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-4-1-1" },
+  <script>
+    // ================= 引擎 A：维度 1～5 专用搜索 =================
+    const localInput = document.getElementById('localSearchInput');
+    const localDropdown = document.getElementById('localSearchDropdown');
 
-            { title: "国际站收款矩阵", category: "03 资金财税", url: "data/finance/finance_all.html#node-1-1-1" },
-            { title: "大宗贸易及独立站通道", category: "03 资金财税", url: "data/finance/finance_all.html#node-2-1-1" },
-            { title: "资金防冻、反洗钱风控", category: "03 资金财税", url: "data/finance/finance_all.html#node-3-1-1" },
-            { title: "流转税与企业税务筹划", category: "03 资金财税", url: "data/finance/finance_all.html#node-4-1-1" },
+    // 大搜索框只允许搜索这五个维度
+    const dimensionPaths = [
+        '/data/compliance/',
+        '/data/logistics/',
+        '/data/finance/',
+        '/data/ip/',
+        '/data/platform/'
+    ];
 
-            { title: "亚马逊域内防卫生态", category: "04 知产维权", url: "data/ip/ip_all.html#node-1-1-1" },
-            { title: "恶意投诉与平台内部仲裁", category: "04 知产维权", url: "data/ip/ip_all.html#node-2-1-1" },
-            { title: "联邦法院 TRO 与资金冻结", category: "04 知产维权", url: "data/ip/ip_all.html#node-3-1-1" },
-            { title: "宏观跨国确权与前端合规", category: "04 知产维权", url: "data/ip/ip_all.html#node-4-1-1" },
-
-            { title: "B2B 平台规则与大宗契约", category: "05 平台契约", url: "data/platform/governance_all.html#node-1-1-1" },
-            { title: "B2C 零售平台风控与治理", category: "05 平台契约", url: "data/platform/governance_all.html#node-2-1-1" },
-            { title: "全球广告营销合规与审查", category: "05 平台契约", url: "data/platform/governance_all.html#node-3-1-1" },
-            { title: "地缘政治与出口管制壁垒", category: "05 平台契约", url: "data/platform/governance_all.html#node-4-1-1" }
-        ];
-
-        const localInput = document.getElementById('localSearchInput');
-        const localDropdown = document.getElementById('localSearchDropdown');
-
-        if(localInput) {
-            localInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                localDropdown.innerHTML = ''; 
-                if (query === '') { localDropdown.style.display = 'none'; return; }
-
-                const results = localDB.filter(item => 
-                    item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
-                );
-
-                if (results.length > 0) {
-                    localDropdown.style.display = 'block';
-                    results.forEach(item => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
-                        li.addEventListener('click', () => window.open(item.url, '_blank'));
-                        localDropdown.appendChild(li);
-                    });
-                } else {
-                    localDropdown.style.display = 'block';
-                    localDropdown.innerHTML = `<li class="res-empty">未在当前大纲找到 "${query}" ...</li>`;
-                }
-            });
-            document.addEventListener('click', (e) => {
-                if (e.target !== localInput && e.target !== localDropdown) localDropdown.style.display = 'none';
-            });
+    // 与顶部全局搜索共用同一个 Pagefind
+    async function searchDimensions(query) {
+        if (!pagefindInstance) {
+            await initPagefind();
         }
+
+        const search = await pagefindInstance.search(query);
+        const results = [];
+
+        for (const result of search.results) {
+            const data = await result.data();
+
+            // 只保留维度 1～5
+            const url = new URL(data.url, window.location.href);
+            const isDimensionPage = dimensionPaths.some(path =>
+                url.pathname.includes(path)
+            );
+
+            if (isDimensionPage) {
+                results.push(data);
+            }
+
+            // 最多显示 10 条
+            if (results.length >= 10) break;
+        }
+
+        return results;
+    }
+
+    if (localInput) {
+        localInput.addEventListener('input', async function() {
+            const query = this.value.trim();
+
+            localDropdown.innerHTML = '';
+
+            if (query === '') {
+                localDropdown.style.display = 'none';
+                return;
+            }
+
+            localDropdown.style.display = 'block';
+            localDropdown.innerHTML =
+                '<li class="res-empty" style="color:#2563EB;">维度 1～5 检索中...</li>';
+
+            try {
+                const results = await searchDimensions(query);
+
+                if (results.length === 0) {
+                    localDropdown.innerHTML =
+                        `<li class="res-empty">维度 1～5 未找到与 "${query}" 相关的内容。</li>`;
+                    return;
+                }
+
+                localDropdown.innerHTML = '';
+
+                results.forEach(data => {
+                    const li = document.createElement('li');
+
+                    li.innerHTML = `
+                        <span class="res-title">
+                            ${data.meta.title || '相关知识'}
+                        </span>
+                        <span class="res-category">
+                            ${data.excerpt || ''}
+                        </span>
+                    `;
+
+                    li.addEventListener('click', () => {
+                        window.open(data.url, '_blank');
+                    });
+
+                    localDropdown.appendChild(li);
+                });
+
+            } catch (error) {
+                console.error('维度搜索失败:', error);
+                localDropdown.innerHTML =
+                    '<li class="res-empty">搜索暂时不可用，请稍后再试。</li>';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target !== localInput &&
+                !localDropdown.contains(e.target)) {
+                localDropdown.style.display = 'none';
+            }
+        });
+    }
 
         // ================= 引擎 B：Pagefind 全网检索 (服务于 ⌘K) =================
         const globalModal = document.getElementById('globalSearchModal');
