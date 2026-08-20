@@ -18,7 +18,7 @@
         
         .wiki-container { max-width: 1024px; margin: 0 auto; min-height: 100vh; padding: 40px 60px; }
         
-        /* 顶导栏与右上角全局搜索按钮 (完美还原截图三) */
+        /* 顶导栏与右上角全局搜索按钮 */
         .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E9ECEF; padding-bottom: 16px; margin-bottom: 40px; }
         .logo-area { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; color: #111; text-decoration: none; }
         
@@ -31,7 +31,7 @@
         .hero-section h1 { font-size: 28px; margin-bottom: 12px; color: #222; font-weight: bold; }
         .hero-section p { color: #666; font-size: 15px; font-family: monospace; margin: 0; }
 
-        /* 居中局部搜索框 (无弹窗，直接下拉出结果) */
+        /* 居中局部搜索框 */
         .local-search-wrapper { position: relative; margin-bottom: 50px; max-width: 100%; z-index: 50;}
         .local-search-input { width: 100%; padding: 16px 20px 16px 48px; font-size: 15px; border: 1px solid #E9ECEF; border-radius: 8px; outline: none; transition: all 0.2s; box-sizing: border-box; background: #fff; color: #333; box-shadow: 0 2px 8px rgba(0,0,0,0.02); font-family: inherit; }
         .local-search-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
@@ -53,7 +53,7 @@
         .dim-icon { font-size: 24px; margin-bottom: 16px; }
         .dim-title { font-weight: bold; font-size: 16px; color: #111; margin-bottom: 16px; }
         
-        /* 核心要求：圆点无序列表排版 */
+        /* 圆点无序列表排版 */
         .dim-list { list-style: none; padding: 0; margin: 0; }
         .dim-list li { position: relative; padding-left: 18px; font-size: 14px; color: #555; line-height: 1.8; margin-bottom: 8px; transition: color 0.2s; }
         .dim-list li::before { content: "•"; position: absolute; left: 0; top: -1px; color: #888; font-weight: bold; font-size: 18px; transition: color 0.2s; }
@@ -79,7 +79,7 @@
         .global-results { max-height: 400px; overflow-y: auto; list-style: none; margin: 0; padding: 0; }
         .global-results li { padding: 16px 24px; border-bottom: 1px solid #F1F3F5; cursor: pointer; display: flex; flex-direction: column; transition: background 0.2s; }
         .global-results li:hover { background: #F8F9FA; }
-        .global-results .res-category { color: #E11D48; } /* 区分全局搜索的分类高亮 */
+        .global-results .res-category { color: #E11D48; }
 
         @media (max-width: 600px) {
             .dimensions-grid { grid-template-columns: 1fr; }
@@ -192,9 +192,8 @@
         </div>
     </div>
 
-    <!-- 双引擎搜索核心逻辑 (搭载 Pagefind) -->
+    <!-- 引擎 A：局部直搜保留 (服务于正文中央输入框) -->
     <script>
-        // ================= 引擎 A：局部直搜 (服务于正文中央输入框) =================
         const localDB = [
             { title: "企业体系与工厂资质", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-1-1" },
             { title: "强制物理安全认证", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-2-1-2" },
@@ -252,91 +251,10 @@
                 if (e.target !== localInput && e.target !== localDropdown) localDropdown.style.display = 'none';
             });
         }
-
-        // ================= 引擎 B：Pagefind 全网检索 (服务于 ⌘K) =================
-        const globalModal = document.getElementById('globalSearchModal');
-        const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
-        const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
-        const globalInput = document.getElementById('globalSearchInput');
-        const globalResultsList = document.getElementById('globalSearchResults');
-        
-        let pagefindInstance = null;
-
-        // 初始化加载 Pagefind (路径向上跳一层，指向大根目录)
-        async function initPagefind() {
-            if (!pagefindInstance) {
-                try {
-                    // 使用绝对路径模式增强 GitHub Pages 的兼容性
-                    pagefindInstance = await import('../_pagefind/pagefind.js');
-                    await pagefindInstance.init();
-                    console.log("Pagefind 引擎加载成功！");
-                } catch (error) {
-                    console.error("Pagefind 加载失败，请检查 .nojekyll 文件是否配置正确:", error);
-                    globalResultsList.innerHTML = '<li class="res-empty" style="color:red;">索引库加载失败，请联系管理员。</li>';
-                }
-            }
-        }
-
-        const openGlobalSearch = async () => {
-            if(globalModal) {
-                globalModal.style.display = 'flex';
-                globalInput.value = '';
-                globalResultsList.innerHTML = '<li class="res-empty">加载全站数据库中，请输入关键词...</li>';
-                setTimeout(() => globalInput.focus(), 100);
-                await initPagefind();
-            }
-        };
-
-        const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
-
-        if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
-        if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
-        if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
-
-        document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
-            if (e.key === 'Escape') closeGlobalSearch();
-        });
-
-        if(globalInput) {
-            globalInput.addEventListener('input', async function() {
-                const query = this.value.trim();
-                if (query === '') {
-                    globalResultsList.innerHTML = '<li class="res-empty">请输入关键词...</li>';
-                    return;
-                }
-
-                if (!pagefindInstance) return;
-
-                globalResultsList.innerHTML = '<li class="res-empty" style="color:#2563EB;">全站检索中...</li>';
-
-                const search = await pagefindInstance.search(query);
-                
-                if (search.results.length === 0) {
-                    globalResultsList.innerHTML = `<li class="res-empty">全站未找到与 "${query}" 相关的正文。</li>`;
-                    return;
-                }
-
-                globalResultsList.innerHTML = ''; 
-                const topResults = search.results.slice(0, 10);
-                
-                for (const result of topResults) {
-                    const data = await result.data();
-                    const li = document.createElement('li');
-                    
-                    li.innerHTML = `
-                        <span class="res-title" style="color: #111;">${data.meta.title || '关联页面'}</span>
-                        <span class="res-category" style="margin-top:8px; line-height: 1.5; color: #555;">${data.excerpt}</span>
-                    `;
-                    li.addEventListener('click', () => {
-                        window.open(data.url, '_blank');
-                        closeGlobalSearch();
-                    });
-                    globalResultsList.appendChild(li);
-                }
-            });
-        }
     </script>
-  
+
+    <!-- 引入全站公共全局搜索与高亮系统 (接管 ⌘K 与全局弹窗) -->
+    <script src="assets/search-data.js"></script>
+    <script src="assets/search.js"></script>
 </body>
 </html>
