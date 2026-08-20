@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -193,152 +194,231 @@
     </div>
 
     <!-- 双引擎搜索核心逻辑 (搭载 Pagefind) -->
-  <script>
-    // ================= 引擎 A：维度 1～5 专用搜索 =================
-    const localInput = document.getElementById('localSearchInput');
-    const localDropdown = document.getElementById('localSearchDropdown');
+    <script>
+        // ================= Pagefind 初始化 =================
+        // 两个搜索框共用同一个 Pagefind 索引，但搜索范围不同。
+        let pagefindInstance = null;
 
-    // 大搜索框只允许搜索这五个维度
-    const dimensionPaths = [
-        '/data/compliance/',
-        '/data/logistics/',
-        '/data/finance/',
-        '/data/ip/',
-        '/data/platform/'
-    ];
+        async function initPagefind() {
+            if (!pagefindInstance) {
+                try {
+                    pagefindInstance = await import('../_pagefind/pagefind.js');
+                    await pagefindInstance.init();
+                    console.log('Pagefind 引擎加载成功！');
+                } catch (error) {
+                    console.error('Pagefind 加载失败，请检查 _pagefind 路径:', error);
+                    const globalResultsList = document.getElementById('globalSearchResults');
+                    if (globalResultsList) {
+                        globalResultsList.innerHTML = '<li class="res-empty" style="color:red;">索引库加载失败，请联系管理员。</li>';
+                    }
+                    throw error;
+                }
+            }
+            return pagefindInstance;
+        }
 
-    // 与顶部全局搜索共用同一个 Pagefind
- async function searchDimensions(query) {
-    if (!pagefindInstance) {
-        await initPagefind();
-    }
+        // ================= 引擎 A：维度 1～5 专用搜索 =================
+        const localInput = document.getElementById('localSearchInput');
+        const localDropdown = document.getElementById('localSearchDropdown');
 
-    const normalize = text =>
-        text.toLowerCase().replace(/[\s\-_.]+/g, '');
+        // 只搜索维度 1～5
+        const dimensionPaths = [
+            '/data/compliance/',
+            '/data/logistics/',
+            '/data/finance/',
+            '/data/ip/',
+            '/data/platform/'
+        ];
 
-    const search = await pagefindInstance.search(query);
-    const results = [];
+        // 标准化关键词：
+        // 忽略大小写、空格、连字符、下划线、点号。
+        // ISO9001 / ISO 9001 / iso-9001 → iso9001
+        function normalize(text) {
+            return String(text || '')
+                .toLowerCase()
+                .replace(/[\s\-_.]+/g, '');
+        }
 
-    const keywords = query
-        .trim()
-        .split(/\s+/)
-        .map(normalize)
-        .filter(Boolean);
+        async function searchDimensions(query) {
+            const pagefind = await initPagefind();
+            const normalizedQuery = normalize(query);
 
-    for (const result of search.results) {
-        const data = await result.data();
+            if (!normalizedQuery) return [];
 
-        // 只保留维度 1～5
-        const url = new URL(data.url, window.location.href);
+            const search = await pagefind.search(query);
+            const results = [];
 
-        const isDimensionPage = dimensionPaths.some(path =>
-            url.pathname.includes(path)
-        );
+            for (const result of search.results) {
+                const data = await result.data();
 
-        if (!isDimensionPage) continue;
+                // ① 只允许维度 1～5
+                const url = new URL(data.url, window.location.href);
+                const isDimensionPage = dimensionPaths.some(path =>
+                    url.pathname.includes(path)
+                );
 
-        // 标题 + 摘要进行精准匹配
-        const searchableText = normalize(
-            (data.meta?.title || '') +
-            ' ' +
-            (data.excerpt || '')
-        );
+                if (!isDimensionPage) continue;
 
-        // 所有关键词都必须匹配
-        const matched = keywords.every(keyword =>
-            searchableText.includes(keyword)
-        );
+                // ② 标题 + Pagefind 摘要进行二次精准过滤
+                const searchableText = normalize(
+                    `${data.meta?.title || ''} ${data.excerpt || ''}`
+                );
 
-        if (!matched) continue;
+                // ③ 规范化后必须完整包含用户输入
+                if (!searchableText.includes(normalizedQuery)) continue;
 
-        results.push(data);
+                results.push(data);
 
-        if (results.length >= 10) break;
-    }
+                if (results.length >= 10) break;
+            }
 
-    return results;
-}
+            return results;
+        }
 
-        // ================= 引擎 B：Pagefind 全网检索 (服务于 ⌘K) =================
+        if (localInput) {
+            localInput.addEventListener('input', async function() {
+                const query = this.value.trim();
+                localDropdown.innerHTML = '';
+
+                if (query === '') {
+                    localDropdown.style.display = 'none';
+                    return;
+                }
+
+                localDropdown.style.display = 'block';
+                localDropdown.innerHTML =
+                    '<li class="res-empty" style="color:#2563EB;">维度 1～5 检索中...</li>';
+
+                try {
+                    const results = await searchDimensions(query);
+
+                    if (results.length === 0) {
+                        localDropdown.innerHTML =
+                            `<li class="res-empty">维度 1～5 未找到与 "${query}" 相关的内容。</li>`;
+                        return;
+                    }
+
+                    localDropdown.innerHTML = '';
+
+                    results.forEach(data => {
+                        const li = document.createElement('li');
+
+                        li.innerHTML = `
+                            <span class="res-title">
+                                ${data.meta?.title || '相关知识'}
+                            </span>
+                            <span class="res-category">
+                                ${data.excerpt || ''}
+                            </span>
+                        `;
+
+                        li.addEventListener('click', () => {
+                            window.open(data.url, '_blank');
+                        });
+
+                        localDropdown.appendChild(li);
+                    });
+                } catch (error) {
+                    console.error('维度搜索失败:', error);
+                    localDropdown.innerHTML =
+                        '<li class="res-empty">搜索暂时不可用，请稍后再试。</li>';
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (e.target !== localInput && !localDropdown.contains(e.target)) {
+                    localDropdown.style.display = 'none';
+                }
+            });
+        }
+
+        // ================= 引擎 B：Pagefind 全站检索（⌘K / Ctrl+K） =================
         const globalModal = document.getElementById('globalSearchModal');
         const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
         const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
         const globalInput = document.getElementById('globalSearchInput');
         const globalResultsList = document.getElementById('globalSearchResults');
-        
-        let pagefindInstance = null;
-
-        // 初始化加载 Pagefind (路径向上跳一层，指向大根目录)
-        async function initPagefind() {
-            if (!pagefindInstance) {
-                try {
-                    // 使用绝对路径模式增强 GitHub Pages 的兼容性
-                    pagefindInstance = await import('../_pagefind/pagefind.js');
-                    await pagefindInstance.init();
-                    console.log("Pagefind 引擎加载成功！");
-                } catch (error) {
-                    console.error("Pagefind 加载失败，请检查 .nojekyll 文件是否配置正确:", error);
-                    globalResultsList.innerHTML = '<li class="res-empty" style="color:red;">索引库加载失败，请联系管理员。</li>';
-                }
-            }
-        }
 
         const openGlobalSearch = async () => {
-            if(globalModal) {
+            if (globalModal) {
                 globalModal.style.display = 'flex';
                 globalInput.value = '';
                 globalResultsList.innerHTML = '<li class="res-empty">加载全站数据库中，请输入关键词...</li>';
                 setTimeout(() => globalInput.focus(), 100);
-                await initPagefind();
+                try {
+                    await initPagefind();
+                } catch (error) {
+                    // 错误信息已由 initPagefind 处理
+                }
             }
         };
 
-        const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
+        const closeGlobalSearch = () => {
+            if (globalModal) globalModal.style.display = 'none';
+        };
 
-        if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
-        if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
-        if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
+        if (openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
+        if (closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
+        if (globalModal) {
+            globalModal.addEventListener('click', (e) => {
+                if (e.target === globalModal) closeGlobalSearch();
+            });
+        }
 
         document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                openGlobalSearch();
+            }
             if (e.key === 'Escape') closeGlobalSearch();
         });
 
-        if(globalInput) {
+        if (globalInput) {
             globalInput.addEventListener('input', async function() {
                 const query = this.value.trim();
+
                 if (query === '') {
                     globalResultsList.innerHTML = '<li class="res-empty">请输入关键词...</li>';
                     return;
                 }
 
-                if (!pagefindInstance) return;
+                try {
+                    const pagefind = await initPagefind();
 
-                globalResultsList.innerHTML = '<li class="res-empty" style="color:#2563EB;">全站检索中...</li>';
+                    globalResultsList.innerHTML =
+                        '<li class="res-empty" style="color:#2563EB;">全站检索中...</li>';
 
-                const search = await pagefindInstance.search(query);
-                
-                if (search.results.length === 0) {
-                    globalResultsList.innerHTML = `<li class="res-empty">全站未找到与 "${query}" 相关的正文。</li>`;
-                    return;
-                }
+                    const search = await pagefind.search(query);
 
-                globalResultsList.innerHTML = ''; 
-                const topResults = search.results.slice(0, 10);
-                
-                for (const result of topResults) {
-                    const data = await result.data();
-                    const li = document.createElement('li');
-                    
-                    li.innerHTML = `
-                        <span class="res-title" style="color: #111;">${data.meta.title || '关联页面'}</span>
-                        <span class="res-category" style="margin-top:8px; line-height: 1.5; color: #555;">${data.excerpt}</span>
-                    `;
-                    li.addEventListener('click', () => {
-                        window.open(data.url, '_blank');
-                        closeGlobalSearch();
-                    });
-                    globalResultsList.appendChild(li);
+                    if (search.results.length === 0) {
+                        globalResultsList.innerHTML =
+                            `<li class="res-empty">全站未找到与 "${query}" 相关的正文。</li>`;
+                        return;
+                    }
+
+                    globalResultsList.innerHTML = '';
+                    const topResults = search.results.slice(0, 10);
+
+                    for (const result of topResults) {
+                        const data = await result.data();
+                        const li = document.createElement('li');
+
+                        li.innerHTML = `
+                            <span class="res-title" style="color: #111;">${data.meta?.title || '关联页面'}</span>
+                            <span class="res-category" style="margin-top:8px; line-height: 1.5; color: #555;">${data.excerpt || ''}</span>
+                        `;
+
+                        li.addEventListener('click', () => {
+                            window.open(data.url, '_blank');
+                            closeGlobalSearch();
+                        });
+
+                        globalResultsList.appendChild(li);
+                    }
+                } catch (error) {
+                    console.error('全站搜索失败:', error);
+                    globalResultsList.innerHTML =
+                        '<li class="res-empty">搜索暂时不可用，请稍后再试。</li>';
                 }
             });
         }
