@@ -237,15 +237,37 @@
                 padding: 10px 12px !important;
             }
         }
+        /* 搜索弹窗样式 */
+        #globalSearchModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 80px; backdrop-filter: blur(4px); }
+        .modal-content { background: #FFFFFF; width: 90%; max-width: 600px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #E2E8F0; }
+        .modal-header { padding: 16px 20px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: center; gap: 12px; }
+        .modal-header input { width: 100%; border: none; outline: none; font-size: 16px; color: #0F172A; background: transparent; }
+        #globalSearchResults { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+        #globalSearchResults li { padding: 14px 20px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
+        #globalSearchResults li:hover { background: #F0FDF4; }
+        #globalSearchResults .res-title { font-weight: 600; color: #0F172A; font-size: 15px; display: block; }
+        #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- 头部锁死款式 -->
-        <header class="app-header">
-            <h1>📊 谷歌推广知识体系 <span>· Tab 5 · 技术SEO</span></h1>
-            <span class="badge-header">🟡 基础必备 · 技术收录</span>
-        </header>
+      <!-- 头部：彻底解决拥挤，加入 Flexbox 行内样式强制横向对齐 -->
+<header class="app-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light);">
+    
+    <!-- 左侧标题区：强制横向弹性布局居中 -->
+    <div class="header-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <!-- 注意：这里的标题文案根据不同 Tab 自行保留原样 -->
+        <h1 style="font-size: 24px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; margin: 0;">
+            📊 谷歌推广知识体系 <span style="font-weight: 400; font-size: 15px; color: var(--text-muted);">· Tab 5 · 技术SEO</span>
+        </h1>
+        <span class="badge-header" style="background: var(--primary); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; white-space: nowrap;"> 🟡 基础必备 · 技术收录</span>
+    </div>
+
+    <!-- 右侧搜索按钮 -->
+    <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
+        <span>🔍</span> 搜索全站 (⌘K)
+    </button>
+</header>
 
         <!-- Tab 导航锁死款式 -->
    <nav class="tab-nav">
@@ -519,11 +541,27 @@
         <div class="footer-links" style="margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
             <span>✨ Tab 5 · 技术SEO — 保证抓取与索引的基础设施</span>
             <span>
-                <span class="internal-link" onclick="location.href='tab4.html'">⬅️ 上一章</span> · 
-                <span class="internal-link" onclick="location.href='tab6.html'">下一章 ➡️</span> · 
-                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">返回顶部</span>
+                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">←返回顶部←</span>
+                <span class="internal-link" onclick="location.href='index.html'">← 返回全局目录←</span>
             </span>
         </div>
     </div>
+<!-- 🔍 ⌘K 全局搜索弹窗结构 -->
+    <div id="globalSearchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span style="font-size: 18px;">🔍</span>
+                <input type="text" id="globalSearchInput" placeholder="输入关键词搜索全库（如：E-E-A-T、CRO、内容集群...）">
+                <button id="closeGlobalSearchBtn" style="background: #F1F5F9; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; color: #64748B; font-size: 12px;">ESC</button>
+            </div>
+            <ul id="globalSearchResults">
+                <li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 引入全站公共全局搜索与高亮系统 -->
+    <script src="assets/search-data.js?v=2"></script>
+    <script src="assets/search.js?v=2"></script>
 </body>
 </html>
