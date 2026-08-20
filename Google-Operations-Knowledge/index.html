@@ -112,6 +112,7 @@
             .badge-header { font-size: 11px !important; padding: 4px 14px !important; }
             .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
             .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
+            
             .video-banner-container { margin-bottom: 16px; border-radius: 12px; }
             .video-banner-container::before { font-size: 12px; }
             .panel-title { font-size: 18px !important; }
@@ -120,6 +121,7 @@
             .stat-card { padding: 12px 14px !important; }
             .stat-card .number { font-size: 22px !important; }
             .stat-card .label { font-size: 12px !important; }
+            .stat-card .icon { font-size: 20px !important; }
             .tree-item summary { padding: 12px 16px !important; font-size: 14px !important; }
             .tree-item .tree-body { padding: 10px 12px 16px 12px !important; }
             .tree-item .tree-body .child { font-size: 13px !important; padding: 4px 0 4px 10px !important; }
@@ -571,120 +573,15 @@
         </div>
     </div>
 
-    <script>
-        // 核心数据库：target 字段为跳转后需要强制高亮寻找的词汇
-        const googleDB = [
-            { title: "Tab 1 · 算法更新认知（2025-2026）", category: "Tab 1 - 算法更新", url: "tab1.html", keywords: "算法更新 inpr fid 核心更新 寄生虫seo 界面革命", target: "算法更新" },
-            { title: "Tab 2 · E-E-A-T 质量框架与权重解析", category: "Tab 2 - 底层思维", url: "tab2.html", keywords: "工作原理 抓取 索引 排名 e-e-a-t eeat pagerank 外链", target: "E-E-A-T" },
-            { title: "Tab 2 · 核心信号：信息增益", category: "Tab 2 - 底层思维", url: "tab2.html", keywords: "信息增益 首选来源 preferred sources", target: "信息增益" },
-            { title: "Tab 3 · 独立站基建与配置", category: "Tab 3 - 独立站基建", url: "tab3.html", keywords: "独立站 域名 服务器 wordpress", target: "独立站" },
-            { title: "Tab 4 · 站内SEO与内容工业化", category: "Tab 4 - 站内SEO", url: "tab4.html", keywords: "站内seo 内容工业化 atomic answer 原子答案", target: "Atomic" },
-            { title: "Tab 4 · 结构化数据与Schema标记", category: "Tab 4 - 站内SEO", url: "tab4.html", keywords: "结构化数据 schema tkd 实体化内容", target: "结构化数据" },
-            { title: "Tab 5 · 技术性SEO与站点索引管理", category: "Tab 5 - 技术SEO", url: "tab5.html", keywords: "技术seo 索引 sitemap robots canonical 重定向", target: "索引" },
-            { title: "Tab 6 · 站外影响力与品牌提及", category: "Tab 6 - 站外影响力", url: "tab6.html", keywords: "站外影响力 外链 客座文章 品牌提及 brand mentions youtube", target: "品牌提及" },
-            { title: "Tab 7 · 谷歌广告投放 (Google Ads)", category: "Tab 7 - 谷歌广告", url: "tab7.html", keywords: "谷歌广告 google ads sem 搜索广告 pmax", target: "谷歌广告" },
-            { title: "Tab 8 · 数据分析与追踪 (GA4 + GTM)", category: "Tab 8 - 数据分析", url: "tab8.html", keywords: "数据分析 ga4 gtm 转化追踪", target: "GA4" },
-            { title: "Tab 9 · 转化率优化 (CRO)", category: "Tab 9 - 转化率优化", url: "tab9.html", keywords: "转化率优化 cro 着陆页 landing page 弹窗 内容集群 edm", target: "转化率优化" },
-            { title: "Tab 10 · AI Overviews优化 (GEO指南)", category: "Tab 10 - AI Overviews", url: "tab10.html", keywords: "ai overviews geo 生成式引擎 引用率", target: "AI Overviews" },
-            // 为了让在 index 页面也能搜到本页的知识点，把 index.html 自身的核心词也加进去
-            { title: "Tab 0 · 全局目录：E-E-A-T 节点", category: "Tab 0 - 全局目录", url: "index.html", keywords: "e-e-a-t eeat", target: "E-E-A-T" },
-            { title: "Tab 0 · 全局目录：内容集群与CRO", category: "Tab 0 - 全局目录", url: "index.html", keywords: "转化率优化 cro 内容集群", target: "转化率优化" }
-        ];
+    <style>
+        #globalSearchResults li { padding: 14px 20px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
+        #globalSearchResults li:hover { background: #F0FDF4; }
+        #globalSearchResults .res-title { font-weight: 600; color: #0F172A; font-size: 15px; display: block; }
+        #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
+    </style>
 
-        const globalModal = document.getElementById('globalSearchModal');
-        const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
-        const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
-        const globalInput = document.getElementById('globalSearchInput');
-        const globalResultsList = document.getElementById('globalSearchResults');
-
-        const openGlobalSearch = () => {
-            if(globalModal) { globalModal.style.display = 'flex'; globalInput.value = ''; globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>'; setTimeout(() => globalInput.focus(), 100); }
-        };
-        const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
-
-        if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
-        if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
-        if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
-        document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
-            if (e.key === 'Escape') closeGlobalSearch();
-        });
-
-        if(globalInput) {
-            globalInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                globalResultsList.innerHTML = ''; 
-                if (query === '') { globalResultsList.innerHTML = '<li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>'; return; }
-
-                const cleanQuery = query.replace(/-/g, '');
-                const results = googleDB.filter(item => {
-                    const targetText = (item.title + " " + item.category + " " + item.keywords).toLowerCase();
-                    const cleanTarget = targetText.replace(/-/g, '');
-                    return targetText.includes(query) || cleanTarget.includes(cleanQuery);
-                });
-
-                if (results.length > 0) {
-                    results.forEach(item => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
-                        li.addEventListener('click', () => {
-                            // URL 传参，抛弃失效的 #hash
-                            const targetUrl = item.url + '?highlight=' + encodeURIComponent(item.target);
-                            window.open(targetUrl, '_self');
-                            closeGlobalSearch();
-                        });
-                        globalResultsList.appendChild(li);
-                    });
-                } else {
-                    globalResultsList.innerHTML = `<li class="res-empty" style="padding: 20px; text-align: center; color: #EF4444; font-size: 14px;">未找到与 "${query}" 相关的知识点...</li>`;
-                }
-            });
-        }
-
-        // ==========================================
-        // 核心突破：加载完毕后，强制撑开折叠面板并进行 JS DOM 高亮和滚动！
-        // ==========================================
-        window.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const keyword = params.get('highlight');
-            if(keyword) {
-                // 1. 强制展开所有 <details> 折叠面板，暴露出原本隐藏的文字
-                document.querySelectorAll('details').forEach(el => el.setAttribute('open', 'true'));
-                
-                // 2. 延迟 300 毫秒等待页面重绘，然后用 DOM 树遍历查找文字
-                setTimeout(() => {
-                    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-                    let node;
-                    while (node = walker.nextNode()) {
-                        // 找到匹配的文本（忽略大小写）
-                        if (node.nodeValue.toLowerCase().includes(keyword.toLowerCase())) {
-                            const parent = node.parentElement;
-                            // 过滤掉输入框、脚本等无用标签
-                            if (parent.tagName !== 'SCRIPT' && parent.tagName !== 'STYLE' && parent.tagName !== 'TITLE' && parent.id !== 'globalSearchInput') {
-                                // 滚动到屏幕中央
-                                parent.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                
-                                // 给该元素添加醒目的黄色高亮背景和红框，持续 3.5 秒
-                                const originalBg = parent.style.backgroundColor;
-                                parent.style.transition = 'all 0.3s ease';
-                                parent.style.backgroundColor = '#FEF08A'; // 醒目黄色
-                                parent.style.borderRadius = '4px';
-                                parent.style.padding = '2px 4px';
-                                parent.style.border = '2px solid #EF4444'; // 红色边框
-                                
-                                setTimeout(() => {
-                                    parent.style.backgroundColor = originalBg;
-                                    parent.style.border = 'none';
-                                    parent.style.padding = '0';
-                                }, 3500); // 3.5秒后自动恢复原样
-                                
-                                break; // 找到第一个就停止，避免页面乱跳
-                            }
-                        }
-                    }
-                }, 300);
-            }
-        });
-    </script>
+    <!-- 引入全站公共全局搜索与高亮系统 -->
+    <script src="assets/search-data.js"></script>
+    <script src="assets/search.js"></script>
 </body>
 </html>
