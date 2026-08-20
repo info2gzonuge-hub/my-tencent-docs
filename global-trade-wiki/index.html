@@ -218,9 +218,9 @@
 
     // 将搜索词拆成多个关键词
     const keywords = query
-        .toLowerCase()
         .trim()
         .split(/\s+/)
+        .map(normalize)
         .filter(Boolean);
 
     for (const result of search.results) {
@@ -236,11 +236,14 @@
         if (!isDimensionPage) continue;
 
         // ② 严格检查标题 + 摘要
-        const searchableText = (
+        const normalize = text =>
+    text.toLowerCase().replace(/[\s\-_.]+/g, '');
+
+const searchableText = normalize(
             (data.meta?.title || '') +
             ' ' +
             (data.excerpt || '')
-        ).toLowerCase();
+        );
 
         // ③ 所有关键词都必须出现
         const matched = keywords.every(keyword =>
