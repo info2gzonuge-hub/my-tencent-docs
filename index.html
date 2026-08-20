@@ -1,342 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GLOBAL TRADE WIKI | 全球贸易合规与履约知识库</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>我的工具导航</title>
     <style>
-        :root {
-            --accent-compliance: #00A080;
-            --accent-logistics: #2563EB;
-            --accent-finance: #D97706;
-            --accent-ip: #6D28D9;
-            --accent-platform: #E11D48;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+            background: #f6f9fc;
         }
-
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fff; margin: 0; padding: 0; color: #333; }
-        
-        .wiki-container { max-width: 1024px; margin: 0 auto; min-height: 100vh; padding: 40px 60px; }
-        
-        /* 顶导栏与右上角全局搜索按钮 (完美还原截图三) */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E9ECEF; padding-bottom: 16px; margin-bottom: 40px; }
-        .logo-area { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; color: #111; text-decoration: none; }
-        
-        .global-search-trigger { background: #F8FAFC; border: none; padding: 8px 12px; border-radius: 6px; color: #64748B; font-size: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; outline: none; gap: 40px; }
-        .global-search-trigger:hover { background: #F1F5F9; }
-        .global-search-trigger kbd { background: #fff; border: 1px solid #E2E8F0; border-radius: 4px; padding: 2px 6px; font-family: -apple-system, sans-serif; font-size: 12px; color: #94A3B8; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-
-        /* Hero 标题区 */
-        .hero-section { margin-bottom: 50px; }
-        .hero-section h1 { font-size: 28px; margin-bottom: 12px; color: #222; font-weight: bold; }
-        .hero-section p { color: #666; font-size: 15px; font-family: monospace; margin: 0; }
-
-        /* 居中局部搜索框 (无弹窗，直接下拉出结果) */
-        .local-search-wrapper { position: relative; margin-bottom: 50px; max-width: 100%; z-index: 50;}
-        .local-search-input { width: 100%; padding: 16px 20px 16px 48px; font-size: 15px; border: 1px solid #E9ECEF; border-radius: 8px; outline: none; transition: all 0.2s; box-sizing: border-box; background: #fff; color: #333; box-shadow: 0 2px 8px rgba(0,0,0,0.02); font-family: inherit; }
-        .local-search-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .search-icon-inside { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
-        
-        .local-search-dropdown { position: absolute; top: calc(100% + 8px); left: 0; width: 100%; background: #fff; border: 1px solid #E9ECEF; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-height: 350px; overflow-y: auto; display: none; list-style: none; padding: 0; margin: 0; }
-        .local-search-dropdown li { padding: 12px 20px; border-bottom: 1px solid #F1F3F5; cursor: pointer; display: flex; flex-direction: column; text-align: left; transition: background 0.2s; }
-        .local-search-dropdown li:hover { background: #F8F9FA; }
-        .res-title { font-size: 14px; font-weight: 600; color: #2563EB; margin-bottom: 4px; }
-        .res-category { font-size: 12px; color: #888; }
-        .res-empty { padding: 20px; text-align: center; color: #888; font-size: 14px; cursor: default !important; }
-
-        /* 五大维度网格 */
-        .dimensions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
-        
-        .dimension-card { text-decoration: none; display: flex; flex-direction: column; padding: 32px 24px; border-radius: 12px; background: #fff; cursor: pointer; transition: all 0.2s ease; border: 1px dashed #ccc; }
-        .dimension-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); border-style: solid; }
-        
-        .dim-icon { font-size: 24px; margin-bottom: 16px; }
-        .dim-title { font-weight: bold; font-size: 16px; color: #111; margin-bottom: 16px; }
-        
-        /* 核心要求：圆点无序列表排版 */
-        .dim-list { list-style: none; padding: 0; margin: 0; }
-        .dim-list li { position: relative; padding-left: 18px; font-size: 14px; color: #555; line-height: 1.8; margin-bottom: 8px; transition: color 0.2s; }
-        .dim-list li::before { content: "•"; position: absolute; left: 0; top: -1px; color: #888; font-weight: bold; font-size: 18px; transition: color 0.2s; }
-        
-        .dimension-card:hover .dim-list li { color: #222; }
-        .dimension-card:hover .dim-list li::before { color: #2563EB; }
-
-        /* 底部快捷入口 */
-        .quick-links { border-top: 1px solid #E9ECEF; padding-top: 24px; display: flex; flex-wrap: wrap; gap: 32px; }
-        .quick-link-item { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #666; transition: color 0.2s; text-decoration: none; }
-        .quick-link-item:hover { color: #111; }
-
-        /* ================= 全局搜索浮层 (Search Modal) ================= */
-        .global-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: flex-start; padding-top: 12vh; z-index: 999; }
-        .global-modal-content { width: 100%; max-width: 640px; background: #fff; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; animation: modalFadeIn 0.2s ease; }
-        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        
-        .global-modal-header { display: flex; align-items: center; padding: 16px 24px; border-bottom: 1px solid #E9ECEF; }
-        .global-modal-header input { flex: 1; border: none; outline: none; font-size: 18px; color: #222; margin-left: 12px; }
-        .global-modal-header input::placeholder { color: #BBB; }
-        .close-btn { background: #F1F3F5; border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; color: #666; cursor: pointer; }
-        
-        .global-results { max-height: 400px; overflow-y: auto; list-style: none; margin: 0; padding: 0; }
-        .global-results li { padding: 16px 24px; border-bottom: 1px solid #F1F3F5; cursor: pointer; display: flex; flex-direction: column; transition: background 0.2s; }
-        .global-results li:hover { background: #F8F9FA; }
-        .global-results .res-category { color: #E11D48; } /* 区分全局搜索的分类高亮 */
-
-        @media (max-width: 600px) {
-            .dimensions-grid { grid-template-columns: 1fr; }
-            .global-search-trigger { width: auto; }
-            .global-search-trigger kbd { display: none; }
+        h1 {
+            color: #0b1a2e;
+            border-bottom: 3px solid #fbbf24;
+            padding-bottom: 12px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 12px 0;
+        }
+        a {
+            display: block;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #0b1a2e;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.2s;
+            border-left: 5px solid #fbbf24;
+        }
+        a:hover {
+            transform: translateX(6px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        }
+        a small {
+            display: block;
+            font-weight: 400;
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-top: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="wiki-container">
-        <!-- 顶导与右上角【全局搜索】触发器 -->
-        <header class="top-nav">
-            <a href="index.html" class="logo-area">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                GLOBAL TRADE WIKI
-            </a>
-            <button class="global-search-trigger" id="openGlobalSearchBtn">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    Search
-                </div>
-                <kbd>⌘K</kbd>
-            </button>
-        </header>
-
-        <section class="hero-section">
-            <h1>全球贸易合规与履约知识库</h1>
-            <p>Personal Encyclopedia of Global Trade</p>
-        </section>
-
-        <!-- 居中【局部搜索】框 -->
-        <div class="local-search-wrapper">
-            <span class="search-icon-inside">🔍</span>
-            <input type="text" id="localSearchInput" class="local-search-input" placeholder="搜索本库知识 / 术语 / 国家 / 平台 / 单证..." autocomplete="off">
-            <ul id="localSearchDropdown" class="local-search-dropdown"></ul>
-        </div>
-
-        <!-- 五大维度网格 -->
-        <section class="dimensions-grid">
-            <a href="data/compliance/compliance_all.html" class="dimension-card" style="border-color: var(--accent-compliance);">
-                <div class="dim-icon">🛡️</div>
-                <div class="dim-title">01 市场准入与合规</div>
-                <ul class="dim-list">
-                    <li>企业体系与工厂资质</li>
-                    <li>强制物理安全认证</li>
-                    <li>区域清关壁垒与质检</li>
-                    <li>零售包装与环保标识</li>
-                </ul>
-            </a>
-            <a href="data/logistics/logistics_all.html" class="dimension-card" style="border-color: var(--accent-logistics);">
-                <div class="dim-icon">🚢</div>
-                <div class="dim-title">02 物流清关与履约</div>
-                <ul class="dim-list">
-                    <li>国际贸易术语</li>
-                    <li>海关申报与关税</li>
-                    <li>退税报关与单证</li>
-                    <li>敏感货与海外仓</li>
-                </ul>
-            </a>
-            <a href="data/finance/finance_all.html" class="dimension-card" style="border-color: var(--accent-finance);">
-                <div class="dim-icon">💰</div>
-                <div class="dim-title">03 资金结算与财税</div>
-                <ul class="dim-list">
-                    <li>国际站收款矩阵</li>
-                    <li>大宗贸易及独立站通道</li>
-                    <li>资金防冻、反洗钱风控</li>
-                    <li>流转税与企业税务筹划</li>
-                </ul>
-            </a>
-            <a href="data/ip/ip_all.html" class="dimension-card" style="border-color: var(--accent-ip);">
-                <div class="dim-icon">⚖️</div>
-                <div class="dim-title">04 知识产权与维权</div>
-                <ul class="dim-list">
-                    <li>亚马逊域内防卫生态</li>
-                    <li>恶意投诉与平台内部仲裁</li>
-                    <li>联邦法院 TRO 与资金冻结</li>
-                    <li>宏观跨国确权与前端合规</li>
-                </ul>
-            </a>
-            <a href="data/platform/platform_all.html" class="dimension-card" style="border-color: var(--accent-platform);">
-                <div class="dim-icon">🤝</div>
-                <div class="dim-title">05 平台治理与商业契约</div>
-                <ul class="dim-list">
-                    <li>B2B 平台规则与大宗契约</li>
-                    <li>B2C 零售平台风控与治理</li>
-                    <li>全球广告营销合规与审查</li>
-                    <li>地缘政治与出口管制壁垒</li>
-                </ul>
-            </a>
-        </section>
-
-        <!-- 底部快捷入口 -->
-        <footer class="quick-links">
-            <a href="data/countries/index.html" class="quick-link-item"><span>🌍</span> 国家与市场地图</a>
-            <a href="data/checklists/index.html" class="quick-link-item"><span>🧰</span> 实操 Checklist</a>
-            <a href="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/" target="_blank" class="quick-link-item"><span>🔍</span> 谷歌知识体系</a>
-            <a href="../全域流量与电商运营词典.html" target="_blank" class="quick-link-item"><span>✍️</span> 全域流量与电商运营词典</a>
-        </footer>
-    </div>
-
-    <!-- ================= 全局搜索浮层 ================= -->
-    <div class="global-modal-overlay" id="globalSearchModal">
-        <div class="global-modal-content">
-            <div class="global-modal-header">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" id="globalSearchInput" placeholder="全站检索 (知识库 / 谷歌运营 / 全域流量词典)..." autocomplete="off">
-                <button class="close-btn" id="closeGlobalSearchBtn">ESC</button>
-            </div>
-            <ul class="global-results" id="globalSearchResults"></ul>
-        </div>
-    </div>
-
-    <!-- 双引擎搜索核心逻辑 (搭载 Pagefind) -->
-    <script>
-        // ================= 引擎 A：局部直搜 (服务于正文中央输入框) =================
-        const localDB = [
-            { title: "企业体系与工厂资质", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-1-1-1" },
-            { title: "强制物理安全认证", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-2-1-2" },
-            { title: "区域清关壁垒与质检", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-3-1-1" },
-            { title: "零售包装与环保标识", category: "01 准入合规", url: "data/compliance/compliance_all.html#node-4-1-1" },
-            
-            { title: "国际贸易术语", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-1-1-1" },
-            { title: "海关申报与关税", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-2-1-1" },
-            { title: "退税报关与单证", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-3-1-1" },
-            { title: "敏感货与海外仓", category: "02 物流通关", url: "data/logistics/logistics_all.html#node-4-1-1" },
-
-            { title: "国际站收款矩阵", category: "03 资金财税", url: "data/finance/finance_all.html#node-1-1-1" },
-            { title: "大宗贸易及独立站通道", category: "03 资金财税", url: "data/finance/finance_all.html#node-2-1-1" },
-            { title: "资金防冻、反洗钱风控", category: "03 资金财税", url: "data/finance/finance_all.html#node-3-1-1" },
-            { title: "流转税与企业税务筹划", category: "03 资金财税", url: "data/finance/finance_all.html#node-4-1-1" },
-
-            { title: "亚马逊域内防卫生态", category: "04 知产维权", url: "data/ip/ip_all.html#node-1-1-1" },
-            { title: "恶意投诉与平台内部仲裁", category: "04 知产维权", url: "data/ip/ip_all.html#node-2-1-1" },
-            { title: "联邦法院 TRO 与资金冻结", category: "04 知产维权", url: "data/ip/ip_all.html#node-3-1-1" },
-            { title: "宏观跨国确权与前端合规", category: "04 知产维权", url: "data/ip/ip_all.html#node-4-1-1" },
-
-            { title: "B2B 平台规则与大宗契约", category: "05 平台契约", url: "data/platform/governance_all.html#node-1-1-1" },
-            { title: "B2C 零售平台风控与治理", category: "05 平台契约", url: "data/platform/governance_all.html#node-2-1-1" },
-            { title: "全球广告营销合规与审查", category: "05 平台契约", url: "data/platform/governance_all.html#node-3-1-1" },
-            { title: "地缘政治与出口管制壁垒", category: "05 平台契约", url: "data/platform/governance_all.html#node-4-1-1" }
-        ];
-
-        const localInput = document.getElementById('localSearchInput');
-        const localDropdown = document.getElementById('localSearchDropdown');
-
-        if(localInput) {
-            localInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                localDropdown.innerHTML = ''; 
-                if (query === '') { localDropdown.style.display = 'none'; return; }
-
-                const results = localDB.filter(item => 
-                    item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
-                );
-
-                if (results.length > 0) {
-                    localDropdown.style.display = 'block';
-                    results.forEach(item => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span class="res-title">${item.title}</span><span class="res-category">${item.category}</span>`;
-                        li.addEventListener('click', () => window.open(item.url, '_blank'));
-                        localDropdown.appendChild(li);
-                    });
-                } else {
-                    localDropdown.style.display = 'block';
-                    localDropdown.innerHTML = `<li class="res-empty">未在当前大纲找到 "${query}" ...</li>`;
-                }
-            });
-            document.addEventListener('click', (e) => {
-                if (e.target !== localInput && e.target !== localDropdown) localDropdown.style.display = 'none';
-            });
-        }
-
-        // ================= 引擎 B：Pagefind 全网检索 (服务于 ⌘K) =================
-        const globalModal = document.getElementById('globalSearchModal');
-        const openGlobalBtn = document.getElementById('openGlobalSearchBtn');
-        const closeGlobalBtn = document.getElementById('closeGlobalSearchBtn');
-        const globalInput = document.getElementById('globalSearchInput');
-        const globalResultsList = document.getElementById('globalSearchResults');
-        
-        let pagefindInstance = null;
-
-        // 初始化加载 Pagefind (路径向上跳一层，指向大根目录)
-        async function initPagefind() {
-            if (!pagefindInstance) {
-                try {
-                    // 使用绝对路径模式增强 GitHub Pages 的兼容性
-                    pagefindInstance = await import('../_pagefind/pagefind.js');
-                    await pagefindInstance.init();
-                    console.log("Pagefind 引擎加载成功！");
-                } catch (error) {
-                    console.error("Pagefind 加载失败，请检查 .nojekyll 文件是否配置正确:", error);
-                    globalResultsList.innerHTML = '<li class="res-empty" style="color:red;">索引库加载失败，请联系管理员。</li>';
-                }
-            }
-        }
-
-        const openGlobalSearch = async () => {
-            if(globalModal) {
-                globalModal.style.display = 'flex';
-                globalInput.value = '';
-                globalResultsList.innerHTML = '<li class="res-empty">加载全站数据库中，请输入关键词...</li>';
-                setTimeout(() => globalInput.focus(), 100);
-                await initPagefind();
-            }
-        };
-
-        const closeGlobalSearch = () => { if(globalModal) globalModal.style.display = 'none'; };
-
-        if(openGlobalBtn) openGlobalBtn.addEventListener('click', openGlobalSearch);
-        if(closeGlobalBtn) closeGlobalBtn.addEventListener('click', closeGlobalSearch);
-        if(globalModal) globalModal.addEventListener('click', (e) => { if(e.target === globalModal) closeGlobalSearch(); });
-
-        document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); }
-            if (e.key === 'Escape') closeGlobalSearch();
-        });
-
-        if(globalInput) {
-            globalInput.addEventListener('input', async function() {
-                const query = this.value.trim();
-                if (query === '') {
-                    globalResultsList.innerHTML = '<li class="res-empty">请输入关键词...</li>';
-                    return;
-                }
-
-                if (!pagefindInstance) return;
-
-                globalResultsList.innerHTML = '<li class="res-empty" style="color:#2563EB;">全站检索中...</li>';
-
-                const search = await pagefindInstance.search(query);
-                
-                if (search.results.length === 0) {
-                    globalResultsList.innerHTML = `<li class="res-empty">全站未找到与 "${query}" 相关的正文。</li>`;
-                    return;
-                }
-
-                globalResultsList.innerHTML = ''; 
-                const topResults = search.results.slice(0, 10);
-                
-                for (const result of topResults) {
-                    const data = await result.data();
-                    const li = document.createElement('li');
-                    
-                    li.innerHTML = `
-                        <span class="res-title" style="color: #111;">${data.meta.title || '关联页面'}</span>
-                        <span class="res-category" style="margin-top:8px; line-height: 1.5; color: #555;">${data.excerpt}</span>
-                    `;
-                    li.addEventListener('click', () => {
-                        window.open(data.url, '_blank');
-                        closeGlobalSearch();
-                    });
-                    globalResultsList.appendChild(li);
-                }
-            });
-        }
-    </script>
-  
+    <h1>🧠 我的工具导航</h1>
+    <p style="color:#475569;">点击下方链接查看对应内容：</p>
+    <ul>
+        <li><a href="AI_Visibility.html" target="_blank">
+            📖 AI可见度 · 完整知识手册
+            <small>AI可见度的定义、逻辑、优化方向及运营SOP</small>
+        </a></li>
+         <li><a href="guide-ops.html" target="_blank">
+        🚀 出海运营知识体系
+        <small>出海运营的完整知识框架与实战指南</small>
+        </a></li>
+                <li><a href="全域流量与电商运营词典.html" target="_blank">
+            ✍️ 全域流量与电商运营词典
+            <small>强化记忆运营核心术语与概念，挖空练习辅助记忆</small>
+        </a></li>
+        <li><a href="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/" target="_blank">
+    🔍 谷歌知识体系
+    <small>包含11个Tab的谷歌核心知识完整框架</small>
+</a></li>
+        <li><a href="global-trade-wiki/index.html" target="_blank">
+        🌍 全球贸易合规与履约知识库
+        <small>涵盖市场准入、物流清关、资金财税、知产维权与平台契约的五大维度全景百科</small>
+    </a></li>
+        <!-- 以后新增页面，在这里添加新的 <li> 链接即可 -->
+    </ul>
+    <p style="margin-top:40px; color:#94a3b8; font-size:0.85rem;">📂 持续更新中...</p>
 </body>
 </html>
