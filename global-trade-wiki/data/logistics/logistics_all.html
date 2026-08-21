@@ -167,8 +167,59 @@
         </aside>
 
         <main class="content-area">
+            <!-- 🏠 全局返回面包屑导航 -->
+            <a href="../../index.html" style="display: inline-block; font-size: 14px; color: #00A080; text-decoration: none; font-weight: 600; margin-bottom: 20px; background-color: #E6F8F3; padding: 8px 16px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 160, 128, 0.1);">⬅️ 返回 GLOBAL TRADE WIKI 首页</a>
             <h1 style="font-size: 36px; margin-bottom: 60px; color: #111;">维度二：物流清关与履约模式合规矩阵</h1>
+<!-- 🌟 全局横向维度导航 (Tabs) -->
+<nav class="global-tabs-nav">
+    <a href="../compliance/compliance_all.html" class="tab-item">维度一：市场准入与合规</a>
+    <a href="../logistics/logistics_all.html" class="tab-item active">维度二：国际物流与履约</a>
+    <a href="../finance/finance_all.html" class="tab-item">维度三：跨境财税与资金</a>
+    <a href="../ip/ip_all.html" class="tab-item">维度四：知识产权与品牌</a>
+    <a href="../platform/platform_all.html" class="tab-item">维度五：平台治理与契约</a>
+</nav>
 
+<style>
+/* 标签栏容器：支持手机端横向自由滑动 */
+.global-tabs-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 48px;
+    padding-bottom: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+/* 隐藏原生滚动条，保持精致感 */
+.global-tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+/* 默认未选中标签样式 */
+.global-tabs-nav .tab-item {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #F4F6F8;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+.global-tabs-nav .tab-item:hover {
+    background-color: #EBF8F5;
+    color: #00A080;
+    transform: translateY(-1px);
+}
+/* 当前所在维度的“高亮选中”样式 */
+.global-tabs-nav .tab-item.active {
+    background-color: #E6F8F3;
+    color: #00A080;
+    border-color: #00A080;
+    box-shadow: 0 2px 8px rgba(0, 160, 128, 0.15);
+}
+</style>
             <section id="node-1-1-1" class="node-section">
                 <div class="tags-container">
                     <span class="wiki-tag">国际贸易术语</span>
