@@ -1942,62 +1942,39 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 }
             });
         });
-<!-- 终极版：全屏双向自动高亮与定位脚本 (无需配置) -->
+<!-- 极简原生安全高亮脚本 -->
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const keyword = params.get('mark');
-            if (!keyword) return;
-
-            // 1. 定义极其醒目的荧光笔样式（亮黄底色+黑字）
-            const highlightStyle = 'background-color: #FFD700; color: #111; font-weight: bold; border-radius: 4px; padding: 2px 4px; box-shadow: 0 0 8px rgba(255,215,0,0.6);';
-            const regex = new RegExp(`(${keyword})`, 'gi');
-
-            // 2. 全屏无差别扫描并贴上高亮标签
-            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            const nodesToWrap = [];
-            let node;
-
-            while ((node = walker.nextNode())) {
-                if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentElement.tagName)) continue;
-                if (node.nodeValue.toLowerCase().includes(keyword.toLowerCase())) {
-                    nodesToWrap.push(node);
-                }
-            }
-
-            nodesToWrap.forEach(textNode => {
-                const tempDiv = document.createElement('div');
-                const safeText = textNode.nodeValue.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                tempDiv.innerHTML = safeText.replace(regex, `<mark class="auto-highlight" style="${highlightStyle}">$1</mark>`);
-                while (tempDiv.firstChild) {
-                    textNode.parentNode.insertBefore(tempDiv.firstChild, textNode);
-                }
-                textNode.parentNode.removeChild(textNode);
-            });
-
-            // 3. 智能判断左右两侧，并各自独立滚动
+        window.addEventListener('load', () => {
+            // 延迟 0.5 秒执行，确保你的网页完全加载出来
             setTimeout(() => {
-                const marks = document.querySelectorAll('mark.auto-highlight');
-                if (marks.length > 0) {
-                    let leftTarget = null;
-                    let rightTarget = null;
+                const params = new URLSearchParams(window.location.search);
+                const keyword = params.get('mark');
+                if (!keyword) return;
 
-                    // 根据屏幕坐标自动判断它是左边栏还是右边正文
-                    marks.forEach(m => {
-                        const rect = m.getBoundingClientRect();
-                        if (rect.left < 350 && !leftTarget) leftTarget = m; // 靠左的元素
-                        if (rect.left >= 350 && !rightTarget) rightTarget = m; // 靠右的元素
-                    });
+                // 1. 临时开启原生渲染模式，绝对不会破坏你的 HTML 结构
+                document.designMode = "on";
+                const sel = window.getSelection();
+                sel.collapse(document.body, 0); // 从网页最顶部开始找
 
-                    // 左右两边互不干扰，同步丝滑滚动
-                    if (leftTarget) leftTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    if (rightTarget) {
-                        setTimeout(() => {
-                            rightTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }, 150); // 错开 0.15 秒滚动，防止浏览器打架
-                    }
+                let found = false;
+                // 2. 把全屏找到的词，全部涂上亮黄色背景
+                while (window.find(keyword)) {
+                    document.execCommand("HiliteColor", false, "#FFD700");
+                    found = true;
                 }
-            }, 300);
+                document.designMode = "off";
+
+                // 3. 解决左右滚动联动：让浏览器连续找两次
+                if (found) {
+                    sel.collapse(document.body, 0); // 重新回到顶部
+                    window.find(keyword); // 第一次找：拉动左侧边栏滚轮
+                    
+                    setTimeout(() => {
+                        window.find(keyword); // 错开 0.2 秒后第二次找：拉动右侧正文滚轮
+                        sel.removeAllRanges(); // 完事后把难看的蓝色选中框去掉，只留黄底色
+                    }, 200);
+                }
+            }, 500); 
         });
     </script>
 </body>
