@@ -963,36 +963,68 @@
             });
         });
     </script>
- <!-- 极简原生安全高亮脚本 -->
-    <script>
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const params = new URLSearchParams(window.location.search);
-                const keyword = params.get('mark');
-                if (!keyword) return;
+<!-- 完美结构化双向联动高亮脚本 -->
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const params = new URLSearchParams(window.location.search);
+            const keyword = params.get('mark');
+            if (!keyword) return;
 
-                document.designMode = "on";
-                const sel = window.getSelection();
-                sel.collapse(document.body, 0);
-
-                let found = false;
-                while (window.find(keyword)) {
-                    document.execCommand("HiliteColor", false, "#FFD700");
-                    found = true;
+            // 1. 安全高亮扫描：纯 DOM 操作，绝对不破坏 HTML 结构
+            function highlightSafe(node) {
+                if (node.nodeType === 3) { // 纯文本节点
+                    const val = node.nodeValue;
+                    const idx = val.toLowerCase().indexOf(keyword.toLowerCase());
+                    if (idx >= 0) {
+                        const span = document.createElement('span');
+                        span.style.cssText = 'background-color: #FFD700; color: #111; font-weight: bold; padding: 0 2px; border-radius: 2px;';
+                        span.className = 'hit-word';
+                        span.appendChild(document.createTextNode(val.substring(idx, idx + keyword.length)));
+                        
+                        const afterNode = document.createTextNode(val.substring(idx + keyword.length));
+                        const parent = node.parentNode;
+                        
+                        parent.insertBefore(document.createTextNode(val.substring(0, idx)), node);
+                        parent.insertBefore(span, node);
+                        parent.insertBefore(afterNode, node);
+                        parent.removeChild(node);
+                        
+                        // 递归检查后半段，保证同一行里出现两次的词都能亮
+                        highlightSafe(afterNode);
+                    }
+                } else if (node.nodeType === 1 && !['SCRIPT', 'STYLE'].includes(node.nodeName)) {
+                    // 转为固定数组遍历，避免死循环
+                    Array.from(node.childNodes).forEach(child => highlightSafe(child));
                 }
-                document.designMode = "off";
+            }
 
-                if (found) {
-                    sel.collapse(document.body, 0); 
-                    window.find(keyword); 
-                    
-                    setTimeout(() => {
-                        window.find(keyword); 
-                        sel.removeAllRanges(); 
-                    }, 200);
+            // 2. 仅在右侧正文区精准寻找，完全无视左侧
+            const contentArea = document.querySelector('.content-area');
+            if (contentArea) highlightSafe(contentArea);
+
+            // 3. 执行真正的“结构化联动”
+            const firstHit = document.querySelector('.hit-word');
+            if (firstHit) {
+                // 右侧：滚动到关键词位置
+                firstHit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // 核心：向上级寻找它属于哪个板块 (提取如 node-1-3-1 的 ID)
+                const parentSection = firstHit.closest('.node-section');
+                if (parentSection && parentSection.id) {
+                    // 根据右侧的 ID，去左侧目录里精准遥控对应的链接
+                    const targetLink = document.querySelector(`.sidebar-toc a[href="#${parentSection.id}"]`);
+                    if (targetLink) {
+                        // 给左侧对应的目录加上常亮状态，并滚动到视野中间
+                        targetLink.style.backgroundColor = '#E6F8F3';
+                        targetLink.style.color = '#00A080';
+                        targetLink.style.fontWeight = 'bold';
+                        targetLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
                 }
-            }, 500); 
-        });
-    </script>
+            }
+        }, 300); 
+    });
+</script>
 </body>
 </html>
