@@ -1942,21 +1942,62 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 }
             });
         });
-    </script>
-    <!-- 搜索词自动高亮与定位脚本 -->
+<!-- 终极版：全屏双向自动高亮与定位脚本 (无需配置) -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            // 1. 检查网址里有没有夹带 "mark" 参数
             const params = new URLSearchParams(window.location.search);
             const keyword = params.get('mark');
-            
-            // 2. 如果有，就执行自动查找
-            if (keyword) {
-                setTimeout(() => {
-                    // 调用浏览器原生的 Ctrl+F 查找功能，自动滚动并选中
-                    window.find(keyword);
-                }, 150); // 稍微延迟 0.15 秒，确保文字都已经加载完
+            if (!keyword) return;
+
+            // 1. 定义极其醒目的荧光笔样式（亮黄底色+黑字）
+            const highlightStyle = 'background-color: #FFD700; color: #111; font-weight: bold; border-radius: 4px; padding: 2px 4px; box-shadow: 0 0 8px rgba(255,215,0,0.6);';
+            const regex = new RegExp(`(${keyword})`, 'gi');
+
+            // 2. 全屏无差别扫描并贴上高亮标签
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            const nodesToWrap = [];
+            let node;
+
+            while ((node = walker.nextNode())) {
+                if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentElement.tagName)) continue;
+                if (node.nodeValue.toLowerCase().includes(keyword.toLowerCase())) {
+                    nodesToWrap.push(node);
+                }
             }
+
+            nodesToWrap.forEach(textNode => {
+                const tempDiv = document.createElement('div');
+                const safeText = textNode.nodeValue.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                tempDiv.innerHTML = safeText.replace(regex, `<mark class="auto-highlight" style="${highlightStyle}">$1</mark>`);
+                while (tempDiv.firstChild) {
+                    textNode.parentNode.insertBefore(tempDiv.firstChild, textNode);
+                }
+                textNode.parentNode.removeChild(textNode);
+            });
+
+            // 3. 智能判断左右两侧，并各自独立滚动
+            setTimeout(() => {
+                const marks = document.querySelectorAll('mark.auto-highlight');
+                if (marks.length > 0) {
+                    let leftTarget = null;
+                    let rightTarget = null;
+
+                    // 根据屏幕坐标自动判断它是左边栏还是右边正文
+                    marks.forEach(m => {
+                        const rect = m.getBoundingClientRect();
+                        if (rect.left < 350 && !leftTarget) leftTarget = m; // 靠左的元素
+                        if (rect.left >= 350 && !rightTarget) rightTarget = m; // 靠右的元素
+                    });
+
+                    // 左右两边互不干扰，同步丝滑滚动
+                    if (leftTarget) leftTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if (rightTarget) {
+                        setTimeout(() => {
+                            rightTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 150); // 错开 0.15 秒滚动，防止浏览器打架
+                    }
+                }
+            }, 300);
         });
     </script>
 </body>
