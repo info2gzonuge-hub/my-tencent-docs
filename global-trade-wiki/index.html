@@ -298,7 +298,10 @@
                             <span class="res-title" style="color: #2563EB;">${data.meta?.title || '相关知识'}</span>
                             <span class="res-category" style="margin-top:4px; line-height: 1.4; color: #555;">${data.excerpt || ''}</span>
                         `;
-                        li.addEventListener('click', () => window.open(data.url, '_blank'));
+                        li.addEventListener('click', () => {
+    const markParam = encodeURIComponent(query); // 给搜索词进行 URL 安全转码
+    window.open(`${data.url}?mark=${markParam}`, '_blank'); // 把词拼在网址尾巴上带过去
+});
                         localDropdown.appendChild(li);
                     });
                 } catch (error) {
@@ -369,7 +372,7 @@
                             <span class="res-title" style="color: #111;">${data.meta?.title || '关联页面'}</span>
                             <span class="res-category" style="margin-top:8px; line-height: 1.5; color: #555;">${data.excerpt || ''}</span>
                         `;
-                        li.addEventListener('click', () => { window.open(data.url, '_blank'); closeGlobalSearch(); });
+                        li.addEventListener('click', () => {const markParam = encodeURIComponent(query);window.open(`${data.url}?mark=${markParam}`, '_blank');closeGlobalSearch();});
                         globalResultsList.appendChild(li);
                     }
                 } catch (error) {
