@@ -676,5 +676,21 @@
             });
         });
     </script>
+    <!-- 搜索词自动高亮与定位脚本 -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // 1. 检查网址里有没有夹带 "mark" 参数
+            const params = new URLSearchParams(window.location.search);
+            const keyword = params.get('mark');
+            
+            // 2. 如果有，就执行自动查找
+            if (keyword) {
+                setTimeout(() => {
+                    // 调用浏览器原生的 Ctrl+F 查找功能，自动滚动并选中
+                    window.find(keyword);
+                }, 150); // 稍微延迟 0.15 秒，确保文字都已经加载完
+            }
+        });
+    </script>
 </body>
 </html>
