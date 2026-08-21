@@ -201,11 +201,11 @@
         async function initPagefind() {
             if (!pagefindInstance) {
                 try {
-                    pagefindInstance = await import('../_pagefind/pagefind.js');
+                    pagefindInstance = await import('../pagefind/pagefind.js');
                     await pagefindInstance.init();
                     console.log('Pagefind 引擎加载成功！');
                 } catch (error) {
-                    console.error('Pagefind 加载失败，请检查 _pagefind 路径:', error);
+                    console.error('Pagefind 加载失败，请检查 pagefind 路径:', error);
                     const globalResultsList = document.getElementById('globalSearchResults');
                     if (globalResultsList) {
                         globalResultsList.innerHTML = '<li class="res-empty" style="color:red;">索引库加载失败，请联系管理员。</li>';
