@@ -1822,7 +1822,30 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
 
                 <section class="wiki-section">
                     <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text"><strong>Triman 标志：</strong> 法国强制环保统一回收标识（一个小人带三个箭头的图案），必须印制在产品外包装上，告知消费者这是可回收包装。<strong>WEEE 标志：</strong> 即带叉的带轮垃圾桶，欧盟强制要求所有废旧电子电气产品本体上必须印制此图标，严禁当做生活垃圾丢弃。</p>
+                    
+                    <div class="def-content-split" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+                        <div class="def-text" style="flex: 1; min-width: 280px;">
+                            <p class="wiki-text"><strong>Triman 标志：</strong> 法国强制环保统一回收标识（一个小人带三个箭头的图案），必须印制在产品外包装上，告知消费者这是可回收包装。</p>
+                            <p class="wiki-text" style="margin-top: 12px;"><strong>WEEE 标志：</strong> 即带叉的带轮垃圾桶，欧盟强制要求所有废旧电子电气产品本体上必须印制此图标，严禁当做生活垃圾丢弃。</p>
+                        </div>
+                        
+                        <!-- 右侧徽章区：直接调用云端官方原图，零下载，零维护 -->
+                        <div class="def-badges" style="display: flex; gap: 16px; flex-shrink: 0; background-color: #fff; padding: 16px 20px; border-radius: 8px; border: 1px dashed #C9DCEB; box-shadow: 0 4px 12px rgba(162, 185, 205, 0.15);">
+                            
+                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <!-- Triman 官方云端链接 -->
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Triman_logo.svg" alt="Triman" style="width: 48px; height: 48px; object-fit: contain;">
+                                <span style="font-size: 12px; color: #888; font-weight: 700;">Triman</span>
+                            </div>
+                            
+                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <!-- WEEE (带底线版) 官方云端链接 -->
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/WEEE_symbol_indicator.svg" alt="WEEE" style="width: 48px; height: 48px; object-fit: contain;">
+                                <span style="font-size: 12px; color: #888; font-weight: 700;">WEEE</span>
+                            </div>
+
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
