@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -47,22 +46,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
 .alert-box p { margin: 0; font-size: 15px; line-height: 1.7; }
 .alert-box strong { color: #E53E3E; display: block; margin-bottom: 6px; font-size: 15px; }
 
-/* 🌟 多巴胺卡片 1：专业释义专属 (浅蓝灰 + 加深边框 + 悬浮动效) */
-.def-card { background-color: #F4F8FB; border: 1px solid #C9DCEB; padding: 20px 24px; border-radius: 12px; }
+/* 🌟 多巴胺卡片 1：专业释义专属 (通过缩减 padding 防止撑高) */
+.def-card { background-color: #F4F8FB; border: 1px solid #C9DCEB; padding: 16px 24px; border-radius: 12px; }
 .def-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(162, 185, 205, 0.25); background-color: #EDF4FA; }
 
-/* 🌟 多巴胺卡片 2：大白话专属 (浅暖橙 + 加深边框 + 悬浮动效) */
+/* 🌟 多巴胺卡片 2：大白话专属 */
 .plain-card { background-color: #FFF8F0; border: 1px solid #EEDAC5; padding: 20px 24px; border-radius: 12px; }
 .plain-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(230, 200, 160, 0.25); background-color: #FFF3E0; }
 
-/* 🌟 多巴胺卡片 3：实操 SOP 专属 (质感浅灰 + 加深边框 + 悬浮动效) */
+/* 🌟 多巴胺卡片 3：实操 SOP 专属 */
 .sop-card { background-color: #F8F9FA; border: 1px solid #DDE2E5; padding: 20px 24px; border-radius: 12px; }
 .sop-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(200, 205, 210, 0.25); background-color: #F1F3F5; }
 .sop-card .sop-list { margin: 0; padding-left: 20px; }
 .sop-card .sop-list li { font-size: 15px; line-height: 1.7; color: #333; margin-bottom: 8px; }
 .sop-card .sop-list li::marker { color: #00A080; }
 
-/* 移动端设备精准适配 (针对 iPad 10 & iPhone 14 Pro Max 优化) */
+/* 移动端设备精准适配 */
 @media (max-width: 820px) {
     .mega-container { flex-direction: column; padding-top: 20px; }
     .sidebar-toc { display: none; }
@@ -249,24 +248,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
 
                 <div class="wiki-divider"></div>
 
-              <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    
-                    <div class="def-content-split" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-                        <!-- 左侧文字区 -->
-                        <div class="def-text" style="flex: 1; min-width: 200px;">
+                <section class="wiki-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
                             <p class="wiki-text">由国际标准化组织 (ISO) 制定的企业质量管理规范。</p>
                         </div>
-                        
-                        <!-- 右侧徽章区：压缩了 padding 留白，防止撑破卡片 -->
-                        <div class="def-badges" style="display: flex; gap: 16px; flex-shrink: 0; background-color: #fff; padding: 10px 16px; border-radius: 8px; border: 1px dashed #C9DCEB; box-shadow: 0 4px 12px rgba(162, 185, 205, 0.15);">
-                            
-                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
-                                <!-- 破除正方形限制：调高 height，让 width 自动适应长宽比 -->
-                                <img src="../../assets/icons/ISO-9001.png" alt="ISO 9001" style="height: 64px; width: auto; max-width: 140px; object-fit: contain;">
-                                <span style="font-size: 12px; color: #888; font-weight: 700;">ISO 9001</span>
-                            </div>
-
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/iso9001.png" alt="ISO 9001" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
                         </div>
                     </div>
                 </section>
@@ -318,30 +307,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
 
                 <div class="wiki-divider"></div>
 
-                              <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    
-                    <div class="def-content-split" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-                        <div class="def-text" style="flex: 1; min-width: 280px;">
+                <section class="wiki-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
                             <p class="wiki-text"><strong> ISO 14001 (环境管理体系)：</strong> 针对组织活动、产品或服务中的环境因素进行控制的国际标准，旨在减少污染排放、节约资源并确保符合属地环保法规。</p>
                             <p class="wiki-text" style="margin-top: 12px;"><strong>ISO 22716 (化妆品良好生产规范 GMP)：</strong> 为化妆品生产、控制、储存和发货提供系统性指导。</p>
                         </div>
-                        
-                        <!-- 右侧徽章区：完美的本地相对路径调用 -->
-                        <div class="def-badges" style="display: flex; gap: 16px; flex-shrink: 0; background-color: #fff; padding: 16px 20px; border-radius: 8px; border: 1px dashed #C9DCEB; box-shadow: 0 4px 12px rgba(162, 185, 205, 0.15);">
-                            
-                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <!-- 调用 assets/icons/iso14001.png -->
-                                <img src="../../assets/icons/iso14001.png" alt="ISO 14001" style="width: 48px; height: 48px; object-fit: contain;">
-                                <span style="font-size: 12px; color: #888; font-weight: 700;">ISO 14001</span>
-                            </div>
-                            
-                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <!-- 调用 assets/icons/22716.png -->
-                                <img src="../../assets/icons/22716.png" alt="ISO 22716" style="width: 48px; height: 48px; object-fit: contain;">
-                                <span style="font-size: 12px; color: #888; font-weight: 700;">ISO 22716</span>
-                            </div>
-
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/iso14001.png" alt="ISO 14001" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                            <img src="../../assets/icons/iso22716.png" alt="ISO 22716" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
                         </div>
                     </div>
                 </section>
@@ -392,8 +367,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">BSCI 是由欧洲对外贸易协会 (FTA) 发起的一套商业社会责任合规监控系统。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">BSCI 是由欧洲对外贸易协会 (FTA) 发起的一套商业社会责任合规监控系统。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/bsci.png" alt="BSCI" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -443,8 +425,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">Sedex (供应商商业道德数据交换) 是一个非营利性会员组织平台。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">Sedex (供应商商业道德数据交换) 是一个非营利性会员组织平台。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/sedex.png" alt="Sedex" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -494,8 +483,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">Halal 认证是指符合伊斯兰教法规定的产品认证。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">Halal 认证是指符合伊斯兰教法规定的产品认证。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/halal.png" alt="Halal" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -545,8 +541,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">Kosher 认证是指符合犹太教饮食法规（Kashrut）的产品认证。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">Kosher 认证是指符合犹太教饮食法规（Kashrut）的产品认证。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/kosher.png" alt="Kosher" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -595,8 +598,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">《企业可持续发展尽职调查指令》(CSDDD) 是欧盟出台的强制性法规。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">《企业可持续发展尽职调查指令》(CSDDD) 是欧盟出台的强制性法规。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/csddd.png" alt="CSDDD" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -645,8 +655,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">CBAM 是欧盟针对特定高碳排放进口产品（现阶段重点涵盖钢铁、铝、水泥、化肥、电力和氢）征收的碳关税调节机制。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">CBAM 是欧盟针对特定高碳排放进口产品（现阶段重点涵盖钢铁、铝、水泥、化肥、电力和氢）征收的碳关税调节机制。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/cbam.png" alt="CBAM" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -695,8 +712,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">SDS (现行统一称呼) 是化学品生产或销售企业按法律要求向客户提供的综合性技术文件。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">SDS (现行统一称呼) 是化学品生产或销售企业按法律要求向客户提供的综合性技术文件。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/sds.png" alt="MSDS" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -745,8 +769,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">FDA 负责监管进入美国市场的受控商品。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">FDA 负责监管进入美国市场的受控商品。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/fda.png" alt="FDA" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -795,8 +826,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">欧盟强制实行的化学品监管体系，旨在保护人类健康和环境。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">欧盟强制实行的化学品监管体系，旨在保护人类健康和环境。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/reach.png" alt="REACH" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -845,8 +883,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">针对牙齿美白仪、美白凝胶、强效祛斑霜等高敏垂直品类，国际监管（如欧盟化妆品法规）对其核心功效成分设定了严格的法定安全阈值（例如：家用牙齿美白产品中过氧化氢浓度不得超过 0.1% 或受控于专业医师指导）。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">针对牙齿美白仪、美白凝胶、强效祛斑霜等高敏垂直品类，国际监管（如欧盟化妆品法规）对其核心功效成分设定了严格的法定安全阈值（例如：家用牙齿美白产品中过氧化氢浓度不得超过 0.1% 或受控于专业医师指导）。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/coa.png" alt="COA" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -895,9 +940,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">CE 标志是欧盟市场的一项强制性安全认证标志。</p>
-                    <p class="wiki-text">注意：CE 侧重于<strong>基础安全要求</strong>，而非质量合格标准。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">CE 标志是欧盟市场的一项强制性安全认证标志。</p>
+                            <p class="wiki-text">注意：CE 侧重于<strong>基础安全要求</strong>，而非质量合格标准。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/ce.png" alt="CE" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -948,8 +1000,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">强制限制电子电气产品及其周边（如塑胶外壳、焊锡、PCB板）中含有铅 (Pb)、汞 (Hg)、镉 (Cd)、六价铬 (Cr6+) 以及多溴联苯等 10 种有毒有害物质的比例。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">强制限制电子电气产品及其周边（如塑胶外壳、焊锡、PCB板）中含有铅 (Pb)、汞 (Hg)、镉 (Cd)、六价铬 (Cr6+) 以及多溴联苯等 10 种有毒有害物质的比例。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/rohs.png" alt="RoHS" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -998,8 +1057,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">这是德国基于《设备及产品安全法》推出的自愿性安全认证标志，要求产品不仅要通过实验室苛刻的安全测试，还强制要求认证机构每年对生产工厂进行复审验厂。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">这是德国基于《设备及产品安全法》推出的自愿性安全认证标志，要求产品不仅要通过实验室苛刻的安全测试，还强制要求认证机构每年对生产工厂进行复审验厂。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/gs.png" alt="GS" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1048,8 +1114,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">作为全球最具声誉的独立测试实验室之一，VDE 的测试范围偏向于电器内部的核心元器件。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">作为全球最具声誉的独立测试实验室之一，VDE 的测试范围偏向于电器内部的核心元器件。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/vde.png" alt="VDE" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1098,8 +1171,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">FCC 是美国联邦通信委员会对进入美国市场的电子电器产品实施的强制性认证。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">FCC 是美国联邦通信委员会对进入美国市场的电子电器产品实施的强制性认证。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/fcc.png" alt="FCC" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1148,8 +1228,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">虽然在联邦法律层面 UL 是“自愿性”认证，但在商业流通领域它是绝对的“硬通行证”。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">虽然在联邦法律层面 UL 是“自愿性”认证，但在商业流通领域它是绝对的“硬通行证”。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/ul.png" alt="UL" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1198,8 +1285,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">CSA 是加拿大最大的安全认证机构，也是加拿大标准的主要制定者。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">CSA 是加拿大最大的安全认证机构，也是加拿大标准的主要制定者。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/csa.png" alt="CSA" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1248,8 +1342,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">CCC (3C认证) 是中国政府为保护消费者人身安全和国家安全依法实施的强制性产品合格评定制度。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">CCC (3C认证) 是中国政府为保护消费者人身安全和国家安全依法实施的强制性产品合格评定制度。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/ccc.png" alt="CCC" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1300,8 +1401,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">根据日本《电气用品安全法》(DENAN) 规定，受控电子电气产品进入日本必须取得 PSE 认证。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">根据日本《电气用品安全法》(DENAN) 规定，受控电子电气产品进入日本必须取得 PSE 认证。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/pse.png" alt="PSE" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1352,8 +1460,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">韩国政府将过去 13 种法定强制标志统一为“KC”标志。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">韩国政府将过去 13 种法定强制标志统一为“KC”标志。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/kc.png" alt="KC" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1404,8 +1519,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">销往澳大利亚和新西兰的电器产品必须满足当地标准。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">销往澳大利亚和新西兰的电器产品必须满足当地标准。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/saa.png" alt="SAA" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1456,8 +1578,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">巴西的国家级强制认证体系。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">巴西的国家级强制认证体系。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/inmetro.png" alt="INMETRO" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1508,8 +1637,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">CB 体系（电工产品合格测试与认证的国际体系）是 IECEE 建立的国际化互认平台。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">CB 体系（电工产品合格测试与认证的国际体系）是 IECEE 建立的国际化互认平台。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/cb.png" alt="CB" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1560,8 +1696,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">SASO 是沙特标准局。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">SASO 是沙特标准局。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/saso.png" alt="SASO" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1612,8 +1755,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 <div class="wiki-divider"></div>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">为防止劣质商品流入，尼日利亚要求管制产品必须取得产品证书 (PC)，并在每次出货开船前，由第三方机构派遣人员到中国工厂现场进行验货，合格后颁发 SONCAP 清关证书 (SC)。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">为防止劣质商品流入，尼日利亚要求管制产品必须取得产品证书 (PC)，并在每次出货开船前，由第三方机构派遣人员到中国工厂现场进行验货，合格后颁发 SONCAP 清关证书 (SC)。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/soncap.png" alt="SONCAP" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1640,8 +1790,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 </section>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">EAC 认证是欧亚经济联盟（涵盖俄罗斯、白俄罗斯、哈萨克斯坦等国）统一的国家标准合格证书，全面替代了过去的俄罗斯旧版 GOST 证书。证明产品符合联盟内的安全、电磁兼容及卫生健康标准。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">EAC 认证是欧亚经济联盟（涵盖俄罗斯、白俄罗斯、哈萨克斯坦等国）统一的国家标准合格证书，全面替代了过去的俄罗斯旧版 GOST 证书。证明产品符合联盟内的安全、电磁兼容及卫生健康标准。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/eac.png" alt="EAC" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1684,8 +1841,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 </section>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">SGS（瑞士通用公证行）是全球领先的检验、测试机构。在 B2B 大宗贸易中，买卖双方互不信任时，往往在合同或信用证 L/C 中约定：出货前必须由 SGS 验货员去工厂现场开箱抽查，出具 PSI (装船前检验报告)。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">SGS（瑞士通用公证行）是全球领先的检验、测试机构。在 B2B 大宗贸易中，买卖双方互不信任时，往往在合同或信用证 L/C 中约定：出货前必须由 SGS 验货员去工厂现场开箱抽查，出具 PSI (装船前检验报告)。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/sgs.png" alt="SGS" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1728,8 +1892,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 </section>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">TÜV（德国莱茵/南德）与 Intertek（天祥集团）是全球顶级的第三方实验室。其详尽的测试数据与报告往往是申请欧盟 CE、德国 GS 及北美 UL 等终端证书的基石。对于追求极致质量的大客户，拥有这两家机构背书就是最佳敲门砖。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">TÜV（德国莱茵/南德）与 Intertek（天祥集团）是全球顶级的第三方实验室。其详尽的测试数据与报告往往是申请欧盟 CE、德国 GS 及北美 UL 等终端证书的基石。对于追求极致质量的大客户，拥有这两家机构背书就是最佳敲门砖。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/tuv.png" alt="TÜV" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                            <img src="../../assets/icons/intertek.png" alt="Intertek" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1772,8 +1944,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 </section>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">PPWR 是欧盟旨在减少包装污染的核心强制法规。其规定了极度严格的包装限缩比例：外包箱内部的空隙率不得超过 40%。此外，所有投放欧盟市场的包装必须在成分上具备可回收性，并要求添加法定比例的再生塑料 (PCR)。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">PPWR 是欧盟旨在减少包装污染的核心强制法规。其规定了极度严格的包装限缩比例：外包箱内部的空隙率不得超过 40%。此外，所有投放欧盟市场的包装必须在成分上具备可回收性，并要求添加法定比例的再生塑料 (PCR)。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/ppwr.png" alt="PPWR" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1816,8 +1995,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 </section>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">EPR (生产者责任延伸) 是一项欧盟环保政策。要求将产品投放欧洲市场的企业（包括跨境电商卖家），必须为其售出商品产生的废弃物（涵盖包装法、电池法、WEEE电子旧物法）承担后续回收处理的财务与法律责任。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">EPR (生产者责任延伸) 是一项欧盟环保政策。要求将产品投放欧洲市场的企业（包括跨境电商卖家），必须为其售出商品产生的废弃物（涵盖包装法、电池法、WEEE电子旧物法）承担后续回收处理的财务与法律责任。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/epr.png" alt="EPR" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1859,31 +2045,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                     </div>
                 </section>
 
-               <!-- ================== 4.2.1 Triman 与 WEEE ================== -->
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    
-                    <div class="def-content-split" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-                        <div class="def-text" style="flex: 1; min-width: 280px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
                             <p class="wiki-text"><strong>Triman 标志：</strong> 法国强制环保统一回收标识（一个小人带三个箭头的图案），必须印制在产品外包装上，告知消费者这是可回收包装。</p>
                             <p class="wiki-text" style="margin-top: 12px;"><strong>WEEE 标志：</strong> 即带叉的带轮垃圾桶，欧盟强制要求所有废旧电子电气产品本体上必须印制此图标，严禁当做生活垃圾丢弃。</p>
                         </div>
-                        
-                        <!-- 右侧徽章区：完美的本地相对路径调用 -->
-                        <div class="def-badges" style="display: flex; gap: 16px; flex-shrink: 0; background-color: #fff; padding: 16px 20px; border-radius: 8px; border: 1px dashed #C9DCEB; box-shadow: 0 4px 12px rgba(162, 185, 205, 0.15);">
-                            
-                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <!-- 调用 assets/icons/Triman.png -->
-                                <img src="../../assets/icons/Triman.png" alt="Triman" style="width: 48px; height: 48px; object-fit: contain;">
-                                <span style="font-size: 12px; color: #888; font-weight: 700;">Triman</span>
-                            </div>
-                            
-                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <!-- 调用 assets/icons/WEEE.png -->
-                                <img src="../../assets/icons/WEEE.png" alt="WEEE" style="width: 48px; height: 48px; object-fit: contain;">
-                                <span style="font-size: 12px; color: #888; font-weight: 700;">WEEE</span>
-                            </div>
-
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/triman.png" alt="Triman" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                            <img src="../../assets/icons/weee.png" alt="WEEE" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
                         </div>
                     </div>
                 </section>
@@ -1928,8 +2099,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 </section>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">CE (欧盟) 与 UKCA (英国) 标志必须严格遵循规定的图形比例。标志高度原则上不小于 5mm，若产品体积极小，必须在技术文件中申请豁免，但几何比例（圆弧、字体粗细）必须保持严格一致。此外，标志必须具备“永久性”或“耐用性”，必须通过实验室进行的酒精、汽油等溶剂擦拭测试，确保标识在产品全生命周期内清晰可见。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">CE (欧盟) 与 UKCA (英国) 标志必须严格遵循规定的图形比例。标志高度原则上不小于 5mm，若产品体积极小，必须在技术文件中申请豁免，但几何比例（圆弧、字体粗细）必须保持严格一致。此外，标志必须具备“永久性”或“耐用性”，必须通过实验室进行的酒精、汽油等溶剂擦拭测试，确保标识在产品全生命周期内清晰可见。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/ce.png" alt="CE" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                            <img src="../../assets/icons/ukca.png" alt="UKCA" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1972,8 +2151,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                 </section>
 
                 <section class="wiki-section">
-                    <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text">《加州安全饮用水和有毒物质执行法》要求，任何在加州销售的，含有 900 多种列管致癌或致畸化学物质（如铅、邻苯二甲酸盐，常见于包材塑胶和线材）的产品，必须在其外包装最显眼处，或独立站详情页的结账前，清晰展示特定格式的警告标识及官网链接（Warning: Cancer and Reproductive Harm - www.P65Warnings.ca.gov）。</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3>📖 专业释义与定义</h3>
+                            <p class="wiki-text">《加州安全饮用水和有毒物质执行法》要求，任何在加州销售的，含有 900 多种列管致癌或致畸化学物质（如铅、邻苯二甲酸盐，常见于包材塑胶和线材）的产品，必须在其外包装最显眼处，或独立站详情页的结账前，清晰展示特定格式的警告标识及官网链接（Warning: Cancer and Reproductive Harm - www.P65Warnings.ca.gov）。</p>
+                        </div>
+                        <div style="flex-shrink: 0; display: flex; gap: 12px; align-items: center;">
+                            <img src="../../assets/icons/prop65.png" alt="Prop 65" style="height: 56px; width: auto; max-width: 120px; object-fit: contain;">
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
@@ -1998,28 +2184,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                     </ul>
                 </section>
             </section>
-
-                <div class="wiki-divider"></div>
-
-                <section class="wiki-section">
-                    <h3>⚠️ 风险提示</h3>
-                    <div class="alert-box">
-                        <p class="wiki-text"><strong>瞒报漏报致没收：</strong> 为了逃避清关税，部分出口商会在装箱单里偷偷塞一些未申请 SONCAP 认证的高级货物。</p>
-                    </div>
-                </section>
-
-                <div class="wiki-divider"></div>
-
-                <section class="wiki-section">
-                    <h3>📝 极简实操 SOP</h3>
-                    <div class="sop-box">
-                        <ul class="sop-list">
-                            <li><input type="checkbox" disabled> <strong>预约现场验货：</strong> 工厂备好大货后，至少提前 5 个工作日向发证机构申请现场检验（监装）。</li>
-                            <li><input type="checkbox" disabled> <strong>确保箱单一致性：</strong> 验货人员核对的品名、数量必须与最终出具的商业发票 (CI) 和装箱单 (PL) 一字不差。</li>
-                        </ul>
-                    </div>
-                </section>
-            </section>
+            
         </main>
     </div>
 <!-- 自动涂色卡片化脚本 -->
