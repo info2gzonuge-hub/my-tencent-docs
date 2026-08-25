@@ -318,10 +318,32 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
 
                 <div class="wiki-divider"></div>
 
-                <section class="wiki-section">
+                              <section class="wiki-section">
                     <h3>📖 专业释义与定义</h3>
-                    <p class="wiki-text"><strong>ISO 14001 (环境管理体系)：</strong> 针对组织活动、产品或服务中的环境因素进行控制的国际标准，旨在减少污染排放、节约资源并确保符合属地环保法规。</p>
-                    <p class="wiki-text"><strong>ISO 22716 (化妆品良好生产规范 GMP)：</strong> 为化妆品生产、控制、储存和发货提供系统性指导。</p>
+                    
+                    <div class="def-content-split" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+                        <div class="def-text" style="flex: 1; min-width: 280px;">
+                            <p class="wiki-text"><strong> ISO 14001 (环境管理体系)：</strong> 针对组织活动、产品或服务中的环境因素进行控制的国际标准，旨在减少污染排放、节约资源并确保符合属地环保法规。</p>
+                            <p class="wiki-text" style="margin-top: 12px;"><strong>ISO 22716 (化妆品良好生产规范 GMP)：</strong> 为化妆品生产、控制、储存和发货提供系统性指导。</p>
+                        </div>
+                        
+                        <!-- 右侧徽章区：完美的本地相对路径调用 -->
+                        <div class="def-badges" style="display: flex; gap: 16px; flex-shrink: 0; background-color: #fff; padding: 16px 20px; border-radius: 8px; border: 1px dashed #C9DCEB; box-shadow: 0 4px 12px rgba(162, 185, 205, 0.15);">
+                            
+                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <!-- 调用 assets/icons/iso14001.png -->
+                                <img src="../../assets/icons/iso14001.png" alt="ISO 14001" style="width: 48px; height: 48px; object-fit: contain;">
+                                <span style="font-size: 12px; color: #888; font-weight: 700;">Triman</span>
+                            </div>
+                            
+                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <!-- 调用 assets/icons/22716.png -->
+                                <img src="../../assets/icons/22716.png" alt="ISO 22716" style="width: 48px; height: 48px; object-fit: contain;">
+                                <span style="font-size: 12px; color: #888; font-weight: 700;">WEEE</span>
+                            </div>
+
+                        </div>
+                    </div>
                 </section>
 
                 <section class="wiki-section">
