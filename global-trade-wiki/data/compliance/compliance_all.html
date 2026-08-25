@@ -258,12 +258,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
                             <p class="wiki-text">由国际标准化组织 (ISO) 制定的企业质量管理规范。</p>
                         </div>
                         
-                        <!-- 右侧徽章区：纯本地调用，确保你已经把 iso9001.png 传进去了 -->
-                        <div class="def-badges" style="display: flex; gap: 16px; flex-shrink: 0; background-color: #fff; padding: 16px 20px; border-radius: 8px; border: 1px dashed #C9DCEB; box-shadow: 0 4px 12px rgba(162, 185, 205, 0.15);">
+                        <!-- 右侧徽章区：压缩了 padding 留白，防止撑破卡片 -->
+                        <div class="def-badges" style="display: flex; gap: 16px; flex-shrink: 0; background-color: #fff; padding: 10px 16px; border-radius: 8px; border: 1px dashed #C9DCEB; box-shadow: 0 4px 12px rgba(162, 185, 205, 0.15);">
                             
-                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <!-- 完美匹配的本地路径，图片名假设为 iso9001.png -->
-                                <img src="../../assets/icons/ISO-9001.png" alt="ISO 9001" style="width: 48px; height: 48px; object-fit: contain;">
+                            <div class="badge-item" style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                                <!-- 破除正方形限制：调高 height，让 width 自动适应长宽比 -->
+                                <img src="../../assets/icons/ISO-9001.png" alt="ISO 9001" style="height: 64px; width: auto; max-width: 140px; object-fit: contain;">
                                 <span style="font-size: 12px; color: #888; font-weight: 700;">ISO 9001</span>
                             </div>
 
