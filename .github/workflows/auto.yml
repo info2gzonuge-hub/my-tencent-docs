@@ -1,0 +1,24 @@
+name: Auto Update
+on:
+  push:
+    paths:
+      - 'Google-Operations-Knowledge/tab*.html'
+  schedule:
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install beautifulsoup4 requests
+      - run: python build.py
+      - run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add Google-Operations-Knowledge/index.html Google-Operations-Knowledge/tab1.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update [skip ci]" && git push)
