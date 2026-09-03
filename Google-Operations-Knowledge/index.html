@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tab 0 · 全局完整目录 · 谷歌推广知识体系</title>
+    <title>Tab 1 · 算法更新 · 谷歌推广知识体系</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -19,10 +19,6 @@
             --primary-light: #FF8A5C;
             --secondary: #3B82F6;
             --accent: #06B6D4;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --purple: #8B5CF6;
-            --pink: #EC4899;
             --text-dark: #1A202C;
             --text-muted: #5A6A7A;
             --border-light: #EDE8E0;
@@ -34,13 +30,6 @@
         body { font-family: var(--font); background-color: var(--bg-body); min-height: 100vh; padding: 30px 20px; color: var(--text-dark); }
         .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
         
-        .video-banner-container {
-            width: 100%; max-width: 1200px; margin: 0 auto 24px auto; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-soft); background-color: #E2E8F0; border: 1px solid var(--border-light); aspect-ratio: 16 / 9; line-height: 0; position: relative; transition: all 0.3s ease;
-        }
-        .video-banner-container::before { content: "🎥 动态画面正在缓冲，请稍候..."; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #64748B; font-size: 14px; font-weight: 500; z-index: 0; text-align: center; width: 100%; }
-        .video-banner-container:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); }
-        .video-banner-container video { width: 100%; height: 100%; display: block; object-fit: cover; position: relative; z-index: 1; background-color: transparent; }
-
         /* 解决头部拥挤：强制左右两端对齐，左侧标题和徽章自动折行但不挤压 */
         .app-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
         .header-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -54,55 +43,20 @@
         .tab-btn { flex-shrink: 0; padding: 10px 20px; border: none; background: transparent; border-radius: 40px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: all 0.2s; }
         .tab-btn.active { background: var(--bg-tab-active); color: #fff; box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35); border-color: var(--bg-tab-active); }
         .tab-btn:not(.active):hover { background: var(--bg-card-alt); color: var(--primary); }
-        
         .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
         .panel-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; padding: 12px 16px; background: var(--bg-card-alt); border-radius: 12px; border-left: 4px solid var(--primary-light); line-height: 1.6; }
-        .pill { display: inline-block; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; background: var(--bg-body); color: var(--text-muted); border: 1px solid var(--border-light); }
-        .pill.orange { background: var(--primary); color: #fff; border: none; }
-        .pill.blue { background: var(--secondary); color: #fff; border: none; }
-        .pill.cyan { background: var(--accent); color: #fff; border: none; }
-        .pill.pink { background: var(--pink); color: #fff; border: none; }
-        .pill.green { background: var(--success); color: #fff; border: none; }
-        .pill.purple { background: var(--purple); color: #fff; border: none; }
+        .pill { display: inline-block; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; background: var(--primary); color: #fff; }
+        .internal-link { color: var(--primary); font-weight: 600; text-decoration: underline 2px dotted var(--primary-light); text-underline-offset: 4px; cursor: pointer; }
+        .internal-link:hover { color: var(--secondary); }
+        .timeline { display: flex; flex-direction: column; gap: 16px; }
+        .timeline-card { border: 1px solid var(--border-light); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; transition: all 0.3s ease; box-shadow: var(--shadow-soft); display: flex; align-items: stretch; }
+        .timeline-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .timeline-card .time-side { background: var(--bg-card-alt); padding: 20px; min-width: 140px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: var(--primary); border-right: 1px solid var(--border-light); }
+        .timeline-card .content-side { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .timeline-card .title { font-size: 18px; font-weight: 700; color: var(--text-dark); }
+        .timeline-card .bubble { background: var(--bg-highlight); padding: 12px 16px; border-radius: 12px; border-left: 4px solid var(--primary); font-size: 14px; color: var(--text-muted); line-height: 1.6; }
         
-        .highlight-box { background: var(--bg-highlight); padding: 16px 20px; border-radius: 12px; border-left: 4px solid var(--primary); margin: 12px 0; line-height: 1.7; }
-        .highlight-box strong { color: var(--primary); }
-        .internal-link { color: var(--primary); font-weight: 600; text-decoration: underline 2px dotted var(--primary-light); text-underline-offset: 4px; cursor: pointer; transition: all 0.2s; }
-        .internal-link:hover { color: var(--secondary); text-decoration-color: var(--secondary); background: rgba(59, 130, 246, 0.05); border-radius: 4px; padding: 0 4px; }
-        .internal-link::after { content: " ↗"; font-size: 12px; opacity: 0.7; }
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0 28px 0; }
-        .stat-card { background: var(--bg-card-alt); border-radius: 12px; padding: 16px 20px; text-align: center; border: 1px solid var(--border-light); transition: all 0.2s; }
-        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--primary-light); }
-        .stat-card .number { font-size: 28px; font-weight: 700; color: var(--primary); }
-        .stat-card .label { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
-        .stat-card .icon { font-size: 24px; display: block; margin-bottom: 4px; }
-        
-        .tree-root { display: flex; flex-direction: column; gap: 16px; margin-bottom: 30px; }
-        .tree-item { border: 1px solid var(--border-light); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; transition: all 0.3s ease; box-shadow: var(--shadow-soft); }
-        .tree-item:hover { border-color: var(--primary-light); box-shadow: var(--shadow-hover); transform: translateY(-1px); }
-        .tree-item summary { padding: 16px 20px; font-weight: 700; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; list-style: none; background: var(--bg-card-alt); transition: background 0.2s; }
-        .tree-item summary:hover { background: var(--bg-highlight); }
-        .tree-item summary::-webkit-details-marker { display: none; }
-        .tree-item summary .summary-left { display: flex; align-items: center; gap: 12px; }
-        .tree-item summary::after { content: "▼"; font-size: 12px; color: var(--primary); transition: transform 0.3s ease; background: var(--bg-card); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid var(--border-light); }
-        .tree-item[open] summary::after { transform: rotate(180deg); background: var(--primary); color: #fff; border-color: var(--primary); }
-        .tree-item .tree-body { padding: 16px 20px 24px 20px; display: flex; flex-direction: column; gap: 8px; border-top: 1px dashed var(--border-light); }
-        .tree-item .tree-body .child { display: flex; align-items: baseline; gap: 8px; padding: 6px 0 6px 16px; border-left: 2px dashed var(--accent); font-size: 15px; color: var(--text-dark); line-height: 1.5; }
-        .tree-item .tree-body .child .marker { font-size: 14px; font-weight: 700; color: var(--secondary); min-width: 16px; }
-        .tree-item .tree-body .child.sub { padding-left: 36px; border-left-color: var(--primary-light); }
-        .tree-item .tree-body .child.sub .marker { color: var(--accent); }
-        .tree-item .tree-body .child.sub-sub { padding-left: 56px; border-left-color: var(--border-light); }
-        .tree-item .tree-body .child.sub-sub .marker { color: var(--warning); }
-        
-        .styled-table { width: 100%; border-collapse: collapse; font-size: 14px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-soft); margin-top: 12px; border: 1px solid var(--border-light); }
-        .styled-table thead { background: var(--bg-card-alt); color: var(--text-dark); font-weight: 600; }
-        .styled-table th, .styled-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border-light); }
-        .styled-table tbody tr:hover { background: var(--bg-highlight); }
-        .styled-table tbody tr:last-child td { border-bottom: none; }
-        .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
-        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 8px; }
-
+        /* 手机端响应式适配 */
         @media (max-width: 768px) {
             .app-container { padding: 16px 12px !important; }
             .app-header { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -112,28 +66,17 @@
             .badge-header { font-size: 11px !important; padding: 4px 14px !important; }
             .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
             .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
-            
-            .video-banner-container { margin-bottom: 16px; border-radius: 12px; }
-            .video-banner-container::before { font-size: 12px; }
             .panel-title { font-size: 18px !important; }
             .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; margin: 12px 0 20px 0 !important; }
-            .stat-card { padding: 12px 14px !important; }
-            .stat-card .number { font-size: 22px !important; }
-            .stat-card .label { font-size: 12px !important; }
-            .stat-card .icon { font-size: 20px !important; }
-            .tree-item summary { padding: 12px 16px !important; font-size: 14px !important; }
-            .tree-item .tree-body { padding: 10px 12px 16px 12px !important; }
-            .tree-item .tree-body .child { font-size: 13px !important; padding: 4px 0 4px 10px !important; }
-            .styled-table { font-size: 11px !important; min-width: 550px !important; }
+            .timeline-card { flex-direction: column; } 
+            .timeline-card .time-side { min-width: auto; justify-content: flex-start; padding: 12px 20px; border-right: none; border-bottom: 1px solid var(--border-light); }
         }
+
         @media (max-width: 480px) {
             .app-header h1 { font-size: 16px !important; }
             .tab-btn { font-size: 11px !important; padding: 4px 10px !important; }
-            .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
-            .styled-table { font-size: 9px !important; min-width: 420px !important; }
         }
-        
+
         /* 搜索弹窗样式 */
         #globalSearchModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 80px; backdrop-filter: blur(4px); }
         .modal-content { background: #FFFFFF; width: 90%; max-width: 600px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #E2E8F0; }
@@ -148,11 +91,11 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- 头部：彻底解决拥挤，加入 Flexbox 自适应换行和左右对齐 -->
+        <!-- 头部：彻底解决拥挤，加入 Flexbox 自适应换行和右侧搜索按钮 -->
         <header class="app-header">
             <div class="header-left">
-                <h1>📊 谷歌推广知识体系 <span>· Tab 0 · 全局完整目录</span></h1>
-                <span class="badge-header">🌳 精确至终版树形图</span>
+                <h1>📊 谷歌推广知识体系 <span>· Tab 1 · 算法更新</span></h1>
+                <span class="badge-header">⏳ 时间轴 · 10个节点</span>
             </div>
             <!-- 右侧搜索按钮 -->
             <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
@@ -160,408 +103,121 @@
             </button>
         </header>
 
-        <!-- 视频 Banner 区 -->
-        <div class="video-banner-container">
-            <video id="hero-video" autoplay="autoplay" loop="loop" muted="muted" playsinline="true" webkit-playsinline="true" x5-playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="false" preload="auto">
-                <source src="https://info2gzonuge-hub.github.io/my-tencent-docs/Google-Operations-Knowledge/assets/banner.mp4" type="video/mp4">
-            </video>
-        </div>
-
         <!-- Tab 导航 -->
         <nav class="tab-nav">
-            <button class="tab-btn active" onclick="location.href='index.html'">📚 全局目录</button>
-            <!-- TOC_START -->
-            <button class="tab-btn" onclick="location.href='tab1.html'">📊 谷歌推广知识体系 · Tab 1 · 算法更新</button>
-            <button class="tab-btn" onclick="location.href='tab2.html'">📊 谷歌推广知识体系 Tab2 · 底层算法思维</button>
-            <button class="tab-btn" onclick="location.href='tab3.html'">📊 谷歌推广知识体系 · 独立站基建</button>
-            <button class="tab-btn" onclick="location.href='tab4.html'">📊 谷歌推广知识体系 Tab 4 · 站内SEO与内容工业化</button>
-            <button class="tab-btn" onclick="location.href='tab5.html'">📊 谷歌推广知识体系 · Tab 5 · 技术SEO</button>
-            <button class="tab-btn" onclick="location.href='tab6.html'">📊 谷歌推广知识体系 · Tab 6 · 站外影响力</button>
-            <button class="tab-btn" onclick="location.href='tab7.html'">📊 谷歌推广知识体系 · Tab 7 · 谷歌广告</button>
-            <button class="tab-btn" onclick="location.href='tab8.html'">📊 谷歌推广知识体系 ·  Tab 8 · 数据分析与追踪</button>
-            <button class="tab-btn" onclick="location.href='tab9.html'">📊 谷歌推广知识体系 · Tab 9 · 转化率优化(CRO)</button>
-            <button class="tab-btn" onclick="location.href='tab10.html'">🚀 谷歌推广知识体系 · Tab 10 · AI Overviews 优化</button>
-            <!-- TOC_END -->
+            <button class="tab-btn" onclick="location.href='index.html'">📚 全局目录</button>
+            <button class="tab-btn active" onclick="location.href='tab1.html'">📅 算法更新</button>
+            <button class="tab-btn" onclick="location.href='tab2.html'">🧠 底层思维</button>
+            <button class="tab-btn" onclick="location.href='tab3.html'">🔧 独立站基建</button>
+            <button class="tab-btn" onclick="location.href='tab4.html'">📝 站内SEO</button>
+            <button class="tab-btn" onclick="location.href='tab5.html'">📤 技术SEO</button>
+            <button class="tab-btn" onclick="location.href='tab6.html'">🔗 站外影响力</button>
+            <button class="tab-btn" onclick="location.href='tab7.html'">💰 谷歌广告</button>
+            <button class="tab-btn" onclick="location.href='tab8.html'">📊 数据分析</button>
+            <button class="tab-btn" onclick="location.href='tab9.html'">📈 转化率(CRO)</button>
+            <button class="tab-btn" onclick="location.href='tab10.html'">🚀 AI Overviews</button>
         </nav>
 
         <!-- 标题区 -->
-        <div class="panel-title">📚 全局目录 · 完整知识树</div>
+        <div class="panel-title">📅 第零层 · 算法更新认知（2025-2026）</div>
         <div class="panel-sub">
-            <span class="pill orange">Tab 0</span> 按照终版树形图完整呈现，共10层、50+节点。
-            点击 <span class="internal-link" onclick="location.href='tab1.html'">内链示例</span> 可跨Tab跳转。
+            <span class="pill">大白话版</span> 2026.07.10 起，谷歌搜索默认由 AI 生成答案——你的网页没被引用，就等于不存在。
         </div>
 
-        <!-- 统计卡片 -->
-        <div class="stats-grid">
-            <div class="stat-card"><span class="icon">📚</span><div class="number">10</div><div class="label">总层级数</div></div>
-            <div class="stat-card"><span class="icon">📌</span><div class="number">50+</div><div class="label">总知识节点</div></div>
-            <div class="stat-card"><span class="icon">🔴</span><div class="number">4</div><div class="label">核心必修层</div></div>
-            <div class="stat-card"><span class="icon">🛠️</span><div class="number">6</div><div class="label">含实操层</div></div>
+        <!-- 时间轴（卡片矩阵化升级） -->
+        <div class="timeline">
+            <div class="timeline-card">
+                <div class="time-side">2024.03</div>
+                <div class="content-side">
+                    <div class="title">INP 替代 FID</div>
+                    <div class="bubble">🗣️ 谷歌换标准了——不看首次点击延迟，而是看整体交互顺不顺滑。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2024.12</div>
+                <div class="content-side">
+                    <div class="title">打击链接网络 &amp; AI客座文章农场</div>
+                    <div class="bubble">🗣️ 花钱买链接、AI批量发外链的路子被彻底堵死。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2025.03</div>
+                <div class="content-side">
+                    <div class="title">核心更新 · E-E-A-T权重提升</div>
+                    <div class="bubble">🗣️ 内容不仅要有用，还要有“真实的人在背后”。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2025.08</div>
+                <div class="content-side">
+                    <div class="title">打击寄生虫 SEO</div>
+                    <div class="bubble">🗣️ 寄生在大品牌域名下的垃圾内容被大面积清理。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2025.12</div>
+                <div class="content-side">
+                    <div class="title">核心更新 · 质量胜于数量</div>
+                    <div class="bubble">🗣️ 有真实经验的网站排名暴涨，AI批量填充的流量归零。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2026.02</div>
+                <div class="content-side">
+                    <div class="title">Discover 独立更新</div>
+                    <div class="bubble">🗣️ 谷歌信息流推荐独立考核，不再和搜索排名混为一谈。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2026.03</div>
+                <div class="content-side">
+                    <div class="title">引入硬性信号“信息增益”</div>
+                    <div class="bubble">🗣️ 只会重复别人说过的话，排名会掉——必须有新东西。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2026.04</div>
+                <div class="content-side">
+                    <div class="title">Preferred Sources 上线</div>
+                    <div class="bubble">🗣️ 用户可在设置里指定“我只想看这个来源的内容”。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side">2026.05</div>
+                <div class="content-side">
+                    <div class="title">I/O大会 · 搜索25年来最大改版</div>
+                    <div class="bubble">🗣️ 搜索不再只给10个蓝链，AI直接把答案整理好给你。</div>
+                </div>
+            </div>
+
+            <div class="timeline-card">
+                <div class="time-side" style="background: var(--primary); color: #fff;">2026.07.10</div>
+                <div class="content-side">
+                    <div class="title">搜索界面革命生效</div>
+                    <div class="bubble">🗣️ 搜索默认回答由 AI 生成——你的网页没被引用，就等于不存在。</div>
+                </div>
+            </div>
         </div>
 
-        <!-- 树形图 -->
-        <div class="tree-root">
-            <details class="tree-item">
-                <summary><div class="summary-left">📅 第零层 · 算法更新认知（2025-2026）</div> <span class="pill orange">🔴 先看</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 2024.03 INP替代FID</div>
-                    <div class="child"><span class="marker">•</span> 2024.12 打击链接网络 &amp; AI客座文章农场</div>
-                    <div class="child"><span class="marker">•</span> 2025.03 核心更新 · E-E-A-T权重提升</div>
-                    <div class="child"><span class="marker">•</span> 2025.08 打击寄生虫SEO</div>
-                    <div class="child"><span class="marker">•</span> 2025.12 核心更新 · 质量胜于数量</div>
-                    <div class="child"><span class="marker">•</span> 2026.02 Discover独立更新</div>
-                    <div class="child"><span class="marker">•</span> 2026.03 引入硬性信号“信息增益”</div>
-                    <div class="child"><span class="marker">•</span> 2026.04 Preferred Sources上线</div>
-                    <div class="child"><span class="marker">•</span> 2026.05 I/O大会 · 搜索25年来最大改版</div>
-                    <div class="child"><span class="marker">•</span> 2026.07.10 搜索界面革命生效</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">🧠 第一层 · 谷歌搜索引擎的工作原理与算法思维</div> <span class="pill orange">🔴 先看</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 1.1 搜索引擎工作原理</div>
-                    <div class="child sub"><span class="marker">◦</span> 抓取（Crawling）→ 索引（Indexing）→ 排名（Ranking）</div>
-                    <div class="child"><span class="marker">•</span> 1.2 核心算法与排名系统（2025-2026）</div>
-                    <div class="child sub"><span class="marker">◦</span> BERT / RankBrain / 神经匹配</div>
-                    <div class="child sub"><span class="marker">◦</span> 有用内容系统（现优先评估“信息增益”）</div>
-                    <div class="child sub"><span class="marker">◦</span> Passage Ranking（段落独立排名）</div>
-                    <div class="child sub"><span class="marker">◦</span> ⭐ 信息增益（Information Gain）——2026.03核心信号</div>
-                    <div class="child sub"><span class="marker">◦</span> Preferred Sources（首选来源）——2026.04全球推出</div>
-                    <div class="child"><span class="marker">•</span> 1.3 SEO vs SIO vs GEO 范式转移</div>
-                    <div class="child sub"><span class="marker">◦</span> SEO（传统）：抢排名第一（权重持续下降）</div>
-                    <div class="child sub"><span class="marker">◦</span> SIO（搜索意图）：匹配用户需求（仍为核心）</div>
-                    <div class="child sub"><span class="marker">◦</span> GEO（生成式引擎优化）：被AI写进答案（核心指标=引用率）</div>
-                    <div class="child"><span class="marker">•</span> 1.4 ⭐ E-E-A-T 质量框架（2026年硬性门槛）</div>
-                    <div class="child sub"><span class="marker">◦</span> Experience（经验）— 排第一！“AI装不了亲手做过”</div>
-                    <div class="child sub"><span class="marker">◦</span> Expertise（专业）</div>
-                    <div class="child sub"><span class="marker">◦</span> Authoritativeness（权威）</div>
-                    <div class="child sub"><span class="marker">◦</span> Trustworthiness（可信）— 基础底线</div>
-                    <div class="child"><span class="marker">•</span> 1.5 独有内容：PR值（PageRank）数学传递逻辑</div>
-                    <div class="child sub"><span class="marker">◦</span> PR值0-10分，通过链接在页面间平均分配</div>
-                    <div class="child sub"><span class="marker">◦</span> 示例：A页PR=5，链接到B/C/D，每个分得约1.67分</div>
-                    <div class="child sub"><span class="marker">◦</span> 关键公式：c=2.5分示例（高质量外链传递更多权重）</div>
-                    <div class="child sub"><span class="marker">◦</span> 良好外链的6大属性：权威性/相关性/锚文本/DoFollow/位置/目标地址</div>
-                    <div class="child"><span class="marker">•</span> 1.6 独有内容：GEO“被AI引用”5大实操对策</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策1：前100字直接回答问题</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策2：列表/表格/FAQ结构化</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策3：强化E-E-A-T信号</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策4：部署完整Schema标记</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策5：持续更新内容</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">🔧 第二层 · 独立站基建（技术底座）</div> <span class="pill blue">🟡 基础必备</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 2.1 域名购买</div>
-                    <div class="child sub"><span class="marker">◦</span> Namesilo（推荐，可用支付宝/微信，约$7.8/年）</div>
-                    <div class="child sub"><span class="marker">◦</span> 阿里云（国内备选）</div>
-                    <div class="child"><span class="marker">•</span> 2.2 服务器/主机</div>
-                    <div class="child sub"><span class="marker">◦</span> SiteGround GrowBig套餐（无限站点，月访客承载10万）</div>
-                    <div class="child sub"><span class="marker">◦</span> Hostinger（性价比高，约800元/年，支持支付宝）</div>
-                    <div class="child"><span class="marker">•</span> 2.3 环境配置</div>
-                    <div class="child sub"><span class="marker">◦</span> SSL证书（Let's Encrypt免费安装，强制HTTPS）</div>
-                    <div class="child sub"><span class="marker">◦</span> PHP版本升级至最新稳定版</div>
-                    <div class="child sub"><span class="marker">◦</span> CDN加速（Cloudflare / NitroPack配置）</div>
-                    <div class="child sub"><span class="marker">◦</span> 网站备份与还原机制（一键备份文件+数据库）</div>
-                    <div class="child"><span class="marker">•</span> 2.4 WordPress安装与主题</div>
-                    <div class="child sub"><span class="marker">◦</span> Hello Elementor轻量主题</div>
-                    <div class="child sub"><span class="marker">◦</span> Elementor Pro（页面构建器，约$59/年，需正版授权）</div>
-                    <div class="child sub"><span class="marker">◦</span> 模板导入与自定义（页眉/页脚/透明页眉/固定页眉/超级菜单）</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">📝 第三层 · 站内SEO与内容工业化（2026方法论）</div> <span class="pill orange">🔴 核心必修</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 3.1 ⭐ 关键词研究（信息增益导向）</div>
-                    <div class="child sub"><span class="marker">◦</span> AI Overviews挖掘法：观察哪些查询触发AI回答，直接作为选题</div>
-                    <div class="child sub"><span class="marker">◦</span> 字母汤 + AnswerThePublic（每天3次免费）：收集用户真实疑问句</div>
-                    <div class="child sub"><span class="marker">◦</span> 信息增益自测：“围绕这个词，我能说出别人没说过的独家信息吗？”</div>
-                    <div class="child sub"><span class="marker">◦</span> B端行业采购词 + 高级搜索指令</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 采购词：factory / supplier / manufacturer / wholesale / distributor</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 高级搜索：inurl:alibaba / -inurl:alibaba</div>
-                    <div class="child"><span class="marker">•</span> 3.2 ⭐ 内容创作（彻底剔除字数崇拜，聚焦深度与唯一性）</div>
-                    <div class="child sub"><span class="marker">◦</span> ① Atomic Answer框架（原子答案）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 在H2问题式标题下，直接用40-60字给出精简答案</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 数据支撑：78.4%的含问题引用来自H2标题</div>
-                    <div class="child sub"><span class="marker">◦</span> ② 信息增益五支柱（实现“独有性”的具体手段）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 专有数据层：使用别处没有的数据（小样本调研、内部实验统计）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 反向专家分析：提供有据可查的相反观点或替代方案</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 技术流程透明化：写下失败教训、具体Bug及解决方案</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 第一人称经验证据：植入“我们帮客户实施时发现...”等真实体验</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 定期内容防腐：每月检查排名5-20名的旧页面，补充新信息（不更新=网站“死了”）</div>
-                    <div class="child sub"><span class="marker">◦</span> ③ 实体化内容（Entity-Based Content）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 自然穿插专业实体词汇（如：牙釉质安全、过氧化氢浓度、ADA认证）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 帮助AI建立知识图谱，理解内容的全貌</div>
-                    <div class="child sub"><span class="marker">◦</span> ④ 内容结构三要素（AI Overviews偏爱）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 清晰答案（Atomic Answer）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 机器可解析结构（列表、表格、步骤、FAQ）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 命名实体（专有名词、品牌、人物、地点、产品）</div>
-                    <div class="child"><span class="marker">•</span> 3.3 页面元素标配</div>
-                    <div class="child sub"><span class="marker">◦</span> TKD标签（Title / Keywords / Description）</div>
-                    <div class="child sub"><span class="marker">◦</span> 描述性URL别名（短且含关键词，如 /black-mens-jeans/）</div>
-                    <div class="child sub"><span class="marker">◦</span> 图片Alt文本 + WebP格式压缩（Shortpixel/Smush插件）</div>
-                    <div class="child sub"><span class="marker">◦</span> 内部链接架构（扁平化，3次点击可达任何页面）</div>
-                    <div class="child"><span class="marker">•</span> 3.4 ⭐ 结构化数据（AI引用的“加速器”）</div>
-                    <div class="child sub"><span class="marker">◦</span> 优先级1：Article（让AI理解文章结构）</div>
-                    <div class="child sub"><span class="marker">◦</span> 优先级2：FAQ / HowTo（直接回答问题）</div>
-                    <div class="child sub"><span class="marker">◦</span> 优先级3：Product（产品信息结构化）</div>
-                    <div class="child sub"><span class="marker">◦</span> 优先级4：Breadcrumb（页面层级清晰）</div>
-                    <div class="child sub"><span class="marker">◦</span> 优先级5：LocalBusiness（本地商家信息）</div>
-                    <div class="child sub"><span class="marker">◦</span> 数据支撑：实体密度达到20.6%的内容更容易被AI引用（普通文本仅5-8%）</div>
-                    <div class="child sub"><span class="marker">◦</span> 大白话：Schema就是给内容贴“标签”，让AI一眼看懂</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">📤 第四层 · 技术性SEO（确保被抓取与索引）</div> <span class="pill blue">🟡 基础必备</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 4.1 索引管理</div>
-                    <div class="child sub"><span class="marker">◦</span> XML站点地图（Sitemap）生成并提交Google Search Console</div>
-                    <div class="child sub"><span class="marker">◦</span> HTML站点地图（用户可见）短代码生成</div>
-                    <div class="child sub"><span class="marker">◦</span> Robots.txt 抓取协议设置</div>
-                    <div class="child sub"><span class="marker">◦</span> Canonical标签规范化（告诉谷歌哪个是页面首选版本）</div>
-                    <div class="child sub"><span class="marker">◦</span> Noindex标签去除（确保重要页面不被屏蔽）</div>
-                    <div class="child sub"><span class="marker">◦</span> 重复内容检测（Siteliner工具）及Seopress“指向权威源”解决方案</div>
-                    <div class="child"><span class="marker">•</span> 4.2 抓取优化</div>
-                    <div class="child sub"><span class="marker">◦</span> 去除抓取障碍（检查robots.txt是否误屏蔽）</div>
-                    <div class="child sub"><span class="marker">◦</span> 修复孤岛页面（没有任何内部链接指向的页面）</div>
-                    <div class="child sub"><span class="marker">◦</span> 内部nofollow链接排查（nofollow会阻止PR传递）</div>
-                    <div class="child"><span class="marker">•</span> 4.3 网站健康管理</div>
-                    <div class="child sub"><span class="marker">◦</span> 301重定向（永久跳转，Redirection插件）</div>
-                    <div class="child sub"><span class="marker">◦</span> 302重定向（临时跳转）</div>
-                    <div class="child sub"><span class="marker">◦</span> 404页面自定义（提升用户体验）</div>
-                    <div class="child sub"><span class="marker">◦</span> Core Web Vitals（INP/LCP/CLS）</div>
-                    <div class="child sub"><span class="marker">◦</span> 移动端适配（Google Mobile-Friendly Test检测）</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">🔗 第五层 · 站外影响力（外链权重下降，品牌提及上升）</div> <span class="pill cyan">🟢 后续发力</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 5.1 外链建设（权重从80%降至约45%，但仍是重要信号）</div>
-                    <div class="child sub"><span class="marker">◦</span> 外链获取方法（仍有效）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 客座文章（Guest Post）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> PR媒体稿（DA≥60优先）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 摩天楼技术（Skyscraper）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> APL外链（权威隐私型链接）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 失效链接修复（Broken Link Building）</div>
-                    <div class="child sub"><span class="marker">◦</span> 外链评判标准（2026）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 权威性：DR/AS值＞50分优先</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 相关性：网站主题高度相关</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> DoFollow优先</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 位置：内容主体内 > 侧边栏 > 页脚</div>
-                    <div class="child sub"><span class="marker">◦</span> 2026年无效/危险的外链</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 大量低质目录提交</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 付费placements</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> AI生成的客座文章农场（2024.12/2025.10两次打击）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 链接网络（PBN）</div>
-                    <div class="child"><span class="marker">•</span> 5.2 ⭐ 品牌提及（Brand Mentions）——决定AI可见度的核心</div>
-                    <div class="child sub"><span class="marker">◦</span> 核心逻辑：别人提到你的品牌名——哪怕没有超链接——谷歌也能识别并加分</div>
-                    <div class="child sub"><span class="marker">◦</span> 三大数据支撑：</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 谷歌与Reddit签有每年6000万美元的数据授权协议</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> YouTube提及与AI品牌可见度的相关性超过任何其他指标</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 品牌在线提及量排名前25%的企业，AI引用率是后25%的10倍以上</div>
-                    <div class="child sub"><span class="marker">◦</span> 外链vs提及的本质区别：外链提升“单页”，提及建立“整个品牌”</div>
-                    <div class="child"><span class="marker">•</span> 5.3 ⭐ 品牌提及实操指南</div>
-                    <div class="child sub"><span class="marker">◦</span> 第一步：建立监控系统（Brand24 / Mention / Awario）</div>
-                    <div class="child sub"><span class="marker">◦</span> 第二步：在第三方平台主动布局内容</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> YouTube ⭐⭐⭐⭐⭐（最强信号）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> Reddit ⭐⭐⭐⭐⭐（禁止硬广）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 行业媒体 ⭐⭐⭐⭐</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> Quora ⭐⭐⭐⭐</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> LinkedIn ⭐⭐⭐</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> Wikipedia ⭐⭐⭐</div>
-                    <div class="child sub"><span class="marker">◦</span> 第三步：将无链接提及转化为链接</div>
-                    <div class="child sub"><span class="marker">◦</span> 第四步：红线警告——禁止操纵品牌提及</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">💰 第六层 · 谷歌广告（Google Ads / SEM）</div> <span class="pill cyan">🟢 补充流量</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 6.1 账户架构：账号 → 广告系列 → 广告组 → 广告 → 关键词</div>
-                    <div class="child"><span class="marker">•</span> 6.2 广告类型</div>
-                    <div class="child sub"><span class="marker">◦</span> 搜索广告（Search）—— B2B首选</div>
-                    <div class="child sub"><span class="marker">◦</span> 展示广告（Display）—— CPM出价</div>
-                    <div class="child sub"><span class="marker">◦</span> 购物广告（Shopping）—— B2C适用</div>
-                    <div class="child sub"><span class="marker">◦</span> 视频广告（Video）—— YouTube投放</div>
-                    <div class="child sub"><span class="marker">◦</span> PMax效果最大化广告（AI驱动）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> Feed型：只用产品Feed</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 素材型：仅用素材，适合B2B</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 混合型：Feed+素材</div>
-                    <div class="child sub"><span class="marker">◦</span> 再营销（Remarketing / RLSA）</div>
-                    <div class="child"><span class="marker">•</span> 6.3 关键词匹配类型</div>
-                    <div class="child sub"><span class="marker">◦</span> 广泛匹配（Broad）：含任意关键词/同义词即触发</div>
-                    <div class="child sub"><span class="marker">◦</span> 词组匹配（Phrase）：推荐起步</div>
-                    <div class="child sub"><span class="marker">◦</span> 完全匹配（Exact）：最精准</div>
-                    <div class="child sub"><span class="marker">◦</span> 广泛匹配修饰符（+关键词）</div>
-                    <div class="child sub"><span class="marker">◦</span> 否定匹配（-关键词）：控制成本核心手段</div>
-                    <div class="child"><span class="marker">•</span> 6.4 质量得分（Quality Score）三要素</div>
-                    <div class="child sub"><span class="marker">◦</span> 预计点击率（eCTR）</div>
-                    <div class="child sub"><span class="marker">◦</span> 广告相关性</div>
-                    <div class="child sub"><span class="marker">◦</span> 着陆页体验</div>
-                    <div class="child"><span class="marker">•</span> 6.5 出价策略</div>
-                    <div class="child sub"><span class="marker">◦</span> 人工CPC（新手推荐）</div>
-                    <div class="child sub"><span class="marker">◦</span> 目标转化出价（tCPA）</div>
-                    <div class="child sub"><span class="marker">◦</span> 目标广告支出回报率（tROAS）</div>
-                    <div class="child"><span class="marker">•</span> 6.6 B2B广告投放黄金法则</div>
-                    <div class="child sub"><span class="marker">◦</span> 先词组匹配起步，持续添加否定关键词</div>
-                    <div class="child sub"><span class="marker">◦</span> 流量不足时才启用广泛匹配修饰符（+）</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">📊 第七层 · 数据分析与追踪（GA4 + GTM）</div> <span class="pill blue">🟡 基础必备</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 7.1 GA4（Google Analytics 4）</div>
-                    <div class="child sub"><span class="marker">◦</span> 账户/媒体资源/数据视图三层结构</div>
-                    <div class="child sub"><span class="marker">◦</span> “原始/测试/主视图”三视图过滤（排除内部IP流量）</div>
-                    <div class="child sub"><span class="marker">◦</span> 四大报告：受众群体/流量获取/行为/转化</div>
-                    <div class="child"><span class="marker">•</span> 7.2 GTM（Google Tag Manager）</div>
-                    <div class="child sub"><span class="marker">◦</span> 容器代码部署（head + body两段代码）</div>
-                    <div class="child sub"><span class="marker">◦</span> 预览Debug模式验证（Tag Assistant）</div>
-                    <div class="child sub"><span class="marker">◦</span> 变量-触发器-代码三要素</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 触发器：设置条件，某些条件成立时触发</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 变量：决定条件成立后要收集什么数据</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 代码：决定数据发到什么平台做分析</div>
-                    <div class="child"><span class="marker">•</span> 7.3 转化追踪设置</div>
-                    <div class="child sub"><span class="marker">◦</span> GA目标设置（目标网址/事件/时长/页数四种类型）</div>
-                    <div class="child sub"><span class="marker">◦</span> 通过GTM设置事件（GA4-Pageview / 表单提交 / 按钮点击）</div>
-                    <div class="child sub"><span class="marker">◦</span> Google Ads转化代码安装</div>
-                    <div class="child sub"><span class="marker">◦</span> 归因模型选择（最终点击/线性/时间衰减/以数据为依据）</div>
-                    <div class="child"><span class="marker">•</span> 7.4 受众群体与再营销</div>
-                    <div class="child sub"><span class="marker">◦</span> 受众群体细分（发送过询盘 / 来自Facebook）</div>
-                    <div class="child sub"><span class="marker">◦</span> GA数据导入Google Ads做再营销</div>
-                    <div class="child"><span class="marker">•</span> 7.5 用户体验追踪工具</div>
-                    <div class="child sub"><span class="marker">◦</span> Lucky Orange（录屏/热力图）</div>
-                    <div class="child sub"><span class="marker">◦</span> Google Mobile-Friendly Test</div>
-                    <div class="child sub"><span class="marker">◦</span> PageSpeed Insights / GTmetrix</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">🎯 第八层 · 转化率优化（CRO）</div> <span class="pill cyan">🟢 进阶优化</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 8.1 着陆页（Landing Page）设计</div>
-                    <div class="child sub"><span class="marker">◦</span> AIDA原则（Attention→Interest→Desire→Action）</div>
-                    <div class="child sub"><span class="marker">◦</span> 首页 vs 着陆页的区别</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 首页：多出口，品牌展示，导航完整</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 着陆页：单一CTA，专注转化，无导航干扰</div>
-                    <div class="child sub"><span class="marker">◦</span> 着陆页组成：标题区 + 正文 + 表单 + 证言区</div>
-                    <div class="child"><span class="marker">•</span> 8.2 转化元素</div>
-                    <div class="child sub"><span class="marker">◦</span> 感谢页（表单提交后跳转，用于GTM追踪转化数据）</div>
-                    <div class="child sub"><span class="marker">◦</span> 挽留弹窗（退出意图触发）</div>
-                    <div class="child sub"><span class="marker">◦</span> 询盘弹窗（Elementor表单制作 + Turnstile反垃圾）</div>
-                    <div class="child sub"><span class="marker">◦</span> 自动发送交换资料（PDF下载链接）</div>
-                    <div class="child"><span class="marker">•</span> 8.3 表单与数据收集</div>
-                    <div class="child sub"><span class="marker">◦</span> 邮箱数据库插件（记录询盘和来源信息）</div>
-                    <div class="child sub"><span class="marker">◦</span> 防垃圾邮件设置</div>
-                    <div class="child"><span class="marker">•</span> 8.4 邮件营销（EDM）</div>
-                    <div class="child sub"><span class="marker">◦</span> MailerLite（性价比高）</div>
-                    <div class="child sub"><span class="marker">◦</span> Groups + Segments 客户细分</div>
-                    <div class="child sub"><span class="marker">◦</span> 自动化工作流设置</div>
-                    <div class="child sub"><span class="marker">◦</span> 嵌入式表单 / 弹出式表单制作</div>
-                    <div class="child sub"><span class="marker">◦</span> 定期清理不活跃订阅者</div>
-                </div>
-            </details>
-
-            <details class="tree-item">
-                <summary><div class="summary-left">🚀 第九层 · ⭐ AI Overviews优化（2026生存必修课）</div> <span class="pill pink">🔴 最优先</span></summary>
-                <div class="tree-body">
-                    <div class="child"><span class="marker">•</span> 9.1 为什么AI Overviews是2026年SEO的核心？</div>
-                    <div class="child sub"><span class="marker">◦</span> AI Overviews现出现在美国约12.95%的搜索查询中</div>
-                    <div class="child sub"><span class="marker">◦</span> 在商业决策类查询中，出现率高达88.5%</div>
-                    <div class="child sub"><span class="marker">◦</span> 当AI Overviews出现时，用户点击传统结果的比例从15%降至8%</div>
-                    <div class="child sub"><span class="marker">◦</span> ⭐ 约38%的AI Overviews引用来源不在自然排名前10中</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 一年前这个比例是76%，说明谷歌越来越倾向于引用排名靠后的内容</div>
-                    <div class="child sub"><span class="marker">◦</span> AI Overviews触达超25亿月活用户</div>
-                    <div class="child sub"><span class="marker">◦</span> AI Mode突破10亿月活用户（2026.05数据）</div>
-                    <div class="child sub"><span class="marker">◦</span> 大白话：你的URL出现在AI答案背后就算一次展示——用户只是不需要点击，因为答案已经满足了他。未来值得追踪的指标不是点击率，而是引用率。</div>
-                    <div class="child"><span class="marker">•</span> 9.2 AI Overviews的工作原理</div>
-                    <div class="child sub"><span class="marker">◦</span> 查询扇出（Query Fan-out）机制</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> Gemini将用户问题拆解成多个相关子查询，并行运行，再将最佳信息整合为一个答案</div>
-                    <div class="child sub"><span class="marker">◦</span> 三个评估信号</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 内容质量：准确、原创、有用</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 来源权威：域名和作者在该主题上的可信度</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 相关性：内容直接回答特定子问题的程度</div>
-                    <div class="child sub"><span class="marker">◦</span> 大白话：谷歌把“用户问的问题”拆成好几个小问题，同时去搜，再把最好的答案拼在一起给你。如果你的页面在任何一个子问题上胜出，就有机会被引用。</div>
-                    <div class="child"><span class="marker">•</span> 9.3 独有内容：GEO算法下“被AI引用”的5大实操对策</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策1：在内容开头100字内直接回答问题</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策2：使用清晰列表、表格、FAQ结构化内容</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策3：强化E-E-A-T信号（真实作者资料、可验证的经验履历）</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策4：部署完整Schema标记，提升实体密度（实体密度20.6%的内容更容易被引用）</div>
-                    <div class="child sub"><span class="marker">◦</span> 对策5：持续更新内容（AI优先引用新鲜信息，定期更新老内容）</div>
-                    <div class="child"><span class="marker">•</span> 9.4 AI Overviews优化四步框架</div>
-                    <div class="child sub"><span class="marker">◦</span> 第一步：绘制主题权威地图（确定品牌在哪些主题领域有真正的专业知识）</div>
-                    <div class="child sub"><span class="marker">◦</span> 第二步：构建连接的知识图谱（用内部链接把相关内容串联起来）</div>
-                    <div class="child sub"><span class="marker">◦</span> 第三步：按优先级部署结构化数据（Article > FAQ/HowTo > Product > Breadcrumb > LocalBusiness）</div>
-                    <div class="child sub"><span class="marker">◦</span> 第四步：优化E-E-A-T信号以适应AI检索</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 权威 → 可验证的实体身份（Wikidata、LinkedIn、知识图谱）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 专业 → Person Schema + 结构化从属关系</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 可信 → 内部一致性（AI交叉检查Schema、内容和实体图谱有无矛盾）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> 经验 → 原始实体（产品、数据、事件）证明亲身经历</div>
-                    <div class="child"><span class="marker">•</span> 9.5 月度实操清单（12项Checklist）</div>
-                    <div class="child sub"><span class="marker">◦</span> 内容层面：</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 每个核心页面在H2问题标题下放置40-60字Atomic Answer</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 内容中包含列表、表格、步骤等结构化格式</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 每个内容至少包含1个独有信息点（独家数据、真实案例、第一手观察）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 自然提及命名实体（品牌、人物、地点、产品）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 定期更新老内容（尤其是排名5-20名的页面）</div>
-                    <div class="child sub"><span class="marker">◦</span> 技术层面：</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 确保所有重要页面可被Google抓取和索引</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 部署优先级Schema（Article / FAQ / Product）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 确保品牌信息跨平台一致（官网、社交媒体、目录）</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 建立作者实体（Person Schema + 社交媒体链接）</div>
-                    <div class="child sub"><span class="marker">◦</span> 监控层面：</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 每月在Google搜索核心关键词，检查AI Overviews是否引用你的网站</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 监控Search Console中新增的AI Overviews和AI Mode展示数据报告</div>
-                    <div class="child sub-sub"><span class="marker">▪</span> [ ] 追踪引用率而非仅点击率</div>
-                </div>
-            </details>
-        </div>
-
-        <h3 style="margin: 30px 0 12px 0; display:flex; align-items:center; gap:8px;"><span>📚</span> 学习路径速查表</h3>
-        <div class="table-wrap">
-            <table class="styled-table">
-                <thead><tr><th>阶段</th><th>层级</th><th>优先级</th><th>建议周期</th><th>关键产出</th></tr></thead>
-                <tbody>
-                    <tr><td>🧱 打地基</td><td>第零层 · 算法更新认知</td><td><span class="pill orange">🔴 先看</span></td><td>第1周</td><td>建立算法时间线认知</td></tr>
-                    <tr><td></td><td>第一层 · 底层算法思维</td><td><span class="pill orange">🔴 先看</span></td><td>第1-2周</td><td>E-E-A-T审计 + 搜索意图表</td></tr>
-                    <tr><td>🏗️ 建房子</td><td>第二层 · 独立站基建</td><td><span class="pill blue">🟡 基础</span></td><td>第2-3周</td><td>可访问的独立站</td></tr>
-                    <tr><td></td><td>第三层 · 站内SEO与内容工业化</td><td><span class="pill orange">🔴 核心</span></td><td>第3-8周</td><td>内容工业化体系</td></tr>
-                    <tr><td></td><td>第四层 · 技术性SEO</td><td><span class="pill blue">🟡 基础</span></td><td>第3-5周</td><td>网站被谷歌索引</td></tr>
-                    <tr><td>📊 数据驱动</td><td>第七层 · 数据分析与追踪</td><td><span class="pill blue">🟡 基础</span></td><td>第6周起</td><td>完整追踪体系</td></tr>
-                    <tr><td>🏠 住进去</td><td>第五层 · 站外影响力</td><td><span class="pill cyan">🟢 后续</span></td><td>第8周起</td><td>品牌提及布局</td></tr>
-                    <tr><td></td><td>第六层 · 谷歌广告</td><td><span class="pill cyan">🟢 补充</span></td><td>第8周起</td><td>付费流量验证</td></tr>
-                    <tr><td></td><td>第八层 · 转化率优化</td><td><span class="pill cyan">🟢 进阶</span></td><td>第10周起</td><td>询盘率提升</td></tr>
-                    <tr><td>🚀 贯穿全程</td><td>第九层 · AI Overviews优化</td><td><span class="pill pink">🔴 最优先</span></td><td>贯穿全程</td><td>AI引用覆盖率</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="highlight-box" style="margin-top:20px;">
-            <strong>💡 节点统计：</strong> 第零层 10个 · 第一层 6个 · 第二层 4个 · 第三层 7个 · 第四层 3个 · 第五层 3个 · 第六层 4个 · 第七层 5个 · 第八层 3个 · 第九层 5个 = <strong>共50+个子节点</strong>，严格按照终版树形图完整呈现，无删减、无合并、无改写。
-        </div>
-
-        <div class="footer-links">
-            <span>✨ Tab 0 · 全局完整目录 — 精确至终版树形图</span>
-            <span>点击 <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">返回顶部</span></span>
+        <!-- 底部已修正链接为 index.html -->
+        <div class="footer-links" style="margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
+            <span>✨ Tab 1 · 算法更新时间轴（10个节点）</span>
+            <span>
+                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">← 返回顶部← </span>
+                <span class="internal-link" onclick="location.href='index.html'">← 返回全局目录← </span>
+            </span>
         </div>
     </div>
 
-    <!-- 微信视频唤醒脚本 -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var video = document.getElementById('hero-video');
-            document.addEventListener("WeixinJSBridgeReady", function() { if (video && video.paused) { video.play(); } }, false);
-            document.body.addEventListener('touchstart', function() { if (video && video.paused) { video.play(); } }, { once: true });
-        });
-    </script>
-
-    <!-- 🔍 ⌘K 全局搜索弹窗与高亮引擎 -->
+    <!-- 🔍 ⌘K 全局搜索弹窗结构 -->
     <div id="globalSearchModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -575,14 +231,7 @@
         </div>
     </div>
 
-    <style>
-        #globalSearchResults li { padding: 14px 20px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
-        #globalSearchResults li:hover { background: #F0FDF4; }
-        #globalSearchResults .res-title { font-weight: 600; color: #0F172A; font-size: 15px; display: block; }
-        #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
-    </style>
-
     <!-- 引入全站公共全局搜索与高亮系统 -->
-   <script src="assets/search.js?v=3"></script>
+    <script src="assets/search.js?v=3"></script>
 </body>
 </html>
