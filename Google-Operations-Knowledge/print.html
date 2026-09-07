@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>知识库 - 完整打印版</title>
+    <style>
+        /* =======================================
+           这是专门为 A4 纸张和黑白打印准备的魔法 CSS
+           ======================================= */
+        @media print {
+            /* 1. 强制展开所有折叠卡片、词典释义和标签页 */
+            .collapse, .tab-content, .hidden-content { 
+                display: block !important; height: auto !important; visibility: visible !important; opacity: 1 !important; 
+            }
+            /* 2. 隐藏不需要打印的按钮、顶部视频 Banner 等 */
+            button, .toggle-icon, .nav-tabs, .video-banner { display: none !important; }
+            
+            /* 3. 强制矩阵表格换行，防止右侧被纸张截断 */
+            .table-responsive, .overflow-x-auto { overflow: visible !important; }
+            table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; word-break: break-all !important; }
+            
+            /* 4. 黑白高对比度 */
+            body { background-color: #fff !important; color: #000 !important; }
+            
+            /* 5. 核心：每个 Tab 页面打印完毕后，自动换一张新纸 */
+            .page-break { page-break-after: always; }
+        }
+        body { font-family: sans-serif; padding: 20px; }
+        #loading { color: #d93025; font-size: 20px; font-weight: bold; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+    <div id="loading">正在为您自动拼接所有页面，请稍候...</div>
+    <div id="print-container"></div>
+
+    <script>
+        async function mergePages() {
+            // 这里自动按顺序抓取 index 以及 tab1 到 tab10
+            const pages = ['index.html'];
+            for (let i = 1; i <= 10; i++) {
+                pages.push(`tab${i}.html`);
+            }
+            
+            let container = document.getElementById('print-container');
+            
+            for (let page of pages) {
+                try {
+                    // 去同一目录下请求对应的 html 文件
+                    let response = await fetch(page);
+                    if (!response.ok) continue; // 如果某个文件不存在就跳过
+                    let text = await response.text();
+                    
+                    // 智能只提取 <body> 里面的核心内容（不带原有的花哨格式）
+                    let bodyMatch = text.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+                    let content = bodyMatch ? bodyMatch[1] : text;
+                    
+                    // 给每个页面的内容套上一层 div，并加上“分页符”
+                    let div = document.createElement('div');
+                    div.className = 'page-break';
+                    div.innerHTML = content;
+                    container.appendChild(div);
+                } catch (e) {
+                    console.error('加载失败: ' + page, e);
+                }
+            }
+            document.getElementById('loading').innerHTML = '✅ 所有 11 个页面已拼装完毕！请直接按 Ctrl + P 选择黑白打印。';
+        }
+        
+        mergePages();
+    </script>
+</body>
+</html>
