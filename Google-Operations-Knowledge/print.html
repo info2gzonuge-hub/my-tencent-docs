@@ -4,28 +4,34 @@
     <meta charset="UTF-8">
     <title>操作知识库 - 完整导出版</title>
     <style>
-        /* =======================================
-           打印与导出 PDF 专属排版 (A4 定制)
-           ======================================= */
         @media print {
-            /* 1. 强制锁定 A4 纸张比例与 15mm 物理边距 */
             @page {
                 size: A4;
                 margin: 15mm; 
             }
             
-            /* 2. 隐藏多余的网页交互元素（含视频Banner和切换按钮） */
             button, .toggle-icon, .nav-tabs, .video-banner { display: none !important; }
             
-            /* 3. 终结表格截断与图片溢出 */
             .table-responsive, .overflow-x-auto { overflow: visible !important; }
             table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; word-break: break-all !important; }
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; }
             
-            /* 4. 强制黑底白字高对比度 */
-            body { background-color: #ffffff !important; color: #000000 !important; }
+            /* =======================================
+               新增核心补丁：彻底破解选项卡重叠与自定义隐藏
+               ======================================= */
+            .tab-content > *, [class*="tab-pane"], [class*="content-item"], [class*="step-"] {
+                display: block !important;
+                position: static !important; /* 致命一击：取消绝对定位，让②③④在①下面自然排开 */
+                visibility: visible !important;
+                opacity: 1 !important;
+                height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+                transform: none !important; /* 取消位移动画 */
+                margin-bottom: 20px !important; /* 加上间距，防止内容粘连 */
+            }
             
-            /* 5. 分页符：确保每个 tab 在 PDF 里从新的一页开始 */
+            body { background-color: #ffffff !important; color: #000000 !important; }
             .page-break { page-break-after: always; }
         }
         
@@ -34,19 +40,16 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在调用原生引擎抓取并强制展开所有折叠内容，请稍候...</div>
+    <div id="loading">正在调用原生引擎抓取并强制展开所有选项卡，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
         async function mergePages() {
-            // 定义需要抓取的页面列表：index.html 以及 tab1 到 tab10
             const pages = ['index.html'];
-            for (let i = 1; i <= 10; i++) {
-                pages.push(`tab${i}.html`);
-            }
+            for (let i = 1; i <= 10; i++) pages.push(`tab${i}.html`);
             
             let container = document.getElementById('print-container');
-            let parser = new DOMParser(); // 启用浏览器原生解析引擎，杜绝内容遗漏
+            let parser = new DOMParser(); 
             
             for (let page of pages) {
                 try {
@@ -54,22 +57,18 @@
                     if (!response.ok) continue;
                     let text = await response.text();
                     
-                    // 将抓取到的文本转化为真实的 DOM 节点结构
                     let doc = parser.parseFromString(text, 'text/html');
                     
-                    // 1. 无损抓取专属 CSS
                     let styles = doc.querySelectorAll('style');
                     styles.forEach(s => document.head.appendChild(s.cloneNode(true)));
                     
-                    // 2. 针对解析后的结构，进行“暴力展开”手术
                     let bodyContent = doc.body;
                     
-                    // 强制展开原生折叠标签
                     let detailsTags = bodyContent.querySelectorAll('details');
                     detailsTags.forEach(d => d.setAttribute('open', 'true'));
                     
-                    // 强制剥离所有前端隐藏类名和样式
-                    let hiddenElements = bodyContent.querySelectorAll('.collapse, .tab-pane, .d-none, .hidden, [hidden], [style*="display: none"], [style*="display:none"]');
+                    // 升级模糊匹配：抓取所有带有 tab, content, hide 字眼的元素进行强制暴漏
+                    let hiddenElements = bodyContent.querySelectorAll('[class*="collapse"], [class*="tab"], [class*="content"], [class*="hide"], [class*="step"], [hidden], [style*="display"]');
                     hiddenElements.forEach(el => {
                         el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
                         el.removeAttribute('hidden');
@@ -77,13 +76,12 @@
                         el.style.visibility = 'visible';
                         el.style.height = 'auto';
                         el.style.opacity = '1';
+                        el.style.position = 'static'; // 同样在 DOM 层解除定位
                     });
                     
-                    // 3. 将处理完毕的完整节点装入分页容器
                     let div = document.createElement('div');
                     div.className = 'page-break';
                     
-                    // 逐个搬运子节点，确保任何标签（含算法模块的特殊标签）都不丢失
                     while (bodyContent.firstChild) {
                         div.appendChild(bodyContent.firstChild);
                     }
@@ -93,7 +91,7 @@
                     console.error('加载页面发生错误: ' + page, e);
                 }
             }
-            document.getElementById('loading').innerHTML = '✅ 原生抓取与强制展开完毕！无任何内容遗漏。<br><br>👉 下一步操作：请按 Ctrl + P，目标打印机选择“另存为 PDF”，保存后即可随意编辑删减。';
+            document.getElementById('loading').innerHTML = '✅ 抓取完毕！选项卡重叠已修复。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
             document.getElementById('loading').style.borderColor = '#0f9d58';
             document.getElementById('loading').style.backgroundColor = '#e6f4ea';
             document.getElementById('loading').style.color = '#0f9d58';
