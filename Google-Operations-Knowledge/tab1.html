@@ -6,7 +6,7 @@
     <title>Tab 1 · 算法更新 · 谷歌推广知识体系</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -25,7 +25,8 @@
             --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
             --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
             --radius: 16px;
-            --font: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            /* 英文采用 Quicksand，中文回退系统无衬线字体 */
+            --font: 'Quicksand', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
         body { font-family: var(--font); background-color: var(--bg-body); min-height: 100vh; padding: 30px 20px; color: var(--text-dark); }
         .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
@@ -43,19 +44,28 @@
         .tab-btn { flex-shrink: 0; padding: 10px 20px; border: none; background: transparent; border-radius: 40px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: all 0.2s; }
         .tab-btn.active { background: var(--bg-tab-active); color: #fff; box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35); border-color: var(--bg-tab-active); }
         .tab-btn:not(.active):hover { background: var(--bg-card-alt); color: var(--primary); }
+        
         .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
         .panel-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; padding: 12px 16px; background: var(--bg-card-alt); border-radius: 12px; border-left: 4px solid var(--primary-light); line-height: 1.6; }
         .pill { display: inline-block; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; background: var(--primary); color: #fff; }
         .internal-link { color: var(--primary); font-weight: 600; text-decoration: underline 2px dotted var(--primary-light); text-underline-offset: 4px; cursor: pointer; }
         .internal-link:hover { color: var(--secondary); }
+        
         .timeline { display: flex; flex-direction: column; gap: 16px; }
-        .timeline-card { border: 1px solid var(--border-light); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; transition: all 0.3s ease; box-shadow: var(--shadow-soft); display: flex; align-items: stretch; }
+        .timeline-card { border: 1px solid var(--border-light); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; transition: all 0.3s ease; box-shadow: var(--shadow-soft); display: flex; align-items: stretch; scroll-margin-top: 20px; }
         .timeline-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
         .timeline-card .time-side { background: var(--bg-card-alt); padding: 20px; min-width: 140px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: var(--primary); border-right: 1px solid var(--border-light); }
         .timeline-card .content-side { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
         .timeline-card .title { font-size: 18px; font-weight: 700; color: var(--text-dark); }
-        .timeline-card .bubble { background: var(--bg-highlight); padding: 12px 16px; border-radius: 12px; border-left: 4px solid var(--primary); font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        .timeline-card .bubble { background: var(--bg-highlight); padding: 16px; border-radius: 12px; border-left: 4px solid var(--primary); font-size: 14px; color: var(--text-dark); line-height: 1.6; display: flex; flex-direction: column; gap: 8px; }
         
+        /* 双向链接高亮特效 */
+        :target { animation: highlight-target 2s ease-out; border-color: var(--primary); }
+        @keyframes highlight-target {
+            0% { background-color: var(--bg-highlight); box-shadow: 0 0 0 2px var(--primary); }
+            100% { background-color: var(--bg-card); box-shadow: var(--shadow-soft); }
+        }
+
         /* 手机端响应式适配 */
         @media (max-width: 768px) {
             .app-container { padding: 16px 12px !important; }
@@ -95,7 +105,7 @@
         <header class="app-header">
             <div class="header-left">
                 <h1>📊 谷歌推广知识体系 <span>· Tab 1 · 算法更新</span></h1>
-                <span class="badge-header">⏳ 时间轴 · 10个节点</span>
+                <span class="badge-header">⏳ 时间轴 · 12个节点</span>
             </div>
             <!-- 右侧搜索按钮 -->
             <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
@@ -119,9 +129,9 @@
         </nav>
 
         <!-- 标题区 -->
-        <div class="panel-title">📅 第零层 · 算法更新认知（2025-2026）</div>
+        <div class="panel-title">📅 第零层 · 算法更新认知（2024-2026）</div>
         <div class="panel-sub">
-            <span class="pill">大白话版</span> 2026.07.10 起，谷歌搜索默认由 AI 生成答案——你的网页没被引用，就等于不存在。
+            <span class="pill">大白话实战版</span> 2026.07.10 起，谷歌搜索默认由 AI 生成答案——不仅要知道算法变了什么，更要知道业务链路上该如何应对。
         </div>
 
         <!-- 时间轴（卡片矩阵化升级） -->
@@ -131,93 +141,146 @@
 
             <!-- ALGO_END -->
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2024-03">
                 <div class="time-side">2024.03</div>
                 <div class="content-side">
                     <div class="title">INP 替代 FID</div>
-                    <div class="bubble">🗣️ 谷歌换标准了——不看首次点击延迟，而是看整体交互顺不顺滑。</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：谷歌换标准了——不看首次点击延迟，而是看整体交互顺不顺滑。</span></div>
+                        <div>🔸 <strong>实战版：前端交互大考。</strong>你的多标签卡片切换、图片悬浮放大（Hover）等特效绝不能卡顿。首屏加载再快，只要客户点击“申请打样”表单时有一丝延迟，页面转化得分直接拉胯。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2024-05">
+                <div class="time-side">2024.05</div>
+                <div class="content-side">
+                    <div class="title">核心更新 · 规模化内容滥用打击 (Scaled Content)</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：纯靠代码批量生成、毫无附加价值的低质网页矩阵遭到全面清理。</span></div>
+                        <div>🔸 <strong>实战版：自动化手段升级。</strong>纯靠 CSV 导入拼凑 Jinja2 模板的 <a href="tab9.html#pseo-strategy" class="internal-link" target="_blank">pSEO 矩阵站</a>遭遇团灭。想用代码狂刷流量，批量生成的长尾页面里必须加入多维度的动态数据筛选或专属测算工具。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-card" id="algo-2024-06">
+                <div class="time-side">2024.06</div>
+                <div class="content-side">
+                    <div class="title">过期域名滥用重置 (Expired Domain Abuse)</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：利用高权重过期域名托管低质内容的做法将被视为垃圾作弊行为。</span></div>
+                        <div>🔸 <strong>实战版：老域名红利终结。</strong>靠抢注带高权重外链的老域名，直接 301 重定向做站群的玩法被废。剥离历史权重后，踏实做新域名的品牌官网反而减少了被黑帽霸屏的阻力。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-card" id="algo-2024-12">
                 <div class="time-side">2024.12</div>
                 <div class="content-side">
-                    <div class="title">打击链接网络 &amp; AI客座文章农场</div>
-                    <div class="bubble">🗣️ 花钱买链接、AI批量发外链的路子被彻底堵死。</div>
+                    <div class="title">打击链接网络 & AI客座文章农场</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：花钱买链接、AI批量发外链的路子被彻底堵死。</span></div>
+                        <div>🔸 <strong>实战版：外链质量洗牌。</strong>毫无流量的垃圾站点发再多外链也没用，反而触发人工惩罚。必须去搞真实的行业论坛背书，或获取供应链上下游合规机构的真实引用。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2025-03">
                 <div class="time-side">2025.03</div>
                 <div class="content-side">
                     <div class="title">核心更新 · E-E-A-T权重提升</div>
-                    <div class="bubble">🗣️ 内容不仅要有用，还要有“真实的人在背后”。</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：内容不仅要有用，还要有“真实的人在背后”。</span></div>
+                        <div>🔸 <strong>实战版：信任状必须前置。</strong>别再堆砌冷冰冰的参数，B2B 独立站需要展示真实的验厂实拍。在双白官网这类 OEM/ODM 定制页上，直接挂上质检负责人的实名背书，虚构的海外专家会被降权。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2025-08">
                 <div class="time-side">2025.08</div>
                 <div class="content-side">
-                    <div class="title">打击寄生虫 SEO</div>
-                    <div class="bubble">🗣️ 寄生在大品牌域名下的垃圾内容被大面积清理。</div>
+                    <div class="title">打击网站声誉滥用 (Site Reputation Abuse)</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：寄生在大品牌域名下的垃圾内容被大面积清理。</span></div>
+                        <div>🔸 <strong>实战版：寄生虫玩法失灵。</strong>租用高权重教育或新闻站二级目录发带货软文被精准狙击。流量开始向拥有真实资质、深耕垂直领域的品牌独立站回流。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2025-12">
                 <div class="time-side">2025.12</div>
                 <div class="content-side">
                     <div class="title">核心更新 · 质量胜于数量</div>
-                    <div class="bubble">🗣️ 有真实经验的网站排名暴涨，AI批量填充的流量归零。</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：有真实经验的网站排名暴涨，AI批量填充的流量归零。</span></div>
+                        <div>🔸 <strong>实战版：内容大清洗。</strong>靠 AI 批量洗稿铺长尾词的站点被团灭。排名靠前的落地页必须有真实的 <a href="tab9.html#cro-testing" class="internal-link" target="_blank">CRO 转化率测试</a>数据，或者整理详实的<a href="tab2.html#dictionary-module" class="internal-link" target="_blank">电商运营专业词典</a>来提供独特价值。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2026-02">
                 <div class="time-side">2026.02</div>
                 <div class="content-side">
                     <div class="title">Discover 独立更新</div>
-                    <div class="bubble">🗣️ 谷歌信息流推荐独立考核，不再和搜索排名混为一谈。</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：谷歌信息流推荐独立考核，不再和搜索排名混为一谈。</span></div>
+                        <div>🔸 <strong>实战版：流量入口分化。</strong>想蹭 Discover 发现页的爆发流量，必须配上极具视觉冲击力的高清创意配图（如皮克斯3D风格的动态视频 Banner）和情绪化标题，传统枯燥软文彻底吃不开。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2026-03">
                 <div class="time-side">2026.03</div>
                 <div class="content-side">
-                    <div class="title">引入硬性信号“信息增益”</div>
-                    <div class="bubble">🗣️ 只会重复别人说过的话，排名会掉——必须有新东西。</div>
+                    <div class="title">引入硬性信号“信息增益” (Information Gain)</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：只会重复别人说过的话，排名会掉——必须有新东西。</span></div>
+                        <div>🔸 <strong>实战版：落地页洗牌。</strong>把全网前十的文章让 AI 换皮洗稿，排名会死死卡在第11名。你的网页里必须有别人查不到的干货：比如独家的合规证书解析（ISO 9001、WEEE等）、定制化打样周期表。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2026-04">
                 <div class="time-side">2026.04</div>
                 <div class="content-side">
                     <div class="title">Preferred Sources 上线</div>
-                    <div class="bubble">🗣️ 用户可在设置里指定“我只想看这个来源的内容”。</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：用户可在设置里指定“我只想看这个来源的内容”。</span></div>
+                        <div>🔸 <strong>实战版：品牌护城河显现。</strong>一旦用户把你的独立站加入了偏好名单，无论你客观排名第几都会被强行顶到前排。这时候，全域流量运营和用户私域留存的威力彻底爆发。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
+            <div class="timeline-card" id="algo-2026-05">
                 <div class="time-side">2026.05</div>
                 <div class="content-side">
                     <div class="title">I/O大会 · 搜索25年来最大改版</div>
-                    <div class="bubble">🗣️ 搜索不再只给10个蓝链，AI直接把答案整理好给你。</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：搜索不再只给10个蓝链，AI直接把答案整理好给你。</span></div>
+                        <div>🔸 <strong>实战版：流量分发重构。</strong>如果你的网页没有提供独特的观点或极高的局部权重，连被 AI 作为参考来源 (Citation) 引用的资格都没有，纯属无效曝光。</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="timeline-card">
-                <div class="time-side" style="background: var(--primary); color: #fff;">2026.07.10</div>
+            <div class="timeline-card" id="algo-2026-07">
+                <div class="time-side" style="background: var(--primary); color: #fff; border-right: none;">2026.07.10</div>
                 <div class="content-side">
                     <div class="title">搜索界面革命生效</div>
-                    <div class="bubble">🗣️ 搜索默认回答由 AI 生成——你的网页没被引用，就等于不存在。</div>
+                    <div class="bubble">
+                        <div>🔹 <span style="color: var(--text-muted);">原版：搜索默认回答由 AI 生成——你的网页没被引用，就等于不存在。</span></div>
+                        <div>🔸 <strong>实战版：终局之战。</strong>传统的“十条蓝链”彻底退居二线。一切的 SEO 优化都必须围绕“如何让 AI 觉得我的数据最值得引用”来做，结构化数据与深度专业性成了唯一解药。</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 底部已修正链接为 index.html -->
+        <!-- 底部 -->
         <div class="footer-links" style="margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
-            <span>✨ Tab 1 · 算法更新时间轴（10个节点）</span>
+            <span>✨ Tab 1 · 算法更新时间轴（12个节点）</span>
             <span>
-                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">← 返回顶部← </span>
-                <span class="internal-link" onclick="location.href='index.html'">← 返回全局目录← </span>
+                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">← 返回顶部</span>
+                <span style="margin: 0 8px;">|</span>
+                <span class="internal-link" onclick="location.href='index.html'">返回全局目录 →</span>
             </span>
         </div>
     </div>
