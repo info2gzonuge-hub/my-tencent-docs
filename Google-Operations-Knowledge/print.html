@@ -2,111 +2,63 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - 完美 A4 打印版</title>
+    <title>操作知识库 - 终极无死角打印版</title>
     <style>
-        /* =======================================
-           A4 纸质排版引擎 (彻底解决拥挤与留白问题)
-           ======================================= */
         @media print {
             @page { size: A4; margin: 15mm; }
-            
-            /* 1. 基础文字排版重置：Quicksand 英文 + 系统无衬线中文，黄金行高 */
-            body { 
-                font-family: "Quicksand", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important; 
-                font-size: 11pt !important; 
-                line-height: 1.6 !important; 
-                color: #222 !important; 
-                background: #fff !important; 
-            }
-            
-            /* 清理多余网页 UI */
-            button, .toggle-icon, .nav-tabs, .video-banner, 
-            input[type="radio"], input[type="checkbox"] { display: none !important; }
-            
-            /* 2. 标题层级优化：收缩字号，避免占用整屏纸张 */
-            h1 { font-size: 16pt !important; border-bottom: 2px solid #000; padding-bottom: 4px; margin: 1.5em 0 0.8em !important; page-break-after: avoid; }
-            h2 { font-size: 14pt !important; margin: 1.2em 0 0.6em !important; page-break-after: avoid; }
-            h3 { font-size: 12pt !important; margin: 1em 0 0.5em !important; page-break-after: avoid; }
-            p, ul, ol, li { margin-bottom: 0.8em !important; }
-
-            /* 3. 卡片与折叠面板“瘦身”：大幅缩减网页端留白，增加细边框以便阅读 */
-            [class*="content"], [class*="tab-pane"], [class*="step"], [class*="card"], [class*="module"] {
-                height: auto !important; max-height: none !important; overflow: visible !important;
-                position: static !important; opacity: 1 !important;
-                padding: 12px 15px !important; /* 缩小内边距 */
-                margin-bottom: 15px !important;
-                background: #fafafa !important; /* 极浅灰底色代替多巴胺大色块 */
-                border: 1px solid #eaeaea !important; 
-                border-radius: 4px !important;
-                page-break-inside: avoid; /* 核心：防止一段内容被硬切到两页 */
-            }
-            
-            /* 4. 网格重构：解决卡片要么太长要么太挤的问题 */
-            [class*="row"], [class*="flex"], [style*="display: flex"] {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                gap: 15px !important; /* 卡片之间的舒适间距 */
-                margin: 0 !important;
-            }
-            /* 强行让子模块（如着陆页七大模块）在 A4 纸上呈现双列排版，最大化利用空间 */
-            [class*="col"], [class*="card"], [class*="item"] {
-                flex: 1 1 calc(50% - 15px) !important; 
-                min-width: 45% !important;
-                box-sizing: border-box !important;
-                margin-bottom: 0 !important; 
-            }
-
-            /* 5. 表格与图片优化 */
-            table { width: 100% !important; table-layout: auto !important; border-collapse: collapse !important; font-size: 10pt !important; margin-bottom: 1em !important; }
-            th, td { border: 1px solid #ccc !important; padding: 6px 10px !important; word-break: break-word !important; }
-            img { max-width: 100% !important; max-height: 250px !important; object-fit: contain !important; page-break-inside: avoid; margin: 10px 0 !important; }
-            
+            button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"] { display: none !important; }
+            table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; }
+            img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
             .page-break { page-break-after: always; }
+            
+            /* 无差别强制换行底层保障 */
+            * {
+                overflow-x: visible !important;
+                white-space: normal !important; 
+                box-sizing: border-box !important;
+            }
+            body { background-color: #fff !important; color: #000 !important; }
         }
-        
-        body { font-family: "Quicksand", sans-serif; padding: 20px; }
+        body { font-family: "Quicksand", "Segoe UI", sans-serif; padding: 20px; }
         #loading { color: #d93025; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding: 20px; border: 2px dashed #d93025; background: #fff3f3; }
     </style>
 </head>
 <body>
-    <div id="loading">正在抓取网页并执行 A4 纸质排版重构，请稍候...</div>
+    <div id="loading">正在执行【物理测量与破拆】抓取所有内容，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
         async function mergePages() {
             const pages = ['index.html'];
             for (let i = 1; i <= 10; i++) pages.push(`tab${i}.html`);
-            
+
             let container = document.getElementById('print-container');
-            let parser = new DOMParser(); 
-            
+            let parser = new DOMParser();
+
             for (let page of pages) {
                 try {
                     let response = await fetch(page);
                     if (!response.ok) continue;
                     let text = await response.text();
-                    
                     let doc = parser.parseFromString(text, 'text/html');
-                    
+
                     let styles = doc.querySelectorAll('style');
                     styles.forEach(s => document.head.appendChild(s.cloneNode(true)));
-                    
+
                     let bodyContent = doc.body;
-                    
-                    // 破解防印机制（单选/复选框）
-                    let hackInputs = bodyContent.querySelectorAll('input[type="radio"], input[type="checkbox"]');
-                    hackInputs.forEach(input => {
-                        input.removeAttribute('name'); 
-                        input.setAttribute('checked', 'checked'); 
-                        input.checked = true; 
+
+                    // 1. 破解单选框障眼法
+                    bodyContent.querySelectorAll('input').forEach(input => {
+                        input.removeAttribute('name');
+                        input.setAttribute('checked', 'checked');
+                        input.checked = true;
                     });
 
-                    // 强制展开所有折叠面板
-                    let detailsTags = bodyContent.querySelectorAll('details');
-                    detailsTags.forEach(d => d.setAttribute('open', 'true'));
-                    
-                    let hiddenElements = bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]');
-                    hiddenElements.forEach(el => {
+                    // 2. 强制展开所有原生折叠
+                    bodyContent.querySelectorAll('details').forEach(d => d.setAttribute('open', 'true'));
+
+                    // 3. 剥离所有常规隐藏属性
+                    bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]').forEach(el => {
                         el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
                         el.removeAttribute('hidden');
                         el.style.display = 'block';
@@ -114,31 +66,59 @@
                         el.style.height = 'auto';
                         el.style.opacity = '1';
                     });
-                    
-                    // 剥离强制不换行属性
-                    let nowrapElements = bodyContent.querySelectorAll('[style*="white-space: nowrap"]');
-                    nowrapElements.forEach(el => {
-                        el.style.whiteSpace = 'normal';
-                    });
 
                     let div = document.createElement('div');
                     div.className = 'page-break';
-                    
                     while (bodyContent.firstChild) {
                         div.appendChild(bodyContent.firstChild);
                     }
-                    
                     container.appendChild(div);
                 } catch (e) {
-                    console.error('加载页面发生错误: ' + page, e);
+                    console.error('加载错误: ' + page, e);
                 }
             }
-            document.getElementById('loading').innerHTML = '✅ 纸质排版重构完成！页面已自适应 A4 布局。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
-            document.getElementById('loading').style.borderColor = '#0f9d58';
-            document.getElementById('loading').style.backgroundColor = '#e6f4ea';
-            document.getElementById('loading').style.color = '#0f9d58';
+
+            // ==========================================
+            // 终极杀手锏：物理测量并摧毁所有横向溢出
+            // ==========================================
+            // 延迟 1.5 秒，确保所有图片和 CSS 渲染完毕后再进行尺子测量
+            setTimeout(() => {
+                const allElements = document.querySelectorAll('#print-container *');
+                const bodyWidth = document.body.clientWidth;
+
+                allElements.forEach(el => {
+                    // 解除所有自带的横向滚动限制
+                    if (window.getComputedStyle(el).overflowX === 'auto' || window.getComputedStyle(el).overflowX === 'scroll') {
+                        el.style.setProperty('overflow-x', 'visible', 'important');
+                        el.style.setProperty('flex-wrap', 'wrap', 'important');
+                        el.style.setProperty('white-space', 'normal', 'important');
+                    }
+
+                    // 核心探测：如果这个元素的实际内容宽度，超出了屏幕/纸张的宽度
+                    if (el.scrollWidth > bodyWidth + 10) { 
+                        // 强制将其父级容器的布局方式砸碎，转为 100% 宽度的块级排版
+                        el.style.setProperty('display', 'block', 'important');
+                        el.style.setProperty('width', '100%', 'important');
+                        el.style.setProperty('max-width', '100%', 'important');
+                        el.style.setProperty('white-space', 'normal', 'important');
+
+                        // 将里面所有横向排列的子卡片（如模块4,5,6,7），全部强制转为上下垂直堆叠
+                        Array.from(el.children).forEach(child => {
+                            child.style.setProperty('display', 'block', 'important');
+                            child.style.setProperty('width', '100%', 'important');
+                            child.style.setProperty('max-width', '100%', 'important');
+                            child.style.setProperty('margin-bottom', '20px', 'important');
+                        });
+                    }
+                });
+
+                document.getElementById('loading').innerHTML = '✅ 终极降维排版完成！所有横向隐藏的内容已全部强制转为上下排列。<br><br>👉 请按 Ctrl + P 选择“另存为 PDF”。';
+                document.getElementById('loading').style.borderColor = '#0f9d58';
+                document.getElementById('loading').style.backgroundColor = '#e6f4ea';
+                document.getElementById('loading').style.color = '#0f9d58';
+            }, 1500); 
         }
-        
+
         mergePages();
     </script>
 </body>
