@@ -2,56 +2,74 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - 完整导出版</title>
+    <title>操作知识库 - 完美 A4 打印版</title>
     <style>
+        /* =======================================
+           A4 纸质排版引擎 (彻底解决拥挤与留白问题)
+           ======================================= */
         @media print {
             @page { size: A4; margin: 15mm; }
             
+            /* 1. 基础文字排版重置：Quicksand 英文 + 系统无衬线中文，黄金行高 */
+            body { 
+                font-family: "Quicksand", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important; 
+                font-size: 11pt !important; 
+                line-height: 1.6 !important; 
+                color: #222 !important; 
+                background: #fff !important; 
+            }
+            
+            /* 清理多余网页 UI */
             button, .toggle-icon, .nav-tabs, .video-banner, 
             input[type="radio"], input[type="checkbox"] { display: none !important; }
             
-            table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; word-break: break-all !important; }
-            img { max-width: 100% !important; height: auto !important; object-fit: contain !important; }
-            
-            /* ==========================================
-               核心修复 1：终结所有容器的隐藏与高度限制
-               ========================================== */
-            [class*="content"], [class*="tab-pane"], [class*="step"] {
+            /* 2. 标题层级优化：收缩字号，避免占用整屏纸张 */
+            h1 { font-size: 16pt !important; border-bottom: 2px solid #000; padding-bottom: 4px; margin: 1.5em 0 0.8em !important; page-break-after: avoid; }
+            h2 { font-size: 14pt !important; margin: 1.2em 0 0.6em !important; page-break-after: avoid; }
+            h3 { font-size: 12pt !important; margin: 1em 0 0.5em !important; page-break-after: avoid; }
+            p, ul, ol, li { margin-bottom: 0.8em !important; }
+
+            /* 3. 卡片与折叠面板“瘦身”：大幅缩减网页端留白，增加细边框以便阅读 */
+            [class*="content"], [class*="tab-pane"], [class*="step"], [class*="card"], [class*="module"] {
                 height: auto !important; max-height: none !important; overflow: visible !important;
                 position: static !important; opacity: 1 !important;
+                padding: 12px 15px !important; /* 缩小内边距 */
+                margin-bottom: 15px !important;
+                background: #fafafa !important; /* 极浅灰底色代替多巴胺大色块 */
+                border: 1px solid #eaeaea !important; 
+                border-radius: 4px !important;
+                page-break-inside: avoid; /* 核心：防止一段内容被硬切到两页 */
             }
             
-            /* ==========================================
-               核心修复 2：彻底消灭横向滚动，强制卡片换行或垂直堆叠
-               ========================================== */
-            /* 打破不换行限制 */
-            [class*="scroll"], [class*="overflow"], [style*="overflow-x"], .row, .flex, [style*="display: flex"] {
+            /* 4. 网格重构：解决卡片要么太长要么太挤的问题 */
+            [class*="row"], [class*="flex"], [style*="display: flex"] {
                 display: flex !important;
-                flex-wrap: wrap !important; /* 核心：强制弹性盒子换行 */
-                overflow: visible !important;
-                white-space: normal !important; /* 核心：禁止文本级强制不换行 */
+                flex-wrap: wrap !important;
+                gap: 15px !important; /* 卡片之间的舒适间距 */
+                margin: 0 !important;
             }
-            
-            /* 让卡片适应纸张并防止被跨页切断 */
-            [class*="card"], [class*="item"], [class*="col-"] {
-                flex: 1 1 100% !important; /* 强制卡片占满整行宽度，变成从上往下排 */
-                width: 100% !important;
-                max-width: 100% !important;
-                margin-bottom: 20px !important;
+            /* 强行让子模块（如着陆页七大模块）在 A4 纸上呈现双列排版，最大化利用空间 */
+            [class*="col"], [class*="card"], [class*="item"] {
+                flex: 1 1 calc(50% - 15px) !important; 
+                min-width: 45% !important;
                 box-sizing: border-box !important;
-                page-break-inside: avoid; /* 核心：防止一张卡片上半截在第一页，下半截在第二页 */
+                margin-bottom: 0 !important; 
             }
 
-            body { background-color: #ffffff !important; color: #000000 !important; }
+            /* 5. 表格与图片优化 */
+            table { width: 100% !important; table-layout: auto !important; border-collapse: collapse !important; font-size: 10pt !important; margin-bottom: 1em !important; }
+            th, td { border: 1px solid #ccc !important; padding: 6px 10px !important; word-break: break-word !important; }
+            img { max-width: 100% !important; max-height: 250px !important; object-fit: contain !important; page-break-inside: avoid; margin: 10px 0 !important; }
+            
             .page-break { page-break-after: always; }
         }
         
-        body { font-family: sans-serif; padding: 20px; }
-        #loading { color: #d93025; font-size: 20px; font-weight: bold; margin-bottom: 20px; padding: 20px; border: 2px dashed #d93025; background: #fff3f3; }
+        body { font-family: "Quicksand", sans-serif; padding: 20px; }
+        #loading { color: #d93025; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding: 20px; border: 2px dashed #d93025; background: #fff3f3; }
     </style>
 </head>
 <body>
-    <div id="loading">正在调用原生引擎，修复横向滚动截断问题，请稍候...</div>
+    <div id="loading">正在抓取网页并执行 A4 纸质排版重构，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -75,7 +93,7 @@
                     
                     let bodyContent = doc.body;
                     
-                    // 破解单选框/复选框障眼法
+                    // 破解防印机制（单选/复选框）
                     let hackInputs = bodyContent.querySelectorAll('input[type="radio"], input[type="checkbox"]');
                     hackInputs.forEach(input => {
                         input.removeAttribute('name'); 
@@ -83,10 +101,10 @@
                         input.checked = true; 
                     });
 
+                    // 强制展开所有折叠面板
                     let detailsTags = bodyContent.querySelectorAll('details');
                     detailsTags.forEach(d => d.setAttribute('open', 'true'));
                     
-                    // 剥离常规隐藏类，强制全部显示
                     let hiddenElements = bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]');
                     hiddenElements.forEach(el => {
                         el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
@@ -97,7 +115,7 @@
                         el.style.opacity = '1';
                     });
                     
-                    // 终极 DOM 级修复：移除任何强制不换行的内联样式
+                    // 剥离强制不换行属性
                     let nowrapElements = bodyContent.querySelectorAll('[style*="white-space: nowrap"]');
                     nowrapElements.forEach(el => {
                         el.style.whiteSpace = 'normal';
@@ -115,7 +133,7 @@
                     console.error('加载页面发生错误: ' + page, e);
                 }
             }
-            document.getElementById('loading').innerHTML = '✅ 横向卡片截断已修复！内容全部垂直平铺。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
+            document.getElementById('loading').innerHTML = '✅ 纸质排版重构完成！页面已自适应 A4 布局。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
             document.getElementById('loading').style.borderColor = '#0f9d58';
             document.getElementById('loading').style.backgroundColor = '#e6f4ea';
             document.getElementById('loading').style.color = '#0f9d58';
