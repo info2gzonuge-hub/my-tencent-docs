@@ -2,12 +2,12 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - V7增强打印版</title>
+    <title>操作知识库 - 终极无死角打印版</title>
     <style>
         @media print {
             @page { size: A4; margin: 15mm; }
             
-            /* 必须加上这句，确保图一里的表格底色和标签背景能打印出来 */
+            /* 保留所有背景色和卡片样式 */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -19,20 +19,25 @@
             .page-break { page-break-after: always; }
             
             /* ==========================================
-               新增针对图二的 CSS 补丁：所有选项卡内容强制显示并取消叠加
+               V7 补丁：横向选项卡强制显示并取消叠加
                ========================================== */
             .tab-content > *, .tab-pane, [class*="tab-pane"] {
-                display: block !important;
-                position: static !important; /* 阻止它们叠在同一个位置 */
-                opacity: 1 !important;
-                visibility: visible !important;
-                height: auto !important;
-                max-height: none !important;
-                overflow: visible !important;
-                margin-bottom: 20px !important;
+                display: block !important; position: static !important; opacity: 1 !important; visibility: visible !important; height: auto !important; max-height: none !important; overflow: visible !important; margin-bottom: 20px !important;
             }
 
-            /* V7 的无差别强制换行底层保障 */
+            /* ==========================================
+               新增补丁：针对 5.1/5.2 手风琴面板强行释放高度
+               ========================================== */
+            .accordion-collapse, .accordion-body, .panel-collapse, [class*="accordion"], [id*="collapse"], [class*="content-box"] {
+                display: block !important;
+                height: auto !important; /* 核心：破解 height: 0 */
+                max-height: none !important;
+                overflow: visible !important; /* 核心：破解 overflow: hidden */
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+
+            /* 底层保障：取消所有强制不换行和滚动条 */
             * {
                 overflow-x: visible !important;
                 white-space: normal !important; 
@@ -45,7 +50,7 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在执行【V7物理测量 + 强制激活全部选项卡】，请稍候...</div>
+    <div id="loading">正在执行【全量抓取 + 选项卡全开 + 手风琴面板强制撑开】，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -76,24 +81,27 @@
 
                     bodyContent.querySelectorAll('details').forEach(d => d.setAttribute('open', 'true'));
 
-                    bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]').forEach(el => {
-                        el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
-                        el.removeAttribute('hidden');
-                        el.style.display = 'block';
-                        el.style.visibility = 'visible';
-                        el.style.height = 'auto';
-                        el.style.opacity = '1';
-                    });
-
-                    // ==========================================
-                    // 新增针对图二的 JS 补丁：强行给未激活的 ②③④ 选项卡打鸡血
-                    // ==========================================
+                    // 选项卡破解
                     bodyContent.querySelectorAll('.tab-pane, .tab-content > div, [class*="tab-pane"], [id^="pane-"]').forEach(el => {
-                        el.classList.add('active', 'show'); // 骗过框架的隐藏逻辑
+                        el.classList.add('active', 'show'); 
                         el.style.setProperty('display', 'block', 'important');
                         el.style.setProperty('opacity', '1', 'important');
                         el.style.setProperty('visibility', 'visible', 'important');
                         el.style.setProperty('position', 'static', 'important'); 
+                    });
+
+                    // ==========================================
+                    // 新增 JS 补丁：强行给手风琴面板注入展开状态，抹除折叠属性
+                    // ==========================================
+                    bodyContent.querySelectorAll('[class*="collapse"], [class*="accordion"], [id*="collapse"], [class*="panel"]').forEach(el => {
+                        el.classList.add('show', 'in'); // 注入展开状态类名
+                        el.classList.remove('collapse', 'collapsed', 'fade', 'd-none', 'hidden'); // 拔除隐藏类名
+                        el.removeAttribute('hidden');
+                        el.style.setProperty('display', 'block', 'important');
+                        el.style.setProperty('height', 'auto', 'important'); // 强行拉伸高度
+                        el.style.setProperty('max-height', 'none', 'important');
+                        el.style.setProperty('overflow', 'visible', 'important');
+                        el.style.setProperty('opacity', '1', 'important');
                     });
 
                     let div = document.createElement('div');
@@ -107,9 +115,7 @@
                 }
             }
 
-            // ==========================================
-            // 继承 V7 的杀手锏：物理测量并摧毁横向溢出
-            // ==========================================
+            // V7 物理测算引擎
             setTimeout(() => {
                 const allElements = document.querySelectorAll('#print-container *');
                 const bodyWidth = document.body.clientWidth;
@@ -136,7 +142,7 @@
                     }
                 });
 
-                document.getElementById('loading').innerHTML = '✅ V7 修复增强版执行完毕！图二缺失内容已强制激活展开。<br><br>👉 按 Ctrl + P 导出 PDF（务必在更多设置中勾选“背景图形”以保留表格颜色）。';
+                document.getElementById('loading').innerHTML = '✅ 终极破解执行完毕！第五层手风琴面板已强制撑开。<br><br>👉 按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF（务必在更多设置中勾选“背景图形”）。';
                 document.getElementById('loading').style.borderColor = '#0f9d58';
                 document.getElementById('loading').style.backgroundColor = '#e6f4ea';
                 document.getElementById('loading').style.color = '#0f9d58';
