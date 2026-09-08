@@ -2,65 +2,50 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - 完美图文打印版</title>
+    <title>操作知识库 - V7增强打印版</title>
     <style>
         @media print {
             @page { size: A4; margin: 15mm; }
             
-            /* ==========================================
-               核心 1：强制浏览器打印所有背景色和卡片样式（保住颜值）
-               ========================================== */
+            /* 必须加上这句，确保图一里的表格底色和标签背景能打印出来 */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
-            /* 隐藏无关的UI按键，但不破坏整体排版 */
-            button, .toggle-icon, .video-banner, 
-            input[type="radio"], input[type="checkbox"] { 
-                display: none !important; 
-            }
-
+            
+            button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"] { display: none !important; }
+            table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; }
+            img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
+            .page-break { page-break-after: always; }
+            
             /* ==========================================
-               核心 2：精准释放空间，阻止叠罗汉，保留原有框架
+               新增针对图二的 CSS 补丁：所有选项卡内容强制显示并取消叠加
                ========================================== */
-            /* 释放所有容器的高度限制，允许内容向下延伸 */
-            html, body, div, section, article, main, .card, [class*="content"] {
+            .tab-content > *, .tab-pane, [class*="tab-pane"] {
+                display: block !important;
+                position: static !important; /* 阻止它们叠在同一个位置 */
+                opacity: 1 !important;
+                visibility: visible !important;
                 height: auto !important;
                 max-height: none !important;
                 overflow: visible !important;
-            }
-
-            /* 专门针对选项卡和折叠面板进行静态平铺（取消绝对定位） */
-            .tab-pane, .collapse, [class*="step-"], [hidden], .d-none {
-                display: block !important;
-                position: static !important; /* 彻底解决你截图里重叠/叠罗汉的问题 */
-                visibility: visible !important;
-                opacity: 1 !important;
                 margin-bottom: 20px !important;
-                page-break-inside: avoid; /* 尽量不让一个卡片被切到两页 */
             }
 
-            /* 强制 Flex 布局允许换行，防止右侧被切掉 */
-            .row, [class*="d-flex"], [style*="display: flex"], [style*="display:flex"] {
-                flex-wrap: wrap !important;
+            /* V7 的无差别强制换行底层保障 */
+            * {
+                overflow-x: visible !important;
+                white-space: normal !important; 
+                box-sizing: border-box !important;
             }
-
-            /* ==========================================
-               核心 3：保护表格和图片的原本排版
-               ========================================== */
-            table { width: 100% !important; border-collapse: collapse !important; word-wrap: break-word !important; }
-            img { max-width: 100% !important; height: auto !important; page-break-inside: avoid; }
-            
-            body { background-color: #fff; color: #333; font-family: "Quicksand", sans-serif; }
-            .page-break { page-break-after: always; }
+            body { background-color: #fff !important; color: #000 !important; }
         }
-        
-        #loading { color: #0f9d58; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding: 20px; border: 2px dashed #0f9d58; background: #e6f4ea; }
+        body { font-family: "Quicksand", "Segoe UI", sans-serif; padding: 20px; }
+        #loading { color: #d93025; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding: 20px; border: 2px dashed #d93025; background: #fff3f3; }
     </style>
 </head>
 <body>
-    <div id="loading">正在抓取原汁原味的图文排版，并智能展开选项卡...</div>
+    <div id="loading">正在执行【V7物理测量 + 强制激活全部选项卡】，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -78,29 +63,37 @@
                     let text = await response.text();
                     let doc = parser.parseFromString(text, 'text/html');
 
-                    // 保留原网页所有的 CSS
                     let styles = doc.querySelectorAll('style');
                     styles.forEach(s => document.head.appendChild(s.cloneNode(true)));
 
                     let bodyContent = doc.body;
 
-                    // 破解防印开关
                     bodyContent.querySelectorAll('input').forEach(input => {
                         input.removeAttribute('name');
                         input.setAttribute('checked', 'checked');
                         input.checked = true;
                     });
+
                     bodyContent.querySelectorAll('details').forEach(d => d.setAttribute('open', 'true'));
 
-                    // JS 层面精准剥离隐藏类名，但不破坏原本的 class 结构
-                    bodyContent.querySelectorAll('.collapse, .fade, .d-none, [hidden]').forEach(el => {
-                        el.classList.remove('collapse', 'fade', 'd-none');
+                    bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]').forEach(el => {
+                        el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
                         el.removeAttribute('hidden');
                         el.style.display = 'block';
                         el.style.visibility = 'visible';
                         el.style.height = 'auto';
                         el.style.opacity = '1';
-                        el.style.position = 'static'; // 阻止定位重叠
+                    });
+
+                    // ==========================================
+                    // 新增针对图二的 JS 补丁：强行给未激活的 ②③④ 选项卡打鸡血
+                    // ==========================================
+                    bodyContent.querySelectorAll('.tab-pane, .tab-content > div, [class*="tab-pane"], [id^="pane-"]').forEach(el => {
+                        el.classList.add('active', 'show'); // 骗过框架的隐藏逻辑
+                        el.style.setProperty('display', 'block', 'important');
+                        el.style.setProperty('opacity', '1', 'important');
+                        el.style.setProperty('visibility', 'visible', 'important');
+                        el.style.setProperty('position', 'static', 'important'); 
                     });
 
                     let div = document.createElement('div');
@@ -114,7 +107,40 @@
                 }
             }
 
-            document.getElementById('loading').innerHTML = '✅ 网页加载完毕！背景色、表格已保留，所有隐藏的选项卡均已平铺。<br><br>👉 请按 Ctrl + P，务必在打印设置中勾选【背景图形 (Background graphics)】，然后另存为 PDF。';
+            // ==========================================
+            // 继承 V7 的杀手锏：物理测量并摧毁横向溢出
+            // ==========================================
+            setTimeout(() => {
+                const allElements = document.querySelectorAll('#print-container *');
+                const bodyWidth = document.body.clientWidth;
+
+                allElements.forEach(el => {
+                    if (window.getComputedStyle(el).overflowX === 'auto' || window.getComputedStyle(el).overflowX === 'scroll') {
+                        el.style.setProperty('overflow-x', 'visible', 'important');
+                        el.style.setProperty('flex-wrap', 'wrap', 'important');
+                        el.style.setProperty('white-space', 'normal', 'important');
+                    }
+
+                    if (el.scrollWidth > bodyWidth + 10) { 
+                        el.style.setProperty('display', 'block', 'important');
+                        el.style.setProperty('width', '100%', 'important');
+                        el.style.setProperty('max-width', '100%', 'important');
+                        el.style.setProperty('white-space', 'normal', 'important');
+
+                        Array.from(el.children).forEach(child => {
+                            child.style.setProperty('display', 'block', 'important');
+                            child.style.setProperty('width', '100%', 'important');
+                            child.style.setProperty('max-width', '100%', 'important');
+                            child.style.setProperty('margin-bottom', '20px', 'important');
+                        });
+                    }
+                });
+
+                document.getElementById('loading').innerHTML = '✅ V7 修复增强版执行完毕！图二缺失内容已强制激活展开。<br><br>👉 按 Ctrl + P 导出 PDF（务必在更多设置中勾选“背景图形”以保留表格颜色）。';
+                document.getElementById('loading').style.borderColor = '#0f9d58';
+                document.getElementById('loading').style.backgroundColor = '#e6f4ea';
+                document.getElementById('loading').style.color = '#0f9d58';
+            }, 1500); 
         }
 
         mergePages();
