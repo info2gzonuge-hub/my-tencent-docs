@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - 完整缝合版</title>
+    <title>操作知识库 - 完整排版缝合版</title>
     <style>
         @media print {
             @page { size: A4; margin: 15mm; }
@@ -11,19 +11,30 @@
             button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"], #globalSearchModal { display: none !important; }
             
             /* ==========================================
-               表格保护与列宽锁定 (修复竖排文字 Bug)
+               🚨 核心修复：表格防挤压 & 防跨页撕裂
                ========================================== */
-            table { 
-                width: 100% !important; 
-                table-layout: fixed !important; /* 核心修复：强制固定列宽，拒绝挤压 */
-                border-collapse: collapse !important; 
-            }
-            th, td { 
-                word-wrap: break-word !important; 
-                word-break: break-word !important; /* 核心修复：允许长单词或长句子自然换行 */
-                white-space: normal !important; 
+            .table-wrap, .sop-table-wrap, .matrix-table-wrap {
+                display: block !important; width: 100% !important; overflow: visible !important; margin-bottom: 20px !important;
             }
             
+            table { 
+                width: 100% !important; 
+                table-layout: fixed !important; 
+                border-collapse: collapse !important; 
+            }
+            
+            th, td { 
+                /* 破除源码手机端 100% 宽度的垄断，让第四列重见天日 */
+                width: auto !important; 
+                word-wrap: break-word !important; 
+                word-break: normal !important; /* 严禁把中文字符挤成竖排 */
+                white-space: normal !important; 
+                padding: 10px !important;
+            }
+            
+            /* 严禁表格行被切成两半，解决截图里被拉长的恐怖排版 */
+            tr { page-break-inside: avoid !important; }
+
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
             .page-break { page-break-after: always; }
             
@@ -37,9 +48,7 @@
                 display: block !important; position: static !important; opacity: 1 !important; visibility: visible !important; height: auto !important; max-height: none !important; overflow: visible !important; margin-bottom: 20px !important;
             }
             
-            /* 强制展开所有原生 Details 标签 */
             details, details > * { display: block !important; height: auto !important; }
-
             .pseo-adaptive-wrapper { flex-direction: column !important; }
             .pseo-tabs-nav { display: none !important; }
             body { background-color: #fff !important; color: #000 !important; }
@@ -49,7 +58,7 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在执行【全量终极缝合】，请稍候...</div>
+    <div id="loading">正在执行【全量展开 + 终极排版修复】，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -115,6 +124,7 @@
 
                 allElements.forEach(el => {
                     const tagName = el.tagName.toUpperCase();
+                    // 表格组件全量豁免，保护它们不被砸碎
                     if (['TABLE', 'TBODY', 'THEAD', 'TR', 'TD', 'TH', 'COLGROUP', 'COL'].includes(tagName)) {
                         return;
                     }
@@ -142,7 +152,7 @@
                     }
                 });
 
-                document.getElementById('loading').innerHTML = '✅ 表格竖排已修复！所有内容完美适配 A4 纸。<br><br>👉 请按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF。';
+                document.getElementById('loading').innerHTML = '✅ 致命排版 Bug 已修复！表格跨页撕裂与竖排文字已解决。<br><br>👉 按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF（背景图形记得勾选）。';
                 document.getElementById('loading').style.borderColor = '#0f9d58';
                 document.getElementById('loading').style.backgroundColor = '#e6f4ea';
                 document.getElementById('loading').style.color = '#0f9d58';
