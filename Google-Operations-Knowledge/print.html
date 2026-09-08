@@ -5,30 +5,23 @@
     <title>操作知识库 - 完整导出版</title>
     <style>
         @media print {
-            @page {
-                size: A4;
-                margin: 15mm; 
-            }
+            @page { size: A4; margin: 15mm; }
             
-            button, .toggle-icon, .nav-tabs, .video-banner { display: none !important; }
+            /* 隐藏网页控制台UI，包括那几个难看的单选框本体 */
+            button, .toggle-icon, .nav-tabs, .video-banner, 
+            input[type="radio"], input[type="checkbox"] { display: none !important; }
             
             .table-responsive, .overflow-x-auto { overflow: visible !important; }
             table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; word-break: break-all !important; }
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; }
             
-            /* =======================================
-               新增核心补丁：彻底破解选项卡重叠与自定义隐藏
-               ======================================= */
-            .tab-content > *, [class*="tab-pane"], [class*="content-item"], [class*="step-"] {
-                display: block !important;
-                position: static !important; /* 致命一击：取消绝对定位，让②③④在①下面自然排开 */
-                visibility: visible !important;
-                opacity: 1 !important;
+            /* 强制解开所有容器的尺寸限制 */
+            [class*="content"], [class*="tab-pane"], [class*="step"] {
                 height: auto !important;
                 max-height: none !important;
                 overflow: visible !important;
-                transform: none !important; /* 取消位移动画 */
-                margin-bottom: 20px !important; /* 加上间距，防止内容粘连 */
+                position: static !important; /* 阻止叠罗汉 */
+                opacity: 1 !important;
             }
             
             body { background-color: #ffffff !important; color: #000000 !important; }
@@ -40,7 +33,7 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在调用原生引擎抓取并强制展开所有选项卡，请稍候...</div>
+    <div id="loading">正在调用原生引擎，并强制破解单选框隐藏机制，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -59,16 +52,28 @@
                     
                     let doc = parser.parseFromString(text, 'text/html');
                     
+                    // 继承样式
                     let styles = doc.querySelectorAll('style');
                     styles.forEach(s => document.head.appendChild(s.cloneNode(true)));
                     
                     let bodyContent = doc.body;
                     
+                    // ==========================================
+                    // 核心修复：破解 CSS 单选框/复选框障眼法
+                    // ==========================================
+                    let hackInputs = bodyContent.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+                    hackInputs.forEach(input => {
+                        input.removeAttribute('name'); // 解除互斥封印
+                        input.setAttribute('checked', 'checked'); // 物理级强制选中
+                        input.checked = true; // DOM 级强制选中
+                    });
+
+                    // 强制展开原生折叠标签
                     let detailsTags = bodyContent.querySelectorAll('details');
                     detailsTags.forEach(d => d.setAttribute('open', 'true'));
                     
-                    // 升级模糊匹配：抓取所有带有 tab, content, hide 字眼的元素进行强制暴漏
-                    let hiddenElements = bodyContent.querySelectorAll('[class*="collapse"], [class*="tab"], [class*="content"], [class*="hide"], [class*="step"], [hidden], [style*="display"]');
+                    // 剥离常规隐藏类
+                    let hiddenElements = bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]');
                     hiddenElements.forEach(el => {
                         el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
                         el.removeAttribute('hidden');
@@ -76,7 +81,6 @@
                         el.style.visibility = 'visible';
                         el.style.height = 'auto';
                         el.style.opacity = '1';
-                        el.style.position = 'static'; // 同样在 DOM 层解除定位
                     });
                     
                     let div = document.createElement('div');
@@ -91,7 +95,7 @@
                     console.error('加载页面发生错误: ' + page, e);
                 }
             }
-            document.getElementById('loading').innerHTML = '✅ 抓取完毕！选项卡重叠已修复。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
+            document.getElementById('loading').innerHTML = '✅ 单选框限制已破解！内容全部展开。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
             document.getElementById('loading').style.borderColor = '#0f9d58';
             document.getElementById('loading').style.backgroundColor = '#e6f4ea';
             document.getElementById('loading').style.color = '#0f9d58';
