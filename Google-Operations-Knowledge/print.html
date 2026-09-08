@@ -2,29 +2,65 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - 终极无死角打印版</title>
+    <title>操作知识库 - 完美图文打印版</title>
     <style>
         @media print {
             @page { size: A4; margin: 15mm; }
-            button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"] { display: none !important; }
-            table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; }
-            img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
-            .page-break { page-break-after: always; }
             
-            /* 无差别强制换行底层保障 */
+            /* ==========================================
+               核心 1：强制浏览器打印所有背景色和卡片样式（保住颜值）
+               ========================================== */
             * {
-                overflow-x: visible !important;
-                white-space: normal !important; 
-                box-sizing: border-box !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            body { background-color: #fff !important; color: #000 !important; }
+
+            /* 隐藏无关的UI按键，但不破坏整体排版 */
+            button, .toggle-icon, .video-banner, 
+            input[type="radio"], input[type="checkbox"] { 
+                display: none !important; 
+            }
+
+            /* ==========================================
+               核心 2：精准释放空间，阻止叠罗汉，保留原有框架
+               ========================================== */
+            /* 释放所有容器的高度限制，允许内容向下延伸 */
+            html, body, div, section, article, main, .card, [class*="content"] {
+                height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
+
+            /* 专门针对选项卡和折叠面板进行静态平铺（取消绝对定位） */
+            .tab-pane, .collapse, [class*="step-"], [hidden], .d-none {
+                display: block !important;
+                position: static !important; /* 彻底解决你截图里重叠/叠罗汉的问题 */
+                visibility: visible !important;
+                opacity: 1 !important;
+                margin-bottom: 20px !important;
+                page-break-inside: avoid; /* 尽量不让一个卡片被切到两页 */
+            }
+
+            /* 强制 Flex 布局允许换行，防止右侧被切掉 */
+            .row, [class*="d-flex"], [style*="display: flex"], [style*="display:flex"] {
+                flex-wrap: wrap !important;
+            }
+
+            /* ==========================================
+               核心 3：保护表格和图片的原本排版
+               ========================================== */
+            table { width: 100% !important; border-collapse: collapse !important; word-wrap: break-word !important; }
+            img { max-width: 100% !important; height: auto !important; page-break-inside: avoid; }
+            
+            body { background-color: #fff; color: #333; font-family: "Quicksand", sans-serif; }
+            .page-break { page-break-after: always; }
         }
-        body { font-family: "Quicksand", "Segoe UI", sans-serif; padding: 20px; }
-        #loading { color: #d93025; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding: 20px; border: 2px dashed #d93025; background: #fff3f3; }
+        
+        #loading { color: #0f9d58; font-size: 18px; font-weight: bold; margin-bottom: 20px; padding: 20px; border: 2px dashed #0f9d58; background: #e6f4ea; }
     </style>
 </head>
 <body>
-    <div id="loading">正在执行【物理测量与破拆】抓取所有内容，请稍候...</div>
+    <div id="loading">正在抓取原汁原味的图文排版，并智能展开选项卡...</div>
     <div id="print-container"></div>
 
     <script>
@@ -42,29 +78,29 @@
                     let text = await response.text();
                     let doc = parser.parseFromString(text, 'text/html');
 
+                    // 保留原网页所有的 CSS
                     let styles = doc.querySelectorAll('style');
                     styles.forEach(s => document.head.appendChild(s.cloneNode(true)));
 
                     let bodyContent = doc.body;
 
-                    // 1. 破解单选框障眼法
+                    // 破解防印开关
                     bodyContent.querySelectorAll('input').forEach(input => {
                         input.removeAttribute('name');
                         input.setAttribute('checked', 'checked');
                         input.checked = true;
                     });
-
-                    // 2. 强制展开所有原生折叠
                     bodyContent.querySelectorAll('details').forEach(d => d.setAttribute('open', 'true'));
 
-                    // 3. 剥离所有常规隐藏属性
-                    bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]').forEach(el => {
-                        el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
+                    // JS 层面精准剥离隐藏类名，但不破坏原本的 class 结构
+                    bodyContent.querySelectorAll('.collapse, .fade, .d-none, [hidden]').forEach(el => {
+                        el.classList.remove('collapse', 'fade', 'd-none');
                         el.removeAttribute('hidden');
                         el.style.display = 'block';
                         el.style.visibility = 'visible';
                         el.style.height = 'auto';
                         el.style.opacity = '1';
+                        el.style.position = 'static'; // 阻止定位重叠
                     });
 
                     let div = document.createElement('div');
@@ -78,45 +114,7 @@
                 }
             }
 
-            // ==========================================
-            // 终极杀手锏：物理测量并摧毁所有横向溢出
-            // ==========================================
-            // 延迟 1.5 秒，确保所有图片和 CSS 渲染完毕后再进行尺子测量
-            setTimeout(() => {
-                const allElements = document.querySelectorAll('#print-container *');
-                const bodyWidth = document.body.clientWidth;
-
-                allElements.forEach(el => {
-                    // 解除所有自带的横向滚动限制
-                    if (window.getComputedStyle(el).overflowX === 'auto' || window.getComputedStyle(el).overflowX === 'scroll') {
-                        el.style.setProperty('overflow-x', 'visible', 'important');
-                        el.style.setProperty('flex-wrap', 'wrap', 'important');
-                        el.style.setProperty('white-space', 'normal', 'important');
-                    }
-
-                    // 核心探测：如果这个元素的实际内容宽度，超出了屏幕/纸张的宽度
-                    if (el.scrollWidth > bodyWidth + 10) { 
-                        // 强制将其父级容器的布局方式砸碎，转为 100% 宽度的块级排版
-                        el.style.setProperty('display', 'block', 'important');
-                        el.style.setProperty('width', '100%', 'important');
-                        el.style.setProperty('max-width', '100%', 'important');
-                        el.style.setProperty('white-space', 'normal', 'important');
-
-                        // 将里面所有横向排列的子卡片（如模块4,5,6,7），全部强制转为上下垂直堆叠
-                        Array.from(el.children).forEach(child => {
-                            child.style.setProperty('display', 'block', 'important');
-                            child.style.setProperty('width', '100%', 'important');
-                            child.style.setProperty('max-width', '100%', 'important');
-                            child.style.setProperty('margin-bottom', '20px', 'important');
-                        });
-                    }
-                });
-
-                document.getElementById('loading').innerHTML = '✅ 终极降维排版完成！所有横向隐藏的内容已全部强制转为上下排列。<br><br>👉 请按 Ctrl + P 选择“另存为 PDF”。';
-                document.getElementById('loading').style.borderColor = '#0f9d58';
-                document.getElementById('loading').style.backgroundColor = '#e6f4ea';
-                document.getElementById('loading').style.color = '#0f9d58';
-            }, 1500); 
+            document.getElementById('loading').innerHTML = '✅ 网页加载完毕！背景色、表格已保留，所有隐藏的选项卡均已平铺。<br><br>👉 请按 Ctrl + P，务必在打印设置中勾选【背景图形 (Background graphics)】，然后另存为 PDF。';
         }
 
         mergePages();
