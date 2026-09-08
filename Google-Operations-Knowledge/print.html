@@ -11,10 +11,19 @@
             button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"], #globalSearchModal { display: none !important; }
             
             /* ==========================================
-               表格保护
+               表格保护与列宽锁定 (修复竖排文字 Bug)
                ========================================== */
-            table { width: 100% !important; table-layout: auto !important; border-collapse: collapse !important; }
-            th, td { word-wrap: break-word !important; white-space: normal !important; }
+            table { 
+                width: 100% !important; 
+                table-layout: fixed !important; /* 核心修复：强制固定列宽，拒绝挤压 */
+                border-collapse: collapse !important; 
+            }
+            th, td { 
+                word-wrap: break-word !important; 
+                word-break: break-word !important; /* 核心修复：允许长单词或长句子自然换行 */
+                white-space: normal !important; 
+            }
+            
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
             .page-break { page-break-after: always; }
             
@@ -28,7 +37,7 @@
                 display: block !important; position: static !important; opacity: 1 !important; visibility: visible !important; height: auto !important; max-height: none !important; overflow: visible !important; margin-bottom: 20px !important;
             }
             
-            /* ⚠️ 找回丢失的补丁：强制展开所有原生 Details 标签（解决你的截图问题） */
+            /* 强制展开所有原生 Details 标签 */
             details, details > * { display: block !important; height: auto !important; }
 
             .pseo-adaptive-wrapper { flex-direction: column !important; }
@@ -63,20 +72,17 @@
 
                     let bodyContent = doc.body;
 
-                    // ⚠️ 找回丢失的补丁 1：破解防印开关 (解决截图部分组件失效)
                     bodyContent.querySelectorAll('input').forEach(input => {
                         input.removeAttribute('name');
                         input.setAttribute('checked', 'checked');
                         input.checked = true;
                     });
 
-                    // ⚠️ 找回丢失的补丁 2：强制展开所有原生折叠标签 (解决截图目录折叠的核心！)
                     bodyContent.querySelectorAll('details').forEach(d => {
                         d.setAttribute('open', 'true');
                         d.open = true;
                     });
 
-                    // 通用隐藏剥离
                     bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]').forEach(el => {
                         el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
                         el.removeAttribute('hidden');
@@ -86,7 +92,6 @@
                         el.style.opacity = '1';
                     });
 
-                    // Tab9 & Tab6 定制类名展开
                     bodyContent.querySelectorAll('.pseo-tab-pane, .pseo-pane-inner, .cluster-detail, .pseo-card-body, .expand-content').forEach(el => {
                         el.classList.add('active', 'open', 'show'); 
                         el.style.setProperty('display', 'block', 'important');
@@ -111,7 +116,7 @@
                 allElements.forEach(el => {
                     const tagName = el.tagName.toUpperCase();
                     if (['TABLE', 'TBODY', 'THEAD', 'TR', 'TD', 'TH', 'COLGROUP', 'COL'].includes(tagName)) {
-                        return; // 表格豁免权保留
+                        return;
                     }
 
                     if (window.getComputedStyle(el).overflowX === 'auto' || window.getComputedStyle(el).overflowX === 'scroll') {
@@ -137,7 +142,7 @@
                     }
                 });
 
-                document.getElementById('loading').innerHTML = '✅ 致命失误已修复！所有折叠面板已全开。<br><br>👉 请按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF。';
+                document.getElementById('loading').innerHTML = '✅ 表格竖排已修复！所有内容完美适配 A4 纸。<br><br>👉 请按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF。';
                 document.getElementById('loading').style.borderColor = '#0f9d58';
                 document.getElementById('loading').style.backgroundColor = '#e6f4ea';
                 document.getElementById('loading').style.color = '#0f9d58';
