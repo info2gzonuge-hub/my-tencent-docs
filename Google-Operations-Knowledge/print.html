@@ -2,22 +2,36 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - 完美PC比例打印版</title>
+    <title>操作知识库 - 完整排版缝合版</title>
     <style>
         @media print {
             @page { size: A4; margin: 15mm; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; overflow-x: visible !important; }
             
             button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"], #globalSearchModal { display: none !important; }
             
-            /* 清理多余强制设定，让原网页的 PC 端 colgroup 比例自己生效 */
+            /* ==========================================
+               🚨 核心新增：仅针对 Tab 6 schema-table 的定点狙击
+               利用高优先级 !important，强行覆盖导致竖排的移动端 22/30/48 比例
+               ========================================== */
+            table.schema-table { table-layout: fixed !important; width: 100% !important; }
+            .schema-table th:nth-child(1), .schema-table td:nth-child(1) { width: 15% !important; }
+            .schema-table th:nth-child(2), .schema-table td:nth-child(2) { width: 15% !important; }
+            .schema-table th:nth-child(3), .schema-table td:nth-child(3) { width: 35% !important; }
+            .schema-table th:nth-child(4), .schema-table td:nth-child(4) { width: 35% !important; }
+
+            /* 常规表格保护底座 */
+            .table-wrap, .sop-table-wrap, .matrix-table-wrap { display: block !important; width: 100% !important; overflow: visible !important; margin-bottom: 20px !important; }
             table { width: 100% !important; border-collapse: collapse !important; }
-            th, td { word-wrap: break-word !important; }
-            
+            th, td { word-wrap: break-word !important; word-break: normal !important; white-space: normal !important; padding: 10px !important; }
+            tr { page-break-inside: avoid !important; } /* 防跨页撕裂 */
+
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
             .page-break { page-break-after: always; }
             
-            /* 所有隐藏类名强制展现 */
+            /* ==========================================
+               所有隐藏类名强制展现 (维持原样不动)
+               ========================================== */
             .tab-content > *, .tab-pane, [class*="tab-pane"],
             .pseo-tab-pane, .pseo-pane-inner, .cluster-detail, .pseo-card-body, 
             [id^="pseo-inner-"], [id^="clusterDetail"],
@@ -35,7 +49,7 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在屏蔽手机端样式，强制渲染 PC 端排版，请稍候...</div>
+    <div id="loading">正在执行【全量展开 + 专属表格定点修复】，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -51,12 +65,6 @@
                     let response = await fetch(page);
                     if (!response.ok) continue;
                     let text = await response.text();
-
-                    // 🚨 终极杀手锏：在字符串层面直接干掉移动端媒体查询！
-                    // 强行把 768px 和 480px 替换成 1px，这样打印时永远不会触发手机端那些拥挤的排版。
-                    text = text.replace(/@media\s*\(\s*max-width\s*:\s*768px\s*\)/g, '@media (max-width: 1px)');
-                    text = text.replace(/@media\s*\(\s*max-width\s*:\s*480px\s*\)/g, '@media (max-width: 1px)');
-
                     let doc = parser.parseFromString(text, 'text/html');
 
                     let styles = doc.querySelectorAll('style');
@@ -101,21 +109,44 @@
                 }
             }
 
-            // 因为已经清除了手机端样式，这里只需简单处理多余的滚动条限制即可，不再暴力干涉排版
             setTimeout(() => {
                 const allElements = document.querySelectorAll('#print-container *');
+                const bodyWidth = document.body.clientWidth;
+
                 allElements.forEach(el => {
+                    const tagName = el.tagName.toUpperCase();
+                    if (['TABLE', 'TBODY', 'THEAD', 'TR', 'TD', 'TH', 'COLGROUP', 'COL'].includes(tagName)) {
+                        return; // 保护所有表格不被拆除结构
+                    }
+
                     if (window.getComputedStyle(el).overflowX === 'auto' || window.getComputedStyle(el).overflowX === 'scroll') {
                         el.style.setProperty('overflow-x', 'visible', 'important');
+                        el.style.setProperty('flex-wrap', 'wrap', 'important');
                         el.style.setProperty('white-space', 'normal', 'important');
+                    }
+
+                    if (el.scrollWidth > bodyWidth + 10) { 
+                        el.style.setProperty('display', 'block', 'important');
+                        el.style.setProperty('width', '100%', 'important');
+                        el.style.setProperty('max-width', '100%', 'important');
+                        el.style.setProperty('white-space', 'normal', 'important');
+
+                        Array.from(el.children).forEach(child => {
+                            const childTag = child.tagName.toUpperCase();
+                            if (!['TABLE', 'TBODY', 'THEAD', 'TR', 'TD', 'TH'].includes(childTag)) {
+                                child.style.setProperty('display', 'block', 'important');
+                                child.style.setProperty('width', '100%', 'important');
+                                child.style.setProperty('max-width', '100%', 'important');
+                            }
+                        });
                     }
                 });
 
-                document.getElementById('loading').innerHTML = '✅ 手机端样式干扰已清除！表格将以完美的 PC 端比例呈现。<br><br>👉 请按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF。';
+                document.getElementById('loading').innerHTML = '✅ 定点修复完毕！Tab 6 表格已恢复横向比例展示。<br><br>👉 按 Ctrl + F5 强刷网页，按 Ctrl + P 导出 PDF。';
                 document.getElementById('loading').style.borderColor = '#0f9d58';
                 document.getElementById('loading').style.backgroundColor = '#e6f4ea';
                 document.getElementById('loading').style.color = '#0f9d58';
-            }, 1000); 
+            }, 1500); 
         }
 
         mergePages();
