@@ -2,47 +2,53 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>操作知识库 - 终极无死角打印版</title>
+    <title>操作知识库 - 源码级完美打印版</title>
     <style>
         @media print {
             @page { size: A4; margin: 15mm; }
             
-            /* 保留所有背景色和卡片样式 */
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
+            /* 保留高颜值底色 */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             
-            button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"] { display: none !important; }
-            table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; }
+            button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"], #globalSearchModal { display: none !important; }
+            
+            /* ==========================================
+               核心修复 1：表格排版保护（浓缩在同一行）
+               ========================================== */
+            table { width: 100% !important; table-layout: auto !important; border-collapse: collapse !important; }
+            th, td { word-wrap: break-word !important; white-space: normal !important; }
+            
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
             .page-break { page-break-after: always; }
             
             /* ==========================================
-               V7 补丁：横向选项卡强制显示并取消叠加
+               核心修复 2：针对你 Tab9 源码专属类名的强制展开
                ========================================== */
-            .tab-content > *, .tab-pane, [class*="tab-pane"] {
-                display: block !important; position: static !important; opacity: 1 !important; visibility: visible !important; height: auto !important; max-height: none !important; overflow: visible !important; margin-bottom: 20px !important;
+            .tab-content > *, .tab-pane, [class*="tab-pane"],
+            .pseo-tab-pane, .pseo-pane-inner, .cluster-detail, .pseo-card-body, 
+            [id^="pseo-inner-"], [id^="clusterDetail"] {
+                display: block !important; 
+                position: static !important; 
+                opacity: 1 !important; 
+                visibility: visible !important; 
+                height: auto !important; 
+                max-height: none !important; 
+                overflow: visible !important; 
+                margin-bottom: 20px !important;
             }
+
+            /* 让左右结构的特殊排版在纸上自动转为垂直，避免互相挤压 */
+            .pseo-adaptive-wrapper { flex-direction: column !important; }
+            .pseo-tabs-nav { display: none !important; } /* 打印时隐藏左侧纯导航按钮，只留右侧全量内容 */
 
             /* ==========================================
-               新增补丁：针对 5.1/5.2 手风琴面板强行释放高度
+               针对 Tab6 5.1/5.2 的手风琴展开
                ========================================== */
-            .accordion-collapse, .accordion-body, .panel-collapse, [class*="accordion"], [id*="collapse"], [class*="content-box"] {
-                display: block !important;
-                height: auto !important; /* 核心：破解 height: 0 */
-                max-height: none !important;
-                overflow: visible !important; /* 核心：破解 overflow: hidden */
-                visibility: visible !important;
-                opacity: 1 !important;
+            .accordion-collapse, .accordion-body, .panel-collapse, [class*="accordion"], [id*="collapse"], .card-body {
+                display: block !important; height: auto !important; max-height: none !important; overflow: visible !important; visibility: visible !important; opacity: 1 !important;
             }
 
-            /* 底层保障：取消所有强制不换行和滚动条 */
-            * {
-                overflow-x: visible !important;
-                white-space: normal !important; 
-                box-sizing: border-box !important;
-            }
+            * { overflow-x: visible !important; box-sizing: border-box !important; }
             body { background-color: #fff !important; color: #000 !important; }
         }
         body { font-family: "Quicksand", "Segoe UI", sans-serif; padding: 20px; }
@@ -50,7 +56,7 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在执行【全量抓取 + 选项卡全开 + 手风琴面板强制撑开】，请稍候...</div>
+    <div id="loading">正在执行【源码级全量解析与表格保护】，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -73,34 +79,20 @@
 
                     let bodyContent = doc.body;
 
-                    bodyContent.querySelectorAll('input').forEach(input => {
-                        input.removeAttribute('name');
-                        input.setAttribute('checked', 'checked');
-                        input.checked = true;
-                    });
-
-                    bodyContent.querySelectorAll('details').forEach(d => d.setAttribute('open', 'true'));
-
-                    // 选项卡破解
-                    bodyContent.querySelectorAll('.tab-pane, .tab-content > div, [class*="tab-pane"], [id^="pane-"]').forEach(el => {
-                        el.classList.add('active', 'show'); 
-                        el.style.setProperty('display', 'block', 'important');
-                        el.style.setProperty('opacity', '1', 'important');
-                        el.style.setProperty('visibility', 'visible', 'important');
-                        el.style.setProperty('position', 'static', 'important'); 
-                    });
-
-                    // ==========================================
-                    // 新增 JS 补丁：强行给手风琴面板注入展开状态，抹除折叠属性
-                    // ==========================================
-                    bodyContent.querySelectorAll('[class*="collapse"], [class*="accordion"], [id*="collapse"], [class*="panel"]').forEach(el => {
-                        el.classList.add('show', 'in'); // 注入展开状态类名
-                        el.classList.remove('collapse', 'collapsed', 'fade', 'd-none', 'hidden'); // 拔除隐藏类名
+                    // 暴力解锁所有隐藏属性
+                    bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]').forEach(el => {
+                        el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
                         el.removeAttribute('hidden');
+                        el.style.display = 'block';
+                        el.style.visibility = 'visible';
+                        el.style.height = 'auto';
+                        el.style.opacity = '1';
+                    });
+
+                    // 针对 Tab9 专属类名的 JS 级注入
+                    bodyContent.querySelectorAll('.pseo-tab-pane, .pseo-pane-inner, .cluster-detail, .pseo-card-body').forEach(el => {
+                        el.classList.add('active', 'open', 'show'); 
                         el.style.setProperty('display', 'block', 'important');
-                        el.style.setProperty('height', 'auto', 'important'); // 强行拉伸高度
-                        el.style.setProperty('max-height', 'none', 'important');
-                        el.style.setProperty('overflow', 'visible', 'important');
                         el.style.setProperty('opacity', '1', 'important');
                     });
 
@@ -115,12 +107,20 @@
                 }
             }
 
-            // V7 物理测算引擎
+            // ==========================================
+            // 智能物理测算引擎（带表格豁免权）
+            // ==========================================
             setTimeout(() => {
                 const allElements = document.querySelectorAll('#print-container *');
                 const bodyWidth = document.body.clientWidth;
 
                 allElements.forEach(el => {
+                    // 🛡️ 核心修复：绝对不要碰表格及表格内的元素！防止被砸碎成多行
+                    const tagName = el.tagName.toUpperCase();
+                    if (['TABLE', 'TBODY', 'THEAD', 'TR', 'TD', 'TH', 'COLGROUP', 'COL'].includes(tagName)) {
+                        return; // 直接跳过，保住表格的命
+                    }
+
                     if (window.getComputedStyle(el).overflowX === 'auto' || window.getComputedStyle(el).overflowX === 'scroll') {
                         el.style.setProperty('overflow-x', 'visible', 'important');
                         el.style.setProperty('flex-wrap', 'wrap', 'important');
@@ -134,15 +134,17 @@
                         el.style.setProperty('white-space', 'normal', 'important');
 
                         Array.from(el.children).forEach(child => {
-                            child.style.setProperty('display', 'block', 'important');
-                            child.style.setProperty('width', '100%', 'important');
-                            child.style.setProperty('max-width', '100%', 'important');
-                            child.style.setProperty('margin-bottom', '20px', 'important');
+                            const childTag = child.tagName.toUpperCase();
+                            if (!['TABLE', 'TBODY', 'THEAD', 'TR', 'TD', 'TH'].includes(childTag)) {
+                                child.style.setProperty('display', 'block', 'important');
+                                child.style.setProperty('width', '100%', 'important');
+                                child.style.setProperty('max-width', '100%', 'important');
+                            }
                         });
                     }
                 });
 
-                document.getElementById('loading').innerHTML = '✅ 终极破解执行完毕！第五层手风琴面板已强制撑开。<br><br>👉 按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF（务必在更多设置中勾选“背景图形”）。';
+                document.getElementById('loading').innerHTML = '✅ 源码级适配完成！Tab9 内容已全开，Tab6 表格已恢复同行显示。<br><br>👉 按 Ctrl + F5 强刷，然后 Ctrl + P 导出（务必勾选“背景图形”）。';
                 document.getElementById('loading').style.borderColor = '#0f9d58';
                 document.getElementById('loading').style.backgroundColor = '#e6f4ea';
                 document.getElementById('loading').style.color = '#0f9d58';
