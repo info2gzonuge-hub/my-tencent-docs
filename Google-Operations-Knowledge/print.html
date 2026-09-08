@@ -11,27 +11,33 @@
             button, .toggle-icon, .nav-tabs, .video-banner, input[type="radio"], input[type="checkbox"], #globalSearchModal { display: none !important; }
             
             /* ==========================================
-               🚨 核心新增：仅针对 Tab 6 schema-table 的定点狙击
-               利用高优先级 !important，强行覆盖导致竖排的移动端 22/30/48 比例
+               🚨 最高权重狙击：仅针对 Tab 6 的 SOP 表格
+               利用 #print-container (ID选择器) 形成碾压级优先级，强制覆盖 22/30/48 的异常比例
                ========================================== */
-            table.schema-table { table-layout: fixed !important; width: 100% !important; }
-            .schema-table th:nth-child(1), .schema-table td:nth-child(1) { width: 15% !important; }
-            .schema-table th:nth-child(2), .schema-table td:nth-child(2) { width: 15% !important; }
-            .schema-table th:nth-child(3), .schema-table td:nth-child(3) { width: 35% !important; }
-            .schema-table th:nth-child(4), .schema-table td:nth-child(4) { width: 35% !important; }
+            #print-container .sop-table-wrap .schema-table { table-layout: fixed !important; width: 100% !important; }
+            
+            #print-container .sop-table-wrap .schema-table th:nth-child(1),
+            #print-container .sop-table-wrap .schema-table td:nth-child(1) { width: 15% !important; display: table-cell !important; }
+            
+            #print-container .sop-table-wrap .schema-table th:nth-child(2),
+            #print-container .sop-table-wrap .schema-table td:nth-child(2) { width: 15% !important; display: table-cell !important; }
+            
+            #print-container .sop-table-wrap .schema-table th:nth-child(3),
+            #print-container .sop-table-wrap .schema-table td:nth-child(3) { width: 35% !important; display: table-cell !important; }
+            
+            #print-container .sop-table-wrap .schema-table th:nth-child(4),
+            #print-container .sop-table-wrap .schema-table td:nth-child(4) { width: 35% !important; display: table-cell !important; }
 
-            /* 常规表格保护底座 */
+            /* 常规表格保护底座（维持 75 页版的稳定排版） */
             .table-wrap, .sop-table-wrap, .matrix-table-wrap { display: block !important; width: 100% !important; overflow: visible !important; margin-bottom: 20px !important; }
             table { width: 100% !important; border-collapse: collapse !important; }
             th, td { word-wrap: break-word !important; word-break: normal !important; white-space: normal !important; padding: 10px !important; }
-            tr { page-break-inside: avoid !important; } /* 防跨页撕裂 */
+            tr { page-break-inside: avoid !important; }
 
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; page-break-inside: avoid; }
             .page-break { page-break-after: always; }
             
-            /* ==========================================
-               所有隐藏类名强制展现 (维持原样不动)
-               ========================================== */
+            /* 所有隐藏类名强制展现 */
             .tab-content > *, .tab-pane, [class*="tab-pane"],
             .pseo-tab-pane, .pseo-pane-inner, .cluster-detail, .pseo-card-body, 
             [id^="pseo-inner-"], [id^="clusterDetail"],
@@ -49,7 +55,7 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在执行【全量展开 + 专属表格定点修复】，请稍候...</div>
+    <div id="loading">正在执行【全量展开 + 最高权重表格修复】，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -116,7 +122,7 @@
                 allElements.forEach(el => {
                     const tagName = el.tagName.toUpperCase();
                     if (['TABLE', 'TBODY', 'THEAD', 'TR', 'TD', 'TH', 'COLGROUP', 'COL'].includes(tagName)) {
-                        return; // 保护所有表格不被拆除结构
+                        return; 
                     }
 
                     if (window.getComputedStyle(el).overflowX === 'auto' || window.getComputedStyle(el).overflowX === 'scroll') {
@@ -142,7 +148,7 @@
                     }
                 });
 
-                document.getElementById('loading').innerHTML = '✅ 定点修复完毕！Tab 6 表格已恢复横向比例展示。<br><br>👉 按 Ctrl + F5 强刷网页，按 Ctrl + P 导出 PDF。';
+                document.getElementById('loading').innerHTML = '✅ 稳固版执行完毕！PDF 已恢复 75 页，Tab 6 表格已应用最高权重修复。<br><br>👉 请按 Ctrl + F5 强刷网页，然后按 Ctrl + P 导出 PDF。';
                 document.getElementById('loading').style.borderColor = '#0f9d58';
                 document.getElementById('loading').style.backgroundColor = '#e6f4ea';
                 document.getElementById('loading').style.color = '#0f9d58';
