@@ -7,23 +7,41 @@
         @media print {
             @page { size: A4; margin: 15mm; }
             
-            /* 隐藏网页控制台UI，包括那几个难看的单选框本体 */
             button, .toggle-icon, .nav-tabs, .video-banner, 
             input[type="radio"], input[type="checkbox"] { display: none !important; }
             
-            .table-responsive, .overflow-x-auto { overflow: visible !important; }
             table { width: 100% !important; table-layout: fixed !important; word-wrap: break-word !important; word-break: break-all !important; }
             img { max-width: 100% !important; height: auto !important; object-fit: contain !important; }
             
-            /* 强制解开所有容器的尺寸限制 */
+            /* ==========================================
+               核心修复 1：终结所有容器的隐藏与高度限制
+               ========================================== */
             [class*="content"], [class*="tab-pane"], [class*="step"] {
-                height: auto !important;
-                max-height: none !important;
-                overflow: visible !important;
-                position: static !important; /* 阻止叠罗汉 */
-                opacity: 1 !important;
+                height: auto !important; max-height: none !important; overflow: visible !important;
+                position: static !important; opacity: 1 !important;
             }
             
+            /* ==========================================
+               核心修复 2：彻底消灭横向滚动，强制卡片换行或垂直堆叠
+               ========================================== */
+            /* 打破不换行限制 */
+            [class*="scroll"], [class*="overflow"], [style*="overflow-x"], .row, .flex, [style*="display: flex"] {
+                display: flex !important;
+                flex-wrap: wrap !important; /* 核心：强制弹性盒子换行 */
+                overflow: visible !important;
+                white-space: normal !important; /* 核心：禁止文本级强制不换行 */
+            }
+            
+            /* 让卡片适应纸张并防止被跨页切断 */
+            [class*="card"], [class*="item"], [class*="col-"] {
+                flex: 1 1 100% !important; /* 强制卡片占满整行宽度，变成从上往下排 */
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-bottom: 20px !important;
+                box-sizing: border-box !important;
+                page-break-inside: avoid; /* 核心：防止一张卡片上半截在第一页，下半截在第二页 */
+            }
+
             body { background-color: #ffffff !important; color: #000000 !important; }
             .page-break { page-break-after: always; }
         }
@@ -33,7 +51,7 @@
     </style>
 </head>
 <body>
-    <div id="loading">正在调用原生引擎，并强制破解单选框隐藏机制，请稍候...</div>
+    <div id="loading">正在调用原生引擎，修复横向滚动截断问题，请稍候...</div>
     <div id="print-container"></div>
 
     <script>
@@ -52,27 +70,23 @@
                     
                     let doc = parser.parseFromString(text, 'text/html');
                     
-                    // 继承样式
                     let styles = doc.querySelectorAll('style');
                     styles.forEach(s => document.head.appendChild(s.cloneNode(true)));
                     
                     let bodyContent = doc.body;
                     
-                    // ==========================================
-                    // 核心修复：破解 CSS 单选框/复选框障眼法
-                    // ==========================================
+                    // 破解单选框/复选框障眼法
                     let hackInputs = bodyContent.querySelectorAll('input[type="radio"], input[type="checkbox"]');
                     hackInputs.forEach(input => {
-                        input.removeAttribute('name'); // 解除互斥封印
-                        input.setAttribute('checked', 'checked'); // 物理级强制选中
-                        input.checked = true; // DOM 级强制选中
+                        input.removeAttribute('name'); 
+                        input.setAttribute('checked', 'checked'); 
+                        input.checked = true; 
                     });
 
-                    // 强制展开原生折叠标签
                     let detailsTags = bodyContent.querySelectorAll('details');
                     detailsTags.forEach(d => d.setAttribute('open', 'true'));
                     
-                    // 剥离常规隐藏类
+                    // 剥离常规隐藏类，强制全部显示
                     let hiddenElements = bodyContent.querySelectorAll('[class*="collapse"], [class*="d-none"], [hidden], [style*="display: none"], [style*="display:none"]');
                     hiddenElements.forEach(el => {
                         el.classList.remove('collapse', 'fade', 'd-none', 'hidden');
@@ -83,6 +97,12 @@
                         el.style.opacity = '1';
                     });
                     
+                    // 终极 DOM 级修复：移除任何强制不换行的内联样式
+                    let nowrapElements = bodyContent.querySelectorAll('[style*="white-space: nowrap"]');
+                    nowrapElements.forEach(el => {
+                        el.style.whiteSpace = 'normal';
+                    });
+
                     let div = document.createElement('div');
                     div.className = 'page-break';
                     
@@ -95,7 +115,7 @@
                     console.error('加载页面发生错误: ' + page, e);
                 }
             }
-            document.getElementById('loading').innerHTML = '✅ 单选框限制已破解！内容全部展开。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
+            document.getElementById('loading').innerHTML = '✅ 横向卡片截断已修复！内容全部垂直平铺。<br><br>👉 请按 Ctrl + P，选择“另存为 PDF”。';
             document.getElementById('loading').style.borderColor = '#0f9d58';
             document.getElementById('loading').style.backgroundColor = '#e6f4ea';
             document.getElementById('loading').style.color = '#0f9d58';
