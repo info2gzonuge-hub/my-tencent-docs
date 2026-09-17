@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 浏览器标签页标题保持不改动 -->
+<title>五大广告平台跨区投放 · 融合版</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- 引入高清矢量国旗图标库，完美解决 Windows 无法显示国旗的问题 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.0/css/flag-icons.min.css" />
+<style>
+  :root {
+    --pink: #FF6B9D; --yellow: #FFD93D; --mint: #6BCB77; --blue: #4D96FF;
+    --purple: #B983FF; --orange: #FF9F45; --bg: #F8FAFC; --card: #FFFFFF;
+    --text: #1E293B; --text-light: #64748B; --border: #E2E8F0;
+    --c1: #7C3AED; --c2: #16A34A; --c3: #EA580C; --c4: #2563EB; --c5: #DB2777;
+    /* Amazon Theme Colors */
+    --amz-primary: #FF9900;
+    --amz-bg: #FFF7ED;
+    --amz-border: #FDBA74;
+    --amz-text: #9A3412;
+    /* TikTok Theme Colors */
+    --tk-primary: #00F2FE;
+    --tk-secondary: #FE0979;
+    --tk-bg: #F0FDF4;
+    --tk-border: #86EFAC;
+    --tk-text: #166534;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.8; padding: 20px;
+    scroll-behavior: smooth;
+  }
+  .container { max-width: 1500px; margin: 0 auto; }
+
+  .hero {
+    text-align: center; padding: 36px 20px 28px; background: #2563EB;
+    border-radius: 20px; margin-bottom: 28px;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.2);
+  }
+  /* 正文主视觉大标题更新 */
+  .hero h1 { font-size: clamp(20px, 3vw, 30px); font-weight: 800; color: #FFF; margin-bottom: 8px; }
+  .hero p { font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 500;}
+
+  /* 平台卡片（可点击跳转） */
+  .platform-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px; margin-bottom: 30px;
+  }
+  .p-card {
+    display: block; text-decoration: none; color: inherit;
+    border-radius: 16px; padding: 22px 20px;
+    border: 2px solid transparent; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer; scroll-margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    background: #fff;
+  }
+  .p-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+  .p-card:nth-child(1) { background: #F3E8FF; border-color: #D8B4FE; }
+  .p-card:nth-child(2) { background: #DCFCE7; border-color: #86EFAC; }
+  .p-card:nth-child(3) { background: #FFEDD5; border-color: #FDBA74; }
+  .p-card:nth-child(4) { background: #DBEAFE; border-color: #93C5FD; }
+  .p-card:nth-child(5) { background: #FCE7F3; border-color: #F9A8D4; }
+  .p-card .icon { font-size: 26px; margin-bottom: 6px; display: block; }
+  .p-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .p-card .tagline { font-size: 12px; color: var(--text-light); margin-bottom: 10px; font-weight: 600; }
+  .p-card .plain {
+    font-size: 13px; line-height: 1.7; padding: 10px 12px; border-radius: 8px;
+    background: rgba(255,255,255,0.7); font-weight: 500;
+  }
+
+  /* 通用折叠面板样式 (包裹表格与图谱) */
+  .table-details {
+    border-radius: 12px; margin-bottom: 30px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 6px solid #2563EB;
+    background: #FFFFFF;
+  }
+  .table-details[open] { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+  .table-details > summary {
+    cursor: pointer; padding: 18px 20px; font-weight: 800; font-size: 18px;
+    display: flex; align-items: center; gap: 10px; list-style: none;
+    user-select: none; transition: background 0.2s; color: #1E293B;
+    background: #F8FAFC; border-bottom: 1px solid var(--border);
+  }
+  .table-details > summary::-webkit-details-marker { display: none; }
+  .table-details > summary::after {
+    content: '▸'; margin-left: auto; font-size: 18px; color: #64748B;
+    transition: transform 0.2s;
+  }
+  .table-details[open] > summary::after { transform: rotate(90deg); }
+  
+  /* 模块特定折叠面板颜色定制 */
+  .table-details.amz-tk { border-left-color: #0F172A; }
+  .table-details.amz-module { border-left: none; border: 2px solid var(--amz-primary); }
+  .table-details.amz-module > summary { background: var(--amz-bg); color: var(--amz-text); border-bottom: 1px solid var(--amz-border); }
+  .table-details.tk-module { border-left: none; border: 2px solid #2DD4BF; }
+  .table-details.tk-module > summary { background: var(--tk-bg); color: var(--tk-text); border-bottom: 1px solid var(--tk-border); }
+
+  .table-summary-box {
+    margin: 16px 20px; font-size: 14.5px; color: #334155; 
+    padding: 14px 18px; border-radius: 8px; font-weight: 500;
+  }
+  .table-details .table-summary-box {
+    background: #EFF6FF; border-left: 4px solid #2563EB;
+  }
+  .table-details.amz-tk .table-summary-box {
+    background: #F8FAFC; border-left: 4px solid #0F172A; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .table-wrap { overflow-x: auto; }
+  table.compare { width: 100%; border-collapse: collapse; min-width: 1100px; font-size: 14px; }
+  table.compare thead th {
+    padding: 18px 16px; text-align: left; font-weight: 700; font-size: 14px;
+    white-space: nowrap; border: 1px solid rgba(255,255,255,0.2);
+    position: sticky; top: 0; z-index: 2; color: #FFF;
+  }
+  table.compare thead th:first-child { background: #1E3A8A; min-width: 160px; z-index: 3; text-align: center; }
+  table.compare thead th:nth-child(2) { background: var(--c1); }
+  table.compare thead th:nth-child(3) { background: var(--c2); }
+  table.compare thead th:nth-child(4) { background: var(--c3); }
+  table.compare thead th:nth-child(5) { background: var(--c4); }
+  table.compare hthead th:nth-child(6) { background: var(--c5); }
+
+  table.compare tbody td {
+    padding: 18px 16px; border: 1px solid var(--border); vertical-align: top;
+    line-height: 1.85; font-size: 14px; transition: background 0.2s;
+  }
+  table.compare tbody td:nth-child(1) {
+    font-weight: 700; background: #F8FAFC; white-space: nowrap;
+    position: sticky; left: 0; z-index: 1; text-align: center; vertical-align: middle;
+    font-size: 14px; color: #1E293B;
+  }
+  table.compare tbody td:nth-child(2) { background: #FAF5FF; }
+  table.compare tbody td:nth-child(3) { background: #F0FDF4; }
+  table.compare tbody td:nth-child(4) { background: #FFF7ED; }
+  table.compare tbody td:nth-child(5) { background: #EFF6FF; }
+  table.compare tbody td:nth-child(6) { background: #FDF2F8; }
+  table.compare tbody td:hover { background: #FEF9C3 !important; }
+  table.compare tbody tr:has(td:hover) td:nth-child(1) { background: #FEF9C3 !important; }
+  table.compare tbody td:hover .cell-inner { transform: translateY(-2px); color: #1E3A8A; text-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  table.compare tbody td .cell-inner { transition: transform 0.2s, color 0.2s, text-shadow 0.2s; }
+
+  .term {
+    display: inline-block; font-size: 11px; font-weight: 700; color: #7C3AED;
+    background: #F3E8FF; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;
+  }
+  .cell-inner strong { display: block; font-size: 13.5px; margin-bottom: 4px; }
+  
+  .cell-inner details { margin-top: 8px; font-size: 13px; }
+  .cell-inner details summary {
+    cursor: pointer; color: #2563EB; font-weight: 600; font-size: 12.5px;
+    list-style: none; user-select: none; background: transparent; border: none; padding: 0;
+  }
+  .cell-inner details summary::-webkit-details-marker { display: none; }
+  .cell-inner details summary::before { content: '▸ '; display: inline-block; transition: transform 0.2s; }
+  .cell-inner details[open] summary::before { transform: rotate(90deg); }
+  .cell-inner details p { margin-top: 6px; color: #475569; line-height: 1.75; }
+  
+  .plain-sm {
+    display: block; font-size: 12px; color: #166534; background: #F0FDF4;
+    padding: 6px 9px; border-radius: 5px; border-left: 3px solid var(--mint);
+    margin-top: 8px; line-height: 1.6; font-weight: 500;
+  }
+  
+  /* ========================================================= */
+  /* 国别政策卡片 (3x2 网格与还原截图样式) */
+  /* ========================================================= */
+  .region-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 20px;
+    background: #F8FAFC; /* 网格底部背景色让白卡片突出 */
+  }
+  
+  .region-card {
+    background: #FFFFFF; border-radius: 14px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); 
+    transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .region-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; }
+  
+  /* Amazon Card Style */
+  .region-card.amz-card { border: 1px solid var(--amz-border); }
+  .region-card.amz-card::before { background: var(--amz-primary); }
+  .region-card.amz-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(255, 153, 0, 0.15); border-color: var(--amz-primary); }
+  .region-card.amz-card h4 { margin-bottom: 16px; margin-top: 6px; font-size: 16px; font-weight: 800; color: #9A3412; }
+  .region-card.amz-card li::before { color: var(--amz-primary); }
+  .region-card.amz-card .plain-sm { background: var(--amz-bg); color: #9A3412; border-left-color: var(--amz-primary); }
+  
+  /* TikTok Card Style */
+  .region-card.tk-card { border: 1px solid var(--tk-border); }
+  .region-card.tk-card::before { background: linear-gradient(90deg, var(--tk-primary), var(--tk-secondary)); }
+  .region-card.tk-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0, 242, 254, 0.15); border-color: #2DD4BF; }
+  .region-card.tk-card h4 { margin-bottom: 16px; margin-top: 6px; font-size: 16px; font-weight: 800; color: #166534; }
+  .region-card.tk-card li::before { color: var(--tk-secondary); }
+  .region-card.tk-card .plain-sm { background: var(--tk-bg); color: #166534; border-left-color: var(--tk-secondary); }
+
+  /* 国旗与缩写样式还原截图 */
+  .card-flags { display: flex; align-items: center; margin-bottom: 6px; font-size: 22px; }
+  .card-flags .fi { border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); margin-right: 6px;}
+  .card-flags .emoji-icon { font-size: 20px; line-height: 1; display: flex; align-items: center; margin-right: 6px;}
+  .flag-text { font-size: 15px; font-weight: 700; color: #0F172A; letter-spacing: 1px; margin-left: 4px;}
+
+  /* 数据进度条微图表样式 */
+  .micro-chart { background: #F8FAFC; padding: 12px 14px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 16px;}
+  .chart-row { display: flex; align-items: center; margin-bottom: 8px; }
+  .chart-row:last-child { margin-bottom: 0; }
+  .chart-label { width: 65px; font-size: 12.5px; color: #475569; font-weight: 600; }
+  .bar-track { flex: 1; height: 7px; background: #E2E8F0; border-radius: 4px; margin: 0 12px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease-out; }
+  .chart-val { width: 36px; font-size: 12px; font-weight: 700; text-align: right; }
+  
+  /* 进度条颜色 */
+  .bg-orange { background: linear-gradient(90deg, #FDBA74, #EA580C); }
+  .bg-green { background: linear-gradient(90deg, #86EFAC, #16A34A); }
+  .bg-red { background: linear-gradient(90deg, #FCA5A5, #DC2626); }
+  .text-orange { color: #EA580C; }
+  .text-green { color: #16A34A; }
+  .text-red { color: #DC2626; }
+
+  /* 列表与大白话 */
+  .region-card ul { list-style: none; padding: 0; font-size: 13.5px; color: #334155; margin-bottom: 14px; flex-grow: 1;}
+  .region-card li { margin-bottom: 8px; line-height: 1.7; position: relative; padding-left: 14px; }
+  .region-card li::before { content: '•'; position: absolute; left: 0; font-weight: bold; }
+  .region-card li b { color: #0F172A; }
+  .region-card .plain-sm { padding: 10px 12px; font-size: 12.5px; line-height: 1.6; border-radius: 6px; }
+
+  /* ========================================================= */
+  /* 术语表与底部速记 */
+  /* ========================================================= */
+  .glossary { margin-top: 30px; margin-bottom: 30px; }
+  .glossary h2 { font-size: 20px; font-weight: 800; margin-bottom: 18px; color: #1E293B; }
+  .term-card {
+    border-radius: 12px; margin-bottom: 16px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 6px solid transparent; background: #FFFFFF;
+  }
+  .term-card[open] { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+  .term-card > summary {
+    cursor: pointer; padding: 14px 18px; font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; gap: 8px; list-style: none; user-select: none; transition: background 0.2s;
+  }
+  .term-card > summary::-webkit-details-marker { display: none; }
+  .term-card > summary::after { content: '▸'; margin-left: auto; font-size: 14px; color: #64748B; transition: transform 0.2s; }
+  .term-card[open] > summary::after { transform: rotate(90deg); }
+  .term-card.c1 { border-left-color: var(--c1); } .term-card.c1 > summary { background: #F3E8FF; color: var(--c1); }
+  .term-card.c2 { border-left-color: var(--c2); } .term-card.c2 > summary { background: #DCFCE7; color: var(--c2); }
+  .term-card.c3 { border-left-color: var(--c3); } .term-card.c3 > summary { background: #FFEDD5; color: var(--c3); }
+  .term-card.c4 { border-left-color: var(--c4); } .term-card.c4 > summary { background: #DBEAFE; color: var(--c4); }
+  .term-card.c5 { border-left-color: var(--c5); } .term-card.c5 > summary { background: #FCE7F3; color: var(--c5); }
+
+  .term-table-wrap { padding: 0 16px 16px; }
+  table.term-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.term-table th, table.term-table td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+  table.term-table th { background: #1E3A8A; color: #FFF; font-weight: 700; font-size: 13px; text-align: center; }
+  table.term-table td:first-child { font-weight: 600; white-space: nowrap; color: #1E293B; }
+  table.term-table td:nth-child(2) { color: #475569; }
+  table.term-table td:nth-child(3) { color: #166534; font-weight: 500; }
+  table.term-table tbody tr:hover { background: #FEF9C3; }
+
+  .bottom-line { background: #2563EB; border-radius: 16px; padding: 32px 24px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(37,99,235,0.25); }
+  .bottom-line h3 { font-size: 18px; font-weight: 800; margin-bottom: 22px; text-align: center; color: #FFF; }
+  .bl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+  .bl-item { display: block; text-decoration: none; color: inherit; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); border-radius: 12px; padding: 16px 18px; transition: background 0.2s, transform 0.2s; }
+  .bl-item:hover { background: rgba(255,255,255,0.2); transform: translateY(-4px); }
+  .bl-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.18); }
+  .bl-head strong { font-size: 15px; color: #FFF; }
+  .bl-badge { margin-left: auto; font-size: 11px; font-weight: 700; color: #1E40AF; background: #FFD93D; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+  .bl-item ul { list-style: none; padding: 0; margin: 0; }
+  .bl-item li { font-size: 13px; color: rgba(255,255,255,0.88); line-height: 1.75; padding-left: 14px; position: relative; margin-bottom: 7px; }
+  .bl-item li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+  .bl-item li b { color: #FFF; }
+  .bl-foot { margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.25); font-size: 12.5px; color: #FFD93D; font-weight: 600; line-height: 1.7; }
+
+  @media (max-width: 992px) {
+    .region-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    body { padding: 12px; }
+    .hero { padding: 24px 14px 18px; border-radius: 14px; }
+    table.compare { font-size: 13px; }
+    table.compare thead th, table.compare tbody td { padding: 12px 10px; }
+    .bl-grid, .region-grid { grid-template-columns: 1fr; }
+    .term-table-wrap { padding: 0 10px 12px; }
+    table.term-table th, table.term-table td { padding: 8px 8px; font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <!-- 仅 H1 改为新版标题，Title 保持 V3 原版 -->
+    <h1>🌍 全球主流平台跨区投放与实战避坑指南</h1>
+    <p>ChatGPT Ads · TikTok Shop · Amazon · Meta Ads · Google Ads</p>
+  </div>
+
+  <!-- 顶部平台卡片：点击跳转到底部对应速记卡 (完全恢复V3) -->
+  <div class="platform-cards">
+    <a href="#summary-chatgpt" id="card-chatgpt" class="p-card">
+      <span class="icon">🤖</span><h3>ChatGPT Ads</h3>
+      <div class="tagline">对话式广告 · 最新入局者</div>
+      <div class="plain">就像开连锁店，每个国家都得单独办一张营业执照，不能一照走天下。</div>
+    </a>
+    <a href="#summary-tiktok" id="card-tiktok" class="p-card">
+      <span class="icon">🎵</span><h3>TikTok Shop</h3>
+      <div class="tagline">内容电商 · 短视频带货</div>
+      <div class="plain">像用微信管理多个群聊，一个“经营组”把各国店铺绑在一起，内容一键分发。</div>
+    </a>
+    <a href="#summary-amazon" id="card-amazon" class="p-card">
+      <span class="icon">📦</span><h3>Amazon</h3>
+      <div class="tagline">全球电商 · 成熟基础设施</div>
+      <div class="plain">像一张全球通用的信用卡，一个广告账户就能在几十个国家同时打广告。</div>
+    </a>
+    <a href="#summary-meta" id="card-meta" class="p-card">
+      <span class="icon">📘</span><h3>Meta Ads</h3>
+      <div class="tagline">社交广告 · 全球覆盖最广</div>
+      <div class="plain">像一个大管家（BM）替你管理所有国家的广告账户，但每个账户得单独“报户口”。</div>
+    </a>
+    <a href="#summary-google" id="card-google" class="p-card">
+      <span class="icon">🔍</span><h3>Google Ads</h3>
+      <div class="tagline">搜索广告 · 意图最精准</div>
+      <div class="plain">像一个总控制台（MCC），一个账号就能管几十个国家的子账户，但账单按国家分开算。</div>
+    </a>
+  </div>
+
+  <!-- 表格一：五大平台对比 (带折叠与概括，还原 V3 详细 details 文案) -->
+  <details class="table-details" open>
+    <summary>📊 五大平台核心运营维度全景对比</summary>
+    <div class="table-summary-box">
+      💡 <b>核心规则拆解：</b>从建站开户、资金回流到封店雷区，全链路扒开不同平台的底层规则与合规红线，把钱花在刀刃上，拒绝盲目试错。
+    </div>
+    <div class="table-wrap" style="margin-bottom: 0; border: none; box-shadow: none; border-radius: 0;">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>对比维度</th>
+            <th>🤖 ChatGPT Ads</th>
+            <th>🎵 TikTok Shop</th>
+            <th>📦 Amazon</th>
+            <th>📘 Meta Ads</th>
+            <th>🔍 Google Ads</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🏗️ 账户架构与核心工具</td>
+            <td><div class="cell-inner"><span class="term">孤岛式架构</span><strong>一国一账户，信息永久锁定，无跨区工具。</strong><details><summary>详情</summary><p>国家、币种、时区提交后无法修改，每个市场需独立注册开户，且无任何跨区管理工具，需逐国登录操作。</p><span class="plain-sm">各玩各的，互不串门，每个国家单独登录。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">联邦矩阵式</span><strong>多店铺绑定“经营组”，内容一键分发。</strong><details><summary>详情</summary><p>可将不同主体、不同账号的多个国家店铺绑定为一个“经营组”，配合内容全球分发 + 跨店一键铺品统一管理。</p><span class="plain-sm">总部分封各路分舵，一键发指令给分公司。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">跨区联合</span><strong>一个广告账户覆盖多站点，一键推广。</strong><details><summary>详情</summary><p>注册一个广告账户，即可在已开展销售的所有亚马逊站点推广，配合“多站点一键推广”和全球广告管理器。</p><span class="plain-sm">一证走天下，一键推广管全球。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">管家分户制</span><strong>一个BM管多个广告账户，资产组分类。</strong><details><summary>详情</summary><p>每个广告账户绑定一个国家/币种/时区，多个账户挂在同一个Business Manager下，用Business Asset Group按“品牌-地区”分组。</p><span class="plain-sm">管家统一管理，但每户单独上户口。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">总控台制</span><strong>一个MCC管多个子账户，跨账户报表。</strong><details><summary>详情</summary><p>经理账号（MCC）像总控制台，下面挂多个子账户，每个子账户可对应不同国家，支持跨账户报表、合并账单、统一权限控制。</p><span class="plain-sm">一个遥控器管所有电视，但每台电视单独交电费。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>🚪 开户门槛与合规验证<br>（含中国主体）</td>
+            <td><div class="cell-inner"><span class="term">本土化穿透审核</span><strong>强制目标国本土主体，门槛最高。</strong><details><summary>详情</summary><p>投美国必须用美国公司+EIN，需通过Persona验证，提交注册文件和负责人ID。中国供应商需借道美国主体——注册美国公司、申请EIN、开设美国银行账户。</p><span class="plain-sm">查户口查到底，必须搭建海外主体架构。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">各站独立审核</span><strong>各站要求不同，部分兼容国内资质。</strong><details><summary>详情</summary><p>美英站点接受中国大陆/香港企业实体（需保证金），日本等站点需本地物流或资质。</p><span class="plain-sm">有的店认外地身份证，有的店必须本地户口。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">一套资料多站点</span><strong>大陆营业执照可直接注册，门槛最低。</strong><details><summary>详情</summary><p>可凭大陆执照直接注册开通多个海外站点，分站有差异化审核（欧洲看水电VAT，北美查税务环境）。</p><span class="plain-sm">一张身份证能开好几个国家的店，门槛最低。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">业务+所在地验证</span><strong>需提交税证、营业执照，验证不通用。</strong><details><summary>详情</summary><p>所在地验证以广告账户为单位，一个账户完成不会自动通过其他账户。中国大陆不直接受理，必须通过官方认证的一级代理商开户。</p><span class="plain-sm">每个账户单独验一次，不能一次验完全家通用。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">广告主验证</span><strong>需提交营业执照、付款方式证明。</strong><details><summary>详情</summary><p>公司名、支付方式、文件必须一致。大陆企业无法直接开通本地化账户，需境外主体或通过官方授权代理商。</p><span class="plain-sm">名字对不上、付款方式对不上，直接打回。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>📊 数据聚合与查看</td>
+            <td><div class="cell-inner"><span class="term">各账户独立</span><strong>无法一屏看全球，汇总极难。</strong><details><summary>详情</summary><p>无法在一个界面查看所有国家数据，跨国汇总极其困难。</p><span class="plain-sm">一到月底，得让财务导出十个国家的Excel表手动拼成一张表。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">跨站点聚合看板</span><strong>全球统一看板，跨国销评互通。</strong><details><summary>详情</summary><p>通过Brand Portal可在单一界面查看所有店铺聚合数据，并支持跨国销评互通。</p><span class="plain-sm">老板一眼看全盘，不用手动拼表。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">统一广告管理器</span><strong>一个后台看全球，可分开可统一。</strong><details><summary>详情</summary><p>可在活动管理器中查看所有站点数据，并灵活切换单独或统一管理。</p><span class="plain-sm">一个后台看全球，想分开看也行。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">BM层面聚合</span><strong>BM看总账，各账户报表独立。</strong><details><summary>详情</summary><p>在BM中可查看所有挂载广告账户的数据，但各账户报表独立。</p><span class="plain-sm">管家能看总账，但每户的明细分开算。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">MCC跨账户报表</span><strong>一个界面比较所有子账户表现。</strong><details><summary>详情</summary><p>MCC提供跨账户报表和聚合仪表盘，一个界面比较所有子账户表现。</p><span class="plain-sm">总部有张总表，所有分公司数据一目了然。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>🧠 流量属性与用户心智</td>
+            <td><div class="cell-inner"><span class="term">意图驱动</span><strong>强信任的“顾问式植入推荐”。</strong><details><summary>详情</summary><p>用户是在提问和寻求解决方案中触发广告，属于强信任的“顾问式植入推荐”。</p><span class="plain-sm">带着问题找答案，AI顺手推荐。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">内容激发</span><strong>冲动消费为主，多巴胺刺激。</strong><details><summary>详情</summary><p>冲动消费为主，依靠爆款短视频、洗脑BGM和主播叫卖刺激多巴胺。</p><span class="plain-sm">闲逛刷视频被种草，冲动下单。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">货架搜索</span><strong>购买目的明确，比价看评价。</strong><details><summary>详情</summary><p>用户购买目的明确，核心对比价格、Review、物流时效。</p><span class="plain-sm">带着钱包来买东西，比价看评价。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">社交种草</span><strong>兴趣标签精准投放。</strong><details><summary>详情</summary><p>用户在刷动态、看视频时被广告触达，靠人群画像和兴趣标签精准投放。</p><span class="plain-sm">刷朋友圈刷到广告，被兴趣标签锁定。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">搜索意图</span><strong>主动搜索，意图最明确。</strong><details><summary>详情</summary><p>用户主动搜索关键词时触发广告，意图最明确，转化率通常最高。</p><span class="plain-sm">主动搜什么，就推什么。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>💰 计费与竞价机制</td>
+            <td><div class="cell-inner"><span class="term">CPM/CPC混合</span><strong>展示/会话计费为主，溢价高。</strong><details><summary>详情</summary><p>按千次曝光(CPM)或单次会话推荐计费，竞价体系尚处早期，溢价高，类似品牌赞助。</p><span class="plain-sm">像品牌买高端赞助位，贵但精准。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">混合出价(CPS)</span><strong>广告费+达人佣金+平台扣点。</strong><details><summary>详情</summary><p>广告费（CPM）+ 达人分销佣金（CPS）+ 平台扣点。</p><span class="plain-sm">广告费加达人抽成，边播边算。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">CPC驱动</span><strong>纯效果导向，盯ACOS和ROAS。</strong><details><summary>详情</summary><p>主要是CPC（按点击付费），核心盯ACOS和ROAS。</p><span class="plain-sm">花钱买点击，死盯投资回报率。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">oCPM/CPC</span><strong>系统自动优化，看转化成本。</strong><details><summary>详情</summary><p>oCPM（按目标优化展示）+ CPC，系统自动优化，核心看转化成本。</p><span class="plain-sm">系统帮你优化，你只管设目标成本。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">CPC/CPA</span><strong>点击与转化并重，搜索转化最实在。</strong><details><summary>详情</summary><p>CPC为主，可选CPA（按转化付费），搜索广告意图明确，转化效率高。</p><span class="plain-sm">按点击或按转化付费，搜索广告转化最实在。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>🎨 素材与本地化壁垒</td>
+            <td><div class="cell-inner"><span class="term">上下文自适应</span><strong>重文本语义，轻视觉。</strong><details><summary>详情</summary><p>不需要复杂的视觉图，但极度依赖精准的文本语义和上下文关联设定。</p><span class="plain-sm">靠AI自然接话把货卖了。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">UGC/KOL基建</span><strong>素材消耗快，本土化门槛最高。</strong><details><summary>详情</summary><p>生命周期极短，需要大量本土外模、当地口音短视频，内容迭代压力极大。</p><span class="plain-sm">得找本地老外拍视频搞直播，折腾人。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">标品Listing</span><strong>高度标准化，一套详情页吃几年。</strong><details><summary>详情</summary><p>搞好一套高水准的“白底图+A+详情页+视频”可长期复用，核心是拼关键词埋词。</p><span class="plain-sm">搞一套高逼格详情页吃几年。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">素材驱动</span><strong>素材即定向，决定投放效果。</strong><details><summary>详情</summary><p>素材质量直接决定投放效果，需要大量图片和视频测试，本土化视觉是关键。</p><span class="plain-sm">素材好不好，直接决定广告跑不跑得动。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">关键词+落地页</span><strong>文字广告为主，词和落地页必须匹配。</strong><details><summary>详情</summary><p>核心是关键词选择和落地页体验，素材要求相对低，但文案和落地页必须高度匹配。</p><span class="plain-sm">词选对了，落地页接得住，转化就来了。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>💱 资金流向与结算汇率</td>
+            <td><div class="cell-inner"><span class="term">原币种结算壁垒</span><strong>本地结算，回款链路长。</strong><details><summary>详情</summary><p>通常只支持美元或投放地币种，需绑定当地企业信用卡或代理预付，回款链路长。</p><span class="plain-sm">钱卡在当地账户难倒回国内。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">跨境直结与本币回流</span><strong>各站独立，三方提款。</strong><details><summary>详情</summary><p>各站点独立结算原币种，可借助Payoneer等提现，退换货及账期受本地政策影响大。</p><span class="plain-sm">借助第三方跨境收款工具结汇。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">闭环最成熟</span><strong>官方全球收款，可统一结汇回国。</strong><details><summary>详情</summary><p>自带官方全球收款，也可轻松绑定第三方收款工具将全球站点的钱统一结汇回国。</p><span class="plain-sm">官方自带渠道直接换成人民币。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">代理商垫付</span><strong>代理商结算，汇率账期由代理定。</strong><details><summary>详情</summary><p>通过代理商充值投放，结算走代理商渠道，汇率和账期由代理商政策决定。</p><span class="plain-sm">钱给代理商，代理商帮你充。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">子账户独立结算</span><strong>各子账户独立付款，MCC可代付。</strong><details><summary>详情</summary><p>每个子账户绑定各自付款方式，MCC可统一支付也可分开结算，汇率按各账户币种处理。</p><span class="plain-sm">各分公司自己付自己的账单，总部可代付也可不代付。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>📢 广告形式/版位</td>
+            <td><div class="cell-inner"><span class="term">对话内植入</span><strong>广告融入AI回答，非传统展示位。</strong><details><summary>详情</summary><p>广告以赞助回答、推荐卡片或上下文关联的形式出现在对话中，用户提问时自然触发，无独立广告位。</p><span class="plain-sm">像专家在解答问题时，顺手推荐一个靠谱产品。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">短视频+直播+商城</span><strong>内容场与货架场双轮驱动。</strong><details><summary>详情</summary><p>主要版位包括For You Feed短视频、直播间、TikTok商城、搜索广告，以及达人合作内容。</p><span class="plain-sm">刷视频、看直播、逛商城，哪儿都能卖货。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">站内搜索+商品页+站外</span><strong>搜索与货架广告为主，DSP补站外。</strong><details><summary>详情</summary><p>核心是Sponsored Products、Sponsored Brands、Sponsored Display，覆盖搜索结果、商品详情页、站内展示位，DSP可延伸至站外。</p><span class="plain-sm">在超市货架和收银台旁边都摆上自己的广告牌。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">Feed+Reels+Stories+Audience Network</span><strong>社交全版位覆盖，素材即定向。</strong><details><summary>详情</summary><p>广告出现在Facebook/Instagram的动态、快拍、Reels、Marketplace、Messenger及Audience Network联盟位。</p><span class="plain-sm">刷朋友圈、刷短视频、看快拍，哪儿都能刷到广告。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">搜索+购物+展示+YouTube</span><strong>搜索意图+展示覆盖+视频，全漏斗。</strong><details><summary>详情</summary><p>搜索广告、购物广告、展示广告、YouTube视频广告、Discover信息流，覆盖主动搜索与被动浏览。</p><span class="plain-sm">主动搜什么推什么，逛网站看视频也推。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>🛡️ 风控合规风险</td>
+            <td><div class="cell-inner"><span class="term">本土主体+隐私强审</span><strong>目标国主体与数据隐私双重门槛。</strong><details><summary>详情</summary><p>强制目标国本土主体（如美国公司+EIN），Persona验证，提交注册文件和负责人ID；对话数据隐私要求极高，合规审查严格。</p><span class="plain-sm">查户口查到底，还盯着你别乱用聊天数据。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">各站独立+内容合规</span><strong>各站资质不同，内容与产品限制多。</strong><details><summary>详情</summary><p>美英接受大陆/香港主体但需保证金，日本等需本地物流或资质；直播和短视频内容审核严，禁限售品类多，封店风险高。</p><span class="plain-sm">每个国家规矩不一样，说错话、卖错货都可能被封。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">KYC+税务+产品合规</span><strong>审核成熟，税务与产品合规是重点。</strong><details><summary>详情</summary><p>分站KYC、欧洲VAT、北美税务、产品认证（CE、FDA等），侵权和假货零容忍，账户绩效指标严格。</p><span class="plain-sm">进超市要查身份证、交税单，卖假货直接清退。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">广告政策+账户验证+代理商</span><strong>政策严、验证繁，代理商是大陆主通道。</strong><details><summary>详情</summary><p>广告政策严格，账户需业务与所在地验证，大陆必须通过一级代理商开户；隐私合规GDPR/CCPA压力大，封号常见。</p><span class="plain-sm">进大门要层层查证，还得找个靠谱中介带你进去。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">广告主验证+政策+落地页</span><strong>验证严，落地页和商标合规是红线。</strong><details><summary>详情</summary><p>广告主身份、付款方式、公司名必须一致；广告政策、商标、落地页体验审查严格，大陆需境外主体或授权代理商。</p><span class="plain-sm">名字对不上、落地页接不住，直接拒登。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>🎯 转化归因与追踪</td>
+            <td><div class="cell-inner"><span class="term">早期会话归因</span><strong>归因体系尚处早期，以会话/曝光为主。</strong><details><summary>详情</summary><p>目前主要按千次曝光或单次会话推荐计费，缺乏成熟像素和跨站追踪，归因窗口和转化路径不透明，需靠平台侧数据。</p><span class="plain-sm">刚起步，只能看个大概，精细归因还得等。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">Pixel+Events API+跨店归因</span><strong>像素与事件API成熟，直播归因强。</strong><details><summary>详情</summary><p>支持TikTok Pixel、Events API、跨店归因，可追踪短视频、直播、商城转化，归因窗口和模型在后台可调。</p><span class="plain-sm">从刷到买，一条线追到底。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">站内归因+ACOS/ROAS</span><strong>站内闭环归因，核心看ACOS和ROAS。</strong><details><summary>详情</summary><p>亚马逊广告归因基于站内点击和购买，数据在广告后台闭环，ACOS、ROAS、TACOS是核心指标，站外归因较弱。</p><span class="plain-sm">在超市里买了就算广告的，出门左转不认。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">Pixel+CAPI+归因窗口</span><strong>像素与CAPI双轨，归因窗口可选。</strong><details><summary>详情</summary><p>支持Meta Pixel、Conversions API，可设置1天、7天、28天归因窗口，跨设备归因依赖登录和cookie，隐私政策影响大。</p><span class="plain-sm">你点过、看过、买过，系统都帮你记着。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">转化跟踪+GA4+归因模型</span><strong>搜索归因最成熟，GA4打通全链路。</strong><details><summary>详情</summary><p>Google Ads转化跟踪、GA4、归因模型（数据驱动、最后点击等），搜索广告归因清晰，跨渠道归因依赖GA4和UTM。</p><span class="plain-sm">搜了什么、点了哪个、最后买没买，一清二楚。</span></details></div></td>
+          </tr>
+          <tr>
+            <td>⚙️ API/批量工具自动化能力</td>
+            <td><div class="cell-inner"><span class="term">暂无成熟公开API</span><strong>自动化能力早期，主要靠人工。</strong><details><summary>详情</summary><p>目前无成熟公开的广告API和批量工具，多国账户需逐国登录操作，自动化投放和批量管理能力有限。</p><span class="plain-sm">刚开张，还没接通自动化流水线。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">开放平台+批量工具</span><strong>有开放平台和批量工具，自动化中等。</strong><details><summary>详情</summary><p>提供TikTok Shop API、Marketing API、批量上传和经营组工具，可批量铺品、分发内容、管理多店，但各站API权限不同。</p><span class="plain-sm">有半自动流水线，但每个国家还得调调参数。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">Ads API+SP-API</span><strong>API最成熟，批量自动化能力强。</strong><details><summary>详情</summary><p>Amazon Ads API支持批量创建、报表、竞价调整，Selling Partner API可打通库存订单，第三方工具生态丰富，多站点统一管理能力强。</p><span class="plain-sm">全自动流水线，接上ERP就能自己跑。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">Marketing API+批量</span><strong>Marketing API成熟，批量自动化强。</strong><details><summary>详情</summary><p>Meta Marketing API支持批量创建广告、受众、报表，可配合自动化规则和第三方工具，多账户管理依赖BM和代理商。</p><span class="plain-sm">有自动化流水线，但每户还得单独接管道。</span></details></div></td>
+            <td><div class="cell-inner"><span class="term">Google Ads API+脚本</span><strong>API和脚本最成熟，自动化能力强。</strong><details><summary>详情</summary><p>Google Ads API、Google Ads Scripts、批量上传、规则自动化，MCC层面可跨账户批量操作，第三方工具生态最丰富。</p><span class="plain-sm">总控台带自动化，一个脚本管所有子账户。</span></details></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- 表格二：折叠模块 -->
+  <details class="table-details amz-tk" open>
+    <summary>📌 AMZ vs TK 跨区互通性极简速查</summary>
+    <div class="table-summary-box">
+      💡 <b>跨国履约边界：</b>一分钟看懂亚马逊与 TK 小店的“国家互通”逻辑，彻底搞清楚你的海外仓库到底能辐射哪些国家，哪些红线绝对不能碰。
+    </div>
+    <div class="table-wrap" style="margin-bottom: 0; border: none; box-shadow: none; border-radius: 0;">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th style="background:#0F172A; text-align:center;">跨区互通性</th>
+            <th style="background:var(--amz-bg); color:var(--amz-text); border-bottom:3px solid var(--amz-primary);">📦 Amazon (亚马逊)</th>
+            <th style="background:var(--tk-bg); color:var(--tk-text); border-bottom:3px solid var(--tk-secondary);">🎵 TikTok Shop (TK 小店)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>北美互通性</strong></td>
+            <td><strong>通</strong>（美国 FBA 可通过 NARF 辐射加、墨）</td>
+            <td><strong>不通</strong>（美区纯封闭，加墨各自独立）</td>
+          </tr>
+          <tr>
+            <td><strong>欧洲互通性</strong></td>
+            <td><strong>通</strong>（欧洲统一账户，泛欧计划一仓发多国）</td>
+            <td><strong>通</strong>（英国带头联动欧陆，推行跨欧联售）</td>
+          </tr>
+          <tr>
+            <td><strong>东南亚互通性</strong></td>
+            <td><strong>弱</strong>（新加坡等为单国独立站）</td>
+            <td><strong>强</strong>（跨境店可一店直通新马泰越菲五国）</td>
+          </tr>
+          <tr>
+            <td><strong>中东/拉美</strong></td>
+            <td><strong>半通</strong>（中东有统一后台但大区隔离，拉美独立）</td>
+            <td><strong>隔离</strong>（沙特/阿联酋单国定点，拉美尚在初期）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- ========================================================= -->
+  <!-- 模块 A: Amazon -->
+  <!-- ========================================================= -->
+  <details class="table-details amz-module" open>
+    <summary>📦 模块 A: Amazon 站点网络与跨区履约图谱</summary>
+    <div class="region-grid amz-grid">
+      <div class="region-card amz-card">
+        <div class="card-flags"><span class="emoji-icon" style="color: #0ea5e9;">🌐</span><span class="flag-text">Global</span></div>
+        <h4 class="card-title">卡片 1：核心模式与成本</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-green" style="width: 20%;"></div></div><span class="chart-val text-green">极低</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 60%;"></div></div><span class="chart-val text-orange">中高</span></div>
+        </div>
+        <ul>
+          <li><b>机制：</b>平台直营与第三方共存（货架型电商），主动搜索为主。</li>
+          <li><b>成本：</b>免押金。核心费用为 39.99美元/月租 + 销售佣金。</li>
+          <li><b>门槛：</b>大陆营业执照即可直接注册多站点。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：开店不要押金交月租，适合规矩卖标品的老板。</span>
+      </div>
+      
+      <div class="region-card amz-card">
+        <div class="card-flags"><span class="fi fi-us"></span><span class="fi fi-ca"></span><span class="fi fi-mx"></span><span class="flag-text">US CA MX</span></div>
+        <h4 class="card-title">卡片 2：北美大区（美/加/墨）</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 50%;"></div></div><span class="chart-val text-orange">中等</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 50%;"></div></div><span class="chart-val text-orange">中等</span></div>
+        </div>
+        <ul>
+          <li><b>机制：</b>北美联合账户 (Unified Account) + 远程配送 (NARF)。</li>
+          <li><b>边界：</b>一仓发三国。商品入驻美国 FBA，即可直卖加拿大和墨西哥。</li>
+          <li><b>税务：</b>代收销售税，但需评估各州 Nexus，FBA仓库地是触发点。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“做美国，送加墨”。注意货放哪个州可能向哪个州交税。</span>
+      </div>
+
+      <div class="region-card amz-card">
+        <div class="card-flags"><span class="fi fi-gb"></span><span class="fi fi-de"></span><span class="fi fi-fr"></span><span class="fi fi-it"></span><span class="fi fi-es"></span><span class="flag-text">EU</span></div>
+        <h4 class="card-title">卡片 3：欧洲大区（英德法意西）</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 60%;"></div></div><span class="chart-val text-orange">偏高</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 95%;"></div></div><span class="chart-val text-red">极高</span></div>
+        </div>
+        <ul>
+          <li><b>机制：</b>欧洲联合账户 + 泛欧计划 (Pan-EU)。</li>
+          <li><b>边界：</b>一地入仓，由算法自动调拨辐射全欧。</li>
+          <li><b>合规：</b>库存关联原则。有实际库存就必须注册当地VAT，强制 GPSR/EPR 环保。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“欧洲申根通票，但税务是连环雷”。没环保标志进不去。</span>
+      </div>
+
+      <div class="region-card amz-card">
+        <div class="card-flags"><span class="fi fi-sa"></span><span class="fi fi-ae"></span><span class="fi fi-br"></span><span class="flag-text">MEA LATAM</span></div>
+        <h4 class="card-title">卡片 4：中东与拉美大区</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 60%;"></div></div><span class="chart-val text-orange">偏高</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 70%;"></div></div><span class="chart-val text-orange">偏高</span></div>
+        </div>
+        <ul>
+          <li><b>中东：</b>账户聚合但履约隔离。统一后台管沙特/阿联酋，但仓库不通必须单发。</li>
+          <li><b>拉美：</b>墨西哥属北美区可用美国货直发；巴西关税壁垒极高，完全独立操作。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：中东是后台连网仓库断网；拉美是巴西在玩单机，美仓发不过去。</span>
+      </div>
+
+      <div class="region-card amz-card">
+        <div class="card-flags"><span class="fi fi-jp"></span><span class="fi fi-au"></span><span class="fi fi-sg"></span><span class="flag-text">APAC</span></div>
+        <h4 class="card-title">卡片 5：亚太大区（日/澳/新）</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 50%;"></div></div><span class="chart-val text-orange">中等</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-green" style="width: 40%;"></div></div><span class="chart-val text-green">较低</span></div>
+        </div>
+        <ul>
+          <li><b>机制：</b>单国封闭站点 (AP大区独立管理)。</li>
+          <li><b>边界：</b>完全各自为政，无法跨国打通。</li>
+          <li><b>特征：</b>日本为成熟百亿级市场，澳洲/新加坡单独运作，库存绝缘。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“各顾各的独立超市”。赚日元做日本人生意，跟澳洲没关系。</span>
+      </div>
+
+      <div class="region-card amz-card">
+        <div class="card-flags"><span class="emoji-icon" style="color:#DC2626;">⚠️</span><span class="flag-text" style="color:#DC2626;">Risk</span></div>
+        <h4 class="card-title">卡片 6：风控合规与封店雷区</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">账户二审</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 90%;"></div></div><span class="chart-val text-red">频发</span></div>
+          <div class="chart-row"><span class="chart-label">封禁力度</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 100%;"></div></div><span class="chart-val text-red">极严</span></div>
+        </div>
+        <ul>
+          <li><b>合规升级：</b>2026 欧洲需法人近12个月个人纳税证明及户口本。</li>
+          <li><b>视频验证：</b>重拳打击替身店铺，审核员盘问详细运营细节。</li>
+          <li><b>雷区：</b>KYC材料不一、二审失败、网络设备不干净。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“买卖账号彻底行不通了”。查户口还要当面考试防套用。</span>
+      </div>
+    </div>
+  </details>
+
+  <!-- ========================================================= -->
+  <!-- 模块 B: TikTok Shop -->
+  <!-- ========================================================= -->
+  <details class="table-details tk-module" open>
+    <summary>🎵 模块 B: TikTok Shop 全球小店销售边界图谱</summary>
+    <div class="region-grid tk-grid">
+      <div class="region-card tk-card">
+        <div class="card-flags"><span class="emoji-icon" style="color: #0ea5e9;">🌐</span><span class="flag-text">Global</span></div>
+        <h4 class="card-title">卡片 1：核心模式与成本</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 80%;"></div></div><span class="chart-val text-red">较高</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 85%;"></div></div><span class="chart-val text-red">极严</span></div>
+        </div>
+        <ul>
+          <li><b>模式：</b>POP自运营 / 全托管(工厂供货) / 本土店(海外资质)。</li>
+          <li><b>成本：</b>高保证金且各站独立。例如美区需 1500 美元 + 强制本地仓。</li>
+          <li><b>属性：</b>内容驱动与多巴胺激发。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：懂流量自己开(POP)，有厂供货给平台(全托管)，有海外关系走绿通道。</span>
+      </div>
+
+      <div class="region-card tk-card">
+        <div class="card-flags"><span class="fi fi-us"></span><span class="fi fi-ca"></span><span class="fi fi-mx"></span><span class="flag-text">US CA MX</span></div>
+        <h4 class="card-title">卡片 2：北美高墙市场</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 95%;"></div></div><span class="chart-val text-red">1500$</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 90%;"></div></div><span class="chart-val text-red">极高</span></div>
+        </div>
+        <ul>
+          <li><b>边界：</b>绝对不可跨国。美区只能卖美国本土，严禁发往加/墨。</li>
+          <li><b>门槛：</b>美区POP保证金暴涨至 1500 美元，佣金 6%。</li>
+          <li><b>要求：</b>需第三方经营证明，强制美国本地仓发货。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“没有北美一家亲”。一执照多店要交多份押金，货必须在美。</span>
+      </div>
+
+      <div class="region-card tk-card">
+        <div class="card-flags"><span class="fi fi-gb"></span><span class="fi fi-eu"></span><span class="fi fi-de"></span><span class="fi fi-fr"></span><span class="flag-text">EU</span></div>
+        <h4 class="card-title">卡片 3：欧洲多国联动</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 70%;"></div></div><span class="chart-val text-orange">偏高</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 85%;"></div></div><span class="chart-val text-red">极高</span></div>
+        </div>
+        <ul>
+          <li><b>机制：</b>英国枢纽 + 欧洲联动 (Sell Across Europe 计划)。</li>
+          <li><b>边界：</b>打破单国壁垒。符合资质可一键扩展至德、法、意、西等。</li>
+          <li><b>门槛：</b>英区400镑；欧盟约1000元，需亚马逊3个月流水及EPR环保资质。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“英国带头打群架”。一后台能卖欧洲多国，但要亚马逊流水和环保。</span>
+      </div>
+
+      <div class="region-card tk-card">
+        <div class="card-flags"><span class="fi fi-vn"></span><span class="fi fi-th"></span><span class="fi fi-my"></span><span class="fi fi-sg"></span><span class="fi fi-ph"></span><span class="flag-text">SEA</span></div>
+        <h4 class="card-title">卡片 4：东南亚大区</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-green" style="width: 15%;"></div></div><span class="chart-val text-green">90$起</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 50%;"></div></div><span class="chart-val text-orange">中等</span></div>
+        </div>
+        <ul>
+          <li><b>本土店：</b>画地为牢。开越南店只能卖越南，货出不了国门。</li>
+          <li><b>跨境店：</b>一店通五国。一套后台勾选卖新/马/泰/越/菲 (印尼独立)。</li>
+          <li><b>成本：</b>保证金极低，90 美元起。一套材料可开最多15店。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“试错成本最低的游乐场”。不到千元押金通吃东南亚五国。</span>
+      </div>
+
+      <div class="region-card tk-card">
+        <div class="card-flags"><span class="fi fi-sa"></span><span class="fi fi-jp"></span><span class="fi fi-kr"></span><span class="flag-text">MEA APAC</span></div>
+        <h4 class="card-title">卡片 5：中东与日韩市场</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">资金门槛</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 80%;"></div></div><span class="chart-val text-red">偏高</span></div>
+          <div class="chart-row"><span class="chart-label">合规风控</span><div class="bar-track"><div class="bar-fill bg-orange" style="width: 75%;"></div></div><span class="chart-val text-orange">偏高</span></div>
+        </div>
+        <ul>
+          <li><b>中东：</b>土豪包厢，依赖 COD(货到付款)。目前全托管为主，POP自营需定邀。</li>
+          <li><b>日本：</b>完全闭环独立。押金涨至15万日元，必须接五大物流(处理≤4H)。</li>
+          <li><b>韩国：</b>主要作为出海供给端，扶持韩国货出口东南亚。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：中东怕你玩不转COD想你做供货商；日本要求变态快；韩国是用来往外卖货的。</span>
+      </div>
+
+      <div class="region-card tk-card">
+        <div class="card-flags"><span class="emoji-icon" style="color:#DC2626;">⚠️</span><span class="flag-text" style="color:#DC2626;">Risk</span></div>
+        <h4 class="card-title">卡片 6：2026 强风控雷区</h4>
+        <div class="micro-chart">
+          <div class="chart-row"><span class="chart-label">设备风控</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 95%;"></div></div><span class="chart-val text-red">核心</span></div>
+          <div class="chart-row"><span class="chart-label">连坐封号</span><div class="bar-track"><div class="bar-fill bg-red" style="width: 100%;"></div></div><span class="chart-val text-red">致命</span></div>
+        </div>
+        <ul>
+          <li><b>设备风控：</b>动态指纹校验升级，占封号60%。7天3次参数变动即二审。</li>
+          <li><b>关联连坐：</b>单店欺诈，同法人及 IP 下所有店资金无限期冻结。</li>
+          <li><b>AHR分：</b>满分1000，低分限流/封号。月销达标强制接官方仓，封虚拟仓。</li>
+        </ul>
+        <span class="plain-sm">🗣️ 大白话：“一人犯错，全家抄斩”。网络别乱切，假装海外发货的路子被堵死了。</span>
+      </div>
+    </div>
+  </details>
+
+
+  <!-- 术语表 (保留完整的 details 文案) -->
+  <div class="glossary">
+    <h2>📖 术语表</h2>
+
+    <details class="term-card c1">
+      <summary>🤖 ChatGPT Ads</summary>
+      <div class="term-table-wrap">
+        <table class="term-table">
+          <thead><tr><th>🏷️ 术语</th><th>📝 精简解释</th><th>💬 大白话</th></tr></thead>
+          <tbody>
+            <tr><td>孤岛式架构</td><td>各国广告账户完全独立，无数据互通、无统一后台、无跨区工具，投几个国家就得分别登录操作。</td><td>各玩各的，互不串门。</td></tr>
+            <tr><td>本土化穿透审核</td><td>平台穿透审核到目标国本土主体，投美国需美国公司+EIN+美国银行账户，再走Persona验证。</td><td>查户口查到底，必须本地有实体。</td></tr>
+            <tr><td>各账户独立</td><td>各账户数据彼此隔离，无法在一个界面查看所有国家数据，跨国汇总极其困难。</td><td>月底得手动拼十个国家的Excel。</td></tr>
+            <tr><td>意图驱动</td><td>用户是在提问和寻求解决方案中触发广告，属于强信任的“顾问式植入推荐”。</td><td>带着问题找答案，AI顺手推荐。</td></tr>
+            <tr><td>CPM/CPC混合</td><td>按千次曝光(CPM)或单次会话推荐计费，竞价体系尚处早期，溢价高，类似品牌赞助。</td><td>像品牌买高端赞助位，贵但精准。</td></tr>
+            <tr><td>上下文自适应</td><td>不需要复杂的视觉图，但极度依赖精准的文本语义和上下文关联设定。</td><td>靠AI自然接话把货卖了。</td></tr>
+            <tr><td>原币种结算壁垒</td><td>通常只支持美元或投放地币种，需绑定当地企业信用卡或代理预付，回款链路长。</td><td>钱卡在当地账户难倒回国内。</td></tr>
+            <tr><td>对话内植入</td><td>广告以赞助回答、推荐卡片或上下文关联形式出现在对话中，用户提问时自然触发，无独立广告位。</td><td>像专家解答问题时顺手推荐产品。</td></tr>
+            <tr><td>本土主体+隐私强审</td><td>强制目标国本土主体，Persona验证，对话数据隐私要求极高，合规审查严格。</td><td>查户口还盯聊天数据。</td></tr>
+            <tr><td>早期会话归因</td><td>主要按千次曝光或单次会话推荐计费，缺乏成熟像素和跨站追踪，归因窗口不透明。</td><td>刚起步，只能看大概。</td></tr>
+            <tr><td>暂无成熟公开API</td><td>目前无成熟公开的广告API和批量工具，多国账户需逐国登录操作。</td><td>还没接通自动化流水线。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="term-card c2">
+      <summary>🎵 TikTok Shop</summary>
+      <div class="term-table-wrap">
+        <table class="term-table">
+          <thead><tr><th>🏷️ 术语</th><th>📝 精简解释</th><th>💬 大白话</th></tr></thead>
+          <tbody>
+            <tr><td>联邦矩阵式</td><td>多国多主体店铺可绑同一经营组，各店独立运营，但总部能统一发指令、看数据、一键分发。</td><td>总部分封各分舵，统一指挥。</td></tr>
+            <tr><td>各站独立审核</td><td>各站要求不同，美英接受大陆/香港主体（需保证金），日本等需本地物流或资质。</td><td>有的店认外地身份证，有的要本地户口。</td></tr>
+            <tr><td>跨站点聚合看板</td><td>通过Brand Portal在单一界面查看所有店铺聚合数据，支持跨国销评互通。</td><td>老板一眼看全盘。</td></tr>
+            <tr><td>内容激发</td><td>冲动消费为主，依靠爆款短视频、洗脑BGM和主播叫卖刺激多巴胺。</td><td>闲逛刷视频被种草。</td></tr>
+            <tr><td>混合出价(CPS)</td><td>广告费（CPM）+达人分销佣金（CPS）+平台扣点。</td><td>广告费加达人抽成。</td></tr>
+            <tr><td>UGC/KOL基建</td><td>持续产出本土达人短视频、直播内容并建立达人合作网络，素材消耗快。</td><td>得找本地老外拍视频搞直播。</td></tr>
+            <tr><td>跨境直结与本币回流</td><td>各站点独立结算原币种，可借助Payoneer等提现，账期受本地政策影响。</td><td>借助第三方工具结汇。</td></tr>
+            <tr><td>短视频+直播+商城</td><td>主要版位包括For You Feed短视频、直播间、TikTok商城、搜索广告及达人合作内容。</td><td>刷视频、看直播、逛商城都能卖货。</td></tr>
+            <tr><td>各站独立+内容合规</td><td>各站资质不同，直播和短视频内容审核严，禁限售品类多，封店风险高。</td><td>说错话卖错货都可能被封。</td></tr>
+            <tr><td>Pixel+Events API+跨店归因</td><td>支持TikTok Pixel、Events API、跨店归因，可追踪短视频、直播、商城转化。</td><td>从刷到买，一条线追到底。</td></tr>
+            <tr><td>开放平台+批量工具</td><td>提供TikTok Shop API、Marketing API、批量上传和经营组工具，各站API权限不同。</td><td>有半自动流水线。</td></tr>
+            <!-- 追加的新术语 -->
+            <tr><td>全托管 / 本土店</td><td>全托管商家仅负责供货入国内仓；本土店指用当地资质注册。</td><td>供货当甩手掌柜 vs 拿当地证开后门。</td></tr>
+            <tr><td>经营组 (Business Group)</td><td>多店铺统一管理中枢，扩展新站点无需重复提交材料。</td><td>集团总账号，一次认证到处开分店。</td></tr>
+            <tr><td>AHR 账号健康分</td><td>替代原积分制，满分1000，低分触发限流或封店。</td><td>驾照扣分系统，分越低给的流量越少。</td></tr>
+            <tr><td>关联连坐</td><td>同法人或同IP下一店违规，其余全关联店铺资金无限冻结。</td><td>一人犯法，全家抄斩，连带冻结钱包。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="term-card c3">
+      <summary>📦 Amazon</summary>
+      <div class="term-table-wrap">
+        <table class="term-table">
+          <thead><tr><th>🏷️ 术语</th><th>📝 精简解释</th><th>💬 大白话</th></tr></thead>
+          <tbody>
+            <tr><td>跨区联合</td><td>一个广告账户覆盖多站点，注册一次即可在所有已开店站点推广，配合多站点一键推广。</td><td>一证走天下，一键推广管全球。</td></tr>
+            <tr><td>一套资料多站点</td><td>大陆营业执照可直接注册多站点，分站有差异化审核（欧洲VAT，北美税务）。</td><td>一张身份证开好几个国家的店。</td></tr>
+            <tr><td>统一广告管理器</td><td>可在活动管理器中查看所有站点数据，灵活切换单独或统一管理。</td><td>一个后台看全球。</td></tr>
+            <tr><td>货架搜索</td><td>用户购买目的明确，核心对比价格、Review、物流时效。</td><td>带着钱包来比价看评价。</td></tr>
+            <tr><td>CPC驱动</td><td>主要是CPC按点击付费，核心盯ACOS和ROAS。</td><td>花钱买点击，死盯回报率。</td></tr>
+            <tr><td>标品Listing</td><td>白底图+A+详情页+视频可长期复用，核心是拼关键词埋词。</td><td>一套详情页吃几年。</td></tr>
+            <tr><td>闭环最成熟</td><td>自带官方全球收款，也可绑第三方收款工具，将全球站点资金统一结汇回国。</td><td>官方自带渠道换成人民币。</td></tr>
+            <tr><td>站内搜索+商品页+站外</td><td>Sponsored Products、Brands、Display覆盖站内，DSP可延伸至站外。</td><td>超市货架和收银台都摆广告牌。</td></tr>
+            <tr><td>KYC+税务+产品合规</td><td>分站KYC、欧洲VAT、北美税务、产品认证，侵权和假货零容忍。</td><td>查身份证交税单，卖假货清退。</td></tr>
+            <tr><td>站内归因+ACOS/ROAS</td><td>归因基于站内点击和购买，数据闭环，站外归因较弱。</td><td>在超市买了才算广告的。</td></tr>
+            <tr><td>Ads API+SP-API</td><td>Ads API支持批量创建、报表、竞价调整，SP-API打通库存订单，第三方生态丰富。</td><td>全自动流水线，接ERP就能跑。</td></tr>
+            <!-- 追加的新术语 -->
+            <tr><td>KYC 审核 / 账户二审</td><td>深度验证需纳税证明、户口本及视频面审；防范买卖资料。</td><td>查户口+当面考试，严打虚假资料。</td></tr>
+            <tr><td>库存关联原则</td><td>商品在欧盟国产生实质库存（含FBA及第三方）均强制注册当地VAT。</td><td>货放在哪，就得向哪国税务局交保护费。</td></tr>
+            <tr><td>Pan-EU 泛欧计划</td><td>库存存在欧洲一国，由系统自动调拨至欧洲多国实现快速配送。</td><td>智能欧洲大仓，代价得注册好几国税号。</td></tr>
+            <tr><td>GPSR / EPR 合规</td><td>欧盟市场强制的安全与环保合规要求。</td><td>欧洲绿色环保门票，没这个进不了海关。</td></tr>
+            <tr><td>IEN 码 (进口清关号)</td><td>英国海关分配的唯一清关识别码，证明货物合法进口交税。</td><td>货物的合法身份证，防走私与灰产物流。</td></tr>
+            <tr><td>NARF 远程配送</td><td>北美联合账户功能，美国 FBA 库存直接跨国售往加墨。</td><td>货放美国，直接送加拿大和墨西哥。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="term-card c4">
+      <summary>📘 Meta Ads</summary>
+      <div class="term-table-wrap">
+        <table class="term-table">
+          <thead><tr><th>🏷️ 术语</th><th>📝 精简解释</th><th>💬 大白话</th></tr></thead>
+          <tbody>
+            <tr><td>管家分户制</td><td>一个BM挂多个广告账户，可统一看总账、分权限，但每账户绑定各自国家/币种/时区。</td><td>一个管家管几户，每户单独上户口。</td></tr>
+            <tr><td>业务+所在地验证</td><td>验证分业务和所在地两层，以单个广告账户为单位，一个账户过了不自动通过其他账户。</td><td>每户单独验，不能全家通用。</td></tr>
+            <tr><td>BM层面聚合</td><td>在BM中可查看所有挂载广告账户的数据，但各账户报表独立。</td><td>管家看总账，明细分开算。</td></tr>
+            <tr><td>社交种草</td><td>用户在刷动态、看视频时被广告触达，靠人群画像和兴趣标签精准投放。</td><td>刷朋友圈被兴趣标签锁定。</td></tr>
+            <tr><td>oCPM/CPC</td><td>oCPM按目标优化展示+CPC，系统自动优化，核心看转化成本。</td><td>系统帮你优化，你设目标成本。</td></tr>
+            <tr><td>素材驱动</td><td>素材质量直接决定投放效果，需要大量图片和视频测试，本土化视觉是关键。</td><td>素材好不好决定广告跑不跑得动。</td></tr>
+            <tr><td>代理商垫付</td><td>通过代理商充值投放，结算走代理商渠道，汇率和账期由代理商政策决定。</td><td>钱给代理商，代理商帮你充。</td></tr>
+            <tr><td>Feed+Reels+Stories+Audience Network</td><td>广告出现在Facebook/Instagram动态、快拍、Reels、Marketplace、Messenger及Audience Network。</td><td>刷朋友圈刷短视频都能刷到广告。</td></tr>
+            <tr><td>广告政策+账户验证+代理商</td><td>广告政策严格，账户需业务与所在地验证，大陆必须通过一级代理商开户，隐私合规压力大。</td><td>层层查证，还得找中介带你进去。</td></tr>
+            <tr><td>Pixel+CAPI+归因窗口</td><td>支持Meta Pixel、Conversions API，可设1/7/28天归因窗口，跨设备归因依赖登录和cookie。</td><td>你点过看过买过，系统都记着。</td></tr>
+            <tr><td>Marketing API+批量</td><td>Marketing API支持批量创建广告、受众、报表，多账户管理依赖BM和代理商。</td><td>有自动化流水线，每户单独接管道。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="term-card c5">
+      <summary>🔍 Google Ads</summary>
+      <div class="term-table-wrap">
+        <table class="term-table">
+          <thead><tr><th>🏷️ 术语</th><th>📝 精简解释</th><th>💬 大白话</th></tr></thead>
+          <tbody>
+            <tr><td>总控台制</td><td>一个MCC管多个子账户，支持跨账户报表、合并账单、统一权限控制。</td><td>一个遥控器管所有电视。</td></tr>
+            <tr><td>广告主验证</td><td>需提交营业执照、付款方式证明，公司名、支付方式、文件必须一致，大陆需境外主体或授权代理商。</td><td>名字对不上、付款方式对不上直接打回。</td></tr>
+            <tr><td>MCC跨账户报表</td><td>MCC可聚合所有子账户数据到一张表，统一比较各国表现，不用逐个登录导出。</td><td>总部一张总表，分公司数据一目了然。</td></tr>
+            <tr><td>搜索意图</td><td>用户主动搜索关键词时触发广告，意图最明确，转化率通常最高。</td><td>主动搜什么就推什么。</td></tr>
+            <tr><td>CPC/CPA</td><td>CPC为主，可选CPA按转化付费，搜索广告意图明确，转化效率高。</td><td>按点击或按转化付费，搜索转化最实在。</td></tr>
+            <tr><td>关键词+落地页</td><td>核心是关键词选择和落地页体验，文案和落地页必须高度匹配。</td><td>词选对了，落地页接得住，转化就来了。</td></tr>
+            <tr><td>子账户独立结算</td><td>每个子账户绑定各自付款方式，MCC可统一支付也可分开结算，汇率按各账户币种处理。</td><td>各分公司自己付账单，总部可代付。</td></tr>
+            <tr><td>搜索+购物+展示+YouTube</td><td>搜索广告、购物广告、展示广告、YouTube视频广告、Discover信息流，覆盖主动搜索与被动浏览。</td><td>主动搜什么推什么，逛网站看视频也推。</td></tr>
+            <tr><td>广告主验证+政策+落地页</td><td>广告主身份、付款方式、公司名必须一致；广告政策、商标、落地页体验审查严格。</td><td>名字对不上、落地页接不住直接拒登。</td></tr>
+            <tr><td>转化跟踪+GA4+归因模型</td><td>Google Ads转化跟踪、GA4、归因模型，搜索归因清晰，跨渠道归因依赖GA4和UTM。</td><td>搜了什么、点了哪个、买没买一清二楚。</td></tr>
+            <tr><td>Google Ads API+脚本</td><td>Google Ads API、Scripts、批量上传、规则自动化，MCC层面可跨账户批量操作，第三方生态最丰富。</td><td>总控台带自动化，一个脚本管所有子账户。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <div class="bottom-line">
+    <h3>💎 五平台速记卡</h3>
+    <div class="bl-grid">
+      <a href="#card-chatgpt" id="summary-chatgpt" class="bl-item">
+        <div class="bl-head"><span class="bl-icon">🤖</span><strong>ChatGPT Ads</strong><span class="bl-badge">分封制</span></div>
+        <ul>
+          <li><b>结构：</b>一国一账户，国家/币种/时区提交后永久锁定</li>
+          <li><b>工具：</b>无跨区工具，逐国登录、各自操作</li>
+          <li><b>中国主体：</b>必须美国公司 + EIN + 美国银行账户，再走 Persona 验证</li>
+        </ul>
+        <div class="bl-foot">开户门槛天花板，只适合已有海外主体架构、愿意分市场精耕的团队</div>
+      </a>
+      <a href="#card-tiktok" id="summary-tiktok" class="bl-item">
+        <div class="bl-head"><span class="bl-icon">🎵</span><strong>TikTok Shop</strong><span class="bl-badge">经营组制</span></div>
+        <ul>
+          <li><b>结构：</b>多国店铺可绑定同一“经营组”，跨主体也能绑</li>
+          <li><b>工具：</b>经营组 + 内容一键分发 + 跨店一键铺品</li>
+          <li><b>中国主体：</b>美英接受大陆/香港主体（需保证金），日本等要求本地物流或资质</li>
+        </ul>
+        <div class="bl-foot">内容电商首选，国内资质可用，但素材迭代与本土化压力是五个平台里最大的</div>
+      </a>
+      <a href="#card-amazon" id="summary-amazon" class="bl-item">
+        <div class="bl-head"><span class="bl-icon">📦</span><strong>Amazon</strong><span class="bl-badge">中央集权制</span></div>
+        <ul>
+          <li><b>结构：</b>一个广告账户覆盖所有已开店站点，无需分站注册</li>
+          <li><b>工具：</b>多站点一键推广 + 全球广告管理器</li>
+          <li><b>中国主体：</b>大陆营业执照可直接注册多站点，门槛最低</li>
+        </ul>
+        <div class="bl-foot">开户最省事、结算最闭环，适合已有多站点店铺的货架型卖家</div>
+      </a>
+      <a href="#card-meta" id="summary-meta" class="bl-item">
+        <div class="bl-head"><span class="bl-icon">📘</span><strong>Meta Ads</strong><span class="bl-badge">管家制</span></div>
+        <ul>
+          <li><b>结构：</b>一个 BM 挂多个广告账户，每账户绑定单一国家/币种/时区</li>
+          <li><b>工具：</b>Business Manager + Business Asset Group 按品牌-地区分组</li>
+          <li><b>中国主体：</b>大陆不直接受理，必须通过官方认证的一级代理商开户</li>
+        </ul>
+        <div class="bl-foot">社交投放覆盖最广，但账户验证不通用、资金各户独立，管理集中而结算分散</div>
+      </a>
+      <a href="#card-google" id="summary-google" class="bl-item">
+        <div class="bl-head"><span class="bl-icon">🔍</span><strong>Google Ads</strong><span class="bl-badge">总控台制</span></div>
+        <ul>
+          <li><b>结构：</b>一个 MCC 挂多个子账户，子账户各自对应国家</li>
+          <li><b>工具：</b>MCC 集中管理 + 跨账户报表 + 合并账单 + 统一权限</li>
+          <li><b>中国主体：</b>大陆企业无法直接开通本地化账户，需境外主体或授权代理商</li>
+        </ul>
+        <div class="bl-foot">搜索广告转化最实在、管理最集中，但资金仍按子账户独立结算</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
