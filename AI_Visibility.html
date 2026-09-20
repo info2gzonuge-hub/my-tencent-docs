@@ -864,6 +864,52 @@
                 color: #000 !important;
             }
         }
+        /* ===== 折叠区块 ===== */
+details.fold {
+    background: #fafdff;
+    border: 1px solid #eef2f6;
+    border-radius: 18px;
+    margin: 14px 0;
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+details.fold[open] {
+    background: #ffffff;
+    border-color: #fbbf24;
+    box-shadow: 0 4px 16px rgba(251, 191, 36, 0.08);
+}
+details.fold > summary {
+    cursor: pointer;
+    padding: 16px 22px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #0b1a2e;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+    transition: background 0.15s ease;
+}
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::after {
+    content: "▾";
+    margin-left: auto;
+    font-size: 1.1rem;
+    color: #fbbf24;
+    font-weight: 900;
+    transition: transform 0.2s ease;
+}
+details.fold[open] > summary::after {
+    transform: rotate(180deg);
+}
+details.fold > summary:hover {
+    background: #fffbeb;
+}
+details.fold .fold-body {
+    padding: 6px 22px 22px 22px;
+    border-top: 1px solid #f1f5f9;
+}
     </style>
 </head>
 <body>
