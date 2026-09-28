@@ -492,7 +492,7 @@
             line-height: 1.6;
         }
 
-        /* CSS 原生克制悬浮表格样式 (已剔除杂乱样式) */
+        /* CSS 原生克制悬浮表格样式 */
         .matrix-table-wrap {
             width: 100%;
             max-width: 100%;
@@ -531,14 +531,8 @@
             z-index: 1;
         }
         .hover-translate-table th:last-child, 
-        .hover-translate-table td:last-child {
-            border-right: none;
-        }
-        .hover-translate-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* 纯粹统一的 translateY 特效，不加边框与放大 */
+        .hover-translate-table td:last-child { border-right: none; }
+        .hover-translate-table tr:last-child td { border-bottom: none; }
         .hover-translate-table td:hover {
             transform: translateY(-4px);
             z-index: 10;
@@ -547,7 +541,6 @@
             border-radius: 8px;
         }
 
-        /* 矩阵底色定义 */
         .t1-matrix colgroup col:nth-child(1) { width: 14%; background: #FFFFFF; }
         .t1-matrix colgroup col:nth-child(2) { width: 24%; background: #FAFAFA; } 
         .t1-matrix colgroup col:nth-child(3) { width: 31%; background: #F0F7FF; } 
@@ -599,21 +592,13 @@
         }
 
         /* ====== pSEO 新版模块样式 ====== */
-        .pseo-4col-grid {
+        .pseo-4col-grid, .pseo-2col-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-top: 16px;
-            margin-bottom: 24px;
-            align-items: start;
-        }
-        .pseo-2col-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             margin-bottom: 24px;
-            align-items: stretch;
         }
+        .pseo-4col-grid { grid-template-columns: repeat(4, 1fr); margin-top: 16px; align-items: start; }
+        .pseo-2col-grid { grid-template-columns: repeat(2, 1fr); align-items: stretch; }
         
         .pseo-action-card {
             background: var(--bg-card);
@@ -624,419 +609,142 @@
             transition: all 0.3s ease;
             position: relative;
         }
-        
-        /* 可点击折叠卡片 */
-        .pseo-action-card.clickable {
-            cursor: pointer;
-            border-right: 4px solid transparent; 
-            background: #F4F8FD; 
-            border-color: #D6E4F8;
-        }
+        .pseo-action-card.clickable { cursor: pointer; border-right: 4px solid transparent; background: #F4F8FD; border-color: #D6E4F8; }
         .pseo-action-card.clickable:hover, .pseo-action-card.clickable.active {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12);
-            border-color: #D6E4F8;
-            border-right-color: var(--purple); 
+            transform: translateY(-4px); box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12); border-color: #D6E4F8; border-right-color: var(--purple); 
         }
-
-        /* 静态并排大卡片 */
-        .pseo-action-card.static {
-            background: #FFFFFF;
-        }
-        .pseo-action-card.static:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-light);
-        }
-
-        .pseo-card-header {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .pseo-card-header .badge {
-            background: var(--secondary);
-            color: #fff;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 13px;
-        }
-        .pseo-card-summary {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 12px;
-            min-height: 40px; 
-        }
-        .pseo-expand-indicator {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--secondary);
-            text-align: center;
-            padding-top: 12px;
-            border-top: 1px dashed #D6E4F8;
-        }
-        .pseo-card-body {
-            display: none;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 2px solid #D6E4F8;
-            font-size: 13.5px;
-            color: var(--text-dark);
-            line-height: 1.6;
-            animation: fadeDown 0.3s ease;
-        }
-        .pseo-card-body.open {
-            display: block;
-        }
-        .pseo-card-body ul {
-            padding-left: 16px;
-            margin-bottom: 12px;
-        }
-        .pseo-card-body li {
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
-        .pseo-card-body li strong {
-            color: var(--secondary);
-        }
-
+        .pseo-action-card.static { background: #FFFFFF; }
+        .pseo-action-card.static:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); }
+        
         /* 内部嵌入表格专用样式 */
         .inner-table-wrapper {
             overflow-x: auto;
-            margin-top: 12px;
-            margin-bottom: 12px;
+            margin-top: 12px; margin-bottom: 12px;
             border: 1px solid var(--border-light);
-            border-radius: 8px;
-            background: #FFFFFF;
+            border-radius: 8px; background: #FFFFFF;
         }
-        .inner-table {
-            width: 100%;
-            min-width: 500px;
-            border-collapse: collapse;
-            font-size: 12.5px;
-        }
-        .inner-table th {
-            background: var(--bg-card-alt);
-            font-weight: 600;
-            padding: 8px 10px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-light);
-            color: var(--text-muted);
-        }
-        .inner-table td {
-            padding: 8px 10px;
-            border-bottom: 1px solid var(--border-light);
-            vertical-align: top;
-        }
+        .inner-table { width: 100%; min-width: 500px; border-collapse: collapse; font-size: 12.5px; }
+        .inner-table th { background: var(--bg-card-alt); font-weight: 600; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border-light); color: var(--text-muted); }
+        .inner-table td { padding: 8px 10px; border-bottom: 1px solid var(--border-light); vertical-align: top; }
         .inner-table tr:last-child td { border-bottom: none; }
-        .inner-table code {
-            background: #F1EFEA;
-            padding: 2px 4px;
-            border-radius: 4px;
-            color: #D97706;
-            font-family: monospace;
-        }
+        .inner-table code { background: #F1EFEA; padding: 2px 4px; border-radius: 4px; color: #D97706; font-family: monospace; }
 
         /* pSEO 补充的防风控逻辑 35:65 非对称网格 */
-        .pseo-logic-grid {
-            display: grid;
-            grid-template-columns: 35fr 65fr;
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-        .pseo-logic-card {
-            background: #F0F7FF; 
-            border: 1px solid #BFDBFE;
-            border-radius: 12px;
-            padding: 24px;
-            transition: all 0.3s ease;
-        }
-        .pseo-logic-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--secondary);
-        }
-        .pseo-logic-card h4 {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-top: 0;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .pseo-logic-card p {
-            font-size: 13.5px;
-            color: var(--text-dark);
-            line-height: 1.6;
-            margin-bottom: 0;
-        }
-        .pseo-logic-card .formula {
-            background: #FFFFFF;
-            border: 1px dashed #93C5FD;
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 12px;
-            font-size: 13px;
-            color: var(--text-dark);
-            font-weight: 600;
-            line-height: 1.6;
-        }
+        .pseo-logic-grid { display: grid; grid-template-columns: 35fr 65fr; gap: 20px; margin-bottom: 24px; }
+        .pseo-logic-card { background: #F0F7FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 24px; transition: all 0.3s ease; }
+        .pseo-logic-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--secondary); }
+        .pseo-logic-card h4 { font-size: 17px; font-weight: 700; color: var(--secondary); margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .pseo-logic-card p { font-size: 13.5px; color: var(--text-dark); line-height: 1.6; margin-bottom: 0; }
+        .pseo-logic-card .formula { background: #FFFFFF; border: 1px dashed #93C5FD; padding: 12px; border-radius: 8px; margin-top: 12px; font-size: 13px; color: var(--text-dark); font-weight: 600; line-height: 1.6; }
 
         /* 极客代码框 */
-        .code-block {
-            background: #1A202C;
-            color: #E2E8F0;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            overflow-x: auto;
-            margin: 8px 0 16px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            line-height: 1.6;
-        }
+        .code-block { background: #1A202C; color: #E2E8F0; padding: 12px 16px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 8px 0 16px; white-space: pre-wrap; word-break: break-all; line-height: 1.6; }
 
         /* ====== Topic Cluster 模块样式 ====== */
-        .cluster-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin: 16px 0 8px 0;
-        }
-        .cluster-card {
-            background: #FFFFFF;
-            border: 2px solid var(--border-light, #EDE8E0);
-            border-radius: 12px;
-            padding: 16px 18px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            user-select: none;
-            box-shadow: var(--shadow-soft, 0 2px 8px rgba(0,0,0,0.04));
-        }
-        .cluster-card:hover {
-            border-color: var(--primary, #FF6B35);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover, 0 6px 20px rgba(0,0,0,0.08));
-        }
-        .cluster-card .step-num {
-            display: inline-block;
-            background: var(--primary, #FF6B35);
-            color: #fff;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            line-height: 28px;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .cluster-card .step-name {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--text-dark, #1A202C);
-            display: block;
-        }
-        .cluster-card .step-bubble {
-            font-size: 13px;
-            color: var(--text-muted, #5A6A7A);
-            margin-top: 4px;
-            display: block;
-            line-height: 1.4;
-        }
-        .cluster-card.active {
-            border-color: var(--primary, #FF6B35);
-            background: var(--bg-highlight, #FFF4E8);
-        }
-        .cluster-detail {
-            display: none;
-            background: var(--bg-card-alt, #FAF8F5);
-            border-radius: 12px;
-            padding: 20px 24px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--primary, #FF6B35);
-            animation: fadeUp 0.3s ease;
-        }
-        .cluster-detail.open {
-            display: block;
-        }
-        .cluster-detail p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--text-dark, #1A202C);
-            margin-bottom: 8px;
-        }
-        .cluster-detail ul {
-            padding-left: 20px;
-            margin: 8px 0 8px 0;
-            list-style: disc;
-        }
-        .cluster-detail ul li {
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--text-muted, #5A6A7A);
-            margin-bottom: 4px;
-        }
+        .cluster-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0 8px 0; }
+        .cluster-card { background: #FFFFFF; border: 2px solid var(--border-light, #EDE8E0); border-radius: 12px; padding: 16px 18px; text-align: center; cursor: pointer; transition: all 0.25s ease; user-select: none; box-shadow: var(--shadow-soft, 0 2px 8px rgba(0,0,0,0.04)); }
+        .cluster-card:hover { border-color: var(--primary, #FF6B35); transform: translateY(-2px); box-shadow: var(--shadow-hover, 0 6px 20px rgba(0,0,0,0.08)); }
+        .cluster-card .step-num { display: inline-block; background: var(--primary, #FF6B35); color: #fff; border-radius: 50%; width: 28px; height: 28px; line-height: 28px; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+        .cluster-card .step-name { font-weight: 700; font-size: 16px; color: var(--text-dark, #1A202C); display: block; }
+        .cluster-card .step-bubble { font-size: 13px; color: var(--text-muted, #5A6A7A); margin-top: 4px; display: block; line-height: 1.4; }
+        .cluster-card.active { border-color: var(--primary, #FF6B35); background: var(--bg-highlight, #FFF4E8); }
+        .cluster-detail { display: none; background: var(--bg-card-alt, #FAF8F5); border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; border-left: 4px solid var(--primary, #FF6B35); animation: fadeUp 0.3s ease; }
+        .cluster-detail.open { display: block; }
+        .cluster-detail p { font-size: 15px; line-height: 1.7; color: var(--text-dark, #1A202C); margin-bottom: 8px; }
+        .cluster-detail ul { padding-left: 20px; margin: 8px 0 8px 0; list-style: disc; }
+        .cluster-detail ul li { font-size: 14px; line-height: 1.6; color: var(--text-muted, #5A6A7A); margin-bottom: 4px; }
 
-        .compare-table-wrap {
-            margin: 16px 0 4px 0;
-            overflow-x: auto;
-        }
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow-soft, 0 2px 8px rgba(0,0,0,0.04));
-        }
-        .compare-table thead {
-            background: var(--bg-body, #F8F6F2);
-            color: var(--text-dark, #1A202C);
-            font-weight: 600;
-        }
-        .compare-table th,
-        .compare-table td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-light, #EDE8E0);
-        }
-        .compare-table tbody tr:hover {
-            background: var(--bg-highlight, #FFF4E8);
-        }
-        .compare-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-        .compare-table .winner {
-            color: var(--primary, #FF6B35);
-            font-weight: 700;
-        }
+        .compare-table-wrap { margin: 16px 0 4px 0; overflow-x: auto; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 14px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-soft, 0 2px 8px rgba(0,0,0,0.04)); }
+        .compare-table thead { background: var(--bg-body, #F8F6F2); color: var(--text-dark, #1A202C); font-weight: 600; }
+        .compare-table th, .compare-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border-light, #EDE8E0); }
+        .compare-table tbody tr:hover { background: var(--bg-highlight, #FFF4E8); }
+        .compare-table tbody tr:last-child td { border-bottom: none; }
+        .compare-table .winner { color: var(--primary, #FF6B35); font-weight: 700; }
+
+        /* ================= 8.6 新增：双六法则专属折叠卡片样式 ================= */
+        .tc-col-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border-light); display: flex; align-items: center; gap: 8px; }
+        .tc-details { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; margin-bottom: 12px; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .tc-details:hover { border-color: var(--secondary); box-shadow: var(--shadow-soft); transform: translateX(2px); }
+        .tc-summary { padding: 14px 16px; font-weight: 600; font-size: 14.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--text-dark); list-style: none; background: #F8FAFC; transition: background 0.2s; }
+        .tc-summary::-webkit-details-marker { display: none; }
+        .tc-summary::before { content: '▶'; font-size: 12px; color: var(--text-muted); transition: transform 0.2s; }
+        .tc-details[open] .tc-summary { border-bottom: 1px dashed var(--border-light); background: #FFF; color: var(--secondary); }
+        .tc-details[open] .tc-summary::before { transform: rotate(90deg); color: var(--secondary); }
+        .tc-content { padding: 16px; font-size: 13.5px; color: var(--text-dark); line-height: 1.6; background: #FFFFFF; }
+        .tc-label { font-weight: 700; display: inline-block; margin-bottom: 4px; margin-top: 8px; }
+        .tc-label.logic { color: var(--secondary); }
+        .tc-label.case { color: var(--primary); }
+        .tc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px; align-items: start; }
+
+        /* ================= 8.6 新增：四大高阶维度卡片 ================= */
+        .adv-card { background: #FFFFFF; border: 2px solid var(--border-light); border-radius: 12px; padding: 16px 18px; text-align: center; cursor: pointer; transition: all 0.25s ease; user-select: none; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100px; }
+        .adv-card:hover { border-color: var(--secondary); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .adv-card .adv-num { font-size: 24px; margin-bottom: 8px; }
+        .adv-card .adv-title { font-weight: 700; font-size: 15px; color: var(--text-dark); display: block; line-height: 1.4; }
+        .adv-card.active { border-color: var(--secondary); background: #F0F7FF; }
+        .adv-detail { display: none; background: var(--bg-card-alt); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; border-left: 4px solid var(--secondary); animation: fadeUp 0.3s ease; }
+        .adv-detail.open { display: block; }
+        .adv-detail p { font-size: 14.5px; line-height: 1.6; color: var(--text-dark); margin-bottom: 12px; }
+        .adv-detail .adv-label { font-weight: 700; color: var(--secondary); margin-right: 6px; }
 
         /* ====== 底部 ====== */
-        .footer-links {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 2px solid var(--border-light);
-            font-size: 14px;
-            color: var(--text-muted);
-        }
+        .footer-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 50px; padding-top: 20px; border-top: 2px solid var(--border-light); font-size: 14px; color: var(--text-muted); }
 
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ============================================================ */
         /* 手机端响应式适配                                              */
         /* ============================================================ */
         @media (max-width: 768px) {
-
             .app-container { padding: 16px 12px !important; }
-
             .app-header { flex-direction: column; align-items: flex-start; gap: 8px; }
             .app-header h1 { font-size: 18px !important; flex-wrap: wrap; }
             .app-header h1 span { font-size: 13px !important; display: block; margin-top: 2px; }
             .badge-header { font-size: 11px !important; padding: 4px 14px !important; }
-
             .tab-nav { flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 10px; }
             .tab-btn { font-size: 12px !important; padding: 6px 14px !important; flex-shrink: 0; }
-
             .panel-title { font-size: 18px !important; }
             .panel-sub { font-size: 13px !important; padding: 10px 14px !important; }
-
             .section-title { font-size: 17px !important; margin-top: 28px !important; margin-bottom: 12px !important; }
             .plain-talk { font-size: 13px !important; padding: 12px 14px !important; margin-bottom: 20px !important; }
-
-            .dashboard-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-            .dash-card { padding: 16px !important; }
+            .dashboard-grid, .funnel-grid, .elements-grid, .strategy-grid, .agg-step-grid, .pseo-4col-grid, .pseo-2col-grid, .pseo-logic-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            .tc-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .dash-card, .funnel-card, .expand-card, .element-card, .trend-card, .strategy-card, .agg-step-card, .pseo-action-card, .pseo-logic-card { padding: 16px !important; }
             .dash-num { font-size: 24px !important; }
-
             .center-bordered-table { font-size: 12px !important; min-width: 500px !important; display: table !important; }
             .center-bordered-table th, .center-bordered-table td { padding: 8px 10px !important; font-size: 12px !important; }
-
-            .funnel-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-            .funnel-card { padding: 14px 16px !important; }
-            .funnel-card:not(:last-child)::after {
-                content: '↓' !important; right: 50% !important; top: auto !important; bottom: -18px !important;
-                transform: translateX(50%) !important; font-size: 18px !important;
-            }
-
+            .funnel-card:not(:last-child)::after { content: '↓' !important; right: 50% !important; top: auto !important; bottom: -18px !important; transform: translateX(50%) !important; font-size: 18px !important; }
             .scroll-wrapper { gap: 10px !important; padding-bottom: 12px !important; }
             .expand-card { flex: 0 0 240px !important; padding: 12px 14px !important; }
-            .expand-card .short-desc { font-size: 12.5px !important; }
-            .expand-content { font-size: 12.5px !important; }
-
-            .elements-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-            .element-card { padding: 20px 16px 16px 16px !important; }
-            .element-badge { font-size: 11px !important; padding: 3px 10px !important; top: -10px !important; left: 12px !important; }
-
-            .trend-card { padding: 16px !important; }
-            .trend-card h4 { font-size: 15px !important; }
-            .trend-card p { font-size: 13px !important; }
-            .trend-card ul { font-size: 12.5px !important; }
-            .trend-card .logic-tree-box { font-size: 12.5px !important; padding: 10px !important; }
-
-            .strategy-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-            .strategy-card { padding: 20px 16px !important; }
-            .strategy-icon { font-size: 28px !important; }
-
-            .agg-step-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-            .agg-step-card { padding: 16px 14px !important; }
-
-            .pseo-4col-grid, .pseo-2col-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-            .pseo-logic-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-            .pseo-action-card, .pseo-logic-card { padding: 16px !important; }
-            .pseo-card-summary { min-height: auto !important; margin-bottom: 10px !important; }
-
-            /* 移动端悬浮特效表格极致适配 */
             .hover-translate-table { min-width: 800px !important; font-size: 13px !important; }
-            .hover-translate-table th { padding: 12px 14px !important; font-size: 13px !important; }
-            .hover-translate-table td { padding: 12px 14px !important; font-size: 13px !important; }
-            
+            .hover-translate-table th, .hover-translate-table td { padding: 12px 14px !important; font-size: 13px !important; }
             .t1-matrix th:nth-child(1), .t1-matrix td:nth-child(1) { white-space: nowrap !important; width: auto !important; }
             .t1-matrix colgroup col:nth-child(1) { width: 16% !important; }
-            .t1-matrix colgroup col:nth-child(2) { width: 28% !important; }
-            .t1-matrix colgroup col:nth-child(3) { width: 28% !important; }
-            .t1-matrix colgroup col:nth-child(4) { width: 28% !important; }
-
+            .t1-matrix colgroup col:nth-child(2), .t1-matrix colgroup col:nth-child(3), .t1-matrix colgroup col:nth-child(4) { width: 28% !important; }
             .t2-matrix th:nth-child(1), .t2-matrix td:nth-child(1) { white-space: normal !important; word-break: break-word !important; }
             .t2-matrix colgroup col:nth-child(1) { width: 22% !important; }
-            .t2-matrix colgroup col:nth-child(2) { width: 26% !important; }
-            .t2-matrix colgroup col:nth-child(3) { width: 26% !important; }
-            .t2-matrix colgroup col:nth-child(4) { width: 26% !important; }
-
+            .t2-matrix colgroup col:nth-child(2), .t2-matrix colgroup col:nth-child(3), .t2-matrix colgroup col:nth-child(4) { width: 26% !important; }
             .cluster-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
-            .cluster-card { padding: 12px 14px !important; }
-            .cluster-card .step-name { font-size: 14px !important; }
+            .cluster-card, .adv-card { padding: 12px 14px !important; min-height: auto !important; }
+            .cluster-card .step-name, .adv-card .adv-title { font-size: 14px !important; }
             .cluster-card .step-bubble { font-size: 12px !important; }
-            .cluster-detail { padding: 14px 16px !important; }
-            .cluster-detail p { font-size: 13px !important; }
-            .cluster-detail ul li { font-size: 12.5px !important; }
-
+            .cluster-detail, .adv-detail { padding: 14px 16px !important; }
+            .cluster-detail p, .adv-detail p { font-size: 13px !important; }
             .compare-table { font-size: 12px !important; min-width: 500px !important; display: table !important; }
             .compare-table th, .compare-table td { padding: 6px 8px !important; font-size: 11px !important; }
             .compare-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
-
             .tool-tag { font-size: 10px !important; padding: 1px 6px !important; }
-
             .footer-links { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; font-size: 13px !important; }
+            .pseo-action-card, .pseo-logic-card { min-width: 0; }
+            .inner-table-wrapper { max-width: 100%; -webkit-overflow-scrolling: touch; margin: 12px -10px; width: calc(100% + 20px); border-radius: 6px; }
+            .inner-table { min-width: 460px !important; font-size: 11.5px !important; }
+            .inner-table th, .inner-table td { padding: 6px 8px !important; }
+            .pseo-card-body { word-wrap: break-word; overflow-wrap: break-word; }
+            .tc-col-title { font-size: 15px; margin-top: 16px; }
+            .tc-summary { font-size: 13.5px; padding: 12px 14px; }
+            .tc-content { font-size: 13px; padding: 14px; }
         }
 
         @media (max-width: 480px) {
@@ -1046,39 +754,7 @@
             .section-title { font-size: 15px !important; margin-top: 20px !important; }
             .plain-talk { font-size: 12px !important; padding: 10px 12px !important; }
         }
-        /* ========== 👇 从这里开始复制：手机端卡片与表格溢出修复 👇 ========== */
         
-        /* 1. 修复 Grid 布局被内部宽表格强制撑破屏幕的经典 Bug */
-        .pseo-action-card, .pseo-logic-card {
-            min-width: 0; 
-        }
-        
-        /* 2. 强制限制表格外包装的最大宽度，并开启 iOS 丝滑滚动 */
-        .inner-table-wrapper {
-            max-width: 100%;
-            -webkit-overflow-scrolling: touch; 
-        }
-
-        /* 3. 手机端专项深度压小适配 */
-        @media (max-width: 768px) {
-            .inner-table-wrapper {
-                margin: 12px -10px; /* 让表格在卡片内部向两侧稍微延伸，争取更多显示空间 */
-                width: calc(100% + 20px);
-                border-radius: 6px;
-            }
-            .inner-table {
-                min-width: 460px !important; /* 适当压低表格的最小宽度 */
-                font-size: 11.5px !important; /* 缩小手机端表格内的字号 */
-            }
-            .inner-table th, .inner-table td {
-                padding: 6px 8px !important; /* 压缩单元格内边距 */
-            }
-            .pseo-card-body {
-                word-wrap: break-word; 
-                overflow-wrap: break-word; /* 强制长文本自动换行，绝不允许撑拉屏幕 */
-            }
-        }
-        /* ========== 👆 到这里结束复制：手机端卡片与表格溢出修复 👆 ========== */
         /* 搜索弹窗样式 */
         #globalSearchModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 80px; backdrop-filter: blur(4px); }
         .modal-content { background: #FFFFFF; width: 90%; max-width: 600px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #E2E8F0; }
@@ -1094,24 +770,20 @@
 <body>
 
     <div class="app-container">
-   <!-- 头部：彻底解决拥挤，加入 Flexbox 行内样式强制横向对齐 -->
-<header class="app-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light);">
-    
-    <!-- 左侧标题区：强制横向弹性布局居中 -->
-    <div class="header-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <h1 style="font-size: 24px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; margin: 0;">
-            📊 谷歌推广知识体系 <span style="font-weight: 400; font-size: 15px; color: var(--text-muted);">· Tab 9 · 转化率优化(CRO)</span>
-        </h1>
-        <!-- 这里的背景色特意改成了 var(--accent) 来呼应 cyan 进阶优化 -->
-        <span class="badge-header" style="background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; white-space: nowrap;">🟢 进阶优化</span>
-    </div>
+        <!-- 头部 -->
+        <header class="app-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light);">
+            <div class="header-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <h1 style="font-size: 24px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; margin: 0;">
+                    📊 谷歌推广知识体系 <span style="font-weight: 400; font-size: 15px; color: var(--text-muted);">· Tab 9 · 转化率优化(CRO)</span>
+                </h1>
+                <span class="badge-header" style="background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; white-space: nowrap;">🟢 进阶优化</span>
+            </div>
+            <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
+                <span>🔍</span> 搜索全站 (⌘K)
+            </button>
+        </header>
 
-    <!-- 右侧搜索按钮 -->
-    <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
-        <span>🔍</span> 搜索全站 (⌘K)
-    </button>
-</header>
-        <!-- ================= 导航栏 ================= -->
+        <!-- 导航栏 -->
         <nav class="tab-nav">
             <button class="tab-btn" onclick="location.href='index.html'">📚 全局目录</button>
             <button class="tab-btn" onclick="location.href='tab1.html'">📅 算法更新</button>
@@ -1126,14 +798,14 @@
             <button class="tab-btn" onclick="location.href='tab10.html'">🚀 AI Overviews</button>
         </nav>
 
-        <!-- ================= 标题区 ================= -->
+        <!-- 标题区 -->
         <div class="panel-title">📈 第八层 · 转化率优化(CRO)</div>
         <div class="panel-sub" style="border-left-color: var(--accent);">
             <span class="pill cyan">🟢 进阶优化</span>
             <span>🗣️ <strong>大白话：</strong>流量再大，留不住都是白搭。CRO就是把"路过的人"变成"留下的人"。</span>
         </div>
 
-        <!-- ================= 核心数据仪表盘 ================= -->
+        <!-- 核心数据仪表盘 -->
         <div class="dashboard-grid">
             <div class="dash-card">
                 <div class="dash-num">13.3%</div>
@@ -1182,7 +854,7 @@
             </table>
         </div>
 
-        <!-- ================= 8.0 CRO全漏斗概览 ================= -->
+        <!-- 8.0 CRO全漏斗概览 -->
         <h3 class="section-title">8.0 CRO全漏斗概览</h3>
         <div class="plain-talk">
             🗣️ <strong>大白话：</strong>转化不是"着陆页"一件事，而是一条链——从用户点进来的那一刻，到最终完成动作，每一步都可能流失。CRO的价值，就是把漏斗的每一层都堵住。
@@ -1211,7 +883,7 @@
             </div>
         </div>
 
-        <!-- ================= 8.1 着陆页设计 ================= -->
+        <!-- 8.1 着陆页设计 -->
         <h3 class="section-title">8.1 ⭐ 着陆页设计（七模块）</h3>
         <div class="plain-talk">
             🗣️ <strong>大白话：</strong>着陆页就是"第一印象"——用户点进来看到什么，决定了他是留下还是离开。<br>
@@ -1294,7 +966,7 @@
             </details>
         </div>
 
-        <!-- ================= 8.2 转化元素 ================= -->
+        <!-- 8.2 转化元素 -->
         <h3 class="section-title">8.2 转化元素</h3>
         <div class="plain-talk">
             🗣️ <strong>大白话：</strong>这四个元素就像是页面的"隐形捕鼠夹"，只要客户流露出一点点兴趣，就要用最小的阻力把他的联系方式留下来。
@@ -1338,7 +1010,7 @@
             </div>
         </div>
 
-        <!-- ================= 8.3 表单与数据收集 ================= -->
+        <!-- 8.3 表单与数据收集 -->
         <h3 class="section-title">8.3 表单与数据收集</h3>
         <div class="plain-talk">
             🗣️ <strong>大白话：</strong>表单是转化的"最后一道门"——门太复杂，人就走了。
@@ -1386,16 +1058,15 @@
             📬 <strong>邮件营销（EDM）补充：</strong>用户离开后，通过 <span class="mailerlite-highlight">MailerLite</span> 等工具发送欢迎邮件和定期更新。每 3-6 个月清理一次不活跃订阅者。2026年全面向 AI 驱动的个性化营销转型。
         </div>
 
-        <!-- ================= 8.4 2026新增趋势 ================= -->
+        <!-- 8.4 2026新增趋势 -->
         <h3 class="section-title">8.4 ⭐ 2026新增趋势</h3>
 
-        <!-- ================= 核心对比区：三大流量引擎 ================= -->
+        <!-- 核心对比区：三大流量引擎 -->
         <h3 class="section-title">🆚 核心战略对比：聚合页 vs pSEO vs 内容集群</h3>
         <div class="plain-talk">
             🗣️ <strong>大白话：</strong>很多时候我们会把这三个概念搞混。简单来说，聚合页是<strong>“炒冷饭”</strong>（整合已有资产）；pSEO是<strong>“无中生有”</strong>（靠数据模板批量生成页面）；而内容集群是<strong>“树立权威”</strong>（靠真人专家的深度内容霸占核心词）。
         </div>
 
-        <!-- 视觉化架构隐喻图 -->
         <div class="strategy-grid">
             <div class="strategy-card">
                 <div class="strategy-icon">🗂️</div>
@@ -1417,7 +1088,6 @@
             </div>
         </div>
 
-        <!-- 深度对比矩阵表 (纯净原生 CSS 版) -->
         <div class="matrix-table-wrap">
             <table class="hover-translate-table t1-matrix">
                 <colgroup>
@@ -1481,7 +1151,6 @@
             </table>
         </div>
 
-        <!-- ================= 聚合页 WP 实操与对比 ================= -->
         <h3 class="section-title">🛠️ 附加指南：聚合页 (Aggregation Pages) WP 超详细实操与平台对比</h3>
         <div class="plain-talk">
             🗣️ <strong>大白话：</strong>做聚合页绝不是“点一下按钮就自动做好”。在 WordPress 里，运营人员只要搞懂“后台哪里点、URL 怎么留、上下两段文案怎么填”，就能搭建出一个符合 2026 谷歌 GEO 标准的百万流量承接页。
@@ -1569,21 +1238,18 @@
             </table>
         </div>
 
-        <!-- 趋势一：pSEO -->
+        <!-- 8.5 趋势一：pSEO -->
         <h3 class="section-title">8.5 ⭐ 趋势一：程序化SEO（pSEO）与规模化着陆页</h3>
         <div class="plain-talk" style="margin-bottom: 24px;">
             🗣️ <strong>大白话：</strong>以前做 pSEO 是“换汤不换药”，把“纽约美白牙贴”换成“洛杉矶美白牙贴”就想去骗流量。但在 2026 年，谷歌算法一秒钟就能看穿这种“批量制造的垃圾”。现在的高级玩法是：建立多维度的数据库，用免代码工具自动拼装出 1000 个“有真实数据支撑、有差异化价值”的专属页面。
         </div>
 
-        <!-- ========== 👇 从这里开始替换 👇 ========== -->
-        <!-- 第一行：落地篇 (PC端左导航右宽屏 / 手机端垂直折叠) -->
         <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">🚀 (一) 苦逼运营落地篇（实操分解）</div>
         <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px; background: #FFF4E8; padding: 10px 14px; border-radius: 8px; border-left: 4px solid var(--primary);">
             🗣️ <strong>大白话：</strong>不用写一行代码，把表格里的词填到模板的坑位里，让工具替你跑腿，一键生成几百个美白牙贴的长尾词独立站页面。
         </div>
 
         <style>
-            /* 方案二：PC 端左导航右宽屏，手机端垂直折叠分离适配 */
             .pseo-adaptive-wrapper { display: flex; gap: 24px; margin-bottom: 24px; align-items: flex-start; }
             .pseo-tabs-nav { flex: 0 0 260px; display: flex; flex-direction: column; gap: 12px; }
             .pseo-tab-btn {
@@ -1599,36 +1265,24 @@
                 background: var(--secondary); color: #fff; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px;
             }
             .pseo-tab-btn .sub { font-size: 13px; color: var(--text-muted); padding-left: 32px; }
-            
             .pseo-tabs-content { flex: 1; min-width: 0; }
             .pseo-tab-pane {
                 display: none; background: #FFFFFF; border: 1px solid #D6E4F8; border-top: 4px solid var(--secondary);
                 border-radius: 12px; padding: 24px; box-shadow: var(--shadow-soft); animation: fadeIn 0.3s ease;
             }
             .pseo-tab-pane.active { display: block; }
-            
             .pseo-mobile-accordion { display: none; }
             .pseo-pane-inner ul { padding-left: 16px; margin-bottom: 12px; }
             .pseo-pane-inner li { margin-bottom: 8px; color: var(--text-dark); line-height: 1.6; font-size: 13.5px; }
 
             @media (max-width: 768px) {
                 .pseo-adaptive-wrapper { display: block; }
-                .pseo-tabs-nav { display: none; } /* 手机端隐藏左侧导航 */
+                .pseo-tabs-nav { display: none; }
                 .pseo-tabs-content { display: flex; flex-direction: column; gap: 12px; }
-                .pseo-tab-pane {
-                    display: block; border: 1px solid var(--border-light); border-left: 4px solid var(--purple); border-top: 1px solid var(--border-light);
-                    padding: 0; border-radius: 12px; box-shadow: var(--shadow-soft); animation: none;
-                }
-                .pseo-mobile-accordion {
-                    display: flex; justify-content: space-between; align-items: center; width: 100%;
-                    background: #F4F8FD; border: none; padding: 16px; border-radius: 12px;
-                    font-size: 15px; font-weight: 700; color: var(--secondary); cursor: pointer; text-align: left;
-                }
+                .pseo-tab-pane { display: block; border: 1px solid var(--border-light); border-left: 4px solid var(--purple); border-top: 1px solid var(--border-light); padding: 0; border-radius: 12px; box-shadow: var(--shadow-soft); animation: none; }
+                .pseo-mobile-accordion { display: flex; justify-content: space-between; align-items: center; width: 100%; background: #F4F8FD; border: none; padding: 16px; border-radius: 12px; font-size: 15px; font-weight: 700; color: var(--secondary); cursor: pointer; text-align: left; }
                 .pseo-mobile-accordion .title-wrap { display: flex; align-items: center; gap: 8px; }
-                .pseo-mobile-accordion .badge {
-                    background: var(--secondary); color: #fff; width: 22px; height: 22px;
-                    display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px;
-                }
+                .pseo-mobile-accordion .badge { background: var(--secondary); color: #fff; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; }
                 .pseo-mobile-accordion .indicator { font-size: 12px; color: var(--primary); font-weight: 600; }
                 .pseo-pane-inner { display: none; padding: 16px; border-top: 1px dashed #D6E4F8; }
                 .pseo-pane-inner.open { display: block; }
@@ -1636,149 +1290,126 @@
         </style>
 
         <div class="pseo-adaptive-wrapper">
-            <!-- PC端左侧导航 -->
             <div class="pseo-tabs-nav">
                 <button class="pseo-tab-btn active" onclick="switchPseoTab(1)">
-                    <div class="title"><span class="badge">①</span> 填个表格</div>
-                    <div class="sub">准备“弹药库”</div>
+                    <div class="title"><span class="badge">①</span> 填个表格</div><div class="sub">准备“弹药库”</div>
                 </button>
                 <button class="pseo-tab-btn" onclick="switchPseoTab(2)">
-                    <div class="title"><span class="badge">②</span> 画个空模板</div>
-                    <div class="sub">留出“填空位”</div>
+                    <div class="title"><span class="badge">②</span> 画个空模板</div><div class="sub">留出“填空位”</div>
                 </button>
                 <button class="pseo-tab-btn" onclick="switchPseoTab(3)">
-                    <div class="title"><span class="badge">③</span> 连线拖拽</div>
-                    <div class="sub">让插件做苦力</div>
+                    <div class="title"><span class="badge">③</span> 连线拖拽</div><div class="sub">让插件做苦力</div>
                 </button>
                 <button class="pseo-tab-btn" onclick="switchPseoTab(4)">
-                    <div class="title"><span class="badge">④</span> 一键爆兵</div>
-                    <div class="sub">执行发布与收录</div>
+                    <div class="title"><span class="badge">④</span> 一键爆兵</div><div class="sub">执行发布与收录</div>
                 </button>
             </div>
 
-            <!-- 内容展示区 -->
             <div class="pseo-tabs-content">
-                <!-- 步骤1 -->
                 <div class="pseo-tab-pane active" id="pseo-pane-1">
-                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(1)">
-                        <div class="title-wrap"><span class="badge">①</span> 填个表格</div>
-                        <span class="indicator" id="pseo-ind-1">▲ 收起详细步骤</span>
-                    </button>
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(1)"><div class="title-wrap"><span class="badge">①</span> 填个表格</div><span class="indicator" id="pseo-ind-1">▲ 收起详细步骤</span></button>
                     <div class="pseo-pane-inner open" id="pseo-inner-1">
                         <ul>
                             <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
                             <li>1. 新建一个空的 Excel 表格。</li>
                             <li>2. 在表头第一行用纯英文写下变量名：<code>Region</code> (地区)、<code>Product</code> (产品)、<code>Formula</code> (成分)、<code>Selling_Point</code> (卖点)、<code>Cert</code> (资质)。<strong>（⚠️新手避坑：表头切记只用纯英文，不要加空格和中文！）</strong></li>
-                            <li>3. 填入你的多市场定制美白牙贴业务数据，另存为 <strong>CSV</strong> 格式。</li>
+                            <li>3. 填入你的多市场定制业务数据，另存为 <strong>CSV</strong> 格式。</li>
                             <li><strong style="color: var(--secondary);">实操举例：</strong> 建立如下“多维实体数据表”：</li>
                         </ul>
                         <div class="inner-table-wrapper">
                             <table class="inner-table">
                                 <thead>
                                     <tr>
-                                        <th>目标地区 <code>{Region}</code></th>
-                                        <th>主推产品线 <code>{Product}</code></th>
-                                        <th>成分策略 <code>{Formula}</code></th>
-                                        <th>差异化卖点 <code>{Selling_Point}</code></th>
-                                        <th>信任壁垒 <code>{Cert}</code></th>
+                                        <th>目标地区 <code>{Region}</code></th><th>主推产品线 <code>{Product}</code></th><th>成分策略 <code>{Formula}</code></th><th>差异化卖点 <code>{Selling_Point}</code></th><th>信任壁垒 <code>{Cert}</code></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><strong>洛杉矶 (北美)</strong></td>
-                                        <td>经典干贴 / 凝胶贴</td>
-                                        <td><strong>6%~10% HP</strong></td>
-                                        <td>高浓度快速起效，迎合北美快节奏美白需求</td>
-                                        <td>FDA 注册</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>柏林 (欧洲)</strong></td>
-                                        <td>零敏紫光牙贴</td>
-                                        <td><strong>PAP/无HP</strong></td>
-                                        <td>符合欧盟严苛法规，温和不酸牙，安全可售</td>
-                                        <td>CE 认证</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>迪拜 (中东)</strong></td>
-                                        <td>植萃美白贴片</td>
-                                        <td><strong>100%零酒精配方</strong></td>
-                                        <td>尊重当地文化禁忌，提供高端温和的个护体验</td>
-                                        <td>Halal 清真认证</td>
-                                    </tr>
+                                    <tr><td><strong>洛杉矶 (北美)</strong></td><td>经典干贴 / 凝胶贴</td><td><strong>6%~10% HP</strong></td><td>高浓度快速起效，迎合北美快节奏美白需求</td><td>FDA 注册</td></tr>
+                                    <tr><td><strong>柏林 (欧洲)</strong></td><td>零敏紫光牙贴</td><td><strong>PAP/无HP</strong></td><td>符合欧盟严苛法规，温和不酸牙，安全可售</td><td>CE 认证</td></tr>
+                                    <tr><td><strong>迪拜 (中东)</strong></td><td>植萃美白贴片</td><td><strong>100%零酒精配方</strong></td><td>尊重当地文化禁忌，提供高端温和的个护体验</td><td>Halal 清真认证</td></tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div style="background: #FFF5F5; border-left: 4px solid #E53E3E; padding: 16px; margin-top: 16px; border-radius: 0 8px 8px 0;">
+                            <div style="font-weight: 700; color: #C53030; margin-bottom: 8px;">🛡️ 2026 高阶防 AI Slop 策略：极深度的实体注入</div>
+                            <ul style="padding-left: 16px; font-size: 13.5px; margin-bottom: 0; color: var(--text-dark);">
+                                <li style="margin-bottom: 8px;"><strong>注入极限合规实体 (Information Gain)：</strong>不要仅停留在基础的 FDA/CE，强制增加如 <code>{Cert_Detail}</code>（ISO 22716、WEEE指令、Triman标志、SMETA验厂编号）。谷歌通过这些硬核实体判定商业价值。</li>
+                                <li><strong>预设前端视觉变量：</strong>新增 <code>{Theme_Style}</code> 列，填入“多巴胺色系”或“护眼主题”的 HEX 色值，为下一步改变每个页面的 UI 代码指纹打底。</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- 步骤2 -->
                 <div class="pseo-tab-pane" id="pseo-pane-2">
-                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(2)">
-                        <div class="title-wrap"><span class="badge">②</span> 画个空模板</div>
-                        <span class="indicator" id="pseo-ind-2">▼ 展开详细步骤</span>
-                    </button>
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(2)"><div class="title-wrap"><span class="badge">②</span> 画个空模板</div><span class="indicator" id="pseo-ind-2">▼ 展开详细步骤</span></button>
                     <div class="pseo-pane-inner" id="pseo-inner-2">
                         <ul>
                             <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
                             <li>1. 登录 WordPress 后台，点击新建页面。</li>
-                            <li>2. 正常编写导购套话。遇到需要根据表格变动的地方，用大括号 <code>{ }</code> 括起来当占位符。</li>
+                            <li>2. 正常编写导购套话。遇到需要变动的地方，用大括号 <code>{ }</code> 当占位符。</li>
                             <li><strong style="color: var(--secondary);">实操举例：</strong></li>
-                            <li><strong>标题框输入：</strong> <code>寻找 {Region} 顶级供应商？批发定制 {Product} 终极指南</code></li>
-                            <li><strong>正文框输入：</strong> <code>我们深知 {Region} 市场的严苛准入要求。本系列专供产品采用 {Formula}，完美实现 {Selling_Point}。问：出口需要什么资质？答：我们提供完整的 {Cert}，助您无忧清关。</code></li>
+                            <li><strong>标题框：</strong> <code>寻找 {Region} 顶级供应商？批发定制 {Product} 终极指南</code></li>
+                            <li><strong>正文框：</strong> <code>我们深知 {Region} 市场的严苛准入要求。本系列专供产品采用 {Formula}，完美实现 {Selling_Point}。问：出口需要什么资质？答：我们提供完整的 {Cert}。</code></li>
                         </ul>
+                        <div style="background: #F0FDF4; border-left: 4px solid #10B981; padding: 16px; margin-top: 16px; border-radius: 0 8px 8px 0;">
+                            <div style="font-weight: 700; color: #047857; margin-bottom: 8px;">🎨 高动态骨架与富媒体破冰 (打碎千篇一律的 HTML)</div>
+                            <ul style="padding-left: 16px; font-size: 13.5px; margin-bottom: 0; color: var(--text-dark);">
+                                <li style="margin-bottom: 8px;"><strong>细致的条件分支拼装：</strong>利用 <code>[IF({cert_smeta})]</code>。如果缺乏验厂数据，直接将该DOM结构物理抽离，让页面代码指纹彻底不同。</li>
+                                <li style="margin-bottom: 8px;"><strong>转化死板文本为交互元素：</strong>将专有名词包裹进 CSS 悬浮卡片中，利用 <code>Quicksand</code> 字体形成专业对比。</li>
+                                <li><strong>头部视觉拦截：</strong>在头部挂载定制 3D 视频横幅（如皮克斯风职场简州猫操作全息屏），高成本元素秒降 Spam 评分。</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 步骤3 -->
                 <div class="pseo-tab-pane" id="pseo-pane-3">
-                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(3)">
-                        <div class="title-wrap"><span class="badge">③</span> 连线拖拽</div>
-                        <span class="indicator" id="pseo-ind-3">▼ 展开详细步骤</span>
-                    </button>
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(3)"><div class="title-wrap"><span class="badge">③</span> 连线拖拽</div><span class="indicator" id="pseo-ind-3">▼ 展开详细步骤</span></button>
                     <div class="pseo-pane-inner" id="pseo-inner-3">
                         <ul>
                             <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
-                            <li>1. 在 WP 安装并激活 <strong>WP All Import</strong> 插件。上传存好的 CSV 文件。</li>
-                            <li>2. 进入拖拽界面时，右边是表格字段（如 Region, Cert），左侧是你的空模板。</li>
-                            <li>3. <strong>关键动作：</strong> 鼠标点住右边的 <code>{Region}</code>，拖拽到左边标题大括号处。像玩连连看一样全拖好。</li>
-                            <li>4. <em>高阶进阶：</em> 将 <code>{Cert}</code> 拖拽到下方 RankMath SEO 的 <code>Description</code> 框，让搜出来的几百个页面摘要都切中当地痛点。</li>
+                            <li>1. 在 WP 安装 <strong>WP All Import</strong> 插件，上传 CSV 文件。</li>
+                            <li>2. 鼠标点住右边的 <code>{Region}</code>，拖拽到左边大括号处，像连连看一样拖好。</li>
+                            <li>3. <em>高阶进阶：</em> 将 <code>{Cert}</code> 拖拽到 RankMath SEO 的 <code>Description</code> 框，让几百个页面摘要切中当地痛点。</li>
                         </ul>
+                        <div style="background: #F5F3FF; border-left: 4px solid var(--purple); padding: 16px; margin-top: 16px; border-radius: 0 8px 8px 0;">
+                            <div style="font-weight: 700; color: var(--purple); margin-bottom: 8px;">🧠 交互映射与 FAQ Schema 深度绑定</div>
+                            <ul style="padding-left: 16px; font-size: 13.5px; margin-bottom: 0; color: var(--text-dark);">
+                                <li style="margin-bottom: 8px;"><strong>强喂 AI 的 FAQ 结构化：</strong>拖拽 <code>{Local_Logistics}</code> 形成问答区时，使用纯净 HTML5 <code>&lt;details&gt;</code>，并在 RankMath 底层精准映射 FAQ Schema。</li>
+                                <li><strong>前端微交互注入：</strong>将表格变量映射到前端 JS 表单中（如“计算发往该地区的预估运费”）。真实点击交互是证明页面价值的最强防御。</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 步骤4 -->
                 <div class="pseo-tab-pane" id="pseo-pane-4">
-                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(4)">
-                        <div class="title-wrap"><span class="badge">④</span> 一键爆兵</div>
-                        <span class="indicator" id="pseo-ind-4">▼ 展开详细步骤</span>
-                    </button>
+                    <button class="pseo-mobile-accordion" onclick="toggleMobileAccordion(4)"><div class="title-wrap"><span class="badge">④</span> 一键爆兵</div><span class="indicator" id="pseo-ind-4">▼ 展开详细步骤</span></button>
                     <div class="pseo-pane-inner" id="pseo-inner-4">
                         <ul>
                             <li><strong style="color: var(--secondary);">小白实操指引：</strong></li>
                             <li>1. 确认无误后点击运行，泡杯咖啡，全自动生成几百个本地化着陆页。</li>
-                            <li><strong style="color: var(--secondary);">2. 提交收录：</strong></li>
-                            <li>生成所有页面后，更新 <strong>Sitemap</strong>（通过 Yoast 或 RankMath）。</li>
-                            <li>登录 <strong>Google Search Console</strong>，点击左侧 Sitemap，粘贴地址并提交。</li>
-                            <li>监控状态：GSC ➔ 覆盖率报告 ➔ 查看“有效”页面变化。</li>
+                            <li><strong style="color: var(--secondary);">2. 提交收录：</strong>更新 Sitemap 并提交至 GSC。监控覆盖率报告中的“有效”页面变化。</li>
                         </ul>
+                        <div style="background: #FFFBEB; border-left: 4px solid #D97706; padding: 16px; margin-top: 16px; border-radius: 0 8px 8px 0;">
+                            <div style="font-weight: 700; color: #B45309; margin-bottom: 8px;">✂️ 抓取预算保护与末位淘汰 (Pruning)</div>
+                            <ul style="padding-left: 16px; font-size: 13.5px; margin-bottom: 0; color: var(--text-dark);">
+                                <li style="margin-bottom: 8px;"><strong>动作 1（防风控发布）：</strong>严格执行 Drip Feed（每日仅释放20篇），结合 Indexing API 自动推送，模拟真人更新。</li>
+                                <li><strong>动作 2（无情清理孤岛）：</strong>上线60-90天在GSC仍零展现的页面，必须通过脚本批量转为 410 (Gone) 剔除，保全站权重。</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <script>
-            // PC端：切换左侧Tab
             function switchPseoTab(step) {
                 const btns = document.querySelectorAll('.pseo-tab-btn');
                 btns.forEach(btn => btn.classList.remove('active'));
                 btns[step-1].classList.add('active');
-
                 const panes = document.querySelectorAll('.pseo-tab-pane');
                 panes.forEach(pane => pane.classList.remove('active'));
                 document.getElementById('pseo-pane-' + step).classList.add('active');
             }
-
-            // 手机端：点击垂直手风琴展开/收起
             function toggleMobileAccordion(step) {
                 const inner = document.getElementById('pseo-inner-' + step);
                 const ind = document.getElementById('pseo-ind-' + step);
@@ -1791,143 +1422,250 @@
                 }
             }
         </script>
-        <!-- ========== 👆 到这里结束替换 👆 ========== -->
 
-        <!-- 逻辑与公式 -->
         <div class="pseo-logic-grid">
             <div class="pseo-logic-card">
                 <h4>🛑 纯数学组合的灾难 (笛卡尔积)</h4>
-                <p>如果让上面“多维实体数据表”里的 5 个列（地区、产品、成分、卖点、资质），按它们各自的 3 个变量进行纯数学的交叉匹配（即笛卡尔积），瞬间会产生 3 × 3 × 3 × 3 × 3 = 243 种组合。<br><br>
-                <strong>但这在商业上是灾难！</strong>因为程序会自动拼装出<em>“为【迪拜】客户提供【10%过氧化氢】并符合【CE认证】”</em>这种反常识的乱码页面，秒被竞争对手举报和谷歌 K 站。成分和资质必须<strong>强绑定于特定地区</strong>，绝不能瞎组合。</p>
+                <p>如果让“多维实体数据表”里的 5 个列纯数学交叉匹配，会产生数百种组合。<strong>但这在商业上是灾难！</strong>因为程序会拼装出<em>“为【迪拜】客户提供【10%过氧化氢】并符合【CE认证】”</em>这种反常识的乱码页面，秒被竞争对手举报。成分和资质必须<strong>强绑定于特定地区</strong>。</p>
             </div>
             <div class="pseo-logic-card">
                 <h4>🌪️ 裂变矩阵公式（7,500+ 页怎么来？）</h4>
-                <p>真正的爆兵不是无脑组合，而是基于<strong>单一正确的商业策略</strong>引入高意图变量进行乘法裂变。以“北美市场过氧化氢干贴”这一条固定的正确策略线为例：</p>
+                <p>爆兵是基于<strong>单一正确的商业策略</strong>引入高意图变量。以“北美市场过氧化氢干贴”为例：</p>
                 <ul style="padding-left: 16px; margin: 8px 0; color: var(--text-dark); font-size: 13.5px; line-height: 1.6;">
-                    <li><strong>变量 A（精准地域）：</strong> 穷举北美细分城市，如洛杉矶、芝加哥、休斯顿等 <strong>(500个)</strong></li>
-                    <li><strong>变量 B（B2B意图词）：</strong> 如 OEM, Wholesale, Private Label, Factory <strong>(5种)</strong></li>
-                    <li><strong>变量 C（长尾产品词）：</strong> 如 Dry Strips, Whitening Wraps, Non-Slip Strips <strong>(3种)</strong></li>
+                    <li><strong>变量 A（精准地域）：</strong> 穷举北美细分城市，如洛杉矶等 <strong>(500个)</strong></li>
+                    <li><strong>变量 B（B2B意图词）：</strong> 如 OEM, Wholesale, Factory <strong>(5种)</strong></li>
+                    <li><strong>变量 C（长尾产品词）：</strong> 如 Dry Strips, Whitening Wraps <strong>(3种)</strong></li>
                 </ul>
                 <div class="formula">
                     🧮 <strong>裂变计算：</strong> 500 × 5 × 3 = <strong>7,500</strong> 个页面。<br>
-                    <span style="font-weight: 400; color: var(--text-muted); font-size: 13px; display: inline-block; margin-top: 6px;"><strong>生成的页面如：</strong> <em>Los Angeles Private Label Dry Whitening Strips Manufacturer</em>。<br>这 7,500 个独立页面全部共用一套“FDA认证+高浓度起效”的北美信任背书，不仅逻辑极其严密，而且完美契合买家搜索意图。</span>
+                    <span style="font-weight: 400; color: var(--text-muted); font-size: 13px; display: inline-block; margin-top: 6px;"><strong>生成的页面如：</strong> <em>Los Angeles Private Label Dry Whitening Strips Manufacturer</em>。这 7,500 个页面共用一套“FDA认证”北美信任背书，逻辑严密。</span>
                 </div>
             </div>
         </div>
 
-      <!-- ========== 👇 从这里开始替换 👇 ========== -->
-        <style>
-            /* 针对(二)和(三)非对称排版与对齐优化 */
-            .pseo-2col-grid {
-                display: grid;
-                grid-template-columns: 58fr 42fr; /* 给予左侧更多宽度，使左右内容底部留白自然对齐 */
-                gap: 20px;
-                margin-bottom: 24px;
-                align-items: stretch; /* 强制左右两张卡片等高、底部对齐 */
-            }
-            
-            /* (二)紫罗兰专属高亮主题卡片 */
-            .pseo-action-card.purple-theme {
-                background: #F5F3FF; 
-                border: 1px solid #DDD6FE;
-                border-left: 4px solid var(--purple, #8B5CF6);
-                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            }
-            .pseo-action-card.purple-theme:hover {
-                transform: translateY(-4px); /* 保留上浮特效 */
-                box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
-                border-color: #C4B5FD;
-                border-left-color: var(--purple, #8B5CF6);
-            }
-            .pseo-action-card.purple-theme .theme-title {
-                color: var(--purple, #8B5CF6);
-            }
-            .pseo-action-card.purple-theme .plain-talk-box {
-                background: #EDE9FE;
-                border-left: 4px solid var(--purple, #8B5CF6);
-            }
-            .pseo-action-card.purple-theme strong.p-highlight {
-                color: var(--purple, #8B5CF6);
-            }
-
-            /* (三)极客代码卡片常规上浮 */
-            .pseo-action-card.static:hover {
-                transform: translateY(-4px); /* 保留上浮特效 */
-                box-shadow: var(--shadow-hover);
-            }
-
-            /* 手机端响应式垂直堆叠 */
-            @media (max-width: 768px) {
-                .pseo-2col-grid { grid-template-columns: 1fr !important; }
-            }
-        </style>
-
-        <!-- 第二行：一行两列 心法与代码 -->
         <div class="pseo-2col-grid">
-            <!-- 心法篇 (紫底) -->
             <div class="pseo-action-card purple-theme">
                 <div class="theme-title" style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">🧠 (二) 高级运营心法篇（2026 防风控落地指南）</div>
                 <div class="plain-talk-box" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; padding: 10px 14px; border-radius: 8px;">
-                    🗣️ <strong class="p-highlight">大白话：</strong>谷歌不傻，纯替换地名的批量页面秒被封。核心是给每个页面加“独家料”，控制发布节奏，假装是真人团队在每天慢慢更新高质量内容。
+                    🗣️ <strong class="p-highlight">大白话：</strong>谷歌不傻，纯替换地名的批量页面秒被封。核心是给每个页面加“独家料”，控制发布节奏，假装是真人团队在每天慢慢更新。
                 </div>
                 <ul style="padding-left: 16px; color: var(--text-dark); line-height: 1.6; font-size: 14px; margin-bottom: 0;">
-                    <li style="margin-bottom: 12px;"><strong class="p-highlight">多维实体数据库（建表时怎么防封？）：</strong>在建 Excel 数据表时，强制要求自己多加 3 列“本地化增益变量”。不能只有 <code>{Region}</code>，必须加上 <code>{Cert_Requirement}</code> (当地准入要求)、<code>{Local_Logistics}</code> (本地时效)。<br><strong>实操落地：</strong>比如中东迪拜那一行，必须在证书列填上“提供完全零酒精的 Halal 清真认证”。把这些业务独家信息塞进去，程序生成的页面查重率自然就降下来了。</li>
-                    
-                    <li style="margin-bottom: 12px;"><strong class="p-highlight">高动态版面模板（画模板时怎么防 Spam？）：</strong>在 WordPress (比如 Elementor) 画模板时，千万别全是一大段静态套话！<br><strong>实操落地：</strong>使用“动态标签(Dynamic Tags)”，在页面里拉一个折叠问答区（Accordion）。标题写死为：“发往 <code>{Region}</code> 需要多久？”，答案内容动态调用表格里的 <code>{Local_Logistics}</code> 字段。<br><span style="color:#DC2626; font-weight:600;">最关键操作：</span>在 Yoast 或 RankMath 插件的底部面板，必须手动把这个区块设置为 <strong>FAQ Schema</strong>，强迫谷歌爬虫把你的问答抓取走。</li>
-                    
-                    <li><strong class="p-highlight">防风控发布与秒收录（后台怎么点？）：</strong><span style="color:#DC2626; font-weight:600;">绝对不要在插件里点击“一次性全部发布”！</span>几千个页面瞬间上线必进沙盒。<br><strong>实操落地：</strong><br>1. 在 WP All Import 的最后一步发布设置中，找到“批处理 / Drip Feed”选项，设定为“每天仅自动释放 20 篇”。<br>2. 在 WP 后台免费安装 <code>Google Indexing API</code> 插件，并在设置里勾选“发布新文章时自动向谷歌 API 推送”。这样就能做到每天工具自动发 20 篇，谷歌立马收录 20 篇，闷声抢占长尾词。</li>
+                    <li style="margin-bottom: 12px;"><strong class="p-highlight">多维实体数据库（建表时怎么防封？）：</strong>强制加 3 列“本地化增益变量”，不能只有 <code>{Region}</code>，必须加上 <code>{Cert_Requirement}</code>。<br><strong>实操落地：</strong>中东迪拜那一行，证书列填“完全零酒精 Halal 认证”。塞入独家信息，查重率自然下降。</li>
+                    <li style="margin-bottom: 12px;"><strong class="p-highlight">高动态版面模板（画模板时怎么防 Spam？）：</strong>千万别全是一大段静态套话！<br><strong>实操落地：</strong>拉一个折叠问答区，标题写死：“发往 <code>{Region}</code> 需要多久？”，答案调用 <code>{Local_Logistics}</code>。底层必须手动设置 <strong>FAQ Schema</strong> 迫使谷歌抓取。</li>
+                    <li><strong class="p-highlight">防风控发布与秒收录：</strong><span style="color:#DC2626; font-weight:600;">绝对不要一次性全部发布！</span><br><strong>实操落地：</strong>设定每天释放 20 篇，结合 <code>Google Indexing API</code> 自动推送。每天发 20 篇，谷歌立马收录 20 篇，抢占长尾词。</li>
                 </ul>
             </div>
-
-            <!-- 代码篇 (白底常规) -->
             <div class="pseo-action-card static">
                 <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px;">⚙️ (三) 极客代码备查篇（供技术团队对接）</div>
                 <div style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; background: #FFF4E8; padding: 10px 14px; border-radius: 8px; border-left: 4px solid var(--primary);">
-                    🗣️ <strong>大白话：</strong>如果你手下有懂技术的开发小哥，直接把这段代码扔给他，连插件的钱都省了，通过接口分分钟批量发版。
+                    🗣️ <strong>大白话：</strong>如果你手下有懂技术的开发小哥，直接把这段代码扔给他，通过接口分分钟批量发版，连插件的钱都省了。
                 </div>
-                <ul style="padding-left: 16px; color: var(--text-dark); font-size: 14px; margin-bottom: 6px;">
-                    <li><strong>Python + Jinja2 模板合成代码：</strong></li>
-                </ul>
+                <ul style="padding-left: 16px; color: var(--text-dark); font-size: 14px; margin-bottom: 6px;"><li><strong>Python + Jinja2 模板合成代码：</strong></li></ul>
                 <div class="code-block">import pandas as pd
 from jinja2 import Template
 data = pd.read_csv("data.csv")
 template = Template(open("template.html").read())
 for _, row in data.iterrows():
     html = template.render(
-        city=row["Region"], 
-        product=row["Product"],
-        cert=row["Cert_Requirement"]
+        city=row["Region"], product=row["Product"], cert=row["Cert_Requirement"]
     )
     with open(f"{row['Region']}_strips.html", "w") as f: 
         f.write(html)</div>
-                <ul style="padding-left: 16px; color: var(--text-dark); font-size: 14px; margin-bottom: 6px;">
-                    <li><strong>对接到 WP (REST API)：</strong></li>
-                </ul>
+                <ul style="padding-left: 16px; color: var(--text-dark); font-size: 14px; margin-bottom: 6px;"><li><strong>对接到 WP (REST API)：</strong></li></ul>
                 <div class="code-block" style="margin-bottom:0;">POST https://yourdomain.com/wp-json/wp/v2/posts
 Headers: { "Authorization": "Bearer YOUR_TOKEN" }
-Body: { 
-    "title": "寻找 {Region} 顶级供应商", 
-    "content": "...", 
-    "status": "publish" 
-}</div>
+Body: { "title": "寻找 {Region} 顶级供应商", "content": "...", "status": "publish" }</div>
             </div>
         </div>
-        <!-- ========== 👆 到这里结束替换 👆 ========== -->
 
-        <!-- 趋势二 -->
+        <!-- ================= 8.6 核心重点：内容集群 (Topic Cluster) ================= -->
         <h3 class="section-title">8.6 ⭐ 趋势二：内容集群（Topic Cluster）架构</h3>
-        <div class="trend-card">
-            <p style="font-size: 14px;">围绕核心主题建立"支柱页面"，再拆出细分话题的"集群内容"，用双向内链串成知识网络。这比单篇孤立页面更容易获得排名和 AI Overviews 引用。</p>
-            <div style="font-size: 13.5px; background: var(--bg-card-alt); padding: 12px; border-radius: 4px; margin-top: 10px; border: 1px solid var(--border-light);">
-                <strong>B2B示例：</strong>以"牙齿美白干贴"做支柱页，向下拆分出"薄荷味的过氧化氢牙齿美白干贴"和"椰子味的亚氯酸钠也就是不含过氧化氢的牙齿美白干性贴片"做集群页，内部互相链接。
-            </div>
-            <div class="logic-tree-box">
-                ⚠️ <strong>与逻辑树的关系：</strong>此部分与第3层"站内SEO"的"实体化内容"和"内部链接架构"紧密相关，是实体SEO在CRO层面的延伸应用。
+        
+        <div style="background: #FFFBEB; border: 1px solid #FDE68A; padding: 16px 20px; border-radius: 10px; margin-bottom: 24px; box-shadow: var(--shadow-soft);">
+            <div style="font-weight: 700; color: #D97706; margin-bottom: 6px; font-size: 16px;">💡 核心认知：AI 洗稿时代的唯一护城河</div>
+            <div style="font-size: 14px; color: var(--text-dark); line-height: 1.6;">
+                🗣️ <strong>大白话：</strong>AI 普及的时代，这种手工织网的“笨方法”还能生效吗？答案是：不仅生效，而且是对抗 AI 批量垃圾（Slop）的唯一护城河。AI 的软肋是“缺乏真实经验”。当你用极度严密的逻辑，将几十篇高质量文章通过双向内链绑定在一起时，你是在向谷歌证明：“我不是随机生成内容的机器，我是拥有完整体系的真人专家（E-E-A-T）。”
             </div>
         </div>
 
-        <!-- Topic Cluster 模块 -->
-        <p style="font-weight:600; margin: 16px 0 8px 0;">📌 全流程概览（点击任意卡片展开详情）</p>
+        <!-- 架构拆解：双六法则实战指南 -->
+        <div style="font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            ⚖️ 架构拆解：双六法则实战指南 (Pillar & Cluster 绝非宣传册)
+        </div>
+        
+        <div class="tc-grid">
+            <!-- 左列：支柱页面 -->
+            <div>
+                <div class="tc-col-title" style="color: var(--secondary);">
+                    🏛️ 支柱页面 (Pillar)：广度的极致
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">全篇靠 H2/H3 搭建大框架，负责品类交通枢纽，密集布局内链指向集群页。</p>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">1. 宏观认知与趋势</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>阐述行业背景、解决客户最核心的品类疑问，确立专家地位并建立权威。<br>
+                        <span class="tc-label case">💡 实操案例：</span>不要只写“牙贴很火”，写“2026年欧盟合规趋严，非过氧化物需求同比增长40%”，并配上一张带Logo的市场趋势饼图。
+                    </div>
+                </details>
+                
+                <details class="tc-details">
+                    <summary class="tc-summary">2. 产品矩阵与核心技术</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>全面展示核心技术分类，并在此处疯狂埋入指向各细分集群页的内链。<br>
+                        <span class="tc-label case">💡 实操案例：</span>用精简表格对比起效时间。在PAP格子里加蓝色带下划线的锚文本：“深入了解 PAP 配方如何做到真正零敏”，引导跳转。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">3. 硬核制造力与服务能力</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>将抽象的实力转化为具体的、可被视觉感知的信任背书。<br>
+                        <span class="tc-label case">💡 实操案例：</span>别写“工厂很大”，放一张 5 秒的10万级无尘车间全自动灌装线动图，旁注“日产50万贴，接单72小时出首批”。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">4. 资质合规与清关壁垒</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>直击 B2B 买家最关心的生死线，展示目标市场准入要求，降低风险。<br>
+                        <span class="tc-label case">💡 实操案例：</span>贴出 CE 证书高清截图（关键信息打码），说明：“符合欧盟最新化妆品法规，保障德国海关0扣留率”。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">5. 起订量 (MOQ) 与合作流</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>极大降低沟通成本，将商业合作模式标准化、透明化。<br>
+                        <span class="tc-label case">💡 实操案例：</span>画出横向时间轴（Day1设计->Day3打样->Day15大货）。明确标明“现货白牌MOQ 100盒，深度定制 5000盒”。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">6. 案例与结构化 FAQ</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>负责漏斗底部转化收尾，利用底层代码抢占 AI 搜索曝光。<br>
+                        <span class="tc-label case">💡 实操案例：</span>收集真实痛点如“发往中东可以不含酒精吗？”，并在代码底层部署 FAQ Schema，强喂给谷歌。
+                    </div>
+                </details>
+            </div>
+
+            <!-- 右列：集群页面 -->
+            <div>
+                <div class="tc-col-title" style="color: var(--purple);">
+                    🔬 集群矩阵 (Cluster)：深度的极致
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">针对极其具体的长尾痛点重拳出击，每篇必须包含一条指向核心支柱页的绝对内链。</p>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">1. 核心枢纽 (Hub)</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>集群网络的中心点，即上述的“支柱页面”本身，接受所有子页面的回链权重。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">2. 定义原理 (What/Why) - 漏斗顶部</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>解决概念认知、工作机制等基础科普问题，满足行业新手或前期调研人群。<br>
+                        <span class="tc-label case">💡 实操案例：</span>《什么是无过氧化氢牙贴的工作原理？》。极其通俗地解释化学反应，截获还在做基础功课的跨行小白老板。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">3. 硬核对比 (Vs/Compare) - 漏斗中部</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>满足客户选择困难，客观拆解不同方案的优劣，用专业度打击竞品。<br>
+                        <span class="tc-label case">💡 实操案例：</span>《干贴 vs 凝胶贴片：OEM 该选哪种？》。掏出底牌对比两者的“成本价、保质期、零售溢价空间”，抢夺纠结期客户。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">4. 实操策略 (How-to) - 展现专业</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>展现超越纯生产的业务深度，为客户赋能，提供可落地的操作指南。<br>
+                        <span class="tc-label case">💡 实操案例：</span>《牙科诊所如何开展美白贴片营销？》。教客户怎么卖货，提供“私域营销话术PDF”内嵌表单疯狂收割邮箱。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">5. 避坑排雷 (Troubleshooting) - 建立信任</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>直击行业痛点和失败教训，通过别人踩过的坑来反衬自身的专业可靠。<br>
+                        <span class="tc-label case">💡 实操案例：</span>《美白牙贴清关被卡？FDA 常见雷区》。剖析清关失败反面教材，引出你们工厂因为合规从未出过事。
+                    </div>
+                </details>
+
+                <details class="tc-details">
+                    <summary class="tc-summary">6. 商业案例 (Case Study) - 漏斗底部</summary>
+                    <div class="tc-content">
+                        <span class="tc-label logic">📌 通用逻辑：</span>终极逼单武器，用真实背景、具体数据证明你的投资回报率 (ROI)。<br>
+                        <span class="tc-label case">💡 实操案例：</span>《如何帮某德国品牌降本 20%？》：“改进模具后良品率升至99%，单片降本$0.05”。文末直放询盘表单。
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- 🤖 GEO 实战法则与闭环工具流 -->
+        <div class="pseo-action-card" style="background: #F0FDF4; border-color: #A7F3D0; margin-bottom: 32px;">
+            <div style="font-size: 18px; font-weight: 700; color: #047857; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                🤖 GEO 实战法则与闭环工具流
+            </div>
+            <div style="font-size: 14px; color: var(--text-dark); line-height: 1.6;">
+                <ul style="padding-left: 16px; margin: 0;">
+                    <li style="margin-bottom: 12px;"><strong style="color: #059669;">实体化小标题：</strong> ❌ 错误小标题：“成分对比”或“我们的优势”。✅ <strong>GEO 小标题（实体前置）：</strong>“PAP 与 6% HP 过氧化氢：哪种美白成分更适合欧洲市场？” AI 搜索引擎不喜欢悬念，喜欢结构化实体。</li>
+                    <li style="margin-bottom: 12px;"><strong style="color: #059669;">TL;DR 倒三角写作 (三明治排版)：</strong> ① <strong>H2 提出明确问题</strong>（带有 vs, how, what）。② <strong>紧跟 TL;DR (太长不看版)</strong>：在 H2 下方第一段，千万别铺垫，直接加粗给结论：“结论：PAP 适合欧盟且无敏，6%HP 适合北美求快客户。”（专门喂给 AI 提取）。③ <strong>深度解析</strong>：结论之后再铺陈实验数据、图表和专家引言。</li>
+                    <li><strong style="color: #059669;">KWFinder 长尾收割流：</strong> 在 Semrush 找大词、Ahrefs 验流量之外，加入低竞争度长尾收割机：输入大词 ➔ 切换到 <strong>Questions</strong> 标签 ➔ 筛选 <strong>KD (难度) &lt; 25</strong>。专门挑搜索量可能只有 50-100，但意图极其明确的问题作为集群文章标题。这类词不需要外链，写完收录就能排首页。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 🚀 进阶补充：内容集群 × GEO 的四大高阶知识结构 -->
+        <div style="font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            🚀 进阶补充：内容集群 × GEO 的四大高阶知识结构
+        </div>
+        
+        <div class="cluster-grid" id="advGrid">
+            <div class="adv-card" data-adv="1" style="border-top: 4px solid var(--secondary);">
+                <span class="adv-num">1️⃣</span>
+                <span class="adv-title">实体链接与 Schema</span>
+            </div>
+            <div class="adv-card" data-adv="2" style="border-top: 4px solid var(--primary);">
+                <span class="adv-num">2️⃣</span>
+                <span class="adv-title">强制植入信息增益</span>
+            </div>
+            <div class="adv-card" data-adv="3" style="border-top: 4px solid var(--purple);">
+                <span class="adv-num">3️⃣</span>
+                <span class="adv-title">应对零点击搜索</span>
+            </div>
+            <div class="adv-card" data-adv="4" style="border-top: 4px solid var(--accent);">
+                <span class="adv-num">4️⃣</span>
+                <span class="adv-title">多模态集群布局</span>
+            </div>
+        </div>
+
+        <div id="advDetail1" class="adv-detail">
+            <p><span class="adv-label">🗣️ 大白话：</span> 以前的爬虫像个文盲，只能通过你文章里加的“超链接蓝字”顺藤摸瓜。现在的 AI 是个博士，它不仅看蓝字，还要看你底层代码里声明的“亲戚关系”。你得在代码里告诉 AI：“这篇文章是那个大主题的亲儿子”。</p>
+            <p><span class="adv-label">🛠️ 实操案例：</span> 在写“PAP 成分”的集群文章时，通过 RankMath 或注入代码，在底层的 JSON-LD Schema 中使用 <code>about</code> 和 <code>mentions</code> 属性，将其强制绑定到“牙齿美白（Teeth Whitening）”这个主实体上。明确的代码绑定比100个超链接更有效。</p>
+        </div>
+
+        <div id="advDetail2" class="adv-detail">
+            <p><span class="adv-label">🗣️ 大白话：</span> AI 搜索引擎自己就能在一秒钟内总结谷歌前十名的文章。如果你写的东西只是“洗稿”，AI 根本不屑于引用你。你必须提供 AI 搜索不到的“独家爆料”。</p>
+            <p><span class="adv-label">🛠️ 实操案例：</span> 每一篇集群文章必须强制加入一个“专有数据”。别写“干贴附着力强”，要写：“根据我厂研发部 2025 年针对 300 名测试者的脱落率实验，干贴在唾液浸泡 30 分钟后的脱落率仅为 1.2%。” 这种带数据的第一手经验，AI 看到就会疯狂引用。</p>
+        </div>
+
+        <div id="advDetail3" class="adv-detail">
+            <p><span class="adv-label">🗣️ 大白话：</span> 现在客户搜一个问题，AI 直接在最上面把答案弹出来了，客户看懂了就划走，根本不点进你的网站！所以你的文章不能把底牌全亮出来，得留个“钩子”。</p>
+            <p><span class="adv-label">🛠️ 实操案例：</span> 文章分为“防守”和“进攻”。定义类的废话让 AI 随便抓；但在“OEM 成本计算”的进攻页面里，文字只给大致区间，然后放一个“2026 最新牙贴 OEM 阶梯报价动态计算器”。客户为了算精准价格，必须点击链接进入你的独立站操作。</p>
+        </div>
+
+        <div id="advDetail4" class="adv-detail">
+            <p><span class="adv-label">🗣️ 大白话：</span> AI 现在长眼睛和耳朵了，它不仅读文字，还看视频和图片。你的知识网如果只有干巴巴的字，在 AI 时代就会吃亏。</p>
+            <p><span class="adv-label">🛠️ 实操案例：</span> 在你的核心支柱页里，嵌入一段 YouTube 视频，并把视频按章节（Chapters）切分好，其中一章就叫“PAP vs HP 的反应过程”。当客户向 AI 提问时，AI 会直接把你的这段视频精准切片拉出来作为答案辅助。</p>
+        </div>
+
+        <!-- 【保留原有：全流程概览操作卡片与 Semrush/Ahrefs 教程】 -->
+        <p style="font-weight:600; margin: 32px 0 8px 0;">📌 全流程概览（工具实操备忘录）</p>
         <div class="cluster-grid" id="clusterGrid">
             <div class="cluster-card" data-step="1">
                 <span class="step-num">①</span>
@@ -2060,40 +1798,11 @@ Body: {
             </div>
         </div>
 
-        <div class="highlight-box" style="margin: 16px 0 4px 0; background: var(--bg-highlight, #FFF4E8); padding: 14px 20px; border-radius: 12px; border-left: 4px solid var(--primary, #FF6B35);">
-            <strong>📝 总结</strong>：用 <span class="tool-tag">Semrush</span> Topic Research 找选题灵感 → 用 <span class="tool-tag blue">Ahrefs</span> Keywords Explorer 验证流量和数据 → 写文章 → 双向链接 → 搞定。
+        <div class="highlight-box" style="margin: 16px 0 32px 0; background: var(--bg-highlight, #FFF4E8); padding: 14px 20px; border-radius: 12px; border-left: 4px solid var(--primary, #FF6B35);">
+            <strong>📝 总结</strong>：用 <span class="tool-tag">Semrush</span> 找选题灵感 → 用 <span class="tool-tag blue">Ahrefs</span> 验证流量 → 用 <strong>KWFinder</strong> 抓取 KD&lt;25 的极致长尾问句 → 写文章 → 双向内链 + 底层 Schema 强绑定 → 搞定。
         </div>
 
-        <script>
-            (function() {
-                var cards = document.querySelectorAll('.cluster-card');
-                var details = {
-                    1: document.getElementById('clusterDetail1'),
-                    2: document.getElementById('clusterDetail2'),
-                    3: document.getElementById('clusterDetail3'),
-                    4: document.getElementById('clusterDetail4')
-                };
-
-                cards.forEach(function(card) {
-                    card.addEventListener('click', function() {
-                        var step = parseInt(this.dataset.step, 10);
-                        var isActive = this.classList.contains('active');
-
-                        for (var key in details) {
-                            if (details[key]) details[key].classList.remove('open');
-                        }
-                        cards.forEach(function(c) { c.classList.remove('active'); });
-
-                        if (!isActive) {
-                            this.classList.add('active');
-                            if (details[step]) details[step].classList.add('open');
-                        }
-                    });
-                });
-            })();
-        </script>
-
-        <!-- 趋势三 -->
+        <!-- 8.7 趋势三 -->
         <h3 class="section-title">8.7 ⭐ 趋势三：AI驱动的CRO</h3>
         <div class="trend-card" style="margin-bottom: 0;">
             <div class="table-wrap">
@@ -2136,17 +1845,67 @@ Body: {
         </div>
     </div>
 
+    <!-- JS 逻辑控制区 (处理所有折叠与弹窗交互) -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // 1. 顶部导航栏滚动居中
             const nav = document.querySelector('.tab-nav');
             const activeBtn = document.querySelector('.tab-btn.active');
-
             if (nav && activeBtn) {
                 const scrollPos = activeBtn.offsetLeft - (nav.offsetWidth / 2) + (activeBtn.offsetWidth / 2);
                 nav.scrollLeft = scrollPos;
             }
+
+            // 2. 原有全流程模块点击交互 (clusterGrid)
+            var cards = document.querySelectorAll('.cluster-card');
+            var details = {
+                1: document.getElementById('clusterDetail1'),
+                2: document.getElementById('clusterDetail2'),
+                3: document.getElementById('clusterDetail3'),
+                4: document.getElementById('clusterDetail4')
+            };
+
+            cards.forEach(function(card) {
+                card.addEventListener('click', function() {
+                    var step = parseInt(this.dataset.step, 10);
+                    var isActive = this.classList.contains('active');
+                    for (var key in details) {
+                        if (details[key]) details[key].classList.remove('open');
+                    }
+                    cards.forEach(function(c) { c.classList.remove('active'); });
+                    if (!isActive) {
+                        this.classList.add('active');
+                        if (details[step]) details[step].classList.add('open');
+                    }
+                });
+            });
+
+            // 3. 新增高阶四维度模块点击交互 (advGrid)
+            var advCards = document.querySelectorAll('.adv-card');
+            var advDetails = {
+                1: document.getElementById('advDetail1'),
+                2: document.getElementById('advDetail2'),
+                3: document.getElementById('advDetail3'),
+                4: document.getElementById('advDetail4')
+            };
+
+            advCards.forEach(function(card) {
+                card.addEventListener('click', function() {
+                    var step = parseInt(this.dataset.adv, 10);
+                    var isActive = this.classList.contains('active');
+                    for (var key in advDetails) {
+                        if (advDetails[key]) advDetails[key].classList.remove('open');
+                    }
+                    advCards.forEach(function(c) { c.classList.remove('active'); });
+                    if (!isActive) {
+                        this.classList.add('active');
+                        if (advDetails[step]) advDetails[step].classList.add('open');
+                    }
+                });
+            });
         });
     </script>
+    
     <!-- 🔍 ⌘K 全局搜索弹窗结构 -->
     <div id="globalSearchModal">
         <div class="modal-content">
