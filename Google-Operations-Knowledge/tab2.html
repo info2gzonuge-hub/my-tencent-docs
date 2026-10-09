@@ -249,171 +249,115 @@
             点击 <span class="internal-link" onclick="location.href='tab0.html'">内链示例</span> 可返回全局目录。
         </div>
 
-   <!-- 📌 1.1 搜索引擎工作原理 -->
-<details>
-    <summary>
-        <img alt="搜索引擎工作原理" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.1 搜索引擎工作原理（含前端渲染） <span>基础</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>完整链路：</strong>抓取（Crawling）→ 渲染（Rendering）→ 索引（Indexing）→ 排名（Ranking）</div>
-            <div><span>•</span> <strong>抓取（Crawling）：</strong>Googlebot从已知URL出发，沿超链接逐步浏览</div>
-            <div><span>•</span> <strong>渲染（Rendering）：</strong>【关键环节】执行网页上的 JavaScript 和 CSS 代码，呈现网页的最终视觉效果（动态加载的内容在此阶段被读取）</div>
-            <div><span>•</span> <strong>索引与排名：</strong>解析内容并存入数据库，根据算法信号决定展示顺序</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>谷歌小蜘蛛先顺着链接爬过来（抓取），然后戴上人类的眼镜看看你的网页到底长啥样、JS代码有没有报错（渲染），最后把内容存进图书馆（索引），并决定给你排第几（排名）。很多炫酷的网站因为“渲染”失败，导致谷歌看到的只是一片空白。</div>
-    </div>
-</details>
+        <!-- 卡片网格（2列布局，结合方案一网络高清图与折叠详情） -->
+        <div class="grid-2">
+            <!-- 卡片1：1.1 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="搜索引擎工作原理" class="card-real-img">
+                    <div class="card-title">📌 1.1 搜索引擎工作原理 <span class="badge blue-bg">基础</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> 抓取（Crawling）→ 索引（Indexing）→ 排名（Ranking）</div>
+                        <div class="item"><span class="marker">•</span> 抓取：Googlebot从已知URL出发，沿超链接逐步浏览</div>
+                        <div class="item"><span class="marker">•</span> 索引：处理抓取到的页面，解析内容并存入数据库</div>
+                        <div class="item"><span class="marker">•</span> 排名：根据数百个信号决定搜索结果的展示顺序</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>谷歌小蜘蛛先顺着链接爬网页，再把内容存进它的图书馆，最后决定给你排第几。</div>
+                </div>
+            </details>
 
-<!-- 📌 1.2 核心算法与排名系统 -->
-<details>
-    <summary>
-        <img alt="核心算法与排名系统" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.2 核心算法与排名系统（2025-2026） <span>⭐ 核心</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>BERT（双向编码器表示模型）：</strong>理解搜索词语前后的“上下文语义”，不再是字面匹配</div>
-            <div><span>•</span> <strong>RankBrain（排名大脑）：</strong>处理谷歌从未见过的新生搜索词，通过机器学习匹配相似概念</div>
-            <div><span>•</span> <strong>MUM（多任务统一模型）：</strong>跨语言、跨媒体（图、文、视频）的复杂意图理解</div>
-            <div><span>•</span> <strong>SpamBrain（反垃圾大脑）：</strong>AI 驱动的作弊检测系统，精准打击 AI 批量生成的低质“水文”和虚假外链</div>
-            <div><span>•</span> <strong>有用内容系统（Helpful Content）：</strong>现已完全并入核心算法，重点奖励“信息增益（Information Gain）”</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>以前谷歌像个死板的图书管理员（只对关键词）；现在它是个精通多国语言、还能看懂图文的学霸（MUM），能听懂你话里有话（BERT）。同时，它还雇了一个冷酷的保安（SpamBrain），如果你全是用AI写的车轱辘废话，保安会直接把你的网页扔进垃圾桶。</div>
-    </div>
-</details>
+            <!-- 卡片2：1.2 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="核心算法与排名系统" class="card-real-img">
+                    <div class="card-title">📌 1.2 核心算法与排名系统（2025-2026） <span class="badge orange-bg">⭐ 核心</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> BERT / RankBrain / 神经匹配：理解搜索查询的语义和上下文</div>
+                        <div class="item"><span class="marker">•</span> 有用内容系统：现优先评估“信息增益”</div>
+                        <div class="item"><span class="marker">•</span> Passage Ranking（段落排名）：同一文章不同段落可独立排名</div>
+                        <div class="item"><span class="marker">•</span> <span class="highlight">⭐ 信息增益（Information Gain）</span> <span class="tag">2026.03核心信号</span></div>
+                        <div class="item"><span class="marker">•</span> 信息增益不是关于字数的指标，而是关于新增语义内容的指标</div>
+                        <div class="item"><span class="marker">•</span> Preferred Sources（首选来源）——2026.04全球推出</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>谷歌现在不只看你写了多少字，而是看你比已经排名前10的页面多说了什么新东西——如果只是重复别人说过的话，排名会掉。</div>
+                </div>
+            </details>
 
-<!-- 📌 1.3 范式转移 -->
-<details>
-    <summary>
-        <img alt="范式转移" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.3 SEO vs SIO vs GEO 范式转移 <span>方向</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>SEO（传统优化）：</strong>抢排名第一（权重持续下降，流量被AI拦截）</div>
-            <div><span>•</span> <strong>SIO（搜索意图优化）：</strong>精准匹配用户背后的真实需求（依然是转化核心）</div>
-            <div><span>•</span> <strong>GEO（生成式引擎优化）：</strong>被 AI Overviews 等大模型写进答案（核心指标 = AI 引用率）</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>以前你的目标是“让自己排第一”，现在和未来的目标是“让 AI 在回答问题时主动引用你”。很多时候用户根本不需要点击你的链接，答案在搜索结果页就已经被 AI 整理好了。</div>
-    </div>
-</details>
+            <!-- 卡片3：1.3 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="范式转移" class="card-real-img">
+                    <div class="card-title">📌 1.3 SEO vs SIO vs GEO 范式转移 <span class="badge cyan-bg">方向</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> SEO（传统）：抢排名第一（权重持续下降）</div>
+                        <div class="item"><span class="marker">•</span> SIO（搜索意图）：匹配用户需求（仍为核心）</div>
+                        <div class="item"><span class="marker">•</span> GEO（生成式引擎优化）：被AI写进答案（核心指标=引用率）</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>以前你的目标是“让自己排第一”，现在和未来的目标是“让AI在回答问题时提到你”——用户可能根本不需要点击你的链接，答案已经被AI整理好了。</div>
+                </div>
+            </details>
 
-<!-- 📌 1.4 E-E-A-T 质量框架 -->
-<details>
-    <summary>
-        <img alt="E-E-A-T质量框架" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.4 ⭐ E-E-A-T 质量框架 <span>硬性门槛</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>Experience（经验）：</strong>【排第一要素】证明你亲身实践过的第一手证据</div>
-            <div><span>•</span> <strong>Expertise（专业） & Authoritativeness（权威）：</strong>资质背书与行业地位</div>
-            <div><span>•</span> <strong>Trustworthiness（可信）：</strong>支付安全、联系方式真实性等基础底线</div>
-        </div>
-        <div>🗣️ <strong>大白话（以美白牙贴为例）：</strong>AI 也能写出完美流畅的理论知识，所以算法现在抓取的是你“亲身经历的证据”。如何向算法“自证”经验？你得在网页里放上你自己拍的带环境背景的糙图（不要买图库）、撕开 OEM 定制铝箔袋的细节动图、亲自在实验室调配凝胶浓度的实拍图、或第一人称视角的细节反馈。这种“带有真实摩擦感的实操细节”，是 AI 在机房里伪造不出来的，也是突破排名的必杀技。</div>
-    </div>
-</details>
+            <!-- 卡片4：1.4 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="E-E-A-T质量框架" class="card-real-img">
+                    <div class="card-title">📌 1.4 ⭐ E-E-A-T 质量框架 <span class="badge pink-bg">硬性门槛</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> <span class="highlight">Experience（经验）</span> — 排第一！“AI装不了亲手做过”</div>
+                        <div class="item"><span class="marker">•</span> Expertise（专业）</div>
+                        <div class="item"><span class="marker">•</span> Authoritativeness（权威）</div>
+                        <div class="item"><span class="marker">•</span> <span class="highlight">Trustworthiness（可信）</span> — 基础底线</div>
+                        <div class="item"><span class="marker">•</span> E-E-A-T已从“加分项”变成排名硬性门槛（入场券）</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>以前E-E-A-T是附加题，现在是必答题——做不好直接没资格参加排名。尤其要注意“经验”这个维度，你得证明自己真的做过，而不是只会说理论。</div>
+                </div>
+            </details>
 
-<!-- 📌 1.5 PR值数学传递逻辑 -->
-<details>
-    <summary>
-        <img alt="PR值数学传递逻辑" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.5 PR值（PageRank）数学传递逻辑与语义 <span>历史与演进</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>原始逻辑：</strong>PR值0-10分，通过链接在页面间类似“投票”平均分配</div>
-            <div><span>•</span> <strong>关键公式：</strong>PR(A) = PR(B)/L(B) + PR(C)/L(C) + ...（你投出去的链接越多，分给每个的权重越低）</div>
-            <div><span>•</span> <strong>现代演进（语义相关性）：</strong>高权重外链必须具备“行业语义相关性”，跨行业高权重的投票甚至可能触发作弊惩罚</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>PR值就像“行业大佬给你写推荐信”。但现在不仅看大佬名气大不大，还要看“专业对不对口”。一个卖重型机械的大佬给你的“美白牙贴”网站写推荐信，谷歌不仅不认，还会觉得你们在联合造假。</div>
-    </div>
-</details>
+            <!-- 卡片5：1.5 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="PR值数学传递逻辑" class="card-real-img">
+                    <div class="card-title">📌 1.5 独有内容：PR值（PageRank）数学传递逻辑 <span class="badge purple-bg">历史基础</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> PR值0-10分，通过链接在页面间平均分配</div>
+                        <div class="item"><span class="marker">•</span> 公式：PR(A) = PR(B)/L(B) + PR(C)/L(C) + PR(D)/L(D)</div>
+                        <div class="item"><span class="marker">•</span> 示例：A页PR=5，链接到B/C/D，每个分得约1.67分</div>
+                        <div class="item"><span class="marker">•</span> 关键公式：c=2.5分示例（高质量外链传递更多权重）</div>
+                        <div class="item"><span class="marker">•</span> 良好外链的6大属性：权威性/相关性/锚文本/DoFollow/位置/目标地址</div>
+                        <div class="item"><span class="marker">•</span> NoFollow的影响：会阻止PR值的传递</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>PR值就像“投票权重”，你投出去的票越多，每张票的分量就越轻——所以高质量的外链比一大堆低质量的外链更有价值。</div>
+                </div>
+            </details>
 
-<!-- 📌 1.6 GEO 被AI引用实操对策 -->
-<details>
-    <summary>
-        <img alt="GEO被AI引用实操对策" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.6 GEO“被AI引用”5大实操对策 <span>行动框架</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>对策1：</strong>前100字直接回答问题（拒绝冗长的背景铺垫）</div>
-            <div><span>•</span> <strong>对策2：</strong>列表/表格/FAQ结构化（迎合 AI 偏爱的小块状、可摘抄格式）</div>
-            <div><span>•</span> <strong>对策3：</strong>强化实体属性（作者实体关联 + 企业实体声誉）</div>
-            <div><span>•</span> <strong>对策4：</strong>部署精准的 Schema 标记（结构化数据给 AI 喂规范格式）</div>
-            <div><span>•</span> <strong>对策5：</strong>保持内容鲜活性（AI 优先采纳最新数据，定期微调页面）</div>
+            <!-- 卡片6：1.6 -->
+            <details class="expand-card">
+                <summary>
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80" alt="GEO被AI引用实操对策" class="card-real-img">
+                    <div class="card-title">📌 1.6 独有内容：GEO“被AI引用”5大实操对策 <span class="badge orange-bg">行动框架</span></div>
+                </summary>
+                <div class="card-details">
+                    <div class="item-list">
+                        <div class="item"><span class="marker">•</span> 对策1：前100字直接回答问题（不铺垫背景）</div>
+                        <div class="item"><span class="marker">•</span> 对策2：列表/表格/FAQ结构化（AI偏爱小块状、可直接摘抄的内容）</div>
+                        <div class="item"><span class="marker">•</span> 对策3：强化E-E-A-T信号（真实作者+可验证履历）</div>
+                        <div class="item"><span class="marker">•</span> 对策4：部署完整Schema标记（提升实体密度）</div>
+                        <div class="item"><span class="marker">•</span> 对策5：持续更新内容（AI优先引用新鲜信息）</div>
+                    </div>
+                    <div class="bubble">🗣️ <strong>大白话：</strong>想让AI引用你？记住这5条：开头直接给答案、内容写成可摘抄的结构、证明你是真人专家、给内容贴好标签、定期刷新老文章。</div>
+                </div>
+            </details>
         </div>
-        <div>🗣️ <strong>大白话：</strong>想让谷歌大模型把你的话念给客户听？记住：开头直接给结论，多用表格和对比，证明你是真人专家，在代码里打好标签，然后经常给文章翻新除草。</div>
-    </div>
-</details>
-
-<!-- 📌 1.7 实体与知识图谱 (新增) -->
-<details>
-    <summary>
-        <img alt="实体与知识图谱" src="https://images.unsplash.com/photo-1542382122-7314d10109f4?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.7 实体与知识图谱（Entity & Knowledge Graph） <span>机器认知</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>底层概念：</strong>从“匹配字符串（Strings）”进化为“理解事物（Things）”</div>
-            <div><span>•</span> <strong>运作机制：</strong>谷歌将人、地点、公司、概念构建成一个巨大的节点网络，理解它们之间的属性和关系</div>
-            <div><span>•</span> <strong>核心策略：</strong>提升“实体声誉”，将你的品牌或产品变成谷歌知识图谱中被认可的节点</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>谷歌不再像查字典一样死抠网页里有没有“牙贴贴牌”这四个字，它已经像人脑一样理解了“双白是一家提供牙贴 OEM 服务的实体公司”。你不仅要堆砌词汇，更要在全网各个角落建立你的“品牌指纹”，让谷歌认识你这个人/这家店。</div>
-    </div>
-</details>
-
-<!-- 📌 1.8 搜索意图分类 (新增) -->
-<details>
-    <summary>
-        <img alt="搜索意图分类" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.8 搜索意图的4大分类与 SERP 展现 <span>流量密码</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>导航型（Navigational）：</strong>寻找特定品牌或网站（如搜“Double White login”）</div>
-            <div><span>•</span> <strong>信息型（Informational）：</strong>学习知识或寻找答案，最容易被 AI 回答拦截</div>
-            <div><span>•</span> <strong>商业调查型（Commercial）：</strong>对比评测、看评价（如“best teeth whitening strips 2026”）</div>
-            <div><span>•</span> <strong>交易型（Transactional）：</strong>明确的购买意向（如“buy PAP+ whitening strips wholesale”）</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>写内容前先搜一下关键词。如果用户搜“买苹果手机”，排在前面的全是商城；这时候你写一篇长达一万字的《苹果手机发展史》，写得再好也不可能排到前面去，因为你“答非所问”，没有满足用户的“掏钱（交易）”意图。</div>
-    </div>
-</details>
-
-<!-- 📌 1.9 AI Overviews与YMYL (新增) -->
-<details>
-    <summary>
-        <img alt="AI Overviews" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.9 AI Overviews 的触发界限与 YMYL <span>AI盲区</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>YMYL（Your Money or Your Life）：</strong>涉及医疗、金融、安全等直接影响人身与财产的敏感领域</div>
-            <div><span>•</span> <strong>不触发机制：</strong>为了规避“AI 幻觉”带来的法律与道德风险，谷歌在 YMYL 领域会大幅限制或直接不展示 AI 生成答案</div>
-            <div><span>•</span> <strong>电商词限制：</strong>对于精确的 B2B/B2C 交易词，谷歌仍倾向于展示自然列表和赞助商广告</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>别怕 AI 抢走所有流量。如果你的产品涉及口腔医疗、成分安全，或者是非常直接的 B2B 批发词，谷歌大模型是不敢随便代替客户做决定的。在这些 AI 不敢开口的“盲区”，传统的霸屏和坑位排名依然是王道。</div>
-    </div>
-</details>
-
-<!-- 📌 1.10 B2B转化导向算法 (新增) -->
-<details>
-    <summary>
-        <img alt="B2B转化导向算法" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80">
-        <div>📌 1.10 B2B 转化导向算法逻辑 <span>转化底盘</span></div>
-    </summary>
-    <div>
-        <div>
-            <div><span>•</span> <strong>信任信号优先：</strong>B2B 采购决策周期长，算法更看重“企业实体信任度”（如：真实的关于我们页面、详细的联系方式、合规认证展示）</div>
-            <div><span>•</span> <strong>深度内容奖励：</strong>算法偏爱能够解决采购痛点的“深度长文”（如 OEM 流程图、成分对比表、最小起订量说明），这代表高“信息增益”</div>
-            <div><span>•</span> <strong>跳出率与停留时间：</strong>专业 B2B 访客如果看到内容太水，会快速跳出（Pogo-Sticking），算法会捕捉这一负面信号并降权</div>
-        </div>
-        <div>🗣️ <strong>大白话：</strong>做 B2B 独立站，谷歌算法就是你的“线上验厂员”。你要把资质证书、工厂实景、详细的贴牌流程清晰地展示出来。如果客户进来发现你的网站像个皮包公司，转头就走，谷歌也会觉得你不靠谱，下次就不会再把流量推给你了。</div>
-    </div>
-</details>
 
         <!-- 底部导航 -->
         <div class="footer-links" style="margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
