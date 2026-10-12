@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
     <style>
-        /* ================= 全局基础变量与样式 (严格锁死) ================= */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-body: #F8F6F2;
@@ -18,420 +17,115 @@
             --bg-tab-active: #FF6B35;
             --primary: #FF6B35;
             --primary-light: #FF8A5C;
-            --secondary: #1E3A8A; 
+            --secondary: #3B82F6;
             --accent: #06B6D4;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
             --text-dark: #1A202C;
             --text-muted: #5A6A7A;
             --border-light: #EDE8E0;
             --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
-            --shadow-hover: 0 8px 24px rgba(255, 107, 53, 0.15);
+            --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.08);
             --radius: 16px;
             --font: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
         body { font-family: var(--font); background-color: var(--bg-body); min-height: 100vh; padding: 30px 20px; color: var(--text-dark); }
         .app-container { max-width: 1280px; margin: 0 auto; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow: hidden; padding: 28px 30px 40px; border: 1px solid var(--border-light); }
-        
-        /* 头部与导航锁死款式 */
-        .app-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); gap: 12px; }
+        .app-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
         .app-header h1 { font-size: 26px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
         .app-header h1 span { font-weight: 400; font-size: 16px; color: var(--text-muted); }
-        .badge-header { background: var(--primary); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 18px; border-radius: 40px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25); }
+        .badge-header { background: var(--primary); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 18px; border-radius: 40px; }
         
-        .tab-nav { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding-bottom: 16px; margin-bottom: 24px; scrollbar-width: thin; border-bottom: 2px solid var(--border-light); }
+        .tab-nav { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding-bottom: 16px; margin-bottom: 24px; border-bottom: 2px solid var(--border-light); }
         .tab-nav::-webkit-scrollbar { height: 4px; }
         .tab-nav::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
         .tab-btn { flex-shrink: 0; padding: 10px 20px; border: none; background: transparent; border-radius: 40px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: all 0.2s; }
-        .tab-btn.active { background: var(--bg-tab-active); color: #fff; box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35); border-color: var(--bg-tab-active); }
+        .tab-btn.active { background: var(--bg-tab-active); color: #fff; box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35); }
         .tab-btn:not(.active):hover { background: var(--bg-card-alt); color: var(--primary); }
         
-        .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
-        .panel-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; padding: 12px 16px; background: var(--bg-card-alt); border-radius: 12px; border-left: 4px solid var(--primary-light); line-height: 1.6; }
-        .pill { display: inline-block; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; background: var(--bg-body); color: var(--text-muted); border: 1px solid var(--border-light); }
-        .pill.yellow { background: #EAB308; color: #fff; border: none; }
+        .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; color: var(--text-dark); }
+        .panel-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; padding: 16px; background: var(--bg-card-alt); border-radius: 12px; border-left: 4px solid var(--primary); line-height: 1.6; }
         
-        .internal-link { color: var(--primary); font-weight: 600; text-decoration: underline 2px dotted var(--primary-light); text-underline-offset: 4px; cursor: pointer; transition: all 0.2s; }
-        .internal-link:hover { color: var(--primary-light); background: rgba(255, 107, 53, 0.05); border-radius: 4px; padding: 0 4px; }
-
-        /* ================= 交互悬浮模块 ================= */
-        .hover-box { transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: default; }
-        .hover-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); z-index: 10; }
-
-        /* ================= 通用排版组件 ================= */
-        .section-header { font-size: 18px; font-weight: 700; color: var(--text-dark); margin: 32px 0 16px; border-bottom: 2px solid var(--border-light); padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .bubble-info { background: var(--bg-highlight); padding: 12px 16px; border-radius: 12px; border: 1px solid #FADCB3; font-size: 13.5px; color: var(--text-dark); line-height: 1.6; margin-bottom: 16px; transition: all 0.3s; }
-        .bubble-info:hover { border-color: var(--primary); background: #FFF; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.08); }
-        .bubble-info strong { color: var(--primary); }
-
-        /* ================= 节点连线图 (流程图/三要素) ================= */
-        .arch-diagram { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 24px 0; font-size: 16px; font-weight: 700; }
-        .arch-node { background: var(--bg-card); border: 2px solid var(--primary-light); padding: 16px 24px; border-radius: 8px; color: var(--text-dark); text-align: center; min-width: 180px; }
-        .arch-node span { display: block; font-size: 13px; font-weight: 400; color: var(--text-muted); margin-top: 6px; border-top: 1px dashed var(--border-light); padding-top: 6px; }
-        .arch-arrow { color: var(--primary-light); font-size: 24px; }
-
-        /* ================= 表格组件 ================= */
-        .styled-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13.5px; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-light); }
-        .styled-table th { background: var(--primary); color: #fff; font-weight: 600; text-align: left; padding: 14px; }
-        .styled-table td { padding: 14px; border-bottom: 1px solid var(--border-light); color: var(--text-dark); line-height: 1.5; }
-        .styled-table tr:nth-child(even) { background: #FAFAFA; }
-        .styled-table tbody tr { transition: background-color 0.2s; }
-        .styled-table tbody tr:hover { background-color: var(--bg-highlight); }
-
-        /* ================= 列表与标签重构 ================= */
-        .list-breakdown { padding: 20px; background: var(--bg-card-alt); border-radius: 12px; border: 1px solid var(--border-light); margin-bottom: 16px; }
-        .list-breakdown ul { list-style: none; padding-left: 0; }
-        .list-breakdown li { margin-bottom: 14px; font-size: 13.5px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.6; }
-        .list-breakdown li:last-child { margin-bottom: 0; }
-        .tag { background: #E5E7EB; color: #374151; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-        .tag.alert { background: #FEE2E2; color: #DC2626; }
-        .tag.update { background: #FEF3C7; color: #D97706; }
-        .tag.ai { background: #E0E7FF; color: #4338CA; }
-        .tag.blue { background: #DBEAFE; color: #1D4ED8; }
-        .tag.green { background: #D1FAE5; color: #059669; }
-
-        /* ================= 网格卡片 (基础要点/转化事件) ================= */
-        .micro-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .micro-card { background: #fff; border: 1px solid var(--border-light); padding: 16px; border-radius: 12px; }
-        .micro-card-title { font-weight: 700; color: var(--text-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; font-size: 14.5px; }
-        .micro-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-
-        /* ================= 步骤指引 (循序渐进结构) ================= */
-        .rule-list { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; background: var(--bg-card-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); }
-        .rule-item { background: #fff; border: 1px solid #E5E7EB; padding: 16px 20px; border-radius: 8px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
-        .rule-num { background: var(--text-dark); color: #fff; padding: 4px 12px; display: inline-flex; justify-content: center; align-items: center; border-radius: 6px; font-weight: 700; font-size: 13.5px; flex-shrink: 0; letter-spacing: 0.5px; }
-        .step-arrow-down { text-align: center; color: var(--primary-light); font-size: 20px; font-weight: 900; margin: -4px 0; opacity: 0.8; }
-        .rule-content { flex: 1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .rule-core { font-weight: 600; font-size: 14.5px; color: var(--text-dark); }
-        .rule-why { font-size: 13px; color: var(--text-muted); background: #F3F4F6; padding: 4px 10px; border-radius: 4px; }
+        .section-title { font-size: 20px; font-weight: 700; color: var(--text-dark); margin: 36px 0 16px 0; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--bg-highlight); padding-bottom: 8px; }
         
-        .rule-item.advanced { border-color: var(--primary-light); background: #FFFBF5; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1); }
-        .rule-item.advanced .rule-num { background: var(--primary); }
+        .highlight { color: var(--primary); font-weight: 700; }
+        .bubble { background: var(--bg-highlight); padding: 16px 20px; border-radius: 12px; border-left: 4px solid var(--primary); margin: 16px 0; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        .bubble strong { color: var(--primary); }
+        .bubble-warning { background: #FEF2F2; border-left: 4px solid var(--danger); }
+        .bubble-warning strong { color: var(--danger); }
+        .bubble-alert { background: #FFFBEB; border-left: 4px solid var(--warning); }
+        .bubble-alert strong { color: #B45309; }
+        
+        .flex-row { display: flex; align-items: stretch; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+        .box { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 20px; flex: 1; min-width: 220px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); }
+        
+        .box-title { font-weight: 700; color: var(--text-dark); margin-bottom: 10px; font-size: 16px; display: flex; align-items: center; gap: 6px; }
+        .box-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .arrow-sep { display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--border-light); font-weight: bold; }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+        
+        ul.update-list { list-style: none; margin-bottom: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+        ul.update-list li { background: var(--bg-card-alt); border-radius: 12px; padding: 16px; border-left: 4px solid var(--secondary); line-height: 1.6; transition: transform 0.3s ease; }
+        ul.update-list li:hover { transform: translateY(-2px); }
+        ul.update-list li .tag { display: inline-block; background: var(--secondary); color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: 600; margin-right: 8px; margin-bottom: 6px; }
+        
+        .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+        .grid-item { background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .grid-item:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(22, 101, 52, 0.08); border-color: #22C55E; }
+        .grid-item strong { color: #166534; font-size: 16px; }
+        .grid-item span { color: #15803D; font-size: 13px; line-height: 1.5; }
+        
+        .rm-panel { display: flex; flex-direction: column; gap: 16px; background: var(--bg-card-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); margin-bottom: 24px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .rm-panel:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .pill-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .pill-tag { background: var(--bg-card); border: 1px solid var(--border-light); padding: 8px 16px; border-radius: 30px; font-size: 13px; color: var(--text-dark); font-weight: 600; display: inline-flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.2s ease, border-color 0.2s ease; }
+        .pill-tag:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); cursor: default; }
+        .rm-flow { font-size: 14px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; background: var(--bg-highlight); padding: 10px 16px; border-radius: 8px; width: fit-content; }
+        
+        .data-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px; }
+        .data-table th, .data-table td { border: 1px solid var(--border-light); padding: 14px 16px; text-align: left; }
+        .data-table th { background: var(--bg-card-alt); color: var(--text-dark); font-weight: 700; }
+        .data-table td { color: var(--text-muted); line-height: 1.6; }
+        .data-table tr { transition: background 0.2s ease; }
+        .data-table tbody tr:hover { background: var(--bg-card-alt); }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+        .stat-box { background: var(--bg-card-alt); padding: 24px 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border-light); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); background: var(--bg-card); }
+        .stat-num { font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .stat-title { font-size: 14px; color: var(--text-dark); font-weight: 700; margin-bottom: 6px; }
+        .stat-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
 
-        /* ================= 核心数据速查网格 ================= */
-        .data-dashboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0 10px; }
-        .data-box { background: #fff; border: 1px solid var(--border-light); border-top: 3px solid var(--primary); padding: 16px; border-radius: 8px; text-align: center; }
-        .data-val { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
-        .data-label { font-size: 12.5px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
-        .data-desc { font-size: 12px; color: var(--text-muted); }
-
-        @media (max-width: 1024px) {
-            .data-dashboard { grid-template-columns: repeat(2, 1fr); }
-            .rule-content { flex-direction: column; align-items: flex-start; }
-            .arch-diagram { flex-direction: column; }
-            .arch-arrow { transform: rotate(90deg); }
+        @media (max-width: 900px) { 
+            .stats-grid { grid-template-columns: repeat(2, 1fr); } 
+            .grid-3 { grid-template-columns: 1fr; }
+            .arrow-sep { display: none; } 
         }
-        @media (max-width: 600px) {
-            .data-dashboard { grid-template-columns: 1fr; }
-            .styled-table { display: block; overflow-x: auto; white-space: nowrap; }
-            .micro-card-grid { grid-template-columns: 1fr; }
-        }
-                /* ============================================================ */
-        /* 手机端响应式适配（与 tab3 保持一致）                           */
-        /* ============================================================ */
         @media (max-width: 768px) {
-
-            .app-container {
-                padding: 16px 12px !important;
-            }
-
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .app-header h1 {
-                font-size: 18px !important;
-                flex-wrap: wrap;
-            }
-            .app-header h1 span {
-                font-size: 13px !important;
-                display: block;
-                margin-top: 2px;
-            }
-            .badge-header {
-                font-size: 11px !important;
-                padding: 4px 14px !important;
-            }
-
-            .tab-nav {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                gap: 4px;
-                padding-bottom: 10px;
-            }
-            .tab-btn {
-                font-size: 12px !important;
-                padding: 6px 14px !important;
-                flex-shrink: 0;
-            }
-
-            .panel-title {
-                font-size: 18px !important;
-            }
-            .panel-sub {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
-
-            /* ====== section-header ====== */
-            .section-header {
-                font-size: 16px !important;
-                margin: 24px 0 12px !important;
-            }
-
-            /* ====== 架构图 ====== */
-            .arch-diagram {
-                flex-direction: column !important;
-                gap: 6px !important;
-                margin: 16px 0 !important;
-            }
-            .arch-node {
-                padding: 10px 16px !important;
-                font-size: 14px !important;
-                width: 100% !important;
-                max-width: 320px !important;
-                margin: 0 auto !important;
-                min-width: unset !important;
-            }
-            .arch-node span {
-                font-size: 11px !important;
-            }
-            .arch-arrow {
-                transform: rotate(90deg) !important;
-                font-size: 16px !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                display: block !important;
-                text-align: center !important;
-            }
-
-            /* ====== 气泡信息 ====== */
-            .bubble-info {
-                font-size: 13px !important;
-                padding: 10px 14px !important;
-            }
-
-            /* ====== 表格：横向滚动 ====== */
-            .styled-table {
-                font-size: 12px !important;
-                min-width: 600px !important;
-                display: table !important;
-                border-radius: 6px !important;
-            }
-            .styled-table th,
-            .styled-table td {
-                padding: 8px 10px !important;
-                font-size: 12px !important;
-            }
-            /* 表格容器滚动 */
-            .table-wrap {
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-                margin-bottom: 12px !important;
-            }
-
-            /* ====== micro-card-grid（卡片网格） ====== */
-            .micro-card-grid {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
-            }
-            .micro-card {
-                padding: 12px 14px !important;
-            }
-            .micro-card-title {
-                font-size: 13.5px !important;
-            }
-            .micro-card-desc {
-                font-size: 12.5px !important;
-            }
-
-            /* ====== list-breakdown ====== */
-            .list-breakdown {
-                padding: 12px 14px !important;
-            }
-            .list-breakdown li {
-                font-size: 12.5px !important;
-                flex-wrap: wrap !important;
-            }
-            .list-breakdown .tag {
-                font-size: 10px !important;
-                padding: 1px 6px !important;
-            }
-
-            /* ====== rule-list 步骤 ====== */
-            .rule-list {
-                padding: 14px !important;
-                gap: 8px !important;
-            }
-            .rule-item {
-                padding: 12px 14px !important;
-                flex-wrap: wrap !important;
-                gap: 10px !important;
-            }
-            .rule-num {
-                font-size: 12px !important;
-                padding: 2px 10px !important;
-            }
-            .rule-core {
-                font-size: 13.5px !important;
-            }
-            .rule-why {
-                font-size: 12px !important;
-                padding: 3px 8px !important;
-            }
-            .step-arrow-down {
-                font-size: 16px !important;
-                margin: -2px 0 !important;
-            }
-
-            /* ====== 数据速查（4列 → 2列） ====== */
-            .data-dashboard {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 10px !important;
-                margin: 16px 0 8px !important;
-            }
-            .data-box {
-                padding: 12px !important;
-            }
-            .data-val {
-                font-size: 20px !important;
-            }
-            .data-label {
-                font-size: 11.5px !important;
-            }
-            .data-desc {
-                font-size: 11px !important;
-            }
-
-            /* ====== tag 标签 ====== */
-            .tag {
-                font-size: 10px !important;
-                padding: 1px 6px !important;
-            }
-            .tag.green,
-            .tag.blue,
-            .tag.update,
-            .tag.alert,
-            .tag.ai {
-                font-size: 10px !important;
-                padding: 1px 6px !important;
-            }
-
-            /* ====== 底部 ====== */
-            .footer-links {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 6px !important;
-                font-size: 13px !important;
-            }
+            .app-container { padding: 16px 12px; }
+            .grid-2x2 { grid-template-columns: 1fr; }
+            .flex-row { flex-direction: column; gap: 12px; }
+            .rm-flow { width: 100%; justify-content: center; text-align: center; }
         }
-
-        @media (max-width: 480px) {
-
-            .app-container {
-                padding: 10px 8px !important;
-            }
-            .app-header h1 {
-                font-size: 16px !important;
-            }
-            .tab-btn {
-                font-size: 11px !important;
-                padding: 4px 10px !important;
-            }
-
-            .section-header {
-                font-size: 14px !important;
-                margin: 18px 0 10px !important;
-            }
-
-            .arch-node {
-                font-size: 13px !important;
-                padding: 8px 14px !important;
-            }
-
-            .styled-table {
-                font-size: 10px !important;
-                min-width: 480px !important;
-            }
-            .styled-table th,
-            .styled-table td {
-                padding: 5px 6px !important;
-                font-size: 10px !important;
-            }
-
-            .micro-card {
-                padding: 10px 12px !important;
-            }
-            .micro-card-title {
-                font-size: 13px !important;
-            }
-            .micro-card-desc {
-                font-size: 12px !important;
-            }
-
-            .list-breakdown li {
-                font-size: 11.5px !important;
-            }
-
-            .rule-core {
-                font-size: 13px !important;
-            }
-            .rule-why {
-                font-size: 11px !important;
-            }
-
-            .data-dashboard {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 8px !important;
-            }
-            .data-val {
-                font-size: 18px !important;
-            }
-            .data-label {
-                font-size: 10.5px !important;
-            }
-            .data-desc {
-                font-size: 10px !important;
-            }
-
-            .bubble-info {
-                font-size: 12px !important;
-                padding: 8px 12px !important;
-            }
-        }
-        /* 搜索弹窗样式 */
         #globalSearchModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 80px; backdrop-filter: blur(4px); }
-        .modal-content { background: #FFFFFF; width: 90%; max-width: 600px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #E2E8F0; }
-        .modal-header { padding: 16px 20px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: center; gap: 12px; }
-        .modal-header input { width: 100%; border: none; outline: none; font-size: 16px; color: #0F172A; background: transparent; }
-        #globalSearchResults { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
-        #globalSearchResults li { padding: 14px 20px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
-        #globalSearchResults li:hover { background: #F0FDF4; }
-        #globalSearchResults .res-title { font-weight: 600; color: #0F172A; font-size: 15px; display: block; }
-        #globalSearchResults .res-category { font-size: 12px; color: #059669; margin-top: 4px; display: block; }
+        .modal-content { background: #FFFFFF; width: 90%; max-width: 600px; border-radius: 16px; overflow: hidden; }
+        .modal-header { padding: 16px 20px; display: flex; align-items: center; border-bottom: 1px solid #F1F5F9; }
+        .modal-header input { width: 100%; border: none; outline: none; font-size: 16px; padding-left: 10px; }
     </style>
 </head>
 <body>
     <div class="app-container">
- <!-- 头部：彻底解决拥挤，加入 Flexbox 行内样式强制横向对齐 -->
-<header class="app-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light);">
-    
-    <!-- 左侧标题区：强制横向弹性布局居中 -->
-    <div class="header-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <!-- 注意：这里的标题文案根据不同 Tab 自行保留原样 -->
-        <h1 style="font-size: 24px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; margin: 0;">
-            📊 谷歌推广知识体系 <span style="font-weight: 400; font-size: 15px; color: var(--text-muted);">·  Tab 8 · 数据分析与追踪</span>
-        </h1>
-        <span class="badge-header" style="background: var(--primary); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px; white-space: nowrap;"> 🟡 基础必备 · 2026方法论</span>
-    </div>
+        <header class="app-header">
+            <div>
+                <h1>📊 谷歌推广知识体系 <span>· Tab 8 · 数据分析与追踪</span></h1>
+            </div>
+            <span class="badge-header">🟡 基础必备 · 2026方法论</span>
+        </header>
 
-    <!-- 右侧搜索按钮 -->
-    <button id="openGlobalSearchBtn" style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: #334155; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; font-weight: 500; transition: all 0.2s;">
-        <span>🔍</span> 搜索全站 (⌘K)
-    </button>
-</header>
-
-        <!-- Tab 导航锁死款式 -->
-    <nav class="tab-nav">
+        <nav class="tab-nav">
             <button class="tab-btn" onclick="location.href='index.html'">📚 全局目录</button>
             <button class="tab-btn" onclick="location.href='tab1.html'">📅 算法更新</button>
             <button class="tab-btn" onclick="location.href='tab2.html'">🧠 底层思维</button>
@@ -445,218 +139,217 @@
             <button class="tab-btn" onclick="location.href='tab10.html'">🚀 AI Overviews</button>
         </nav>
 
-        <!-- 标题区 -->
         <div class="panel-title">📊 第七层 · 数据分析与追踪 (GA4 + GTM)</div>
         <div class="panel-sub">
-            <span class="pill yellow">🟡 基础必备</span> 
-            🗣️ <strong>大白话：</strong> 没有数据，你就不知道钱花哪了、客户从哪来、下一步该干嘛。
+            <span class="highlight" style="font-size: 16px;">🧠 数据追踪的本质演进与底层逻辑</span><br><br>
+            🗣️ <strong>大白话辅助理解：</strong> 数据分析的目的从没变过（看流量、转化、ROI），但谷歌的“统计工具”和“分饼规则”发生了巨变：<br><br>
+            1. <strong>从“翻书”变成“看监控” (GA4 事件驱动)：</strong> 以前系统只在乎用户“看了几页(PV)”，现在系统把用户的每一个微小动作（滚动页面、点击 WhatsApp、下载报价单）都当成独立的“监控事件 (Event)”来记录。<br>
+            2. <strong>从“死板记账”变成“AI 算命” (归因模型)：</strong> 以前转化了，功劳全算在最后一次点击上；现在谷歌用大模型分析用户全程轨迹，动态分配功劳。<br><br>
+            <span class="highlight">底层核心一句话：不要再迷恋虚荣的“停留时间”和“跳出率”，一切都要向“精准的高意向动作（询盘/点击）”看齐。</span>
         </div>
 
-        <!-- 安装流程总览 -->
-        <h3 class="section-header">📍 安装流程总览</h3>
-        <div class="arch-diagram hover-box">
-            <div class="arch-node">7.1 GA4 安装<span>数据底座</span></div>
-            <div class="arch-arrow">➔</div>
-            <div class="arch-node">7.2 GTM 部署<span>容器管理</span></div>
-            <div class="arch-arrow">➔</div>
-            <div class="arch-node" style="border-color: var(--primary);">7.3 转化追踪<span>效果量化</span></div>
-        </div>
-
-        <!-- 7.1 GA4 -->
-        <h3 class="section-header">7.1 GA4 (Google Analytics 4) 基础底座</h3>
-        <div class="micro-card-grid">
-            <div class="micro-card hover-box">
-                <div class="micro-card-title">🏗️ 三层结构</div>
-                <div class="micro-card-desc">
-                    组织 ➔ 账号 ➔ 媒体资源 ➔ 数据流
+        <div class="section-title">7.1 GA4 (Google Analytics 4) 基础底座</div>
+        <div class="flex-row">
+            <div class="box">
+                <div class="box-title">🏗️ 基础架构与核心变革</div>
+                <div class="box-desc">
+                    <span style="font-weight:600; color:var(--text-dark);">新版数据架构：</span>组织 ➔ 账号/媒体资源 ➔ 数据流<br><br>
+                    <span style="font-weight:600; color:var(--text-dark);">核心变革 (事件驱动)：</span>全面抛弃旧版基于“PV”的逻辑和三视图。现在，用户的每一次滚动、视频播放、文件下载、表单提交，都被统称为一个平等的“事件 (Event)”。
                 </div>
             </div>
-            <div class="micro-card hover-box">
-                <div class="micro-card-title">🗂️ 三视图过滤</div>
-                <div class="micro-card-desc">
-                    原始数据 (备份) ➔ 测试视图 (验证) ➔ 主视图 (生产)
+            <div class="box">
+                <div class="box-title">📊 四大核心报告</div>
+                <div class="box-desc">
+                    <ul style="padding-left: 18px; display:flex; flex-direction:column; gap:8px;">
+                        <li><strong>受众群体</strong> (谁来了)</li>
+                        <li><strong>流量获取</strong> (从哪来)</li>
+                        <li><strong>行为</strong> (干了什么)</li>
+                        <li><strong>转化</strong> (有没有成交)</li>
+                    </ul>
                 </div>
             </div>
-            <div class="micro-card hover-box">
-                <div class="micro-card-title">📊 四大核心报告</div>
-                <div class="micro-card-desc">
-                    <strong>受众群体</strong> (谁来了) · <strong>流量获取</strong> (从哪来)<br>
-                    <strong>行为</strong> (干了什么) · <strong>转化</strong> (有没有成交)
-                </div>
-            </div>
-        </div>
-
-        <!-- GA4 2026 更新 -->
-        <div class="list-breakdown hover-box">
-            <div style="font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 18px;">⭐</span> 2026 年重要更新 (GA4)
-            </div>
-            <ul>
-                <li>
-                    <span class="tag ai">🤖 Analytics Advisor</span> 
-                    <div>基于 Gemini 的对话式 AI 分析助手，位于 GA4 右上角。直接用自然语言提问（如“为什么昨天转化下降了？”），AI 自动生成图表和洞察。</div>
-                </li>
-                <li>
-                    <span class="tag update">📈 AI Assistant 渠道</span> 
-                    <div>GA4 新增默认渠道分组，自动识别来自 ChatGPT、Gemini、Claude 等 AI 助手的流量，归入 <code>ai-assistant</code> 媒介。<br>
-                    <span style="color:var(--text-muted); font-size:12px;">🔍 <strong>路径：</strong>报告 → 流量获取报告（看维度）；报告 → 互动 → 页面和屏幕（看被引用的高流量页面）。</span></div>
-                </li>
-                <li>
-                    <span class="tag blue">💰 跨管道预算企划书 (Beta)</span> 
-                    <div>串接非 Google 渠道数据（如 Meta、TikTok），进行多平台的预算模拟和成效预测。</div>
-                </li>
-                <li>
-                    <span class="tag">🎯 每转化独立归因</span> 
-                    <div>每种转化类型可独立设置归因模型和回溯窗口。<br>
-                    <span style="color:var(--text-muted); font-size:12px;">🔍 <strong>路径：</strong>管理 → 归因设置 → 选择转化事件 → 设置专属模型。</span></div>
-                </li>
-            </ul>
-        </div>
-
-        <!-- 7.2 GTM -->
-        <h3 class="section-header">7.2 GTM (Google Tag Manager) 容器部署</h3>
-        <div class="bubble-info hover-box">
-            🗣️ <strong>大白话：</strong> GTM 就像是网站的“万能开关盒”，装一次主代码，以后加什么追踪工具都不用再找程序员改网页代码了。发布前务必开启 <strong>🔍 预览 Debug 模式</strong> 验证所有代码。
-        </div>
-        
-        <div style="margin-bottom: 12px; font-weight: 600; padding-left: 4px;">🔗 三要素可视化：</div>
-        <div class="arch-diagram hover-box" style="margin-top: 0;">
-            <div class="arch-node">⚡ 触发器<span>“什么时候干活？”<br><strong>用户点击按钮</strong></span></div>
-            <div class="arch-arrow">➔</div>
-            <div class="arch-node">📦 变量<span>“收集什么？”<br><strong>按钮文字/ID</strong></span></div>
-            <div class="arch-arrow">➔</div>
-            <div class="arch-node">📤 代码<span>“发给谁？”<br><strong>发给 GA4/Ads</strong></span></div>
-        </div>
-
-        <!-- GTM 2026 更新 -->
-        <div class="list-breakdown hover-box">
-            <div style="font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 18px;">⭐</span> 2026 年重要更新 (GTM)
-            </div>
-            <ul>
-                <li><span class="tag update">🔄 GTM ➔ Google Tag</span> GTM 容器可“进化”为功能完整的 Google Tag（选择性升级，非自动迁移）。</li>
-                <li><span class="tag">🌐 Google Tag Gateway</span> 第一方数据网关，通过 GCP、Akamai、Cloudflare 等 CDN 服务发送数据，提升信号质量与可靠性。</li>
-                <li><span class="tag blue">⚙️ 自动收集增强</span> Google Ads 自动从网站收集页面浏览、点击等事件数据，减少手动配置。（注：关键转化事件仍需手动标记）。</li>
-            </ul>
-        </div>
-
-        <!-- 7.3 转化追踪设置 -->
-        <h3 class="section-header">7.3 转化追踪设置</h3>
-        <div style="margin-bottom: 12px; font-weight: 600; padding-left: 4px;">🎯 四大转化事件：</div>
-        <div class="micro-card-grid">
-            <div class="micro-card hover-box"><strong>🌐 网页浏览</strong><br><span class="micro-card-desc">用户访问特定页面 (如感谢页)</span></div>
-            <div class="micro-card hover-box"><strong>🖱️ 事件触发</strong><br><span class="micro-card-desc">用户执行特定操作 (如点击提交)</span></div>
-            <div class="micro-card hover-box"><strong>⏱️ 时长</strong><br><span class="micro-card-desc">会话持续时间达标 (如超3分钟)</span></div>
-            <div class="micro-card hover-box"><strong>📄 页数</strong><br><span class="micro-card-desc">浏览足够多的页面 (如5页以上)</span></div>
-        </div>
-
-        <div style="margin-top: 24px; font-weight: 600; padding-left: 4px;">🔧 实操配置流：</div>
-        <div class="rule-list hover-box">
-            <div class="rule-item">
-                <div class="rule-num">Step 1</div>
-                <div class="rule-content">
-                    <span class="rule-core">GTM 设置事件 (基础定义)</span>
-                    <span class="rule-why">Pageview选"All Pages" | 表单提交选"表单提交"+ID | 按钮选"所有元素"+文字</span>
-                </div>
-            </div>
-            <div class="step-arrow-down">↓</div>
-            <div class="rule-item">
-                <div class="rule-num">Step 2</div>
-                <div class="rule-content">
-                    <span class="rule-core">Google Ads 获取代码</span>
-                    <span class="rule-why">工具与设置 → 衡量 → 转化 → 新建 → 选GTM → 复制ID和标签</span>
-                </div>
-            </div>
-            <div class="step-arrow-down">↓</div>
-            <div class="rule-item">
-                <div class="rule-num">Step 3</div>
-                <div class="rule-content">
-                    <span class="rule-core">GTM 绑定分发</span>
-                    <span class="rule-why">新建代码(Ads转化跟踪) → 粘贴ID和标签 → 触发条件选Step1设好的事件</span>
-                </div>
-            </div>
-            <div class="step-arrow-down">↓</div>
-            <div class="rule-item advanced">
-                <div class="rule-num">Step 4</div>
-                <div class="rule-content">
-                    <span class="rule-core">Debug 验证 (防错闭环)</span>
-                    <span class="rule-why" style="background: #fff;">在 GTM 预览模式下完成一次真实的转化操作，检查代码是否成功触发。</span>
+            <div class="box">
+                <div class="box-title">🏷️ UTM 流量精准打标</div>
+                <div class="box-desc">
+                    <strong>实操：</strong>在推广链接后加 <code>?utm_source=linkedin...</code><br><br>
+                    🗣️ <strong>大白话：</strong>发文章或发邮件引流，如果不加 UTM 尾巴，GA4 会把它识别成来源不明的直接流量。加上 UTM，就能精准追踪哪篇帖子带来了最大的询盘。
                 </div>
             </div>
         </div>
 
-        <!-- 归因模型表格 -->
-    <div class="table-wrap">
-        <table class="styled-table">
+        <div style="font-weight:700; margin:28px 0 16px 0; color:var(--text-dark); font-size: 16px;">⭐ 2026 年重要更新 (GA4)</div>
+        <ul class="update-list">
+            <li><div class="tag">🤖 Analytics Advisor</div> 基于 Gemini 的对话式 AI 分析助手。直接用自然语言提问，自动生成图表和洞察。</li>
+            <li><div class="tag">📈 AI Assistant 渠道</div> 新增默认渠道分组，自动识别来自 ChatGPT、Gemini 等 AI 助手的流量。</li>
+            <li><div class="tag">💰 跨管道预算企划书</div> 串接非 Google 渠道数据（如 Meta、TikTok），进行多平台预算模拟预测。</li>
+            <li><div class="tag">🎯 每转化独立归因</div> 每种转化类型可独立设置专属的归因模型和回溯窗口。</li>
+        </ul>
+
+        <div class="section-title">7.2 GTM (Google Tag Manager) 容器部署</div>
+        <div class="flex-row">
+            <div class="box">
+                <div class="box-title">⚡ 触发器 (Trigger)</div>
+                <div class="box-desc">“什么时候干活？”<br><strong>用户点击按钮</strong></div>
+            </div>
+            <div class="arrow-sep">➔</div>
+            <div class="box" style="border-color: var(--primary-light); background: var(--bg-highlight);">
+                <div class="box-title" style="color: var(--primary);">🧠 变量与数据层 (Data Layer)</div>
+                <div class="box-desc">“收集什么具体细节？”<br><strong>例如：按钮文字/产品ID</strong></div>
+            </div>
+            <div class="arrow-sep">➔</div>
+            <div class="box">
+                <div class="box-title">📤 代码 (Tag)</div>
+                <div class="box-desc">“打包发给谁？”<br><strong>发给 GA4/Ads</strong></div>
+            </div>
+        </div>
+        <div class="bubble">
+            🗣️ <strong>大白话：</strong> GTM 高级之处在于“数据层”。它能抓取客户点的是【PAP+牙贴询价】还是【美白漱口水询价】，把极细颗粒度的业务细节精准发给 GA4。
+        </div>
+
+        <div style="font-weight:700; margin:32px 0 16px 0; color:var(--text-dark); font-size: 16px;">🛠️ GTM 核心实操演练 (以 Double White 为例)</div>
+        <div class="grid-3">
+            <div class="box">
+                <div class="box-title" style="color: var(--secondary);">实操 1：埋进网站</div>
+                <div class="box-desc">
+                    登录 <code>www.double-white.com</code> 的 WordPress 后台，直接装 <code>GTM4WP</code> 插件填入 <code>GTM-XXXXX</code>，一键全站生效，不碰任何底层代码。<br><br>
+                    <span class="highlight">大白话：</span>给双白独立站装个“智能总电箱”，以后加代码不求程序员。
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-title" style="color: var(--secondary);">实操 2：追踪 B2B 询盘</div>
+                <div class="box-desc">
+                    目标是追踪主页的 WhatsApp 按钮。条件(触发器)：点击链接且URL含 <code>wa.me/双白号码</code>；动作(代码)：发送 <code>click_whatsapp_oem</code>。<br><br>
+                    <span class="highlight">大白话：</span>这就叫精准布置“捕鼠夹”。
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-title" style="color: var(--secondary);">实操 3：Debug 调试</div>
+                <div class="box-desc">
+                    GTM 右上角点“预览”打开双白网站，你自己点一下 WhatsApp，如果立刻弹出绿色 <code>Tags Fired</code>，说明成功。<br><br>
+                    <span class="highlight">大白话：</span>没通过“照妖镜”测试的代码绝对不要发布。
+                </div>
+            </div>
+        </div>
+
+        <div class="bubble bubble-warning">
+            🚨 <strong>新手避坑指南：致命的“幽灵埋点”</strong><br>
+            🗣️ <strong>大白话：</strong> 在 GTM 预览模式里看到 <code>Tags Fired</code> 绿灯亮起后，90% 的新手以为大功告成直接关掉网页。结果跑了一个月广告，GA4 里零转化！因为你忘了点右上角的<strong>“提交 (Submit) 与发布”</strong>！没发布的容器就像草稿箱里的绝世好文，外面的世界根本看不见。
+        </div>
+
+        <div style="font-weight:700; margin:28px 0 16px 0; color:var(--text-dark); font-size: 16px;">⭐ 2026 年重要更新 (GTM)</div>
+        <ul class="update-list">
+            <li><div class="tag">🔄 GTM ➔ Google Tag</div> GTM 容器可“进化”为功能完整的 Google Tag。</li>
+            <li><div class="tag">🌐 Google Tag Gateway</div> 第一方数据网关，通过 GCP、Cloudflare 等 CDN 发送数据，提升信号质量。</li>
+            <li><div class="tag">⚙️ 自动收集增强</div> Google Ads 自动从网站收集基础事件数据，减少手动常规配置。</li>
+        </ul>
+
+        <div class="section-title">7.3 转化追踪设置</div>
+        <div style="font-weight:700; margin-bottom:16px; font-size: 16px;">🎯 B2B 独立站四大黄金微转化</div>
+        <div class="grid-2x2">
+            <div class="grid-item">
+                <strong>📝 询盘表单提交 (Form_Submit) <span style="color: #EF4444; font-size: 14px;">[意向度：🔥🔥🔥 极高]</span></strong>
+                <span>最核心的高意向线索（直入 CRM）。建议销售团队收到提示后 1 小时内火速邮件跟进或电联。</span>
+            </div>
+            <div class="grid-item">
+                <strong>💬 沟通工具点击 (Click_WhatsApp) <span style="color: #F59E0B; font-size: 14px;">[意向度：🔥🔥 高]</span></strong>
+                <span>快速建立即时联系。B2B 买家点击此按钮说明迫切需要报价或验厂视频，客服需随时在线秒回。</span>
+            </div>
+            <div class="grid-item">
+                <strong>📧 邮箱地址点击 (Click_Email) <span style="color: #F59E0B; font-size: 14px;">[意向度：🔥🔥 高]</span></strong>
+                <span>传统大 B 端采购商的首选习惯。</span>
+            </div>
+            <div class="grid-item">
+                <strong>📥 核心资料下载 (PDF_Download) <span style="color: var(--primary); font-size: 14px;">[意向度：🔥 中]</span></strong>
+                <span>如下载 OEM 报价单、工厂资质证书。属于高潜客户，适合纳入 EDM 邮件自动化培育序列持续种草。</span>
+            </div>
+        </div>
+
+        <div style="font-weight:700; margin:32px 0 16px 0; font-size: 16px;">🔧 横向实操配置流 (以追踪双白表单为例)</div>
+        <div class="flex-row" style="align-items: center; gap: 8px;">
+            <div class="box" style="padding: 16px; text-align: center;">
+                <div style="font-weight: 700; color: var(--primary); margin-bottom: 4px;">Step 1</div>
+                <div style="font-size: 13px;"><strong>GTM 设事件</strong><br>识别双白询价表单提交</div>
+            </div>
+            <div class="arrow-sep" style="font-size: 16px;">➔</div>
+            <div class="box" style="padding: 16px; text-align: center;">
+                <div style="font-weight: 700; color: var(--primary); margin-bottom: 4px;">Step 2</div>
+                <div style="font-size: 13px;"><strong>Ads 拿代码</strong><br>新建转化并复制特定 ID</div>
+            </div>
+            <div class="arrow-sep" style="font-size: 16px;">➔</div>
+            <div class="box" style="padding: 16px; text-align: center;">
+                <div style="font-weight: 700; color: var(--primary); margin-bottom: 4px;">Step 3</div>
+                <div style="font-size: 13px;"><strong>GTM 绑定分发</strong><br>Ads代码绑定给Step1表单</div>
+            </div>
+            <div class="arrow-sep" style="font-size: 16px;">➔</div>
+            <div class="box" style="padding: 16px; text-align: center;">
+                <div style="font-weight: 700; color: var(--primary); margin-bottom: 4px;">Step 4</div>
+                <div style="font-size: 13px;"><strong>验证闭环</strong><br>模拟填表确认代码跑通</div>
+            </div>
+        </div>
+        <div class="bubble">
+            🗣️ <strong>大白话：</strong> 配置转化追踪就像是 <strong>“给谷歌寄快递”</strong>。Step 1 把包裹打包好（在双白定义事件），Step 2 去拿快递单（获取 Ads 代码），Step 3 把单子贴在包裹上发出去（GTM 绑定分发），Step 4 查物流看有没有寄到（Debug 测试）。
+        </div>
+
+        <div class="bubble bubble-alert">
+            ⏳ <strong>实战防坑常识：别急着说“追踪没生效”！</strong><br>
+            🗣️ <strong>大白话：</strong> 在 Step 4 测试成功后，千万别隔半小时就去刷 GA4 后台问“转化呢？”。GA4 并不是实时到账的支付宝，它的数据处理和归因计算通常会有 <strong>24 到 48 小时</strong> 的延迟。让子弹飞一会儿，千万别因为急性子去瞎改原本正确的代码。
+        </div>
+
+        <div style="font-weight:700; margin:32px 0 16px 0; font-size: 16px;">🔍 归因模型与实操分析</div>
+        <table class="data-table">
             <thead>
                 <tr>
-                    <th>归因模型</th>
-                    <th>逻辑</th>
-                    <th>适用场景</th>
+                    <th style="width: 30%;">归因模型 (精简版)</th>
+                    <th>逻辑与适用场景</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>最终点击</strong></td>
-                    <td>100% 功劳给最后一次点击</td>
-                    <td>默认，简单直接</td>
+                    <td><strong style="color: var(--primary);">以数据为依据 (DDA)</strong><br><span style="font-size: 12px; color: var(--success); font-weight: 600;">[官方主推]</span></td>
+                    <td>AI 动态分配每次点击的功劳。适合 B2B 长决策周期，能公平体现科普词早期的引流贡献。</td>
                 </tr>
                 <tr>
-                    <td><strong>首次点击</strong></td>
-                    <td>100% 功劳给第一次点击</td>
-                    <td>评估品牌曝光渠道</td>
-                </tr>
-                <tr>
-                    <td><strong>线性</strong></td>
-                    <td>平均分配给所有点击</td>
-                    <td>多个渠道均衡贡献</td>
-                </tr>
-                <tr>
-                    <td><strong>时间衰减</strong></td>
-                    <td>越接近转化的点击权重越高</td>
-                    <td>重视“临门一脚”</td>
-                </tr>
-                <tr>
-                    <td style="color: var(--primary); font-weight: 700;"><strong>以数据为依据</strong></td>
-                    <td>AI 根据历史数据分配功劳</td>
-                    <td>数据量充足时最精准</td>
+                    <td><strong>最终点击 (Last Click)</strong></td>
+                    <td>100% 功劳归于最后一次点击。极度保守，仅适合看一眼就买的 B2C 快消品，B2B 极易误伤早期引流。</td>
                 </tr>
             </tbody>
         </table>
-    </div>
-
-        <!-- 7.4 受众群体与再营销 -->
-        <h3 class="section-header">7.4 受众群体与再营销</h3>
-        <div style="margin-bottom: 16px;">
-            <strong>🧩 细分维度：</strong>
-            <span class="tag green" style="margin: 0 4px;">行为维度 (如未支付/看5页)</span>
-            <span class="tag blue" style="margin: 0 4px;">来源维度 (如来自FB/SEO)</span>
-            <span class="tag update" style="margin: 0 4px;">用户特征 (如新老客/设备/地域)</span>
-        </div>
-        
-        <div class="rule-list hover-box">
-            <div class="rule-item"><div class="rule-num">Step 1</div><div class="rule-content"><span class="rule-core">GA4 中关联 Google Ads 账号</span><span class="rule-why">管理 → Google Ads关联</span></div></div>
-            <div class="step-arrow-down">↓</div>
-            <div class="rule-item"><div class="rule-num">Step 2</div><div class="rule-content"><span class="rule-core">启用核心功能</span><span class="rule-why">管理 → 数据收集 → 勾选“再营销”与“广告报告功能”</span></div></div>
-            <div class="step-arrow-down">↓</div>
-            <div class="rule-item"><div class="rule-num">Step 3</div><div class="rule-content"><span class="rule-core">创建受众群体并发布</span><span class="rule-why">在 GA4 中创建特定细分人群 → 发布到 Google Ads</span></div></div>
-            <div class="step-arrow-down">↓</div>
-            <div class="rule-item advanced"><div class="rule-num">Step 4</div><div class="rule-content"><span class="rule-core">在 Ads 中创建再营销广告</span><span class="rule-why" style="background:#fff;">选择对应的受众群体列表进行精准投放</span></div></div>
-        </div>
-        <div class="bubble-info" style="border-color: #E5E7EB; background: #fff;">
-            ⚠️ <strong>数据门槛：</strong> Google 搜索广告的受众群体列表需至少包含 <strong>1,000 个用户</strong> 才能用于再营销。
+        <div class="bubble">
+            🗣️ <strong>转化归因大白话 (业务员分提成)：</strong><br>
+            客户看了广告牌(付费) ➔ 进展位听讲解(SEO) ➔ 回国搜品牌词下大单(直接访问)。<br>
+            用“最终点击”提成全归最后一步，前期引流的都得饿死；用“DDA”就是精明财务总监，按比例分功劳，保证拉新培育不掉链子。
         </div>
 
-        <!-- 7.5 用户体验追踪工具 -->
-        <h3 class="section-header">7.5 用户体验追踪工具</h3>
-    <div class="table-wrap">
-        <table class="styled-table">
+        <div class="section-title">7.4 受众群体与再营销 (B2B 流量追投策略)</div>
+        <div class="rm-panel">
+            <div style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+                🗣️ <strong>大白话：</strong> 97% 的 B2B 客户第一次看网站绝不发询盘。再营销就是揪出看了多次却没留言的“高意向大鱼”，全网精准追投。
+            </div>
+            
+            <div class="pill-container">
+                <div class="pill-tag">💊 深度潜水鱼：<span style="font-weight: 400;">看双白产品 >3页且 >2分钟，未询盘</span></div>
+                <div class="pill-tag">💊 核心意向客：<span style="font-weight: 400;">看过“OEM贴牌”页，没点WhatsApp</span></div>
+                <div class="pill-tag">💊 流失的线索：<span style="font-weight: 400;">点了“下载双白画册”但没留邮箱</span></div>
+            </div>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 8px;">
+                <div class="rm-flow">
+                    GA4 智能圈人 ➔ 无缝同步 Ads ➔ Ads 展示定制打样广告
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); background: #FFF; padding: 10px 16px; border-radius: 8px; border: 1px dashed var(--warning);">
+                    ⚠️ <strong>门槛对策：</strong> 需满 1,000 人。双白初期流量小，直接圈“过去 90 天所有访客”让广告先跑起来。
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">7.5 用户体验追踪工具</div>
+        <table class="data-table">
             <thead>
                 <tr>
                     <th>工具</th>
                     <th>用途</th>
                     <th>安装方式</th>
-                    <th style="width: 40%;">大白话</th>
+                    <th>大白话</th>
                 </tr>
             </thead>
             <tbody>
@@ -680,70 +373,53 @@
                 </tr>
             </tbody>
         </table>
-    </div>
 
-        <!-- 核心数据速查看板 (底部) -->
-        <h3 class="section-header" style="border: none; margin-bottom: 0;">📊 核心数据速查</h3>
-        <div class="data-dashboard">
-            <div class="data-box hover-box">
-                <div class="data-val">1,000+</div>
-                <div class="data-label">GA4 预测激活门槛</div>
-                <div class="data-desc">过去28天需满千人，AI预测才生效</div>
+        <div class="section-title">📊 核心数据速查</div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-num">1,000+</div>
+                <div class="stat-title">GA4 预测激活门槛</div>
+                <div class="stat-desc">过去28天需满千人激活</div>
             </div>
-            <div class="data-box hover-box">
-                <div class="data-val">2个月</div>
-                <div class="data-label">标准数据保留期</div>
-                <div class="data-desc">如需更长历史需设置 BigQuery 导出</div>
+            <div class="stat-box">
+                <div class="stat-num">2 个月</div>
+                <div class="stat-title">标准数据保留期</div>
+                <div class="stat-desc">更长历史需接 BigQuery</div>
             </div>
-            <div class="data-box hover-box">
-                <div class="data-val">≥ 1,000</div>
-                <div class="data-label">搜索再营销门槛</div>
-                <div class="data-desc">低于此数量无法用于搜索广告再营销</div>
+            <div class="stat-box">
+                <div class="stat-num">≥ 1,000</div>
+                <div class="stat-title">搜索再营销门槛</div>
+                <div class="stat-desc">低于此数无法用于搜索</div>
             </div>
-            <div class="data-box hover-box">
-                <div class="data-val">1,400万+</div>
-                <div class="data-label">GA4 全球装机量</div>
-                <div class="data-desc">稳居主流，已是全球网站标配底座</div>
+            <div class="stat-box">
+                <div class="stat-num">14M+</div>
+                <div class="stat-title">全球装机量</div>
+                <div class="stat-desc">稳居主流网站标配底座</div>
             </div>
         </div>
 
-        <!-- 底部内链与页脚 (严格锁死) -->
-        <div class="footer-links" style="margin-top:40px; border-top:2px solid var(--border-light); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; font-size:14px; color:var(--text-muted); gap:10px;">
-            <span>✨ Tab 8 · 数据分析与追踪 · 流程图+卡片布局</span>
+        <div class="footer-links" style="margin-top: 36px; padding-top: 18px; border-top: 2px solid var(--border-light); display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted);">
+            <span>✨ Tab 8 · 数据分析与追踪 · 避坑实战版</span>
             <span>
-                <a href="#" class="internal-link" style="text-decoration:none;">⬅️返回全局目录⬅️</a> · 
-                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬅️返回顶部⬅️</span>
+                <span class="internal-link" onclick="location.href='index.html'" style="color: var(--primary); text-decoration: none; font-weight: 600; cursor: pointer;">← 返回全局目录</span>
+                <span style="margin: 0 10px;">·</span>
+                <span class="internal-link" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="color: var(--primary); text-decoration: none; font-weight: 600; cursor: pointer;">返回顶部</span>
             </span>
         </div>
     </div>
-<!-- ================= 自动定位导航栏滚动条的脚本 ================= -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const nav = document.querySelector('.tab-nav');
-        const activeBtn = document.querySelector('.tab-btn.active');
-        
-        if (nav && activeBtn) {
-            // 计算激活按钮相对于导航栏的中心位置并自动滚动
-            const scrollPos = activeBtn.offsetLeft - (nav.offsetWidth / 2) + (activeBtn.offsetWidth / 2);
-            nav.scrollLeft = scrollPos;
-        }
-    });
-</script>
+
     <!-- 🔍 ⌘K 全局搜索弹窗结构 -->
     <div id="globalSearchModal">
         <div class="modal-content">
             <div class="modal-header">
                 <span style="font-size: 18px;">🔍</span>
-                <input type="text" id="globalSearchInput" placeholder="输入关键词搜索全库（如：E-E-A-T、CRO、内容集群...）">
+                <input type="text" id="globalSearchInput" style="border: none; outline: none; padding: 8px;" placeholder="输入关键词搜索全库...">
                 <button id="closeGlobalSearchBtn" style="background: #F1F5F9; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; color: #64748B; font-size: 12px;">ESC</button>
             </div>
-            <ul id="globalSearchResults">
+            <ul id="globalSearchResults" style="list-style: none; margin: 0; padding: 0;">
                 <li class="res-empty" style="padding: 20px; text-align: center; color: #94A3B8; font-size: 14px;">请输入关键词开始检索...</li>
             </ul>
         </div>
     </div>
-
-    <!-- 引入全站公共全局搜索与高亮系统 -->
-    <script src="assets/search.js?v=3"></script>
 </body>
 </html>
