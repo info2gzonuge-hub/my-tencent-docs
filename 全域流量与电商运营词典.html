@@ -657,27 +657,19 @@ function renderQuizCards() {
     document.getElementById('quizContainer').innerHTML = html;
 }
 
-// 通用卡片生成器：主次反转逻辑核心位置 (全新双向随机版)
+// 通用卡片生成器：主次反转逻辑核心位置
 function generateCardHTML(idx, viewMode) {
     const item = db[idx];
     const prog = quizProgress[idx];
     const isAns = prog.answered;
     const isCor = prog.correct;
     
-    // 【新增核心】：如果是未答题状态，随机决定出正反面；如果已答题，保持之前的出题面状态
-    if (!prog.hasOwnProperty('isAskEnglish')) {
-        prog.isAskEnglish = Math.random() > 0.5; // 50% 概率考英文，50% 概率考中文
-    }
-    const isAskEnglish = prog.isAskEnglish;
-
     let feedbackHtml = '';
     if (isAns) {
         if (isCor) {
             feedbackHtml = `<div class="feedback"><span>✅</span> <span>回答正确！</span></div>`;
         } else {
-            // 答错时的提示也要根据出题面动态变化
-            const correctHint = isAskEnglish ? `<code>${item.a.join('/')}</code>` : `<code>${item.t}</code>`;
-            feedbackHtml = `<div class="feedback"><span>❌</span> <span>正解应包含：${correctHint}</span></div>`;
+            feedbackHtml = `<div class="feedback"><span>❌</span> <span>正解应包含：<code>${item.t}</code> 或 <code>${item.a.join('/')}</code></span></div>`;
         }
     }
 
@@ -685,50 +677,28 @@ function generateCardHTML(idx, viewMode) {
     const checkFunc = viewMode === 'exam' ? `checkExam(${idx})` : `checkQuiz(${idx})`;
     const toggleFunc = viewMode === 'exam' ? `toggleExamAnswer(${idx})` : `toggleAnswer(${idx})`;
 
-    // 动态生成“题目面”
-    let questionHtml = '';
-    let inputPlaceholder = '';
-    
-    if (isAskEnglish) {
-        // 出英文，考中文
-        questionHtml = `
-            <div style="font-size: 24px; font-weight: bold; color: var(--quiz-blue); margin-bottom: 5px;">${item.t}</div>
-            <div style="font-size: 13px; color: #64748B; margin-bottom: 15px;">👉 请根据上述英文术语，回想它的中文释义</div>
-        `;
-        inputPlaceholder = "请输入中文解释或别名...";
-    } else {
-        // 出中文，考英文
-        questionHtml = `
-            <div style="font-size: 20px; font-weight: bold; color: #334155; margin-bottom: 5px;">${item.a.join(' / ')}</div>
-            <div style="font-size: 13px; color: #64748B; margin-bottom: 15px;">👉 请根据上述中文，回想它的英文专业缩写/术语</div>
-        `;
-        inputPlaceholder = "请输入英文术语或缩写...";
-    }
-
-    // 动态生成“全景答案面”（固定结构，答题后显示）
+    // 【新增】：答题后或点击显示答案时，展示的中英文双语块（已内嵌样式，直接生效）
     const fullAnswerHtml = `
-        <div class="full-answer-block">
-            <div style="font-size: 18px; font-weight: bold; color: var(--quiz-blue);">${item.t}</div>
-            <div style="font-size: 14px; font-weight: bold; color: #334155; margin: 4px 0 8px 0;">${item.a.join(' / ')}</div>
-            <div style="font-size: 13px; color: #475569; line-height: 1.5;"><b>📖 专业：</b>${item.d}</div>
-            <div style="font-size: 13px; color: #475569; line-height: 1.5; margin-top: 4px;"><b>💬 白话：</b>${item.p}</div>
+        <div style="${isAns ? 'display: block;' : 'display: none;'} margin-top: 15px; padding: 15px; background: ${isCor ? '#ECFDF5' : (isAns ? '#FEF2F2' : '#F8FAFC')}; border-radius: 8px; border-left: 4px solid ${isCor ? '#10B981' : (isAns ? '#EF4444' : '#0AA5F2')}; border-top: 1px solid #E2E8F0; animation: fadeIn 0.3s ease;">
+            <div style="font-size: 18px; font-weight: bold; color: #0AA5F2;">${item.t}</div>
+            <div style="font-size: 14px; font-weight: bold; color: #334155; margin: 4px 0 0 0;">${item.a.join(' / ')}</div>
         </div>
     `;
 
     return `
-        <div class="card-item ${isAns ? (isCor ? 'correct' : 'wrong') : ''} ${isAns ? 'answered' : ''}">
+        <div class="card-item ${isAns ? (isCor ? 'correct' : 'wrong') : ''}">
             <div class="hint">
-                ${questionHtml}
+                <strong>📖 专业释义：</strong>
+                <span>${item.d}</span>
+                <div class="def-text-quiz">💬 <b>核心白话：</b>${item.p}</div>
             </div>
-            
             <div class="row">
-                <input type="text" id="${inputId}" placeholder="${inputPlaceholder}" value="${prog.userInput}" ${isAns ? 'disabled' : ''} onkeydown="if(event.key==='Enter') ${checkFunc}" />
+                <input type="text" id="${inputId}" placeholder="输入术语缩写或中文..." value="${prog.userInput}" ${isAns ? 'disabled' : ''} onkeydown="if(event.key==='Enter') ${checkFunc}" />
                 <div class="btn-group">
                     ${!isAns ? `<button class="btn-check" onclick="${checkFunc}">提交答案</button>` : ''}
-                    <button class="btn-show" onclick="${toggleFunc}">${isAns ? '重新作答' : '直接看答案'}</button>
+                    <button class="btn-show" onclick="${toggleFunc}">${isAns ? '重新作答' : '显示答案'}</button>
                 </div>
             </div>
-            
             ${feedbackHtml}
             ${fullAnswerHtml}
         </div>
@@ -834,12 +804,16 @@ function checkExam(dbIdx) {
 
 function toggleExamAnswer(dbIdx) {
     if (quizProgress[dbIdx].answered) {
+        // 如果已经答题，点击则重置为“重新作答”状态
         quizProgress[dbIdx] = { answered: false, correct: false, userInput: '' };
         saveProgress();
         renderExamCard();
     } else {
-        document.getElementById(`exam-input-${dbIdx}`).value = db[dbIdx].t;
-        checkExam(dbIdx);
+        // 【核心改动】：如果未答题，点击“显示答案”不再自动往框里填英文，而是直接在下方展开中英文对照答案块
+        quizProgress[dbIdx].answered = true;
+        quizProgress[dbIdx].correct = false; 
+        saveProgress();
+        renderExamCard();
     }
 }
 
