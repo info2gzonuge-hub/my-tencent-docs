@@ -26,6 +26,11 @@
             
             --quiz-blue: #0AA5F2;
         }
+        /* 新增：全景答案块样式 */
+        .card-item .full-answer-block { display: none; margin-top: 15px; padding: 15px; background: #F1F5F9; border-radius: 8px; border-left: 4px solid var(--quiz-blue); animation: fadeIn 0.3s ease; }
+        .card-item.correct .full-answer-block { border-left-color: #10B981; background: #ECFDF5; }
+        .card-item.wrong .full-answer-block { border-left-color: #EF4444; background: #FEF2F2; }
+        .card-item.answered .full-answer-block { display: block; }
 
         body { font-family: var(--font-main); color: var(--text-main); margin: 0; padding: 20px; padding-bottom: env(safe-area-inset-bottom, 20px); line-height: 1.6; transition: background 0.4s ease, color 0.4s ease; overflow-x: hidden; }
         .container { max-width: var(--container-width); margin: 0 auto; }
@@ -652,19 +657,27 @@ function renderQuizCards() {
     document.getElementById('quizContainer').innerHTML = html;
 }
 
-// 通用卡片生成器：主次反转逻辑核心位置
+// 通用卡片生成器：主次反转逻辑核心位置 (全新双向随机版)
 function generateCardHTML(idx, viewMode) {
     const item = db[idx];
     const prog = quizProgress[idx];
     const isAns = prog.answered;
     const isCor = prog.correct;
     
+    // 【新增核心】：如果是未答题状态，随机决定出正反面；如果已答题，保持之前的出题面状态
+    if (!prog.hasOwnProperty('isAskEnglish')) {
+        prog.isAskEnglish = Math.random() > 0.5; // 50% 概率考英文，50% 概率考中文
+    }
+    const isAskEnglish = prog.isAskEnglish;
+
     let feedbackHtml = '';
     if (isAns) {
         if (isCor) {
             feedbackHtml = `<div class="feedback"><span>✅</span> <span>回答正确！</span></div>`;
         } else {
-            feedbackHtml = `<div class="feedback"><span>❌</span> <span>正解应包含：<code>${item.t}</code> 或 <code>${item.a.join('/')}</code></span></div>`;
+            // 答错时的提示也要根据出题面动态变化
+            const correctHint = isAskEnglish ? `<code>${item.a.join('/')}</code>` : `<code>${item.t}</code>`;
+            feedbackHtml = `<div class="feedback"><span>❌</span> <span>正解应包含：${correctHint}</span></div>`;
         }
     }
 
@@ -672,21 +685,52 @@ function generateCardHTML(idx, viewMode) {
     const checkFunc = viewMode === 'exam' ? `checkExam(${idx})` : `checkQuiz(${idx})`;
     const toggleFunc = viewMode === 'exam' ? `toggleExamAnswer(${idx})` : `toggleAnswer(${idx})`;
 
+    // 动态生成“题目面”
+    let questionHtml = '';
+    let inputPlaceholder = '';
+    
+    if (isAskEnglish) {
+        // 出英文，考中文
+        questionHtml = `
+            <div style="font-size: 24px; font-weight: bold; color: var(--quiz-blue); margin-bottom: 5px;">${item.t}</div>
+            <div style="font-size: 13px; color: #64748B; margin-bottom: 15px;">👉 请根据上述英文术语，回想它的中文释义</div>
+        `;
+        inputPlaceholder = "请输入中文解释或别名...";
+    } else {
+        // 出中文，考英文
+        questionHtml = `
+            <div style="font-size: 20px; font-weight: bold; color: #334155; margin-bottom: 5px;">${item.a.join(' / ')}</div>
+            <div style="font-size: 13px; color: #64748B; margin-bottom: 15px;">👉 请根据上述中文，回想它的英文专业缩写/术语</div>
+        `;
+        inputPlaceholder = "请输入英文术语或缩写...";
+    }
+
+    // 动态生成“全景答案面”（固定结构，答题后显示）
+    const fullAnswerHtml = `
+        <div class="full-answer-block">
+            <div style="font-size: 18px; font-weight: bold; color: var(--quiz-blue);">${item.t}</div>
+            <div style="font-size: 14px; font-weight: bold; color: #334155; margin: 4px 0 8px 0;">${item.a.join(' / ')}</div>
+            <div style="font-size: 13px; color: #475569; line-height: 1.5;"><b>📖 专业：</b>${item.d}</div>
+            <div style="font-size: 13px; color: #475569; line-height: 1.5; margin-top: 4px;"><b>💬 白话：</b>${item.p}</div>
+        </div>
+    `;
+
     return `
-        <div class="card-item ${isAns ? (isCor ? 'correct' : 'wrong') : ''}">
+        <div class="card-item ${isAns ? (isCor ? 'correct' : 'wrong') : ''} ${isAns ? 'answered' : ''}">
             <div class="hint">
-                <strong>📖 专业释义：</strong>
-                <span>${item.d}</span>
-                <div class="def-text-quiz">💬 <b>核心白话：</b>${item.p}</div>
+                ${questionHtml}
             </div>
+            
             <div class="row">
-                <input type="text" id="${inputId}" placeholder="输入术语缩写或中文..." value="${prog.userInput}" ${isAns ? 'disabled' : ''} onkeydown="if(event.key==='Enter') ${checkFunc}" />
+                <input type="text" id="${inputId}" placeholder="${inputPlaceholder}" value="${prog.userInput}" ${isAns ? 'disabled' : ''} onkeydown="if(event.key==='Enter') ${checkFunc}" />
                 <div class="btn-group">
                     ${!isAns ? `<button class="btn-check" onclick="${checkFunc}">提交答案</button>` : ''}
-                    <button class="btn-show" onclick="${toggleFunc}">${isAns ? '重新作答' : '显示答案'}</button>
+                    <button class="btn-show" onclick="${toggleFunc}">${isAns ? '重新作答' : '直接看答案'}</button>
                 </div>
             </div>
+            
             ${feedbackHtml}
+            ${fullAnswerHtml}
         </div>
     `;
 }
@@ -699,11 +743,16 @@ function checkQuiz(idx) {
 
 function toggleAnswer(idx) {
     if (quizProgress[idx].answered) {
+        // 重新作答，清除当前题目的进度和出题面设定
         quizProgress[idx] = { answered: false, correct: false, userInput: '' };
+        delete quizProgress[idx].isAskEnglish; 
         saveProgress();
         renderQuizCards();
     } else {
-        document.getElementById(`q-input-${idx}`).value = db[idx].t;
+        // 直接看答案：为了方便，根据当前题面自动填入正确的另一面内容
+        const isAskEnglish = quizProgress[idx].isAskEnglish;
+        const correctVal = isAskEnglish ? db[idx].a[0] : db[idx].t;
+        document.getElementById(`q-input-${idx}`).value = correctVal;
         checkQuiz(idx);
     }
 }
@@ -713,10 +762,23 @@ function processAnswer(idx, rawValue) {
     if (!userVal) { alert('请先输入答案！'); return; }
     
     const q = db[idx];
-    const validAnswers = [q.t.toLowerCase(), ...q.a.map(a => a.toLowerCase())];
-    const isMatched = validAnswers.some(ans => userVal.includes(ans) || ans.includes(userVal));
+    const prog = quizProgress[idx];
+    let isMatched = false;
+
+    // 根据当前的出题面，验证不同的答案集
+    if (prog.isAskEnglish) {
+        // 如果题目出的是英文，用户必须输入中文数组中的任意一个词
+        const validChineseAns = q.a.map(a => a.toLowerCase());
+        isMatched = validChineseAns.some(ans => userVal.includes(ans) || ans.includes(userVal));
+    } else {
+        // 如果题目出的是中文，用户必须输入英文术语
+        const validEnglishAns = q.t.toLowerCase();
+        isMatched = userVal.includes(validEnglishAns) || validEnglishAns.includes(userVal);
+    }
     
-    quizProgress[idx] = { answered: true, correct: isMatched, userInput: rawValue };
+    quizProgress[idx].answered = true;
+    quizProgress[idx].correct = isMatched;
+    quizProgress[idx].userInput = rawValue;
     saveProgress();
 }
 
